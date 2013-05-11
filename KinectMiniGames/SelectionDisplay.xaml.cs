@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Samples.Kinect.ControlsBasics
+﻿namespace KinectMiniGames
 {
     using System.Globalization;
     using System.Windows.Controls;
@@ -16,7 +16,7 @@
         {
             this.InitializeComponent();
 
-            this.messageTextBlock.Text = string.Format(CultureInfo.CurrentCulture, Properties.Resources.SelectedMessage, itemId);
+            this.messageTextBlock.Text = string.Format(CultureInfo.CurrentCulture, KinectMiniGames.Properties.Resources.SelectedMessage, itemId);
         }
 
         /// <summary>
