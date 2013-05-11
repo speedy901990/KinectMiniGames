@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>902aec56-7b41-40d9-acd7-4867d3585453</ProjectGuid>
+    <ProjectGuid>{AA1F470E-60F4-4DAF-89E9-DCB1794D26BC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ApplesGame</RootNamespace>
