@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,66 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DelegateCommandCastException" xml:space="preserve">
+    <value>Parameter of type {0} not of of expected type {1}</value>
+  </data>
+  <data name="MessageAllSet" xml:space="preserve">
+    <value>All set!</value>
+  </data>
+  <data name="MessageAllSetListening" xml:space="preserve">
+    <value>Kinect is listening</value>
+  </data>
+  <data name="MessageConflict" xml:space="preserve">
+    <value>This Kinect is being used by another application.</value>
+  </data>
+  <data name="MessageError" xml:space="preserve">
+    <value>Oops, there is an error.</value>
+  </data>
+  <data name="MessageInitializing" xml:space="preserve">
+    <value>Initializing...</value>
+  </data>
+  <data name="MessageInsufficientBandwidth" xml:space="preserve">
+    <value>Too many USB devices! Please unplug one or more.</value>
+  </data>
+  <data name="MessageNoAvailableSensors" xml:space="preserve">
+    <value>Kinect required</value>
+  </data>
+  <data name="MessageNotGenuine" xml:space="preserve">
+    <value>This sensor is not genuine!</value>
+  </data>
+  <data name="MessageNotPowered" xml:space="preserve">
+    <value>Plug my power cord in!</value>
+  </data>
+  <data name="MessageNotSupported" xml:space="preserve">
+    <value>Kinect for Xbox not supported.</value>
+  </data>
+  <data name="MoreInformationConflict" xml:space="preserve">
+    <value>This application needs a Kinect for Windows sensor in order to function. However, another application is using the Kinect Sensor.</value>
+  </data>
+  <data name="MoreInformationError" xml:space="preserve">
+    <value>The Kinect Sensor is plugged in, however an error has occurred. For steps to resolve, please click the "Help" link.</value>
+  </data>
+  <data name="MoreInformationInsufficientBandwidth" xml:space="preserve">
+    <value>The Kinect Sensor needs the majority of the USB Bandwidth of a USB Controller. If other devices are in contention for that bandwidth, the Kinect Sensor may not be able to function.</value>
+  </data>
+  <data name="MoreInformationNoAvailableSensors" xml:space="preserve">
+    <value>This application needs a Kinect for Windows sensor in order to function. Please plug one into the PC.</value>
+  </data>
+  <data name="MoreInformationNotGenuine" xml:space="preserve">
+    <value>This application needs a genuine Kinect for Windows sensor in order to function. Please plug one into the PC.</value>
+  </data>
+  <data name="MoreInformationNotPowered" xml:space="preserve">
+    <value>The Kinect Sensor is plugged into the computer with its USB connection, but the power plug appears to be not powered.</value>
+  </data>
+  <data name="MoreInformationNotSupported" xml:space="preserve">
+    <value>This application needs a Kinect for Windows sensor in order to function. Please plug one into the PC.</value>
+  </data>
+  <data name="NoDefaultBrowserAvailable" xml:space="preserve">
+    <value>Unable to launch the default web browser. Trying to navigate to: {0}</value>
+  </data>
 </root>
