@@ -10,8 +10,6 @@ namespace Microsoft.Kinect.Toolkit.Controls
     using System.ComponentModel;
     using System.Windows;
 
-    using Microsoft.Kinect.Toolkit.Interaction;
-
     /// <summary>
     /// Contains all the information we have about a hand pointer.
     /// </summary>

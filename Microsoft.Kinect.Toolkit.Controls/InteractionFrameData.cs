@@ -6,10 +6,6 @@
 
 namespace Microsoft.Kinect.Toolkit.Controls
 {
-    using System;
-    using System.Windows;
-    using Microsoft.Kinect.Toolkit.Interaction;
-
     /// <summary>
     /// Class to send hand pointer information we get from the UxCore components to
     /// the KinectAdaptor.

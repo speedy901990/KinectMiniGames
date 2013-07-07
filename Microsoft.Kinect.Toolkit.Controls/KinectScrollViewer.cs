@@ -18,8 +18,6 @@ namespace Microsoft.Kinect.Toolkit.Controls
     using System.Windows.Media.Animation;
     using System.Windows.Threading;
 
-    using Microsoft.Kinect.Toolkit.Interaction;
-
     /// <summary>
     /// A ScrollViewer class that responds to Kinect events
     /// </summary>

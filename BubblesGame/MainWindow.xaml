@@ -1,8 +1,26 @@
 ﻿<Window x:Class="BubblesGame.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wpfViewers="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
+        xmlns:controls="clr-namespace:Coding4Fun.Kinect.Wpf.Controls;assembly=Coding4Fun.Kinect.Wpf"
+        xmlns:k="http://schemas.microsoft.com/kinect/2013"
+        xmlns:kinectTheDots="clr-namespace:BeginningKinect.Chapter4.KinectTheDots"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+    <Viewbox>
+        <Grid x:Name="LayoutRoot" Width="1920" Height="1200">
+            <kinectTheDots:SkeletonViewer x:Name="SkeletonViewerElement"/>
+            <Polyline x:Name="CrayonElement" Stroke="Black" StrokeThickness="3"/>
+            <Canvas x:Name="PuzzleBoardElement"/>
+            <Canvas x:Name="GameBoardElement">
+                <Image x:Name="HandCursorElement" Source="C:\Users\Slawek\Documents\Visual Studio 2012\Projects\KinectBookSkeleton\KinectBookSkeleton\hand.png"
+                        Height="75" RenderTransformOrigin="0.5,0.5" Canvas.Left="165" Canvas.Top="144">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="HandCursorScale" ScaleX="1"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Canvas>
+        </Grid>
+    </Viewbox>
 </Window>

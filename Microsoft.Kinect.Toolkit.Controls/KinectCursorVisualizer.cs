@@ -15,8 +15,6 @@ namespace Microsoft.Kinect.Toolkit.Controls
     using System.Windows.Data;
     using System.Windows.Media;
 
-    using Microsoft.Kinect.Toolkit.Interaction;
-
     /// <summary>
     /// Simple WPF Adorner to display Kinect HandPointers
     /// </summary>
