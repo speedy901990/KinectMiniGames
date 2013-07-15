@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Kinect.Toolkit", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Kinect.Toolkit.Controls", "Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj", "{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeGame", "ShapeGame\ShapeGame.csproj", "{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Samples.Kinect.WpfViewers", "KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj", "{4DE23893-27E7-423F-9BB6-BA21DAC2C45E}"
 EndProject
 Global
@@ -73,6 +75,16 @@ Global
 		{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}.Release|x86.ActiveCfg = Release|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}.Release|x86.ActiveCfg = Release|Any CPU
 		{4DE23893-27E7-423F-9BB6-BA21DAC2C45E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4DE23893-27E7-423F-9BB6-BA21DAC2C45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DE23893-27E7-423F-9BB6-BA21DAC2C45E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

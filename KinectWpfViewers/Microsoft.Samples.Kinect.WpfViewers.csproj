@@ -32,16 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Coding4Fun.Kinect.Wpf, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Coding4Fun.Kinect.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Expression.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\coding4fun\Microsoft.Expression.Drawing.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Kinect">
       <HintPath>$(KINECTSDK10_DIR)\Assemblies\Microsoft.Kinect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -58,10 +52,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KinectSensorChooser.xaml.cs">
-      <DependentUpon>KinectSensorChooser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ImageViewer.cs" />
+    <Compile Include="Converters.cs" />
+    <Compile Include="DepthColorizer.cs" />
+    <Compile Include="KinectControl.cs" />
+    <Compile Include="KinectSensorManagerEventArgs.cs" />
+    <Compile Include="KinectSkeletonChooser.cs" />
+    <Compile Include="KinectViewer.cs" />
     <Compile Include="JointMapping.cs" />
     <Compile Include="KinectAudioViewer.xaml.cs">
       <DependentUpon>KinectAudioViewer.xaml</DependentUpon>
@@ -72,16 +68,20 @@
     <Compile Include="KinectColorViewer.xaml.cs">
       <DependentUpon>KinectColorViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="KinectDiagnosticViewer.xaml.cs">
-      <DependentUpon>KinectDiagnosticViewer.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="KinectSensorManager.cs" />
     <Compile Include="KinectSettings.xaml.cs">
       <DependentUpon>KinectSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KinectSettingsViewModel.cs" />
     <Compile Include="KinectSkeleton.cs" />
     <Compile Include="KinectSkeletonViewer.xaml.cs">
       <DependentUpon>KinectSkeletonViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KinectSpeechCommander.cs" />
+    <Compile Include="KinectVoiceCommandViewer.xaml.cs">
+      <DependentUpon>KinectVoiceCommandViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LocalSupressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,23 +106,19 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="KinectSensorChooser.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="KinectAudioViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Resource Include="KinectControlResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Page Include="KinectDepthViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="KinectColorViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="KinectDiagnosticViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="KinectSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -131,6 +127,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="KinectVoiceCommandViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="SpeechGrammars\SpeechGrammar.xml" />
+    <Resource Include="Images\AudioKinectIcon.png" />
+    <Resource Include="Images\KinectTilt.png" />
+    <Resource Include="Images\Slider.png" />
+    <Resource Include="Images\SliderTrack.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

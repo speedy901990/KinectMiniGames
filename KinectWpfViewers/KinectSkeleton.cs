@@ -31,6 +31,34 @@ namespace Microsoft.Samples.Kinect.WpfViewers
         public static readonly DependencyProperty ShowCenterProperty =
             DependencyProperty.Register("ShowCenter", typeof(bool), typeof(KinectSkeleton), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
 
+        public static readonly DependencyProperty SkeletonProperty =
+            DependencyProperty.Register(
+                "Skeleton",
+                typeof(Skeleton),
+                typeof(KinectSkeleton),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static readonly DependencyProperty JointMappingsProperty =
+            DependencyProperty.Register(
+                "JointMappings",
+                typeof(Dictionary<JointType, JointMapping>),
+                typeof(KinectSkeleton),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static readonly DependencyProperty CenterProperty =
+            DependencyProperty.Register(
+                "Center",
+                typeof(Point),
+                typeof(KinectSkeleton),
+                new FrameworkPropertyMetadata(new Point(), FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static readonly DependencyProperty ScaleFactorProperty =
+            DependencyProperty.Register(
+                "ScaleFactor",
+                typeof(double),
+                typeof(KinectSkeleton),
+                new FrameworkPropertyMetadata(1.0, FrameworkPropertyMetadataOptions.AffectsRender));
+
         private const double JointThickness = 3;
         private const double BodyCenterThickness = 10;
         private const double TrackedBoneThickness = 6;
@@ -54,11 +82,6 @@ namespace Microsoft.Samples.Kinect.WpfViewers
 
         private readonly Brush rightClipBrush = new LinearGradientBrush(
             Color.FromArgb(0, 255, 0, 0), Color.FromArgb(255, 255, 0, 0), new Point(0, 0), new Point(1, 0));
-
-        private Dictionary<JointType, JointMapping> jointMappings;
-        private Point centerPoint;
-        private Skeleton currentSkeleton;
-        private double scale = 1.0;
 
         public bool ShowClippedEdges
         {
@@ -84,29 +107,28 @@ namespace Microsoft.Samples.Kinect.WpfViewers
             set { SetValue(ShowCenterProperty, value); }
         }
 
-        /// <summary>
-        /// This method should be called every skeleton frame.  It will force the properties to update and 
-        /// trigger the control to render.
-        /// </summary>
-        /// <param name="skeleton">This is the current frame's skeleton data.</param>
-        /// <param name="mappings">This is a list of pre-mapped joints.  See KinectSkeletonViewerer.xaml.cs</param>
-        /// <param name="center">This is a pre-mapped point to the skeleton's center position.</param>
-        /// <param name="scaleFactor">1 will render the bones and joints at a good size for a 640x480 image.
-        /// The method would expect 0.5 to render a 320x240 scaled image.</param>
-        public void RefreshSkeleton(Skeleton skeleton, Dictionary<JointType, JointMapping> mappings, Point center, double scaleFactor)
+        public Skeleton Skeleton
         {
-            this.centerPoint = center;
-            this.jointMappings = mappings;
-            this.scale = scaleFactor;
-            this.currentSkeleton = skeleton;
-
-            this.InvalidateVisual();
+            get { return (Skeleton)GetValue(SkeletonProperty); }
+            set { SetValue(SkeletonProperty, value); }
         }
 
-        public void Reset()
+        public Dictionary<JointType, JointMapping> JointMappings
         {
-            this.currentSkeleton = null;
-            this.InvalidateVisual();
+            get { return (Dictionary<JointType, JointMapping>)GetValue(JointMappingsProperty); }
+            set { SetValue(JointMappingsProperty, value); }
+        }
+        
+        public Point Center
+        {
+            get { return (Point)GetValue(CenterProperty); }
+            set { SetValue(CenterProperty, value); }
+        }
+
+        public double ScaleFactor
+        {
+            get { return (double)GetValue(ScaleFactorProperty); }
+            set { SetValue(ScaleFactorProperty, value); }
         }
 
         protected override Size MeasureOverride(Size constraint)
@@ -123,130 +145,134 @@ namespace Microsoft.Samples.Kinect.WpfViewers
         {
             base.OnRender(drawingContext);
 
+            var currentSkeleton = Skeleton;
+
             // Don't render if we don't have a skeleton, or it isn't tracked
-            if (this.currentSkeleton == null || this.currentSkeleton.TrackingState == SkeletonTrackingState.NotTracked)
+            if (drawingContext == null || currentSkeleton == null || currentSkeleton.TrackingState == SkeletonTrackingState.NotTracked)
             {
                 return;
             }
 
             // Displays a gradient near the edge of the display where the skeleton is leaving the screen
-            this.RenderClippedEdges(drawingContext);
+            RenderClippedEdges(drawingContext);
 
-            switch (this.currentSkeleton.TrackingState)
+            switch (currentSkeleton.TrackingState)
             {
                 case SkeletonTrackingState.PositionOnly:
-                    if (this.ShowCenter)
+                    if (ShowCenter)
                     {
                         drawingContext.DrawEllipse(
-                            this.centerPointBrush,
+                            centerPointBrush,
                             null,
-                            this.centerPoint,
-                            BodyCenterThickness * this.scale,
-                            BodyCenterThickness * this.scale);
+                            Center,
+                            BodyCenterThickness * ScaleFactor,
+                            BodyCenterThickness * ScaleFactor);
                     }
 
                     break;
                 case SkeletonTrackingState.Tracked:
-                    this.DrawBonesAndJoints(drawingContext);
+                    DrawBonesAndJoints(drawingContext);
                 break;
             }
         }
 
         private void RenderClippedEdges(DrawingContext drawingContext)
         {
-            if (!this.ShowClippedEdges || 
-                this.currentSkeleton.ClippedEdges.Equals(FrameEdges.None))
+            var currentSkeleton = Skeleton;
+
+            if (!ShowClippedEdges || 
+                currentSkeleton.ClippedEdges.Equals(FrameEdges.None))
             {
                 return;
             }
 
-            double scaledThickness = ClipBoundsThickness * this.scale;
-            if (this.currentSkeleton.ClippedEdges.HasFlag(FrameEdges.Bottom))
+            double scaledThickness = ClipBoundsThickness * ScaleFactor;
+            if (currentSkeleton.ClippedEdges.HasFlag(FrameEdges.Bottom))
             {
                 drawingContext.DrawRectangle(
-                    this.bottomClipBrush,
+                    bottomClipBrush,
                     null,
-                    new Rect(0, this.RenderSize.Height - scaledThickness, this.RenderSize.Width, scaledThickness));
+                    new Rect(0, RenderSize.Height - scaledThickness, RenderSize.Width, scaledThickness));
             }
 
-            if (this.currentSkeleton.ClippedEdges.HasFlag(FrameEdges.Top))
+            if (currentSkeleton.ClippedEdges.HasFlag(FrameEdges.Top))
             {
                 drawingContext.DrawRectangle(
-                    this.topClipBrush,
+                    topClipBrush,
                     null,
-                    new Rect(0, 0, this.RenderSize.Width, scaledThickness));
+                    new Rect(0, 0, RenderSize.Width, scaledThickness));
             }
 
-            if (this.currentSkeleton.ClippedEdges.HasFlag(FrameEdges.Left))
+            if (currentSkeleton.ClippedEdges.HasFlag(FrameEdges.Left))
             {
                 drawingContext.DrawRectangle(
-                    this.leftClipBrush,
+                    leftClipBrush,
                     null,
-                    new Rect(0, 0, scaledThickness, this.RenderSize.Height));
+                    new Rect(0, 0, scaledThickness, RenderSize.Height));
             }
 
-            if (this.currentSkeleton.ClippedEdges.HasFlag(FrameEdges.Right))
+            if (currentSkeleton.ClippedEdges.HasFlag(FrameEdges.Right))
             {
                 drawingContext.DrawRectangle(
-                    this.rightClipBrush,
+                    rightClipBrush,
                     null,
-                    new Rect(this.RenderSize.Width - scaledThickness, 0, scaledThickness, this.RenderSize.Height));
+                    new Rect(RenderSize.Width - scaledThickness, 0, scaledThickness, RenderSize.Height));
             }
         }
 
         private void DrawBonesAndJoints(DrawingContext drawingContext)
         {
-            if (this.ShowBones)
+            if (ShowBones)
             {
                 // Render Torso
-                this.DrawBone(drawingContext, JointType.Head, JointType.ShoulderCenter);
-                this.DrawBone(drawingContext, JointType.ShoulderCenter, JointType.ShoulderLeft);
-                this.DrawBone(drawingContext, JointType.ShoulderCenter, JointType.ShoulderRight);
-                this.DrawBone(drawingContext, JointType.ShoulderCenter, JointType.Spine);
-                this.DrawBone(drawingContext, JointType.Spine, JointType.HipCenter);
-                this.DrawBone(drawingContext, JointType.HipCenter, JointType.HipLeft);
-                this.DrawBone(drawingContext, JointType.HipCenter, JointType.HipRight);
+                DrawBone(drawingContext, JointType.Head, JointType.ShoulderCenter);
+                DrawBone(drawingContext, JointType.ShoulderCenter, JointType.ShoulderLeft);
+                DrawBone(drawingContext, JointType.ShoulderCenter, JointType.ShoulderRight);
+                DrawBone(drawingContext, JointType.ShoulderCenter, JointType.Spine);
+                DrawBone(drawingContext, JointType.Spine, JointType.HipCenter);
+                DrawBone(drawingContext, JointType.HipCenter, JointType.HipLeft);
+                DrawBone(drawingContext, JointType.HipCenter, JointType.HipRight);
 
                 // Left Arm
-                this.DrawBone(drawingContext, JointType.ShoulderLeft, JointType.ElbowLeft);
-                this.DrawBone(drawingContext, JointType.ElbowLeft, JointType.WristLeft);
-                this.DrawBone(drawingContext, JointType.WristLeft, JointType.HandLeft);
+                DrawBone(drawingContext, JointType.ShoulderLeft, JointType.ElbowLeft);
+                DrawBone(drawingContext, JointType.ElbowLeft, JointType.WristLeft);
+                DrawBone(drawingContext, JointType.WristLeft, JointType.HandLeft);
 
                 // Right Arm
-                this.DrawBone(drawingContext, JointType.ShoulderRight, JointType.ElbowRight);
-                this.DrawBone(drawingContext, JointType.ElbowRight, JointType.WristRight);
-                this.DrawBone(drawingContext, JointType.WristRight, JointType.HandRight);
+                DrawBone(drawingContext, JointType.ShoulderRight, JointType.ElbowRight);
+                DrawBone(drawingContext, JointType.ElbowRight, JointType.WristRight);
+                DrawBone(drawingContext, JointType.WristRight, JointType.HandRight);
 
                 // Left Leg
-                this.DrawBone(drawingContext, JointType.HipLeft, JointType.KneeLeft);
-                this.DrawBone(drawingContext, JointType.KneeLeft, JointType.AnkleLeft);
-                this.DrawBone(drawingContext, JointType.AnkleLeft, JointType.FootLeft);
+                DrawBone(drawingContext, JointType.HipLeft, JointType.KneeLeft);
+                DrawBone(drawingContext, JointType.KneeLeft, JointType.AnkleLeft);
+                DrawBone(drawingContext, JointType.AnkleLeft, JointType.FootLeft);
 
                 // Right Leg
-                this.DrawBone(drawingContext, JointType.HipRight, JointType.KneeRight);
-                this.DrawBone(drawingContext, JointType.KneeRight, JointType.AnkleRight);
-                this.DrawBone(drawingContext, JointType.AnkleRight, JointType.FootRight);
+                DrawBone(drawingContext, JointType.HipRight, JointType.KneeRight);
+                DrawBone(drawingContext, JointType.KneeRight, JointType.AnkleRight);
+                DrawBone(drawingContext, JointType.AnkleRight, JointType.FootRight);
             }
 
-            if (this.ShowJoints)
+            if (ShowJoints)
             {
                 // Render Joints
-                foreach (JointMapping joint in this.jointMappings.Values)
+                foreach (JointMapping joint in JointMappings.Values)
                 {
                     Brush drawBrush = null;
                     switch (joint.Joint.TrackingState)
                     {
                         case JointTrackingState.Tracked:
-                            drawBrush = this.trackedJointBrush;
+                            drawBrush = trackedJointBrush;
                             break;
                         case JointTrackingState.Inferred:
-                            drawBrush = this.inferredJointBrush;
+                            drawBrush = inferredJointBrush;
                             break;
                     }
 
                     if (drawBrush != null)
                     {
-                        drawingContext.DrawEllipse(drawBrush, null, joint.MappedPoint, JointThickness * this.scale, JointThickness * this.scale);
+                        drawingContext.DrawEllipse(drawBrush, null, joint.MappedPoint, JointThickness * ScaleFactor, JointThickness * ScaleFactor);
                     }
                 }
             }
@@ -258,9 +284,9 @@ namespace Microsoft.Samples.Kinect.WpfViewers
             JointMapping joint2;
 
             // If we can't find either of these joints, exit
-            if (!this.jointMappings.TryGetValue(jointType1, out joint1) || 
+            if (!JointMappings.TryGetValue(jointType1, out joint1) || 
                 joint1.Joint.TrackingState == JointTrackingState.NotTracked ||
-                !this.jointMappings.TryGetValue(jointType2, out joint2) || 
+                !JointMappings.TryGetValue(jointType2, out joint2) || 
                 joint2.Joint.TrackingState == JointTrackingState.NotTracked)
             {
                 return;
@@ -274,12 +300,12 @@ namespace Microsoft.Samples.Kinect.WpfViewers
             }
             
             // We assume all drawn bones are inferred unless BOTH joints are tracked
-            Pen drawPen = this.inferredBonePen;
-            drawPen.Thickness = InferredBoneThickness * this.scale;
+            Pen drawPen = inferredBonePen;
+            drawPen.Thickness = InferredBoneThickness * ScaleFactor;
             if (joint1.Joint.TrackingState == JointTrackingState.Tracked && joint2.Joint.TrackingState == JointTrackingState.Tracked)
             {
-                drawPen = this.trackedBonePen;
-                drawPen.Thickness = TrackedBoneThickness * this.scale;
+                drawPen = trackedBonePen;
+                drawPen.Thickness = TrackedBoneThickness * ScaleFactor;
             }
 
             drawingContext.DrawLine(drawPen, joint1.MappedPoint, joint2.MappedPoint);

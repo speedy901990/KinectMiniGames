@@ -112,10 +112,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
-      <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>
-      <Name>Microsoft.Samples.Kinect.WpfViewers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj">
       <Project>{4508c4d1-85bb-4f3f-9e3b-cc93d231c65d}</Project>
       <Name>Microsoft.Kinect.Toolkit.Controls</Name>

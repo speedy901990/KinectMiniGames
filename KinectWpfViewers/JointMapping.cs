@@ -15,12 +15,12 @@ namespace Microsoft.Samples.Kinect.WpfViewers
     public class JointMapping
     {
         /// <summary>
-        /// This is the joint we are looking at
+        /// Gets or sets the joint at which we we are looking
         /// </summary>
         public Joint Joint { get; set; }
 
         /// <summary>
-        /// This is the point mapped into the target displays
+        /// Gets or sets the point mapped into the target display
         /// </summary>
         public Point MappedPoint { get; set; }
     }

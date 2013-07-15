@@ -8,87 +8,188 @@ namespace Microsoft.Samples.Kinect.WpfViewers
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Windows;
+    using System.Windows.Data;
     using Microsoft.Kinect;
 
     public enum ImageType
     {
+        /// <summary>
+        /// The Color Image
+        /// </summary>
         Color,
-        Depth,
-    }
 
-    internal enum TrackingMode
-    {
-        DefaultSystemTracking,
-        Closest1Player,
-        Closest2Player,
-        Sticky1Player,
-        Sticky2Player,
-        MostActive1Player,
-        MostActive2Player
+        /// <summary>
+        /// The Depth Image
+        /// </summary>
+        Depth,
     }
 
     /// <summary>
     /// Interaction logic for KinectSkeletonViewer.xaml
     /// </summary>
-    public partial class KinectSkeletonViewer : ImageViewer, INotifyPropertyChanged
+    public partial class KinectSkeletonViewer : KinectViewer
     {
-        private const float ActivityFalloff = 0.98f;
-        private readonly List<ActivityWatcher> recentActivity = new List<ActivityWatcher>();
-        private readonly List<int> activeList = new List<int>();
-        private List<KinectSkeleton> skeletonCanvases;
-        private List<Dictionary<JointType, JointMapping>> jointMappings = new List<Dictionary<JointType, JointMapping>>();
+        public static readonly DependencyProperty ShowBonesProperty =
+            DependencyProperty.Register(
+                "ShowBones",
+                typeof(bool),
+                typeof(KinectSkeletonViewer),
+                new PropertyMetadata(true));
+
+        public static readonly DependencyProperty ShowJointsProperty =
+            DependencyProperty.Register(
+                "ShowJoints",
+                typeof(bool),
+                typeof(KinectSkeletonViewer),
+                new PropertyMetadata(true));
+
+        public static readonly DependencyProperty ShowCenterProperty =
+            DependencyProperty.Register(
+                "ShowCenter",
+                typeof(bool),
+                typeof(KinectSkeletonViewer),
+                new PropertyMetadata(true));
+
+        public static readonly DependencyProperty ImageTypeProperty =
+            DependencyProperty.Register(
+                "ImageType",
+                typeof(ImageType),
+                typeof(KinectSkeletonViewer),
+                new PropertyMetadata(ImageType.Color));
+
+        private const int SkeletonCount = 6;
+        private readonly List<KinectSkeleton> skeletonCanvases = new List<KinectSkeleton>(SkeletonCount);
+        private readonly List<Dictionary<JointType, JointMapping>> jointMappings = new List<Dictionary<JointType, JointMapping>>();
         private Skeleton[] skeletonData;
 
         public KinectSkeletonViewer()
         {
             InitializeComponent();
-            this.ShowJoints = true;
-            this.ShowBones = true;
-            this.ShowCenter = true;
+            ShowJoints = true;
+            ShowBones = true;
+            ShowCenter = true;
         }
 
-        public bool ShowBones { get; set; }
-
-        public bool ShowJoints { get; set; }
-
-        public bool ShowCenter { get; set; }
-
-        public ImageType ImageType { get; set; }
-
-        internal TrackingMode TrackingMode { get; set; }
-
-        public void HideAllSkeletons()
+        public bool ShowBones
         {
-            if (this.skeletonCanvases != null)
+            get { return (bool)GetValue(ShowBonesProperty); }
+            set { SetValue(ShowBonesProperty, value); }
+        }
+
+        public bool ShowJoints
+        {
+            get { return (bool)GetValue(ShowJointsProperty); }
+            set { SetValue(ShowJointsProperty, value); }
+        }
+
+        public bool ShowCenter
+        {
+            get { return (bool)GetValue(ShowCenterProperty); }
+            set { SetValue(ShowCenterProperty, value); }
+        }
+
+        public ImageType ImageType
+        {
+            get { return (ImageType)GetValue(ImageTypeProperty); }
+            set { SetValue(ImageTypeProperty, value); }
+        }
+
+        protected override void OnKinectSensorChanged(object sender, KinectSensorManagerEventArgs<KinectSensor> args)
+        {
+            if (null != args.OldValue)
             {
-                foreach (KinectSkeleton skeletonCanvas in this.skeletonCanvases)
+                args.OldValue.AllFramesReady -= KinectAllFramesReady;
+            }
+
+            if ((null != args.NewValue) && (KinectStatus.Connected == args.NewValue.Status))
+            {
+                args.NewValue.AllFramesReady += KinectAllFramesReady;
+            }
+        }
+
+        /// <summary>
+        /// Returns the 2D position of the provided 3D SkeletonPoint.
+        /// The result will be in in either Color coordinate space or Depth coordinate space, depending on 
+        /// the current value of this.ImageType.
+        /// Only those parameters associated with the current ImageType will be used.
+        /// </summary>
+        /// <param name="sensor">The KinectSensor for which this mapping is being performed.</param>
+        /// <param name="imageType">The target image type</param>
+        /// <param name="renderSize">The target dimensions of the visualization</param>
+        /// <param name="skeletonPoint">The source point to map</param>
+        /// <param name="colorFormat">The format of the target color image, if imageType is Color</param>
+        /// <param name="colorWidth">The width of the target color image, if the imageType is Color</param>
+        /// <param name="colorHeight">The height of the target color image, if the imageType is Color</param>
+        /// <param name="depthFormat">The format of the target depth image, if the imageType is Depth</param>
+        /// <param name="depthWidth">The width of the target depth image, if the imageType is Depth</param>
+        /// <param name="depthHeight">The height of the target depth image, if the imageType is Depth</param>
+        /// <returns>Returns the 2D position of the provided 3D SkeletonPoint.</returns>
+        private static Point Get2DPosition(
+            KinectSensor sensor,
+            ImageType imageType,
+            Size renderSize,
+            SkeletonPoint skeletonPoint,
+            ColorImageFormat colorFormat,
+            int colorWidth,
+            int colorHeight,
+            DepthImageFormat depthFormat,
+            int depthWidth,
+            int depthHeight)
+        {
+            try
+            {
+                switch (imageType)
                 {
-                    skeletonCanvas.Reset();
+                    case ImageType.Color:
+                        if (ColorImageFormat.Undefined != colorFormat)
+                        {
+                            var colorPoint = sensor.CoordinateMapper.MapSkeletonPointToColorPoint(skeletonPoint, colorFormat);
+
+                            // map back to skeleton.Width & skeleton.Height
+                            return new Point(
+                                (int)(renderSize.Width * colorPoint.X / colorWidth),
+                                (int)(renderSize.Height * colorPoint.Y / colorHeight));
+                        }
+
+                        break;
+                    case ImageType.Depth:
+                        if (DepthImageFormat.Undefined != depthFormat)
+                        {
+                            var depthPoint = sensor.CoordinateMapper.MapSkeletonPointToDepthPoint(skeletonPoint, depthFormat);
+
+                            return new Point(
+                                (int)(renderSize.Width * depthPoint.X / depthWidth),
+                                (int)(renderSize.Height * depthPoint.Y / depthHeight));
+                        }
+
+                        break;
                 }
             }
-        }
-
-        protected override void OnKinectChanged(KinectSensor oldKinectSensor, KinectSensor newKinectSensor)
-        {
-            if (oldKinectSensor != null)
+            catch (InvalidOperationException)
             {
-                oldKinectSensor.AllFramesReady -= this.KinectAllFramesReady;
-                this.HideAllSkeletons();
+                // The stream must have stopped abruptly
+                // Handle this gracefully
             }
 
-            if (newKinectSensor != null && newKinectSensor.Status == KinectStatus.Connected)
-            {
-                newKinectSensor.AllFramesReady += this.KinectAllFramesReady;
-            }
+            return new Point();
         }
 
         private void KinectAllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
+            KinectSensor sensor = sender as KinectSensor;
+
+            foreach (var skeletonCanvas in skeletonCanvases)
+            {
+                skeletonCanvas.Skeleton = null;
+            }
+
             // Have we already been "shut down" by the user of this viewer, 
             // or has the SkeletonStream been disabled since this event was posted?
-            if ((this.Kinect == null) || !((KinectSensor)sender).SkeletonStream.IsEnabled)
+            if ((null == KinectSensorManager) || 
+                (null == sensor) ||
+                (null == sensor.SkeletonStream) ||
+                !sensor.SkeletonStream.IsEnabled)
             {
                 return;
             }
@@ -99,288 +200,157 @@ namespace Microsoft.Samples.Kinect.WpfViewers
             {
                 if (skeletonFrame != null)
                 {
-                    if (this.skeletonCanvases == null)
+                    if ((skeletonData == null) || (skeletonData.Length != skeletonFrame.SkeletonArrayLength))
                     {
-                        this.CreateListOfSkeletonCanvases();
+                        skeletonData = new Skeleton[skeletonFrame.SkeletonArrayLength];
                     }
 
-                    if ((this.skeletonData == null) || (this.skeletonData.Length != skeletonFrame.SkeletonArrayLength))
-                    {
-                        this.skeletonData = new Skeleton[skeletonFrame.SkeletonArrayLength];
-                    }
-
-                    skeletonFrame.CopySkeletonDataTo(this.skeletonData);
+                    skeletonFrame.CopySkeletonDataTo(skeletonData);
 
                     haveSkeletonData = true;
                 }
-            }
+            }          
 
             if (haveSkeletonData)
             {
-                using (DepthImageFrame depthImageFrame = e.OpenDepthImageFrame())
+                ColorImageFormat colorFormat = ColorImageFormat.Undefined;
+                int colorWidth = 0;
+                int colorHeight = 0;
+
+                DepthImageFormat depthFormat = DepthImageFormat.Undefined;
+                int depthWidth = 0;
+                int depthHeight = 0;
+
+                switch (ImageType)
                 {
-                    if (depthImageFrame != null)
-                    {
-                        int trackedSkeletons = 0;
-
-                        foreach (Skeleton skeleton in this.skeletonData)
-                        {
-                            Dictionary<JointType, JointMapping> jointMapping = this.jointMappings[trackedSkeletons];
-                            jointMapping.Clear();
-
-                            KinectSkeleton skeletonCanvas = this.skeletonCanvases[trackedSkeletons++];
-                            skeletonCanvas.ShowBones = this.ShowBones;
-                            skeletonCanvas.ShowJoints = this.ShowJoints;
-                            skeletonCanvas.ShowCenter = this.ShowCenter;
-
-                            // Transform the data into the correct space
-                            // For each joint, we determine the exact X/Y coordinates for the target view
-                            foreach (Joint joint in skeleton.Joints)
-                            {
-                                Point mappedPoint = this.GetPosition2DLocation(depthImageFrame, joint.Position);
-                                jointMapping[joint.JointType] = new JointMapping
-                                    {
-                                        Joint = joint, 
-                                        MappedPoint = mappedPoint
-                                    };
-                            }
-
-                            // Look up the center point
-                            Point centerPoint = this.GetPosition2DLocation(depthImageFrame, skeleton.Position);
-
-                            // Scale the skeleton thickness
-                            // 1.0 is the desired size at 640 width
-                            double scale = this.RenderSize.Width / 640;
-
-                            skeletonCanvas.RefreshSkeleton(skeleton, jointMapping, centerPoint, scale);
-                        }
-
-                        if (ImageType == ImageType.Depth)
-                        {
-                            this.ChooseTrackedSkeletons(this.skeletonData);
-                        }
-                    }
-                }
-            }
-        }
-
-        private Point GetPosition2DLocation(DepthImageFrame depthFrame, SkeletonPoint skeletonPoint)
-        {
-            DepthImagePoint depthPoint = depthFrame.MapFromSkeletonPoint(skeletonPoint);
-
-            switch (ImageType)
-            {
                 case ImageType.Color:
-                    ColorImagePoint colorPoint = depthFrame.MapToColorImagePoint(depthPoint.X, depthPoint.Y, this.Kinect.ColorStream.Format);
+                    // Retrieve the current color format, from the frame if present, and from the sensor if not.
+                    using (ColorImageFrame colorImageFrame = e.OpenColorImageFrame())
+                    {
+                        if (null != colorImageFrame)
+                        {
+                            colorFormat = colorImageFrame.Format;
+                            colorWidth = colorImageFrame.Width;
+                            colorHeight = colorImageFrame.Height;
+                        }
+                        else if (null != sensor.ColorStream)
+                        {
+                            colorFormat = sensor.ColorStream.Format;
+                            colorWidth = sensor.ColorStream.FrameWidth;
+                            colorHeight = sensor.ColorStream.FrameHeight;
+                        }
+                    }
 
-                    // map back to skeleton.Width & skeleton.Height
-                    return new Point(
-                        (int)(this.RenderSize.Width * colorPoint.X / this.Kinect.ColorStream.FrameWidth),
-                        (int)(this.RenderSize.Height * colorPoint.Y / this.Kinect.ColorStream.FrameHeight));
+                    break;
                 case ImageType.Depth:
-                    return new Point(
-                        (int)(this.RenderSize.Width * depthPoint.X / depthFrame.Width),
-                        (int)(this.RenderSize.Height * depthPoint.Y / depthFrame.Height));
-                default:
-                    throw new ArgumentOutOfRangeException("ImageType was a not expected value: " + ImageType.ToString());
-            }
-        }
-
-        private void CreateListOfSkeletonCanvases()
-        {
-            this.skeletonCanvases = new List<KinectSkeleton>
-                {
-                    this.skeletonCanvas1,
-                    this.skeletonCanvas2,
-                    this.skeletonCanvas3,
-                    this.skeletonCanvas4,
-                    this.skeletonCanvas5,
-                    this.skeletonCanvas6
-                };
-
-            this.skeletonCanvases.ForEach(s => this.jointMappings.Add(new Dictionary<JointType, JointMapping>()));
-        }
-
-        // NOTE: The ChooseTrackedSkeletons part of the KinectSkeletonViewer would be useful
-        // separate from the SkeletonViewer.
-        private void ChooseTrackedSkeletons(IEnumerable<Skeleton> skeletonDataValue)
-        {
-            switch (TrackingMode)
-            {
-                case TrackingMode.Closest1Player:
-                    this.ChooseClosestSkeletons(skeletonDataValue, 1);
-                    break;
-                case TrackingMode.Closest2Player:
-                    this.ChooseClosestSkeletons(skeletonDataValue, 2);
-                    break;
-                case TrackingMode.Sticky1Player:
-                    this.ChooseOldestSkeletons(skeletonDataValue, 1);
-                    break;
-                case TrackingMode.Sticky2Player:
-                    this.ChooseOldestSkeletons(skeletonDataValue, 2);
-                    break;
-                case TrackingMode.MostActive1Player:
-                    this.ChooseMostActiveSkeletons(skeletonDataValue, 1);
-                    break;
-                case TrackingMode.MostActive2Player:
-                    this.ChooseMostActiveSkeletons(skeletonDataValue, 2);
-                    break;
-            }
-        }
-
-        private void ChooseClosestSkeletons(IEnumerable<Skeleton> skeletonDataValue, int count)
-        {
-            SortedList<float, int> depthSorted = new SortedList<float, int>();
-
-            foreach (Skeleton s in skeletonDataValue)
-            {
-                if (s.TrackingState != SkeletonTrackingState.NotTracked)
-                {
-                    float valueZ = s.Position.Z;
-                    while (depthSorted.ContainsKey(valueZ))
+                    // Retrieve the current depth format, from the frame if present, and from the sensor if not.
+                    using (DepthImageFrame depthImageFrame = e.OpenDepthImageFrame())
                     {
-                        valueZ += 0.0001f;
+                        if (null != depthImageFrame)
+                        {
+                            depthFormat = depthImageFrame.Format;
+                            depthWidth = depthImageFrame.Width;
+                            depthHeight = depthImageFrame.Height;
+                        }
+                        else if (null != sensor.DepthStream)
+                        {
+                            depthFormat = sensor.DepthStream.Format;
+                            depthWidth = sensor.DepthStream.FrameWidth;
+                            depthHeight = sensor.DepthStream.FrameHeight;
+                        }
                     }
 
-                    depthSorted.Add(valueZ, s.TrackingId);
+                    break;
                 }
-            }
 
-            this.ChooseSkeletonsFromList(depthSorted.Values, count);
-        }
-
-        private void ChooseOldestSkeletons(IEnumerable<Skeleton> skeletonDataValue, int count)
-        {
-            List<int> newList = new List<int>();
-            
-            foreach (Skeleton s in skeletonDataValue)
-            {
-                if (s.TrackingState != SkeletonTrackingState.NotTracked)
+                for (int i = 0; i < skeletonData.Length && i < skeletonCanvases.Count; i++)
                 {
-                    newList.Add(s.TrackingId);
-                }
-            }
+                    var skeleton = skeletonData[i];
+                    var skeletonCanvas = skeletonCanvases[i];
+                    var jointMapping = jointMappings[i];
 
-            // Remove all elements from the active list that are not currently present
-            this.activeList.RemoveAll(k => !newList.Contains(k));
+                    jointMapping.Clear();
 
-            // Add all elements that aren't already in the activeList
-            this.activeList.AddRange(newList.FindAll(k => !this.activeList.Contains(k)));
-
-            this.ChooseSkeletonsFromList(this.activeList, count);
-        }
-
-        private void ChooseMostActiveSkeletons(IEnumerable<Skeleton> skeletonDataValue, int count)
-        {
-            foreach (ActivityWatcher watcher in this.recentActivity)
-            {
-                watcher.NewPass();
-            }
-
-            foreach (Skeleton s in skeletonDataValue)
-            {
-                if (s.TrackingState != SkeletonTrackingState.NotTracked)
-                {
-                    ActivityWatcher watcher = this.recentActivity.Find(w => w.TrackingId == s.TrackingId);
-                    if (watcher != null)
+                    try
                     {
-                        watcher.Update(s);
+                        // Transform the data into the correct space
+                        // For each joint, we determine the exact X/Y coordinates for the target view
+                        foreach (Joint joint in skeleton.Joints)
+                        {
+                            Point mappedPoint = Get2DPosition(
+                                sensor,
+                                ImageType,
+                                RenderSize,
+                                joint.Position, 
+                                colorFormat, 
+                                colorWidth, 
+                                colorHeight, 
+                                depthFormat, 
+                                depthWidth, 
+                                depthHeight);
+
+                            jointMapping[joint.JointType] = new JointMapping
+                            {
+                                Joint = joint,
+                                MappedPoint = mappedPoint
+                            };
+                        }
                     }
-                    else
+                    catch (UnauthorizedAccessException)
                     {
-                        this.recentActivity.Add(new ActivityWatcher(s));
+                        // Kinect is no longer available.
+                        return;
                     }
-                }
-            }
 
-            // Remove any skeletons that are gone
-            this.recentActivity.RemoveAll(aw => !aw.Updated);
+                    // Look up the center point
+                    Point centerPoint = Get2DPosition(
+                        sensor,
+                        ImageType,
+                        RenderSize,
+                        skeleton.Position, 
+                        colorFormat, 
+                        colorWidth, 
+                        colorHeight, 
+                        depthFormat, 
+                        depthWidth, 
+                        depthHeight);
 
-            this.recentActivity.Sort();
-            this.ChooseSkeletonsFromList(this.recentActivity.ConvertAll(f => f.TrackingId), count);
-        }
+                    // Scale the skeleton thickness
+                    // 1.0 is the desired size at 640 width
+                    double scale = RenderSize.Width / 640;
 
-        private void ChooseSkeletonsFromList(IList<int> list, int max)
-        {
-            if (this.Kinect.SkeletonStream.IsEnabled)
-            {
-                int argCount = Math.Min(list.Count, max);
-
-                if (argCount == 0)
-                {
-                    this.Kinect.SkeletonStream.ChooseSkeletons();
-                }
-
-                if (argCount == 1)
-                {
-                    this.Kinect.SkeletonStream.ChooseSkeletons(list[0]);
-                }
-
-                if (argCount >= 2)
-                {
-                    this.Kinect.SkeletonStream.ChooseSkeletons(list[0], list[1]);
+                    skeletonCanvas.Skeleton = skeleton;
+                    skeletonCanvas.JointMappings = jointMapping;
+                    skeletonCanvas.Center = centerPoint;
+                    skeletonCanvas.ScaleFactor = scale;
                 }
             }
         }
 
-        private class ActivityWatcher : IComparable<ActivityWatcher>
+        private void KinectSkeletonViewer_OnLoaded(object sender, RoutedEventArgs e)
         {
-            private float activityLevel;
-            private SkeletonPoint previousPosition;
-            private SkeletonPoint previousDelta;
-
-            internal ActivityWatcher(Skeleton s)
+            // Build a set of Skeletons, and bind each of their control properties to those
+            // exposed on this class so that changes are propagated.
+            for (int i = 0; i < SkeletonCount; i++)
             {
-                this.activityLevel = 0.0f;
-                this.TrackingId = s.TrackingId;
-                this.Updated = true;
-                this.previousPosition = s.Position;
-                this.previousDelta = new SkeletonPoint();
-            }
+                var skeletonCanvas = new KinectSkeleton();
+                skeletonCanvas.ClipToBounds = true;
 
-            internal int TrackingId { get; private set; }
+                var showBonesBinding = new Binding("ShowBones");
+                showBonesBinding.Source = this;
+                skeletonCanvas.SetBinding(KinectSkeleton.ShowBonesProperty, showBonesBinding);
 
-            internal bool Updated { get; private set; }
+                var showJointsBinding = new Binding("ShowJoints");
+                showJointsBinding.Source = this;
+                skeletonCanvas.SetBinding(KinectSkeleton.ShowJointsProperty, showJointsBinding);
 
-            public int CompareTo(ActivityWatcher other)
-            {
-                // Use the existing CompareTo on float, but reverse the arguments,
-                // since we wish to have larger activityLevels sort ahead of smaller values.
-                return other.activityLevel.CompareTo(this.activityLevel);
-            }
+                var showCenterBinding = new Binding("ShowCenter");
+                showCenterBinding.Source = this;
+                skeletonCanvas.SetBinding(KinectSkeleton.ShowCenterProperty, showCenterBinding);
 
-            internal void NewPass()
-            {
-                this.Updated = false;
-            }
-
-            internal void Update(Skeleton s)
-            {
-                SkeletonPoint newPosition = s.Position;
-                SkeletonPoint newDelta = new SkeletonPoint
-                    {
-                        X = newPosition.X - this.previousPosition.X,
-                        Y = newPosition.Y - this.previousPosition.Y,
-                        Z = newPosition.Z - this.previousPosition.Z
-                    };
-
-                SkeletonPoint deltaV = new SkeletonPoint
-                    {
-                        X = newDelta.X - this.previousDelta.X,
-                        Y = newDelta.Y - this.previousDelta.Y,
-                        Z = newDelta.Z - this.previousDelta.Z
-                    };
-
-                this.previousPosition = newPosition;
-                this.previousDelta = newDelta;
-
-                float deltaVLengthSquared = (deltaV.X * deltaV.X) + (deltaV.Y * deltaV.Y) + (deltaV.Z * deltaV.Z);
-                float deltaVLength = (float)Math.Sqrt(deltaVLengthSquared);
-
-                this.activityLevel = this.activityLevel * ActivityFalloff;
-                this.activityLevel += deltaVLength;
-
-                this.Updated = true;
+                skeletonCanvases.Add(skeletonCanvas);
+                jointMappings.Add(new Dictionary<JointType, JointMapping>());
+                SkeletonCanvasPanel.Children.Add(skeletonCanvas);
             }
         }
     }

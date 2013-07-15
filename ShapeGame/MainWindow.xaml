@@ -1,0 +1,28 @@
+﻿<Window x:Class="ShapeGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:kt="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:toolkit="clr-namespace:Microsoft.Kinect.Toolkit;assembly=Microsoft.Kinect.Toolkit"
+        Title="Kinect Shape Game" FontStyle="Italic" SizeToContent="WidthAndHeight"
+        Loaded="WindowLoaded" Closed="WindowClosed" Closing="WindowClosing">
+    <Grid>
+        <StackPanel Orientation="Vertical" Background="#FF46BC44">
+            <Grid>
+                <Canvas Margin="0" Name="playfield" Height="688" Width="619" SizeChanged="PlayfieldSizeChanged">
+                    <Canvas.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#D9040833" Offset="0.238" />
+                            <GradientStop Color="#FF46BC44" Offset="1" />
+                            <GradientStop Color="#E61747B2" Offset="0.811" />
+                        </LinearGradientBrush>
+                    </Canvas.Background>
+                </Canvas>
+                <kt:KinectColorViewer Margin="0,18,19,0" HorizontalAlignment="Right" Width="160" Height="120" VerticalAlignment="Top" KinectSensorManager="{Binding}"/>
+                <toolkit:KinectSensorChooserUI x:Name="SensorChooserUI" IsListening="True"  HorizontalAlignment="Center" VerticalAlignment="Top" />
+            </Grid>
+            <!--<CheckBox x:Name="enableAec" Foreground="White" FontSize="20" Margin="19,0,0,18" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Collapsed" Checked="EnableAecChecked" Unchecked="EnableAecChecked" IsEnabled="False">
+                Enable Echo Cancellation on Default Speakers
+            </CheckBox>-->
+        </StackPanel>
+    </Grid>
+</Window>
