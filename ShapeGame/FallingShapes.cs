@@ -8,7 +8,7 @@
 // hit testing against a set of segments provided by the Kinect NUI, and
 // have shapes react accordingly.
 
-namespace ShapeGame.Utils
+namespace BubblesGame.Utils
 {
     using System;
     using System.Windows;

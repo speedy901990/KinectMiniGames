@@ -9,9 +9,9 @@
 // positions to the game portion for hit testing.
 
 using System.Windows.Media;
-using ShapeGame.Properties;
+using BubblesGame.Properties;
 
-namespace ShapeGame
+namespace BubblesGame
 {
     using System;
     using System.Collections.Generic;

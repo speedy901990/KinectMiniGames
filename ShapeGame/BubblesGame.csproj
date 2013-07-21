@@ -8,7 +8,7 @@
     <ProjectGuid>{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShapeGame</RootNamespace>
+    <RootNamespace>BubblesGame</RootNamespace>
     <AssemblyName>ShapeGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>

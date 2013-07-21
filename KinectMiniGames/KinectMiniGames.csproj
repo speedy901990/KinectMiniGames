@@ -122,9 +122,9 @@
       <Project>{aa1f470e-60f4-4daf-89e9-dcb1794d26bc}</Project>
       <Name>ApplesGame</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BubblesGame\BubblesGame.csproj">
+    <ProjectReference Include="..\BubblesGame\BubblesGame2.csproj">
       <Project>{e3c86c95-0154-40b5-b5d5-5bbe46344b4e}</Project>
-      <Name>BubblesGame</Name>
+      <Name>BubblesGame2</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj">
       <Project>{4508c4d1-85bb-4f3f-9e3b-cc93d231c65d}</Project>

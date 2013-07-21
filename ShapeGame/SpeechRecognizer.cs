@@ -12,7 +12,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Media;
 
-namespace ShapeGame.Speech
+namespace BubblesGame.Speech
 {
     using System;
     using System.Collections.Generic;

@@ -4,7 +4,7 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
-namespace ShapeGame
+namespace BubblesGame
 {
     using System;
     using System.Collections.Generic;

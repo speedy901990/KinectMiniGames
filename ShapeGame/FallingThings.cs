@@ -10,7 +10,7 @@
 
 using System.Security.AccessControl;
 
-namespace ShapeGame
+namespace BubblesGame
 {
     using System;
     using System.Collections.Generic;
