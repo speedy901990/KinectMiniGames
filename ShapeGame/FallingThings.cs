@@ -219,13 +219,14 @@ namespace BubblesGame
                                         if (thing.State == ThingState.Falling)
                                         {
                                             thing.State = ThingState.Bouncing;
-                                            thing.Hotness = 1;
-                                            thing.FlashCount = 0;
+                                            //thing.Hotness = 1;
+                                            //thing.FlashCount = 0;
+                                            hit |= HitType.Popped;
                                         }
                                      }
                                     _things[i] = thing;
 
-                                    hit |= HitType.Popped;
+                                    //hit |= HitType.Popped;
                                 }
                             }
 

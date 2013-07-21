@@ -8,6 +8,7 @@
 // processing, displaying players on screen, and sending updated player
 // positions to the game portion for hit testing.
 
+using System.Security.Cryptography;
 using System.Windows.Media;
 using BubblesGame.Properties;
 
@@ -137,6 +138,9 @@ namespace BubblesGame
 
             UpdatePlayfieldSize();
 
+            var rand = new Random();
+            dropSize = rand.Next(10, 65);
+
             myFallingThings.SetGravity(dropGravity);
             myFallingThings.SetDropRate(dropRate);
             myFallingThings.SetSize(dropSize);
@@ -248,6 +252,34 @@ namespace BubblesGame
         #endregion Kinect discovery + setup
 
         #region Kinect Skeleton processing
+        private static Skeleton GetPrimarySkeleton(Skeleton[] skeletons)
+        {
+            Skeleton skeleton = null;
+
+            if (skeletons != null)
+            {
+                //Find the closest skeleton
+                for (int i = 0; i < skeletons.Length; i++)
+                {
+                    if (skeletons[i].TrackingState == SkeletonTrackingState.Tracked)
+                    {
+                        if (skeleton == null)
+                        {
+                            skeleton = skeletons[i];
+                        }
+                        else
+                        {
+                            if (skeleton.Position.Z > skeletons[i].Position.Z)
+                            {
+                                skeleton = skeletons[i];
+                            }
+                        }
+                    }
+                }
+            }
+
+            return skeleton;
+        }
         private void SkeletonsReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
@@ -265,7 +297,10 @@ namespace BubblesGame
 
                     //foreach (Skeleton skeleton in skeletonData)
                     //{
-                        if (SkeletonTrackingState.Tracked == skeletonData[0].TrackingState)
+                    Skeleton skeleton = GetPrimarySkeleton(skeletonData);
+                    if (skeleton!=null)
+                    {
+                        if (SkeletonTrackingState.Tracked == skeleton.TrackingState)
                         {
                             Player player;
                             if (players.ContainsKey(skeletonSlot))
@@ -282,50 +317,53 @@ namespace BubblesGame
                             player.LastUpdated = DateTime.Now;
 
                             // Update player's bone and joint positions
-                            if (skeletonData[0].Joints.Count > 0)
+                            if (skeleton.Joints.Count > 0)
                             {
                                 player.IsAlive = true;
 
                                 // Head, hands, feet (hit testing happens in order here)
-                                player.UpdateJointPosition(skeletonData[0].Joints, JointType.Head);
-                                player.UpdateJointPosition(skeletonData[0].Joints, JointType.HandLeft);
-                                player.UpdateJointPosition(skeletonData[0].Joints, JointType.HandRight);
-                                player.UpdateJointPosition(skeletonData[0].Joints, JointType.FootLeft);
-                                player.UpdateJointPosition(skeletonData[0].Joints, JointType.FootRight);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.Head);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.HandLeft);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.HandRight);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.FootLeft);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.FootRight);
 
                                 // Hands and arms
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.HandRight, JointType.WristRight);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.WristRight, JointType.ElbowRight);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.ElbowRight, JointType.ShoulderRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HandRight, JointType.WristRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.WristRight, JointType.ElbowRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ElbowRight, JointType.ShoulderRight);
 
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.HandLeft, JointType.WristLeft);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.WristLeft, JointType.ElbowLeft);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.ElbowLeft, JointType.ShoulderLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HandLeft, JointType.WristLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.WristLeft, JointType.ElbowLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ElbowLeft, JointType.ShoulderLeft);
 
                                 // Head and Shoulders
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.ShoulderCenter, JointType.Head);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.ShoulderLeft, JointType.ShoulderCenter);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.ShoulderCenter, JointType.ShoulderRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ShoulderCenter, JointType.Head);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ShoulderLeft,
+                                    JointType.ShoulderCenter);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ShoulderCenter,
+                                    JointType.ShoulderRight);
 
                                 // Legs
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.HipLeft, JointType.KneeLeft);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.KneeLeft, JointType.AnkleLeft);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.AnkleLeft, JointType.FootLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft);
 
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.HipRight, JointType.KneeRight);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.KneeRight, JointType.AnkleRight);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.AnkleRight, JointType.FootRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipRight, JointType.KneeRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.AnkleRight, JointType.FootRight);
 
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.HipLeft, JointType.HipCenter);
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.HipCenter, JointType.HipRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipLeft, JointType.HipCenter);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipCenter, JointType.HipRight);
 
                                 // Spine
-                                player.UpdateBonePosition(skeletonData[0].Joints, JointType.HipCenter, JointType.ShoulderCenter);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipCenter, JointType.ShoulderCenter);
                             }
-                        //}
+                        }
 
                         skeletonSlot++;
                     }
+                    //}
                 }
             }
         }
