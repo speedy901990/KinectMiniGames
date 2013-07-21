@@ -181,7 +181,6 @@ namespace BubblesGame
                     Thing thing = _things[i];
                     switch (thing.State)
                     {
-                        //case ThingState.Bouncing:
                         case ThingState.Falling:
                             {
                                 var hitCenter = new Point(0, 0);
@@ -199,34 +198,15 @@ namespace BubblesGame
                                     thing.TimeLastHit = cur;
 
                                     // Bounce off head and hands
-                                    /*if (seg.IsCircle())
-                                    {
-                                        if (fMs > 100.0)
-                                        {
-                                            hit |= HitType.Hand;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (fMs > 100.0)
-                                        {
-                                    */        
-                                    hit |= HitType.Hand;
-                                    //    }
-                                    //}
-                                    if (seg.IsCircle())
+                                    if (seg.IsCircle() && seg.Radius<19)
                                     {
                                         if (thing.State == ThingState.Falling)
                                         {
                                             thing.State = ThingState.Bouncing;
-                                            //thing.Hotness = 1;
-                                            //thing.FlashCount = 0;
                                             hit |= HitType.Popped;
                                         }
                                      }
                                     _things[i] = thing;
-
-                                    //hit |= HitType.Popped;
                                 }
                             }
 

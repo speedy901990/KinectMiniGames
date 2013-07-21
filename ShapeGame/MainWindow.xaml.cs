@@ -52,7 +52,7 @@ namespace BubblesGame
         private const double MinFramerate = 15;
         private const double MinShapeSize = 12;
         private const double MaxShapeSize = 90;
-        private const double DefaultDropRate = 7;
+        private const double DefaultDropRate = 1;
         private const double DefaultDropSize = 64.0;
         private const double DefaultDropGravity = 1.0;
 
