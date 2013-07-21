@@ -210,7 +210,8 @@ namespace BubblesGame
                                     {
                                         if (fMs > 100.0)
                                         {
-                                    */        hit |= HitType.Hand;
+                                    */        
+                                    hit |= HitType.Hand;
                                     //    }
                                     //}
                                     if (seg.IsCircle())
