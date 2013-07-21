@@ -5,13 +5,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectMiniGames", "KinectMi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplesGame", "ApplesGame\ApplesGame.csproj", "{AA1F470E-60F4-4DAF-89E9-DCB1794D26BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubblesGame2", "BubblesGame\BubblesGame2.csproj", "{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubblesGame2", "BubblesGame2\BubblesGame2.csproj", "{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Kinect.Toolkit", "Microsoft.Kinect.Toolkit\Microsoft.Kinect.Toolkit.csproj", "{C6F9C31B-6130-4443-A5CC-EF0664552ECD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Kinect.Toolkit.Controls", "Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj", "{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubblesGame", "ShapeGame\BubblesGame.csproj", "{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubblesGame", "BubblesGame\BubblesGame.csproj", "{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Samples.Kinect.WpfViewers", "KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj", "{4DE23893-27E7-423F-9BB6-BA21DAC2C45E}"
 EndProject

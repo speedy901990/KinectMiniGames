@@ -1,119 +1,261 @@
-﻿using System;
-using System.IO;
-using System.Windows.Controls;
+﻿//------------------------------------------------------------------------------
+// <copyright file="MainWindow.xaml.cs" company="Microsoft">
+//     Copyright (c) Microsoft Corporation.  All rights reserved.
+// </copyright>
+//------------------------------------------------------------------------------
+
+// This module contains code to do Kinect NUI initialization,
+// processing, displaying players on screen, and sending updated player
+// positions to the game portion for hit testing.
+
+using System.Security.Cryptography;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Coding4Fun.Kinect.Wpf.Controls;
-using KinectBookSkeleton;
-using Microsoft.Kinect;
-using System.Linq;
-using System.Windows;
+using BubblesGame.Properties;
 
 namespace BubblesGame
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Media;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Threading;
+    using Microsoft.Kinect;
+    using Microsoft.Kinect.Toolkit;
+    using Microsoft.Samples.Kinect.WpfViewers;
+    using Speech;
+    using Utils;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
-        #region Member Variables
-        private KinectSensor _KinectDevice;
-        private DotPuzzle _Puzzle;
-        private int _PuzzleDotIndex;
-        private Skeleton[] _FrameSkeletons;
-        #endregion Member Variables
+        public static readonly DependencyProperty KinectSensorManagerProperty =
+            DependencyProperty.Register(
+                "KinectSensorManager",
+                typeof(KinectSensorManager),
+                typeof(MainWindow),
+                new PropertyMetadata(null));
 
+        #region Private State
+        private const int TimerResolution = 2;  // ms
+        private const int NumIntraFrames = 3;
+        private const int MaxShapes = 80;
+        private const double MaxFramerate = 70;
+        private const double MinFramerate = 15;
+        private const double MinShapeSize = 12;
+        private const double MaxShapeSize = 90;
+        private const double DefaultDropRate = 1;
+        private const double DefaultDropSize = 64.0;
+        private const double DefaultDropGravity = 1.0;
 
-        #region Constructor
+        private readonly Dictionary<int, Player> players = new Dictionary<int, Player>();
+        private readonly SoundPlayer popSound = new SoundPlayer();
+        private readonly SoundPlayer hitSound = new SoundPlayer();
+        private readonly SoundPlayer squeezeSound = new SoundPlayer();
+        private readonly KinectSensorChooser sensorChooser = new KinectSensorChooser();
+
+        private double dropRate = DefaultDropRate;
+        private double dropSize = DefaultDropSize;
+        private double dropGravity = DefaultDropGravity;
+        private DateTime lastFrameDrawn = DateTime.MinValue;
+        private DateTime predNextFrame = DateTime.MinValue;
+        private double actualFrameTime;
+
+        private Skeleton[] skeletonData;
+
+        // Player(s) placement in scene (z collapsed):
+        private Rect playerBounds;
+        private Rect screenRect;
+
+        private double targetFramerate = MaxFramerate;
+        private int frameCount;
+        private bool runningGameThread;
+        private FallingThings myFallingThings;
+        
+//        private SpeechRecognizer mySpeechRecognizer;
+        #endregion Private State
+
+        #region ctor + Window Events
+
         public MainWindow()
         {
+            KinectSensorManager = new KinectSensorManager();
+            KinectSensorManager.KinectSensorChanged += KinectSensorChanged;
+            DataContext = KinectSensorManager;
+
             InitializeComponent();
 
-            this._Puzzle = new DotPuzzle();
-            this._Puzzle.Dots.Add(new Point(200, 300));
-            this._Puzzle.Dots.Add(new Point(1600, 300));
-            this._Puzzle.Dots.Add(new Point(1650, 400));
-            this._Puzzle.Dots.Add(new Point(1600, 500));
-            this._Puzzle.Dots.Add(new Point(1000, 500));
-            this._Puzzle.Dots.Add(new Point(1000, 600));
-            this._Puzzle.Dots.Add(new Point(1200, 700));
-            this._Puzzle.Dots.Add(new Point(1150, 800));
-            this._Puzzle.Dots.Add(new Point(750, 800));
-            this._Puzzle.Dots.Add(new Point(700, 700));
-            this._Puzzle.Dots.Add(new Point(900, 600));
-            this._Puzzle.Dots.Add(new Point(900, 500));
-            this._Puzzle.Dots.Add(new Point(200, 500));
-            this._Puzzle.Dots.Add(new Point(150, 400));
+            SensorChooserUI.KinectSensorChooser = sensorChooser;
+            sensorChooser.Start();
 
-            this._PuzzleDotIndex = -1;
+            // Bind the KinectSensor from the sensorChooser to the KinectSensor on the KinectSensorManager
+            var kinectSensorBinding = new Binding("Kinect") { Source = sensorChooser };
+            BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
 
-            this.Loaded += (s, e) =>
-            {
-                KinectSensor.KinectSensors.StatusChanged += KinectSensors_StatusChanged;
-                this.KinectDevice = KinectSensor.KinectSensors.FirstOrDefault(x => x.Status == KinectStatus.Connected);
-
-                DrawPuzzle(this._Puzzle);
-            };
+            RestoreWindowState();
         }
-        #endregion Constructor
 
-
-        #region Methods
-        private void KinectSensors_StatusChanged(object sender, StatusChangedEventArgs e)
+        public KinectSensorManager KinectSensorManager
         {
-            switch (e.Status)
+            get { return (KinectSensorManager)GetValue(KinectSensorManagerProperty); }
+            set { SetValue(KinectSensorManagerProperty, value); }
+        }
+
+        // Since the timer resolution defaults to about 10ms precisely, we need to
+        // increase the resolution to get framerates above between 50fps with any
+        // consistency.
+        [DllImport("Winmm.dll", EntryPoint = "timeBeginPeriod")]
+        private static extern int TimeBeginPeriod(uint period);
+
+        private void RestoreWindowState()
+        {
+            // Restore window state to that last used
+            Rect bounds = Settings.Default.PrevWinPosition;
+            if (bounds.Right != bounds.Left)
             {
-                case KinectStatus.Initializing:
-                case KinectStatus.Connected:
-                case KinectStatus.NotPowered:
-                case KinectStatus.NotReady:
-                case KinectStatus.DeviceNotGenuine:
-                    this.KinectDevice = e.Sensor;
-                    break;
-                case KinectStatus.Disconnected:
-                    //TODO: Give the user feedback to plug-in a Kinect device.                    
-                    this.KinectDevice = null;
-                    break;
-                default:
-                    //TODO: Show an error state
-                    break;
+                Top = bounds.Top;
+                Left = bounds.Left;
+                Height = bounds.Height;
+                Width = bounds.Width;
+            }
+
+            WindowState = (WindowState)Settings.Default.WindowState;
+        }
+
+        private void WindowLoaded(object sender, EventArgs e)
+        {
+            playfield.ClipToBounds = true;
+
+            myFallingThings = new FallingThings(MaxShapes, targetFramerate, NumIntraFrames);
+
+            UpdatePlayfieldSize();
+
+            myFallingThings.SetGravity(dropGravity);
+            myFallingThings.SetDropRate(dropRate);
+            myFallingThings.SetSize(dropSize);
+            myFallingThings.SetPolies(PolyType.Circle);
+            
+            popSound.Stream = Properties.Resources.Pop_5;
+            hitSound.Stream = Properties.Resources.Hit_2;
+            squeezeSound.Stream = Properties.Resources.Squeeze;
+
+            popSound.Play();
+
+            TimeBeginPeriod(TimerResolution);
+            var myGameThread = new Thread(GameThread);
+            myGameThread.SetApartmentState(ApartmentState.STA);
+            myGameThread.Start();
+
+      }
+
+        private void WindowClosing(object sender, CancelEventArgs e)
+        {
+            sensorChooser.Stop();
+
+            runningGameThread = false;
+            Settings.Default.PrevWinPosition = RestoreBounds;
+            Settings.Default.WindowState = (int)WindowState;
+            Settings.Default.Save();
+        }
+
+        private void WindowClosed(object sender, EventArgs e)
+        {
+            KinectSensorManager.KinectSensor = null;
+        }
+
+        #endregion ctor + Window Events
+
+        #region Kinect discovery + setup
+
+        private void KinectSensorChanged(object sender, KinectSensorManagerEventArgs<KinectSensor> args)
+        {
+            if (null != args.OldValue)
+            {
+                UninitializeKinectServices(args.OldValue);
+            }
+
+            // Only enable this checkbox if we have a sensor
+            //enableAec.IsEnabled = null != args.NewValue;
+
+            if (null != args.NewValue)
+            {
+                InitializeKinectServices(KinectSensorManager, args.NewValue);
             }
         }
 
-        // Listing 4-5
-        private void KinectDevice_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
+        // Kinect enabled apps should customize which Kinect services it initializes here.
+        private void InitializeKinectServices(KinectSensorManager kinectSensorManager, KinectSensor sensor)
         {
-            using (SkeletonFrame frame = e.OpenSkeletonFrame())
+            // Application should enable all streams first.
+            kinectSensorManager.ColorFormat = ColorImageFormat.RgbResolution640x480Fps30;
+            kinectSensorManager.ColorStreamEnabled = true;
+
+            sensor.SkeletonFrameReady += SkeletonsReady;
+            kinectSensorManager.TransformSmoothParameters = new TransformSmoothParameters
+                                             {
+                                                 Smoothing = 0.5f,
+                                                 Correction = 0.5f,
+                                                 Prediction = 0.5f,
+                                                 JitterRadius = 0.05f,
+                                                 MaxDeviationRadius = 0.04f
+                                             };
+            kinectSensorManager.SkeletonStreamEnabled = true;
+            kinectSensorManager.KinectSensorEnabled = true;
+
+/*
+            if (!kinectSensorManager.KinectSensorAppConflict)
             {
-                if (frame != null)
+                // Start speech recognizer after KinectSensor started successfully.
+                mySpeechRecognizer = SpeechRecognizer.Create();
+
+                if (null != mySpeechRecognizer)
                 {
-                    frame.CopySkeletonDataTo(this._FrameSkeletons);
-                    Skeleton skeleton = GetPrimarySkeleton(this._FrameSkeletons);
-
-                    if (skeleton == null)
-                    {
-                        HandCursorElement.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        Joint primaryHand = GetPrimaryHand(skeleton);
-                        TrackHand(primaryHand);
-                        TrackPuzzle(primaryHand.Position);
-                    }
+                    mySpeechRecognizer.SaidSomething += RecognizerSaidSomething;
+                    mySpeechRecognizer.Start(sensor.AudioSource);
                 }
+
+                enableAec.Visibility = Visibility.Visible;
+                UpdateEchoCancellation(enableAec);
             }
+*/
         }
 
+        // Kinect enabled apps should uninitialize all Kinect services that were initialized in InitializeKinectServices() here.
+        private void UninitializeKinectServices(KinectSensor sensor)
+        {
+            sensor.SkeletonFrameReady -= SkeletonsReady;
 
-        // Listing 4-5
+/*
+            if (null != mySpeechRecognizer)
+            {
+                mySpeechRecognizer.Stop();
+                mySpeechRecognizer.SaidSomething -= RecognizerSaidSomething;
+                mySpeechRecognizer.Dispose();
+                mySpeechRecognizer = null;
+            }
+*/
+
+            //enableAec.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion Kinect discovery + setup
+
+        #region Kinect Skeleton processing
         private static Skeleton GetPrimarySkeleton(Skeleton[] skeletons)
         {
             Skeleton skeleton = null;
 
             if (skeletons != null)
             {
-                //Find the closest skeleton       
+                //Find the closest skeleton
                 for (int i = 0; i < skeletons.Length; i++)
                 {
                     if (skeletons[i].TrackingState == SkeletonTrackingState.Tracked)
@@ -135,210 +277,375 @@ namespace BubblesGame
 
             return skeleton;
         }
-
-
-        // Listing 4-6                       
-        private static Joint GetPrimaryHand(Skeleton skeleton)
+        private void SkeletonsReady(object sender, SkeletonFrameReadyEventArgs e)
         {
-            Joint primaryHand = new Joint();
-
-            if (skeleton != null)
+            using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
             {
-                primaryHand = skeleton.Joints[JointType.HandLeft];
-                Joint righHand = skeleton.Joints[JointType.HandRight];
-
-
-                if (righHand.TrackingState != JointTrackingState.NotTracked)
+                if (skeletonFrame != null)
                 {
-                    if (primaryHand.TrackingState == JointTrackingState.NotTracked)
+                    int skeletonSlot = 0;
+
+                    if ((skeletonData == null) || (skeletonData.Length != skeletonFrame.SkeletonArrayLength))
                     {
-                        primaryHand = righHand;
+                        skeletonData = new Skeleton[skeletonFrame.SkeletonArrayLength];
                     }
-                    else
+
+                    skeletonFrame.CopySkeletonDataTo(skeletonData);
+
+                    //foreach (Skeleton skeleton in skeletonData)
+                    //{
+                    Skeleton skeleton = GetPrimarySkeleton(skeletonData);
+                    if (skeleton!=null)
                     {
-                        if (primaryHand.Position.Z > righHand.Position.Z)
+                        if (SkeletonTrackingState.Tracked == skeleton.TrackingState)
                         {
-                            primaryHand = righHand;
+                            Player player;
+                            if (players.ContainsKey(skeletonSlot))
+                            {
+                                player = players[skeletonSlot];
+                            }
+                            else
+                            {
+                                player = new Player(skeletonSlot);
+                                player.SetBounds(playerBounds);
+                                players.Add(skeletonSlot, player);
+                            }
+
+                            player.LastUpdated = DateTime.Now;
+
+                            // Update player's bone and joint positions
+                            if (skeleton.Joints.Count > 0)
+                            {
+                                player.IsAlive = true;
+
+                                // Head, hands, feet (hit testing happens in order here)
+                                player.UpdateJointPosition(skeleton.Joints, JointType.Head);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.HandLeft);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.HandRight);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.FootLeft);
+                                player.UpdateJointPosition(skeleton.Joints, JointType.FootRight);
+
+                                // Hands and arms
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HandRight, JointType.WristRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.WristRight, JointType.ElbowRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ElbowRight, JointType.ShoulderRight);
+
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HandLeft, JointType.WristLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.WristLeft, JointType.ElbowLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ElbowLeft, JointType.ShoulderLeft);
+
+                                // Head and Shoulders
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ShoulderCenter, JointType.Head);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ShoulderLeft,
+                                    JointType.ShoulderCenter);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.ShoulderCenter,
+                                    JointType.ShoulderRight);
+
+                                // Legs
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipLeft, JointType.KneeLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.KneeLeft, JointType.AnkleLeft);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.AnkleLeft, JointType.FootLeft);
+
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipRight, JointType.KneeRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.KneeRight, JointType.AnkleRight);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.AnkleRight, JointType.FootRight);
+
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipLeft, JointType.HipCenter);
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipCenter, JointType.HipRight);
+
+                                // Spine
+                                player.UpdateBonePosition(skeleton.Joints, JointType.HipCenter, JointType.ShoulderCenter);
+                            }
                         }
+
+                        skeletonSlot++;
                     }
+                    //}
+                }
+            }
+        }
+
+    /*    private void CheckPlayers()
+        {
+            foreach (var player in players)
+            {
+                if (!player.Value.IsAlive)
+                {
+                    // Player left scene since we aren't tracking it anymore, so remove from dictionary
+                    players.Remove(player.Value.GetId());
+                    break;
                 }
             }
 
-            return primaryHand;
+            // Count alive players
+            int alive = players.Count(player => player.Value.IsAlive);
+
+            if (alive != playersAlive)
+            {
+                if (alive == 2)
+                {
+                    myFallingThings.SetGameMode(GameMode.TwoPlayer);
+                }
+                else if (alive == 1)
+                {
+                    myFallingThings.SetGameMode(GameMode.Solo);
+                }
+                else if (alive == 0)
+                {
+                    myFallingThings.SetGameMode(GameMode.Off);
+                }
+
+                if ((playersAlive == 0)) // && (mySpeechRecognizer != null))
+                {
+                    BannerText.NewBanner(
+                        Properties.Resources.Vocabulary,
+                        screenRect,
+                        true,
+                        Color.FromArgb(200, 255, 255, 255));
+                }
+
+                playersAlive = alive;
+            }
+        }
+*/
+        private void PlayfieldSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdatePlayfieldSize();
         }
 
-
-        // Listing 4-7
-        private void TrackHand(Joint hand)
+        private void UpdatePlayfieldSize()
         {
-            if (hand.TrackingState == JointTrackingState.NotTracked)
+            // Size of player wrt size of playfield, putting ourselves low on the screen.
+            screenRect.X = 0;
+            screenRect.Y = 0;
+            screenRect.Width = playfield.ActualWidth;
+            screenRect.Height = playfield.ActualHeight;
+
+            //BannerText.UpdateBounds(screenRect);
+
+            playerBounds.X = 0;
+            playerBounds.Width = playfield.ActualWidth;
+            playerBounds.Y = playfield.ActualHeight * 0.2;
+            playerBounds.Height = playfield.ActualHeight * 0.75;
+
+            foreach (var player in players)
             {
-                HandCursorElement.Visibility = Visibility.Collapsed;
+                player.Value.SetBounds(playerBounds);
             }
-            else
+
+            Rect fallingBounds = playerBounds;
+            fallingBounds.Y = 0;
+            fallingBounds.Height = playfield.ActualHeight;
+            if (myFallingThings != null)
             {
-                HandCursorElement.Visibility = Visibility.Visible;
+                myFallingThings.SetBoundaries(fallingBounds);
+            }
+        }
+        #endregion Kinect Skeleton processing
 
+        #region GameTimer/Thread
+        private void GameThread()
+        {
+            runningGameThread = true;
+            predNextFrame = DateTime.Now;
+            actualFrameTime = 1000.0 / targetFramerate;
 
-                DepthImagePoint point = this._KinectDevice.MapSkeletonPointToDepth(hand.Position, this._KinectDevice.DepthStream.Format);
-                point.X = (int)((point.X * LayoutRoot.ActualWidth / _KinectDevice.DepthStream.FrameWidth) - (HandCursorElement.ActualWidth / 2.0));
-                point.Y = (int)((point.Y * LayoutRoot.ActualHeight / _KinectDevice.DepthStream.FrameHeight) - (HandCursorElement.ActualHeight / 2.0));
-
-                Canvas.SetLeft(HandCursorElement, point.X);
-                Canvas.SetTop(HandCursorElement, point.Y);
-
-                if (hand.JointType == JointType.HandRight)
+            // Try to dispatch at as constant of a framerate as possible by sleeping just enough since
+            // the last time we dispatched.
+            while (runningGameThread)
+            {
+                // Calculate average framerate.  
+                DateTime now = DateTime.Now;
+                if (lastFrameDrawn == DateTime.MinValue)
                 {
-                    HandCursorScale.ScaleX = 1;
+                    lastFrameDrawn = now;
+                }
+
+                double ms = now.Subtract(lastFrameDrawn).TotalMilliseconds;
+                actualFrameTime = (actualFrameTime * 0.95) + (0.05 * ms);
+                lastFrameDrawn = now;
+
+                // Adjust target framerate down if we're not achieving that rate
+                frameCount++;
+                if ((frameCount % 100 == 0) && (1000.0 / actualFrameTime < targetFramerate * 0.92))
+                {
+                    targetFramerate = Math.Max(MinFramerate, (targetFramerate + (1000.0 / actualFrameTime)) / 2);
+                }
+
+                if (now > predNextFrame)
+                {
+                    predNextFrame = now;
                 }
                 else
                 {
-                    HandCursorScale.ScaleX = -1;
+                    double milliseconds = predNextFrame.Subtract(now).TotalMilliseconds;
+                    if (milliseconds >= TimerResolution)
+                    {
+                        Thread.Sleep((int)(milliseconds + 0.5));
+                    }
                 }
+
+                predNextFrame += TimeSpan.FromMilliseconds(1000.0 / targetFramerate);
+
+                Dispatcher.Invoke(DispatcherPriority.Send, new Action<int>(HandleGameTimer), 0);
             }
         }
 
-
-        // Listing 4-10 
-        private void DrawPuzzle(DotPuzzle puzzle)
+        private void HandleGameTimer(int param)
         {
-            PuzzleBoardElement.Children.Clear();
-
-            if (puzzle != null)
+            // Every so often, notify what our actual framerate is
+            if ((frameCount % 100) == 0)
             {
-                for (int i = 0; i < puzzle.Dots.Count; i++)
-                {
-                    Grid dotContainer = new Grid();
-                    dotContainer.Width = 50;
-                    dotContainer.Height = 50;
-                    dotContainer.Children.Add(new Ellipse { Fill = Brushes.Gray });
-
-                    TextBlock dotLabel = new TextBlock();
-                    dotLabel.Text = (i + 1).ToString();
-                    dotLabel.Foreground = Brushes.White;
-                    dotLabel.FontSize = 24;
-                    dotLabel.HorizontalAlignment = HorizontalAlignment.Center;
-                    dotLabel.VerticalAlignment = VerticalAlignment.Center;
-                    dotContainer.Children.Add(dotLabel);
-
-                    //Position the UI element centered on the dot point
-                    Canvas.SetTop(dotContainer, puzzle.Dots[i].Y - (dotContainer.Height / 2));
-                    Canvas.SetLeft(dotContainer, puzzle.Dots[i].X - (dotContainer.Width / 2));
-                    PuzzleBoardElement.Children.Add(dotContainer);
-                }
+                myFallingThings.SetFramerate(1000.0 / actualFrameTime);
             }
+
+            // Advance animations, and do hit testing.
+            for (int i = 0; i < NumIntraFrames; ++i)
+            {
+                foreach (var pair in players)
+                {
+                    HitType hit = myFallingThings.LookForHits(pair.Value.Segments, pair.Value.GetId());
+                    if ((hit & HitType.Squeezed) != 0)
+                    {
+                        squeezeSound.Play();
+                    }
+                    else if ((hit & HitType.Popped) != 0)
+                    {
+                        popSound.Play();
+                    }
+                    else if ((hit & HitType.Hand) != 0)
+                    {
+                        hitSound.Play();
+                    }
+                }
+
+                myFallingThings.AdvanceFrame();
+            }
+
+            // Draw new Wpf scene by adding all objects to canvas
+            playfield.Children.Clear();
+            myFallingThings.DrawFrame(playfield.Children);
+            /*foreach (var player in players)
+            {
+                player.Value.Draw(playfield.Children);
+            }*/
+            if (players.FirstOrDefault().Value != null)
+                players.FirstOrDefault().Value.Draw(playfield.Children);
+            //BannerText.Draw(playfield.Children);
+            //FlyingText.Draw(playfield.Children);
+
+            //CheckPlayers();
         }
-
-
-        // Listing 4-11
-        private void TrackPuzzle(SkeletonPoint position)
+        #endregion GameTimer/Thread
+        
+        #region Kinect Speech processing
+      /*  private void RecognizerSaidSomething(object sender, SpeechRecognizer.SaidSomethingEventArgs e)
         {
-            if (this._PuzzleDotIndex == this._Puzzle.Dots.Count)
+            FlyingText.NewFlyingText(screenRect.Width / 30, new Point(screenRect.Width / 2, screenRect.Height / 2), e.Matched);
+            switch (e.Verb)
             {
-                //Do nothing - Game is over
-            }
-            else
-            {
-                Point dot;
-
-                if (this._PuzzleDotIndex + 1 < this._Puzzle.Dots.Count)
-                {
-                    dot = this._Puzzle.Dots[this._PuzzleDotIndex + 1];
-                }
-                else
-                {
-                    dot = this._Puzzle.Dots[0];
-                }
-
-
-                DepthImagePoint point = this._KinectDevice.MapSkeletonPointToDepth(position, _KinectDevice.DepthStream.Format);
-                point.X = (int)(point.X * LayoutRoot.ActualWidth / _KinectDevice.DepthStream.FrameWidth);
-                point.Y = (int)(point.Y * LayoutRoot.ActualHeight / _KinectDevice.DepthStream.FrameHeight);
-                Point handPoint = new Point(point.X, point.Y);
-
-
-                Point dotDiff = new Point(dot.X - handPoint.X, dot.Y - handPoint.Y);
-                double length = Math.Sqrt(dotDiff.X * dotDiff.X + dotDiff.Y * dotDiff.Y);
-
-                int lastPoint = this.CrayonElement.Points.Count - 1;
-
-                if (length < 25)
-                {
-                    //Cursor is within the hit zone
-
-                    if (lastPoint > 0)
+                case SpeechRecognizer.Verbs.Pause:
+                    myFallingThings.SetDropRate(0);
+                    myFallingThings.SetGravity(0);
+                    break;
+                case SpeechRecognizer.Verbs.Resume:
+                    myFallingThings.SetDropRate(dropRate);
+                    myFallingThings.SetGravity(dropGravity);
+                    break;
+                case SpeechRecognizer.Verbs.Reset:
+                    dropRate = DefaultDropRate;
+                    dropSize = DefaultDropSize;
+                    dropGravity = DefaultDropGravity;
+                    myFallingThings.SetPolies(PolyType.All);
+                    myFallingThings.SetDropRate(dropRate);
+                    myFallingThings.SetGravity(dropGravity);
+                    myFallingThings.SetSize(dropSize);
+                    myFallingThings.SetShapesColor(Color.FromRgb(0, 0, 0), true);
+                    myFallingThings.Reset();
+                    break;
+                case SpeechRecognizer.Verbs.DoShapes:
+                    myFallingThings.SetPolies(e.Shape);
+                    break;
+                case SpeechRecognizer.Verbs.RandomColors:
+                    myFallingThings.SetShapesColor(Color.FromRgb(0, 0, 0), true);
+                    break;
+                case SpeechRecognizer.Verbs.Colorize:
+                    myFallingThings.SetShapesColor(e.RgbColor, false);
+                    break;
+                case SpeechRecognizer.Verbs.ShapesAndColors:
+                    myFallingThings.SetPolies(e.Shape);
+                    myFallingThings.SetShapesColor(e.RgbColor, false);
+                    break;
+                case SpeechRecognizer.Verbs.More:
+                    dropRate *= 1.5;
+                    myFallingThings.SetDropRate(dropRate);
+                    break;
+                case SpeechRecognizer.Verbs.Fewer:
+                    dropRate /= 1.5;
+                    myFallingThings.SetDropRate(dropRate);
+                    break;
+                case SpeechRecognizer.Verbs.Bigger:
+                    dropSize *= 1.5;
+                    if (dropSize > MaxShapeSize)
                     {
-                        //Remove the working end point
-                        this.CrayonElement.Points.RemoveAt(lastPoint);
+                        dropSize = MaxShapeSize;
                     }
 
-                    //Set line end point
-                    this.CrayonElement.Points.Add(new Point(dot.X, dot.Y));
-
-                    //Set new line start point
-                    this.CrayonElement.Points.Add(new Point(dot.X, dot.Y));
-
-                    //Move to the next dot 
-                    this._PuzzleDotIndex++;
-
-                    if (this._PuzzleDotIndex == this._Puzzle.Dots.Count)
+                    myFallingThings.SetSize(dropSize);
+                    break;
+                case SpeechRecognizer.Verbs.Biggest:
+                    dropSize = MaxShapeSize;
+                    myFallingThings.SetSize(dropSize);
+                    break;
+                case SpeechRecognizer.Verbs.Smaller:
+                    dropSize /= 1.5;
+                    if (dropSize < MinShapeSize)
                     {
-                        //Notify the user that the game is over
+                        dropSize = MinShapeSize;
                     }
-                }
-                else
-                {
-                    if (lastPoint > 0)
+
+                    myFallingThings.SetSize(dropSize);
+                    break;
+                case SpeechRecognizer.Verbs.Smallest:
+                    dropSize = MinShapeSize;
+                    myFallingThings.SetSize(dropSize);
+                    break;
+                case SpeechRecognizer.Verbs.Faster:
+                    dropGravity *= 1.25;
+                    if (dropGravity > 4.0)
                     {
-                        //To refresh the Polyline visual you must remove the last point, update and add it back                     
-                        Point lineEndpoint = this.CrayonElement.Points[lastPoint];
-                        this.CrayonElement.Points.RemoveAt(lastPoint);
-                        lineEndpoint.X = handPoint.X;
-                        lineEndpoint.Y = handPoint.Y;
-                        this.CrayonElement.Points.Add(lineEndpoint);
+                        dropGravity = 4.0;
                     }
-                }
+
+                    myFallingThings.SetGravity(dropGravity);
+                    break;
+                case SpeechRecognizer.Verbs.Slower:
+                    dropGravity /= 1.25;
+                    if (dropGravity < 0.25)
+                    {
+                        dropGravity = 0.25;
+                    }
+
+                    myFallingThings.SetGravity(dropGravity);
+                    break;
             }
         }
-        #endregion Methods
-
-
-        #region Properties
-        public KinectSensor KinectDevice
+*/
+/*
+        private void EnableAecChecked(object sender, RoutedEventArgs e)
         {
-            get { return this._KinectDevice; }
-            set
-            {
-                if (this._KinectDevice != value)
-                {
-                    //Uninitialize
-                    if (this._KinectDevice != null)
-                    {
-                        this._KinectDevice.Stop();
-                        this._KinectDevice.SkeletonFrameReady -= KinectDevice_SkeletonFrameReady;
-                        this._KinectDevice.SkeletonStream.Disable();
-                        SkeletonViewerElement.KinectDevice = null;
-                        this._FrameSkeletons = null;
-                    }
-
-                    this._KinectDevice = value;
-
-                    //Initialize
-                    if (this._KinectDevice != null)
-                    {
-                        if (this._KinectDevice.Status == KinectStatus.Connected)
-                        {
-                            this._KinectDevice.SkeletonStream.Enable();
-                            this._FrameSkeletons = new Skeleton[this._KinectDevice.SkeletonStream.FrameSkeletonArrayLength];
-                            this._KinectDevice.Start();
-
-                            SkeletonViewerElement.KinectDevice = this.KinectDevice;
-                            this.KinectDevice.SkeletonFrameReady += KinectDevice_SkeletonFrameReady;
-                        }
-                    }
-                }
-            }
+            var enableAecCheckBox = (CheckBox)sender;
+            UpdateEchoCancellation(enableAecCheckBox);
         }
-        #endregion Properties
+*/
+
+        /*private void UpdateEchoCancellation(CheckBox aecCheckBox)
+        {
+            mySpeechRecognizer.EchoCancellationMode = aecCheckBox.IsChecked != null && aecCheckBox.IsChecked.Value
+                ? EchoCancellationMode.CancellationAndSuppression
+                : EchoCancellationMode.None;
+        }
+*/
+        #endregion Kinect Speech processing
     }
 }
