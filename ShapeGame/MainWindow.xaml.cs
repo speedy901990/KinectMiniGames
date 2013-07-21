@@ -138,9 +138,6 @@ namespace BubblesGame
 
             UpdatePlayfieldSize();
 
-            var rand = new Random();
-            dropSize = rand.Next(10, 65);
-
             myFallingThings.SetGravity(dropGravity);
             myFallingThings.SetDropRate(dropRate);
             myFallingThings.SetSize(dropSize);
