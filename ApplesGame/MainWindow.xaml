@@ -1,8 +1,33 @@
 ﻿<Window x:Class="ApplesGame.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        xmlns:k="http://schemas.microsoft.com/kinect/2013"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="ApplesGame"
+        Name="ApplesGame"
+        Closing="WindowClosing"
+        mc:Ignorable="d"
+        d:DesignWidth="1200"
+        d:DesignHeight="700"
+        MinWidth="500"
+        MinHeight="700"
+        FontFamily="Segoe UI"
+        >
+    <Viewbox>
+        <Grid x:Name="LayoutRoot" Width="1920" Height="1200">
+            <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUI" />
+            <k:KinectRegion Grid.Row="0" x:Name="kinectRegion" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}">
+                <Grid x:Name="kinectRegionGrid" Margin="10,20,10,20">
+                      <WrapPanel VerticalAlignment="Center" x:Name="wrapPanel" Orientation="Horizontal"  HorizontalAlignment="Center" Height="400" Margin="0,0,0,0" Width="540">
+                        <!-- items for design layout.  They will be replaced at runtime. -->
+                        <k:KinectTileButton Label="Press me!" Click="ButtonOnClick"></k:KinectTileButton>
+                        <k:KinectCircleButton Label="Circle" HorizontalAlignment="Right" Height="200" Click="ButtonOnClick">Hi</k:KinectCircleButton>
+
+                    </WrapPanel>
+                </Grid>
+            </k:KinectRegion>
+            
+        </Grid>
+    </Viewbox>
 </Window>
