@@ -24,9 +24,8 @@ namespace ApplesGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        //ilosc jablek na ekranie
         public int applesCount = 1;
-
+        
         private KinectSensorChooser sensorChooser;
 
         public MainWindow()
@@ -40,11 +39,11 @@ namespace ApplesGame
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
             this.sensorChooserUI.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
-            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };// jeśli Kinect jest pod Xbox to potrzebne te dwie linijki (1)
-            BindingOperations.SetBinding(this.kinectRegion, Microsoft.Kinect.Toolkit.Controls.KinectRegion.KinectSensorProperty, regionSensorBinding);// inaczej nie wykrywa ruchu  (2)
+            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
+            BindingOperations.SetBinding(this.kinectRegion, Microsoft.Kinect.Toolkit.Controls.KinectRegion.KinectSensorProperty, regionSensorBinding);
         }
-
-        private void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs args)      // poprawne uruchamianie oraz włączanie głębi i szkieletu w Kinect 
+ 
+        private void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs args)
         {
             bool error = false;
             if (args.OldSensor != null)
@@ -58,8 +57,6 @@ namespace ApplesGame
                 }
                 catch (InvalidOperationException)
                 {
-                    // Kinect moze przejsc w nieprawidlowy stan podczas wlaczania/wylaczania 
-                    // Np. moze byc nagle wylaczony
                     error = true;
                 }
             }
@@ -94,20 +91,12 @@ namespace ApplesGame
 
 
         }
-        /// <summary>
-        /// Execute shutdown tasks
-        /// </summary>
-        /// <param name="sender">object sending the event</param>
-        /// <param name="e">event arguments</param>
+
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.sensorChooser.Stop();
         }
-        /// <summary>
-        /// Handle a button click from the wrap panel.
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="e">Event arguments</param>
+
         private void ButtonOnClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Well done!");
