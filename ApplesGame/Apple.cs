@@ -8,14 +8,10 @@ namespace ApplesGame
 {
     public class Apple
     {
-        //pozycja jablka
         private int posX;
         private int posY;
-
-        //rozmiar
         private int size;
 
-        //konstruktor tworzacy jablko
         public Apple(int xMin, int xMax, int yMin, int yMax)
         {
             System.Random rand = new Random(Seed);
