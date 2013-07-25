@@ -1,6 +1,7 @@
 ﻿using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit.Controls;
 using Microsoft.Kinect.Toolkit;
+using Microsoft.Samples.Kinect.WpfViewers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +29,18 @@ namespace ApplesGame
         
         private KinectSensorChooser sensorChooser;
 
+        public static readonly DependencyProperty KinectSensorManagerProperty =
+            DependencyProperty.Register(
+                "KinectSensorManager",
+                typeof(KinectSensorManager),
+                typeof(MainWindow),
+                new PropertyMetadata(null));
+
         public MainWindow()
         {
             InitializeComponent();
             Loaded += OnLoaded;
+            
         }
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -42,7 +51,8 @@ namespace ApplesGame
             var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
             BindingOperations.SetBinding(this.kinectRegion, Microsoft.Kinect.Toolkit.Controls.KinectRegion.KinectSensorProperty, regionSensorBinding);
         }
- 
+
+        #region Kinect discovery + setup
         private void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs args)
         {
             bool error = false;
@@ -85,21 +95,27 @@ namespace ApplesGame
                 catch (InvalidOperationException)
                 {
                     error = true;
-
                 }
             }
-
-
         }
 
+        public KinectSensorManager KinectSensorManager
+        {
+            get { return (KinectSensorManager)GetValue(KinectSensorManagerProperty); }
+            set { SetValue(KinectSensorManagerProperty, value); }
+        }
+        #endregion Kinect discovery + setup
+
+        #region Closing window 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.sensorChooser.Stop();
         }
-
-        private void ButtonOnClick(object sender, RoutedEventArgs e)
+        
+        private void WindowClosed(object sender, EventArgs e)
         {
-            MessageBox.Show("Well done!");
+            KinectSensorManager.KinectSensor = null;
         }
+        #endregion
     }
 }
