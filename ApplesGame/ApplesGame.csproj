@@ -106,6 +106,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
+      <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>
+      <Name>Microsoft.Samples.Kinect.WpfViewers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
