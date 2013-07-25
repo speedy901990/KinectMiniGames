@@ -30,9 +30,6 @@
                         </Canvas.Background>
                         <k:KinectUserViewer HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="200" Margin="0,50,50,0"/>
                         <Canvas x:Name="Tree" Background="Green" Width="800" Height="600" Margin="550,100,0,0">
-                            <Ellipse Canvas.Left="100" Canvas.Top="100" Width="100" Height="100" Fill="Red"/>
-                            
-
                         </Canvas>
                     </Canvas>
                 </Grid>

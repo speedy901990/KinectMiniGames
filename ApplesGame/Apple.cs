@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using System.Windows;
 
 namespace ApplesGame
 {
@@ -13,7 +14,7 @@ namespace ApplesGame
         #region private fields
         
         private int size;
-        private ApplePosition pos;
+        private Point pos;
         private Color color;
 
         private Ellipse shape;
@@ -23,17 +24,18 @@ namespace ApplesGame
         //to generate apples
         public Apple(int xMin, int xMax, int yMin, int yMax)
         {
-            System.Random rand = new Random(Seed);
+            //System.Random rand = new Random(System.DateTime.Now.Millisecond);
+            System.Random rand = new Random(Guid.NewGuid().GetHashCode());
             rand.Next(xMin, xMax);
-            pos = new ApplePosition(rand.Next(xMin, xMax), rand.Next(yMin, yMax));
-            size = rand.Next(50, 75);
-
+            pos.X = rand.Next(xMin, xMax);
+            pos.Y = rand.Next(yMin, yMax);
+            size = rand.Next(40, 60);
             //Creating Ellipse colored with SolidColorBrush
             shape = new Ellipse();
             SolidColorBrush mySolidColorBrush = new SolidColorBrush();
 
             //Coloring (1 - red, 2 - green, 3 - yellow)
-            int colorTemp = rand.Next(1, 3);
+            int colorTemp = rand.Next(1, 4);
             setColor(colorTemp); 
             mySolidColorBrush.Color = getColor();
             shape.Fill = mySolidColorBrush;
@@ -43,9 +45,10 @@ namespace ApplesGame
             // Set the width and height of the Ellipse.
             shape.Width = size;
             shape.Height = size;
-        }
 
-        public int Seed { get; set; }
+            // Set position of shape
+            shape.Margin = new Thickness(pos.X, pos.Y, 0, 0);
+        }
 
         #region getters
         public Ellipse getShape()
@@ -53,7 +56,7 @@ namespace ApplesGame
             return this.shape;
         }
 
-        public ApplePosition getPosition()
+        public Point getPosition()
         {
             return this.pos;
         }
@@ -103,17 +106,5 @@ namespace ApplesGame
         #endregion setters
 
 
-    }
-
-    public class ApplePosition
-    {
-        private int posX;
-        private int posY;
-
-        public ApplePosition(int x, int y)
-        {
-            this.posX = x;
-            this.posY = y;
-        }
     }
 }
