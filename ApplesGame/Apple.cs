@@ -12,10 +12,9 @@ namespace ApplesGame
         
         private int size;
         private ApplePosition pos;
-        private string color;
+        private string  color;
         
         #endregion private fields
-
 
         public Apple(int xMin, int xMax, int yMin, int yMax)
         {
