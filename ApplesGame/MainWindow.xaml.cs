@@ -41,20 +41,8 @@ namespace ApplesGame
             InitializeComponent();
             Loaded += OnLoaded;
 
-
-            //Creating Ellipse colored with SolidColorBrush
-            Ellipse myEllipse = new Ellipse();
-            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-            mySolidColorBrush.Color = Color.FromArgb(255, 255, 255, 0);
-            myEllipse.Fill = mySolidColorBrush;
-            myEllipse.StrokeThickness = 2;
-            myEllipse.Stroke = Brushes.Black;
-
-            // Set the width and height of the Ellipse.
-            myEllipse.Width = 500;
-            myEllipse.Height = 400;
-
-            Tree.Children.Add(myEllipse);
+            Apple myApple = new Apple(50, 750, 50, 550);
+            Tree.Children.Add(myApple.getShape());
 
         }
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
