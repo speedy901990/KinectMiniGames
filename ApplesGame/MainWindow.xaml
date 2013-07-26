@@ -29,7 +29,11 @@
                             </LinearGradientBrush>
                         </Canvas.Background>
                         <k:KinectUserViewer HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="200" Margin="0,50,50,0"/>
-                        <Canvas x:Name="Tree" Background="Green" Width="800" Height="600" Margin="550,100,0,0">
+                        <Canvas x:Name="Tree1" Background="Green" Width="500" Height="600" Margin="20,100,0,0" HorizontalAlignment="Left">
+                        </Canvas>
+                        <Canvas x:Name="Tree2" Background="Green" Width="500" Height="600" Margin="700,100,0,0" HorizontalAlignment="Center">
+                        </Canvas>
+                        <Canvas x:Name="Tree3" Background="Green" Width="500" Height="600" Margin="1400,100,0,0" HorizontalAlignment="Right">
                         </Canvas>
                     </Canvas>
                 </Grid>

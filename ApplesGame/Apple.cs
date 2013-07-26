@@ -14,71 +14,89 @@ namespace ApplesGame
         #region private fields
         
         private int size;
-        private Point pos;
+        private Point pos; 
         private Color color;
-
-        private Ellipse shape;
+        private Ellipse figure;
         #endregion private fields
+
+        #region accessors
+
+        public int Size
+        {
+            get
+            {
+                return this.size;
+            }
+            set
+            {
+                this.size = value;
+            }
+        }
+
+        public Point Pos
+        {
+            get
+            {
+                return this.pos;
+            }
+            set
+            {
+                pos = value;
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return this.color;
+            }
+        }
+
+        public Ellipse Figure
+        {
+            get
+            {
+                return this.figure;
+            }
+            set
+            {
+                this.figure = value;
+            }
+        }
+        #endregion accessors
 
         //Constructor take parameters that describe the range
         //to generate apples
         public Apple(int xMin, int xMax, int yMin, int yMax)
         {
-            //System.Random rand = new Random(System.DateTime.Now.Millisecond);
             System.Random rand = new Random(Guid.NewGuid().GetHashCode());
-            rand.Next(xMin, xMax);
-            pos.X = rand.Next(xMin, xMax);
-            pos.Y = rand.Next(yMin, yMax);
-            size = rand.Next(40, 60);
+            
+            //Setting random position and size of the apple
+            Pos = new Point(rand.Next(xMin, xMax),rand.Next(yMin, yMax));
+            Size = rand.Next(40, 60);
+            
             //Creating Ellipse colored with SolidColorBrush
-            shape = new Ellipse();
+            Figure = new Ellipse();
             SolidColorBrush mySolidColorBrush = new SolidColorBrush();
 
             //Coloring (1 - red, 2 - green, 3 - yellow)
             int colorTemp = rand.Next(1, 4);
             setColor(colorTemp); 
-            mySolidColorBrush.Color = getColor();
-            shape.Fill = mySolidColorBrush;
-            shape.StrokeThickness = 2;
-            shape.Stroke = Brushes.Black;
+            mySolidColorBrush.Color = Color;
+            figure.Fill = mySolidColorBrush;
+            figure.StrokeThickness = 2;
+            figure.Stroke = Brushes.Black;
 
             // Set the width and height of the Ellipse.
-            shape.Width = size;
-            shape.Height = size;
+            figure.Width = Size;
+            figure.Height = Size;
 
-            // Set position of shape
-            shape.Margin = new Thickness(pos.X, pos.Y, 0, 0);
+            // Set position of figure
+            figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
         }
-
-        #region getters
-        public Ellipse getShape()
-        {
-            return this.shape;
-        }
-
-        public Point getPosition()
-        {
-            return this.pos;
-        }
-
-        public int getSize()
-        {
-            return this.size;
-        }
-
-        public Color getColor()
-        {
-            return this.color;
-        }
-        #endregion getters
-
 
         #region setters
-        private void setSize(int sizeParam)
-        {
-            this.size = sizeParam;
-        }
-
         private void setColor(int colourParam)
         {
             switch (colourParam)

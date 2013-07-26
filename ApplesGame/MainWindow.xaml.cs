@@ -25,7 +25,7 @@ namespace ApplesGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int applesCount = 10;
+        public int apllesCount = 30;
         
         private KinectSensorChooser sensorChooser;
 
@@ -41,17 +41,21 @@ namespace ApplesGame
             InitializeComponent();
             Loaded += OnLoaded;
 
-            Apple[] myApple = new Apple[applesCount];
-            for (int i = 0; i < applesCount; i++)
+            Apple[] myApple = new Apple[apllesCount];
+            for (int i = 0; i < apllesCount; i++)
             {
-                myApple[i] = new Apple(50, 750, 50, 550);
-                Tree.Children.Add(myApple[i].getShape());
-            }
-            //Apple myApple = new Apple(70, 730, 70, 530);
-            //Apple myApple2 = new Apple(50, 750, 50, 550);
-            //Tree.Children.Add(myApple.getShape());
-            //Tree.Children.Add(myApple2.getShape());
+                myApple[i] = new Apple(50, 450, 50, 550);
+                Tree1.Children.Add(myApple[i].Figure);
+                i++;
 
+                myApple[i] = new Apple(50, 450, 50, 550);
+                Tree2.Children.Add(myApple[i].Figure);
+                i++;
+
+                myApple[i] = new Apple(50, 450, 50, 550);
+                Tree3.Children.Add(myApple[i].Figure);
+            }
+            
         }
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
