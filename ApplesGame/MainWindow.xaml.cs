@@ -25,7 +25,11 @@ namespace ApplesGame
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int apllesCount = 30;
+        private int windowHeight = 1080;
+        private int windowWidth = 1920;
+
+        private int treesCount = 3;
+        private int apllesOnTree = 10;
         
         private KinectSensorChooser sensorChooser;
 
@@ -41,19 +45,27 @@ namespace ApplesGame
             InitializeComponent();
             Loaded += OnLoaded;
 
-            Apple[] myApple = new Apple[apllesCount];
-            for (int i = 0; i < apllesCount; i++)
+            //generating trees
+            Canvas[] tree = new Canvas[treesCount];
+            Apple[,] myApple = new Apple[treesCount,apllesOnTree];
+            ImageBrush treeBg = new ImageBrush();
+            treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
+            for (int i = 0; i < treesCount; i++)
             {
-                myApple[i] = new Apple(50, 450, 50, 550);
-                Tree1.Children.Add(myApple[i].Figure);
-                i++;
-
-                myApple[i] = new Apple(50, 450, 50, 550);
-                Tree2.Children.Add(myApple[i].Figure);
-                i++;
-
-                myApple[i] = new Apple(50, 450, 50, 550);
-                Tree3.Children.Add(myApple[i].Figure);
+                tree[i] = new Canvas();
+                tree[i].Width = (windowWidth-300)/treesCount;
+                tree[i].Height = 1000;
+                Canvas.SetLeft(tree[i], (i * tree[i].Width + 50));
+                tree[i].Name = "tree" + i;
+                playfield.Children.Add(tree[i]);
+                tree[i].Background = treeBg;
+                for (int j = 0; j < apllesOnTree; j++)
+                {
+                    //add apple (minX,maxX,minY,maxY)
+                    myApple[i,j] = new Apple(50, (int)(tree[i].Width)-80,
+                        80, (int)(tree[i].Height) - 400);
+                    tree[i].Children.Add(myApple[i, j].Figure);
+                }
             }
             
         }

@@ -79,7 +79,7 @@ namespace ApplesGame
             
             //Setting random position and size of the apple
             Pos = new Point(rand.Next(xMin, xMax),rand.Next(yMin, yMax));
-            Size = rand.Next(60, 80);
+            Size = rand.Next(80, 100);
             
             //Creating Ellipse filled with image
             Figure = new Ellipse();
