@@ -13,7 +13,7 @@ namespace KinectMiniGames
     /// </summary>
     public partial class MainWindow
     {
-        public int gamesCount = 4;
+        public int gamesCount = 2;
 
         public static readonly DependencyProperty PageLeftEnabledProperty = DependencyProperty.Register(
             "PageLeftEnabled", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
@@ -42,7 +42,7 @@ namespace KinectMiniGames
 
             // Bind the sensor chooser's current sensor to the KinectRegion
             var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
-            BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
+            BindingOperations.SetBinding(this.kinectRegionGrid, KinectRegion.KinectSensorProperty, regionSensorBinding);
 
             // Clear out placeholder content
             this.wrapPanel.Children.Clear();
@@ -193,6 +193,12 @@ namespace KinectMiniGames
         {
             this.PageLeftEnabled = scrollViewer.HorizontalOffset > ScrollErrorMargin;
             this.PageRightEnabled = scrollViewer.HorizontalOffset < scrollViewer.ScrollableWidth - ScrollErrorMargin;
+        }
+
+        private void key_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Escape)
+                this.Close();
         }
     }
 }
