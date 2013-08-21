@@ -85,7 +85,8 @@ namespace BubblesGame
 
         #region ctor + Window Events
 
-        public MainWindow()
+        //public MainWindow(BubblesGameConfig config)
+        public MainWindow(string config)
         {
             KinectSensorManager = new KinectSensorManager();
             KinectSensorManager.KinectSensorChanged += KinectSensorChanged;
@@ -101,6 +102,8 @@ namespace BubblesGame
             BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
 
             RestoreWindowState();
+
+            MessageBox.Show(config);
         }
 
         public KinectSensorManager KinectSensorManager
