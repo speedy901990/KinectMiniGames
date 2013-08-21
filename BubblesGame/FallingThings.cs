@@ -21,6 +21,8 @@ namespace BubblesGame
     using System.Windows.Shapes;
     using Microsoft.Kinect;
     using Utils;
+    using System.Media;
+    using System.Windows.Media.Imaging;
 
     // FallingThings is the main class to draw and maintain positions of falling shapes.  It also does hit testing
     // and appropriate bouncing.
@@ -309,7 +311,7 @@ namespace BubblesGame
                     tryType = alltypes[_rnd.Next(alltypes.Length)];
                 }
                 while ((_polyTypes & tryType) == 0);
-
+                
                 DropNewThing(tryType, _shapeSize, Color.FromRgb(r, g, b));
             }
         }
@@ -322,6 +324,7 @@ namespace BubblesGame
             for (var i = 0; i < _things.Count; i++)
             {
                 Thing thing = _things[i];
+                
                 if (thing.Brush == null)
                 {
                     thing.Brush = new SolidColorBrush(thing.Color);
@@ -400,15 +403,18 @@ namespace BubblesGame
             double strokeThickness,
             double opacity)
         {
-            
+                ImageBrush myBrush = new ImageBrush();
+                myBrush.ImageSource = new BitmapImage(new Uri("C:/Users/Slawek/Documents/Visual Studio 2012/Projects/KinectMiniGames/Graphics/BubblesGame/bubble.png", UriKind.Relative));
                 var circle = new Ellipse { Width = size * 2, Height = size * 2, Stroke = brushStroke };
+                
                 if (circle.Stroke != null)
                 {
                     circle.Stroke.Opacity = opacity;
                 }
-
+                
                 circle.StrokeThickness = strokeThickness * ((numSides == 1) ? 1 : 2);
-                circle.Fill = (numSides == 1) ? brush : null;
+                //circle.Fill = (numSides == 1) ? brush : null;
+                circle.Fill = myBrush;
                 circle.SetValue(Canvas.LeftProperty, center.X - size);
                 circle.SetValue(Canvas.TopProperty, center.Y - size);
                 return circle;
