@@ -29,7 +29,7 @@ namespace ApplesGame
         private int windowWidth = 1920;
 
         private int treesCount = 3;
-        private int apllesOnTree = 10;
+        private int applesOnTree = 10;
         
         private KinectSensorChooser sensorChooser;
 
@@ -47,7 +47,7 @@ namespace ApplesGame
 
             //generating trees
             Canvas[] tree = new Canvas[treesCount];
-            Apple[,] myApple = new Apple[treesCount,apllesOnTree];
+            Apple[,] myApple = new Apple[treesCount,applesOnTree];
             ImageBrush treeBg = new ImageBrush();
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
             for (int i = 0; i < treesCount; i++)
@@ -59,7 +59,7 @@ namespace ApplesGame
                 tree[i].Name = "tree" + i;
                 playfield.Children.Add(tree[i]);
                 tree[i].Background = treeBg;
-                for (int j = 0; j < apllesOnTree; j++)
+                for (int j = 0; j < applesOnTree; j++)
                 {
                     //add apple (minX,maxX,minY,maxY)
                     myApple[i,j] = new Apple(50, (int)(tree[i].Width)-80,
@@ -69,6 +69,41 @@ namespace ApplesGame
             }
             
         }
+
+        public MainWindow(ApplesGameConfig config)
+        {
+            treesCount = config.TreesCount;
+            applesOnTree = config.ApplesOnTreeCount;
+            this.sensorChooser = sensorChooser;
+
+            InitializeComponent();
+            Loaded += OnLoaded;
+
+            //generating trees
+            Canvas[] tree = new Canvas[treesCount];
+            Apple[,] myApple = new Apple[treesCount, applesOnTree];
+            ImageBrush treeBg = new ImageBrush();
+            treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
+            for (int i = 0; i < treesCount; i++)
+            {
+                tree[i] = new Canvas();
+                tree[i].Width = (windowWidth - 300) / treesCount;
+                tree[i].Height = 1000;
+                Canvas.SetLeft(tree[i], (i * tree[i].Width + 50));
+                tree[i].Name = "tree" + i;
+                playfield.Children.Add(tree[i]);
+                tree[i].Background = treeBg;
+                for (int j = 0; j < applesOnTree; j++)
+                {
+                    //add apple (minX,maxX,minY,maxY)
+                    myApple[i, j] = new Apple(50, (int)(tree[i].Width) - 80,
+                        80, (int)(tree[i].Height) - 400);
+                    tree[i].Children.Add(myApple[i, j].Figure);
+                }
+            }
+
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             this.sensorChooser = new KinectSensorChooser();
@@ -144,5 +179,11 @@ namespace ApplesGame
             KinectSensorManager.KinectSensor = null;
         }
         #endregion
+
+        private void ApplesGame_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Escape)
+                this.Close();
+        }
     }
 }

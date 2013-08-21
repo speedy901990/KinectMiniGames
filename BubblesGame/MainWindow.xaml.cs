@@ -85,8 +85,7 @@ namespace BubblesGame
 
         #region ctor + Window Events
 
-        //public MainWindow(BubblesGameConfig config)
-        public MainWindow(string config)
+        public MainWindow()
         {
             KinectSensorManager = new KinectSensorManager();
             KinectSensorManager.KinectSensorChanged += KinectSensorChanged;
@@ -102,8 +101,24 @@ namespace BubblesGame
             BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
 
             RestoreWindowState();
+        }
 
-            MessageBox.Show(config);
+        public MainWindow(BubblesGameConfig config)
+        {
+            KinectSensorManager = new KinectSensorManager();
+            KinectSensorManager.KinectSensorChanged += KinectSensorChanged;
+            DataContext = KinectSensorManager;
+
+            InitializeComponent();
+
+            SensorChooserUI.KinectSensorChooser = sensorChooser;
+            sensorChooser.Start();
+
+            // Bind the KinectSensor from the sensorChooser to the KinectSensor on the KinectSensorManager
+            var kinectSensorBinding = new Binding("Kinect") { Source = sensorChooser };
+            BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
+
+            RestoreWindowState();
         }
 
         public KinectSensorManager KinectSensorManager
@@ -540,6 +555,12 @@ namespace BubblesGame
             //CheckPlayers();
         }
         #endregion GameTimer/Thread
+
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Escape)
+                this.Close();
+        }
         
         #region Kinect Speech processing
       /*  private void RecognizerSaidSomething(object sender, SpeechRecognizer.SaidSomethingEventArgs e)

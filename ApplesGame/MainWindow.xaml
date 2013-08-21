@@ -8,13 +8,14 @@
         Title="ApplesGame"
         x:Name="ApplesGame"
         Closing="WindowClosing"
+        KeyDown="ApplesGame_KeyDown"
         mc:Ignorable="d"
         d:DesignWidth="1920"
         d:DesignHeight="1080"
         MinWidth="800"
         MinHeight="600"
         FontFamily="Segoe UI"
-        >
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
     <Viewbox>
         <Grid x:Name="LayoutRoot" Width="1920" Height="1080">
             <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="sensorChooserUI" Margin="940,0" />

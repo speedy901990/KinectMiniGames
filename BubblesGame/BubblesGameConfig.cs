@@ -9,8 +9,8 @@ namespace BubblesGame
     public class BubblesGameConfig
     {
         private string username;
-        private int bubbleSize;
-        private int bubbleFallSpeed;
+        private int bubblesFallSpeed;
+        private int bubblesCount;
 
         public BubblesGameConfig()
         {
@@ -23,10 +23,16 @@ namespace BubblesGame
             set { this.username = value; }
         }
 
-        public int BubbleFallSpeed
+        public int BubblesFallSpeed
         {
-            get { return this.bubbleFallSpeed; }
-            set { this.bubbleFallSpeed = value; }
+            get { return this.bubblesFallSpeed; }
+            set { this.bubblesFallSpeed = value; }
+        }
+
+        public int BubblesCount
+        {
+            get { return this.bubblesCount; }
+            set { this.bubblesCount = value; }
         }
     }
 }

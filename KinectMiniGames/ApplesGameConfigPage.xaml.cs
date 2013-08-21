@@ -2,7 +2,7 @@
 {
     using System.Globalization;
     using System.Windows.Controls;
-
+    using ApplesGame;
     /// <summary>
     /// Interaction logic for ApplesGameConfigPage.xaml
     /// </summary>
@@ -25,6 +25,20 @@
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
         private void OnLoadedStoryboardCompleted(object sender, System.EventArgs e)
+        {
+            var parent = (Panel)this.Parent;
+            parent.Children.Remove(this);
+        }
+
+        private void submitApplesConfig_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ApplesGameConfig config = new ApplesGameConfig();
+            config = (ApplesGameConfig)this.FindResource("applesGameConfig");
+            ApplesGame.MainWindow window = new ApplesGame.MainWindow(config);
+            window.Show();
+        }
+
+        private void btnBackToMenu_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var parent = (Panel)this.Parent;
             parent.Children.Remove(this);

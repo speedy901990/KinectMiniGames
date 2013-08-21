@@ -404,7 +404,7 @@ namespace BubblesGame
             double opacity)
         {
                 ImageBrush myBrush = new ImageBrush();
-                myBrush.ImageSource = new BitmapImage(new Uri("C:/Users/Slawek/Documents/Visual Studio 2012/Projects/KinectMiniGames/Graphics/BubblesGame/bubble.png", UriKind.Relative));
+                myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble.png", UriKind.Relative));
                 var circle = new Ellipse { Width = size * 2, Height = size * 2, Stroke = brushStroke };
                 
                 if (circle.Stroke != null)

@@ -48,13 +48,26 @@
             <StackPanel Margin="5,5,5,5" Height="{Binding ElementName=grid, Path=ActualHeight}">
             <TextBlock x:Name="messageTextBlock" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top">Bubbles Game Config</TextBlock>  
                 <Label FontSize="15" Height="35" HorizontalAlignment="Left">Username</Label>
-                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbFallSpeed" VerticalAlignment="Top" Width="150">
+                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbUsername" VerticalAlignment="Top" Width="150">
                     <TextBox.Text>
                         <Binding Source="{StaticResource bubblesGameConfig}" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
                     </TextBox.Text>
                 </TextBox>
+                <Label FontSize="15" Height="35" HorizontalAlignment="Left">Fall speed</Label>
+                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbFallSpeed" VerticalAlignment="Top" Width="150">
+                    <TextBox.Text>
+                        <Binding Source="{StaticResource bubblesGameConfig}" Path="BubblesFallSpeed" UpdateSourceTrigger="PropertyChanged"/>
+                    </TextBox.Text>
+                </TextBox>
+                <Label FontSize="15" Height="35" HorizontalAlignment="Left">Bubbles count</Label>
+                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbBubblesCount" VerticalAlignment="Top" Width="150">
+                    <TextBox.Text>
+                        <Binding Source="{StaticResource bubblesGameConfig}" Path="BubblesCount" UpdateSourceTrigger="PropertyChanged"/>
+                    </TextBox.Text>
+                </TextBox>
                 <Button Click="submitBubblesConfig_Click"  FontSize="25" x:Name="submitBubblesConfig" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Uruchom Grę"/>
             </StackPanel>
+            <Button Click="btnBackToMenu_Click"  FontSize="25" x:Name="btnBackToMenu" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Wróć do menu"/>
         </Grid>
     </Grid>
 </UserControl>

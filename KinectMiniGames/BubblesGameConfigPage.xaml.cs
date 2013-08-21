@@ -36,8 +36,14 @@
         {
             BubblesGameConfig config = new BubblesGameConfig();
             config = (BubblesGameConfig)this.FindResource("bubblesGameConfig");
-            BubblesGame.MainWindow window = new BubblesGame.MainWindow(config.Username);
+            BubblesGame.MainWindow window = new BubblesGame.MainWindow(config);
             window.Show();
+        }
+
+        private void btnBackToMenu_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var parent = (Panel)this.Parent;
+            parent.Children.Remove(this);
         }
     }
 }
