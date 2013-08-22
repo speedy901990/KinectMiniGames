@@ -9,7 +9,7 @@
              d:DesignWidth="300"
              Background="Transparent"
              FontFamily="Segoe UI"
-             FontSize="30"> 
+             FontSize="30">
     <UserControl.Resources>
         <c:ApplesGameConfig x:Key="applesGameConfig"/>
         <Storyboard x:Key="OnLoadedStoryboard" Completed="OnLoadedStoryboardCompleted">
