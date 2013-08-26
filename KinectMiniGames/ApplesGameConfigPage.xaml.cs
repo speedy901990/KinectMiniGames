@@ -1,6 +1,5 @@
 ﻿namespace KinectMiniGames
 {
-    using System.Globalization;
     using System.Windows.Controls;
     using ApplesGame;
     /// <summary>

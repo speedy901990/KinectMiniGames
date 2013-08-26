@@ -8,20 +8,15 @@
 // hit testing against a set of segments provided by the Kinect NUI, and
 // have shapes react accordingly.
 
-using System.Security.AccessControl;
-
 namespace BubblesGame
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Shapes;
-    using Microsoft.Kinect;
     using Utils;
-    using System.Media;
     using System.Windows.Media.Imaging;
 
     // FallingThings is the main class to draw and maintain positions of falling shapes.  It also does hit testing
@@ -30,6 +25,8 @@ namespace BubblesGame
     {
         private const double BaseGravity = 0.017;
         private const double BaseAirFriction = 0.994;
+        public static int BubblesFallen = 0;
+        public static int BubblesPopped = 0;
 
         private readonly Dictionary<PolyType, PolyDef> _polyDefs = new Dictionary<PolyType, PolyDef>
             {
@@ -43,9 +40,11 @@ namespace BubblesGame
                 //{ PolyType.Bubble, new PolyDef { Sides = 0, Skip = 1 } }
             };
 
-        private readonly List<Thing> _things = new List<Thing>();
+        public readonly List<Thing> _things = new List<Thing>();
         private readonly Random _rnd = new Random();
+        private readonly Random _rnd2 = new Random();
         private readonly int _maxThings;
+        private readonly int _maxBubbles;
         private readonly int _intraFrames = 1;
         private readonly Dictionary<int, int> _scores = new Dictionary<int, int>();
         private const double DissolveTime = 0.4;
@@ -65,16 +64,37 @@ namespace BubblesGame
         private PolyType _polyTypes = PolyType.All;
         private DateTime _gameStartTime;
 
-        public FallingThings(int maxThings, double framerate, int intraFrames)
+        public FallingThings(int maxThings, double framerate, int intraFrames, int maxBubbles)
         {
             _maxThings = maxThings;
             _intraFrames = intraFrames;
+            _maxBubbles = maxBubbles;
             _targetFrameRate = framerate * intraFrames;
             SetGravity(_gravityFactor);
             _sceneRect.X = _sceneRect.Y = 0;
             _sceneRect.Width = _sceneRect.Height = 100;
             _shapeSize = _sceneRect.Height * _baseShapeSize / 1000.0;
             _expandingRate = Math.Exp(Math.Log(6.0) / (_targetFrameRate * DissolveTime));
+        }
+
+        public static Label MakeSimpleLabel(string text, Rect bounds, Brush brush)
+        {
+            var label = new Label { Content = text };
+            if (bounds.Width != 0)
+            {
+                label.SetValue(Canvas.LeftProperty, bounds.Left);
+                label.SetValue(Canvas.TopProperty, bounds.Top);
+                label.Width = bounds.Width;
+                label.Height = bounds.Height;
+            }
+
+            label.Foreground = brush;
+            label.FontFamily = new FontFamily("Arial");
+            label.FontWeight = FontWeight.FromOpenTypeWeight(600);
+            label.FontStyle = FontStyles.Normal;
+            label.HorizontalAlignment = HorizontalAlignment.Center;
+            label.VerticalAlignment = VerticalAlignment.Center;
+            return label;
         }
 
         public enum ThingState
@@ -200,14 +220,14 @@ namespace BubblesGame
                                     thing.TimeLastHit = cur;
 
                                     // Bounce off head and hands
-                                    if (seg.IsCircle() && seg.Radius<19)
+                                    if (seg.IsCircle() && seg.Radius < 19)
                                     {
                                         if (thing.State == ThingState.Falling)
                                         {
                                             thing.State = ThingState.Bouncing;
                                             hit |= HitType.Popped;
                                         }
-                                     }
+                                    }
                                     _things[i] = thing;
                                 }
                             }
@@ -221,6 +241,7 @@ namespace BubblesGame
                         thing.Dissolve = 0;
                         thing.XVelocity = thing.YVelocity = 0;
                         _things[i] = thing;
+                        BubblesPopped++;
                     }
 
                     allHits |= hit;
@@ -291,18 +312,21 @@ namespace BubblesGame
                 byte r;
                 byte g;
                 byte b;
+                int number;
 
                 if (_doRandomColors)
                 {
                     r = (byte)(_rnd.Next(215) + 40);
                     g = (byte)(_rnd.Next(215) + 40);
                     b = (byte)(_rnd.Next(215) + 40);
+                    number = _rnd2.Next(0, 10);
                 }
                 else
                 {
                     r = (byte)Math.Min(255.0, _baseColor.R * (0.7 + (_rnd.NextDouble() * 0.7)));
                     g = (byte)Math.Min(255.0, _baseColor.G * (0.7 + (_rnd.NextDouble() * 0.7)));
                     b = (byte)Math.Min(255.0, _baseColor.B * (0.7 + (_rnd.NextDouble() * 0.7)));
+                    number = _rnd2.Next(0, 10);
                 }
 
                 PolyType tryType;
@@ -311,8 +335,8 @@ namespace BubblesGame
                     tryType = alltypes[_rnd.Next(alltypes.Length)];
                 }
                 while ((_polyTypes & tryType) == 0);
-                
-                DropNewThing(tryType, _shapeSize, Color.FromRgb(r, g, b));
+
+                DropNewThing(tryType, _shapeSize, Color.FromRgb(r, g, b), number);
             }
         }
 
@@ -324,7 +348,7 @@ namespace BubblesGame
             for (var i = 0; i < _things.Count; i++)
             {
                 Thing thing = _things[i];
-                
+
                 if (thing.Brush == null)
                 {
                     thing.Brush = new SolidColorBrush(thing.Color);
@@ -338,22 +362,23 @@ namespace BubblesGame
                     thing.BrushPulse = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                 }
 
-                    if (thing.State == ThingState.Dissolving)
-                    {
-                        thing.Brush.Opacity = 1.0 - (thing.Dissolve * thing.Dissolve);
-                    }
+                if (thing.State == ThingState.Dissolving)
+                {
+                    thing.Brush.Opacity = 1.0 - (thing.Dissolve * thing.Dissolve);
+                }
 
-                    children.Add(
-                        MakeSimpleShape(
-                            _polyDefs[thing.Shape].Sides,
-                            _polyDefs[thing.Shape].Skip,
-                            thing.Size,
-                            thing.Center,
-                            thing.Brush,
-                            (thing.State == ThingState.Dissolving) ? null : thing.Brush2,
-                            1,
-                            0.2));
-                
+                children.Add(
+                    MakeSimpleShape(
+                        _polyDefs[thing.Shape].Sides,
+                        _polyDefs[thing.Shape].Skip,
+                        thing.Size,
+                        thing.Center,
+                        thing.Brush,
+                        thing.Number,
+                        (thing.State == ThingState.Dissolving) ? null : thing.Brush2,
+                        1,
+                        0.2));
+
             }
         }
 
@@ -362,7 +387,7 @@ namespace BubblesGame
             return ((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1));
         }
 
-        private void DropNewThing(PolyType newShape, double newSize, Color newColor)
+        private void DropNewThing(PolyType newShape, double newSize, Color newColor, int number)
         {
             // Only drop within the center "square" area 
             double dropWidth = _sceneRect.Bottom - _sceneRect.Top;
@@ -387,24 +412,46 @@ namespace BubblesGame
                 Dissolve = 0,
                 State = ThingState.Falling,
                 Hotness = 0,
-                FlashCount = 0
+                FlashCount = 0,
+                Number = number
             };
-
-            _things.Add(newThing);
+            if (BubblesFallen < _maxBubbles)
+            {
+                _things.Add(newThing);
+                BubblesFallen++;
+            }
         }
 
-        private Shape MakeSimpleShape(
-            int numSides,
-            int skip,
-            double size,
-            Point center,
-            Brush brush,
-            Brush brushStroke,
-            double strokeThickness,
-            double opacity)
+        private Shape MakeSimpleShape(int numSides, int skip, double size, Point center, Brush brush, int number, Brush brushStroke, double strokeThickness, double opacity)
         {
-                ImageBrush myBrush = new ImageBrush();
-                myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble.png", UriKind.Relative));
+                var myBrush = new ImageBrush();
+            switch (number)
+            {
+                case 0: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble.png", UriKind.Relative));
+                    break;
+                case 1: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_black.png", UriKind.Relative));
+                    break;
+                case 2: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_blue.png", UriKind.Relative));
+                    break;
+                case 3: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_blue2.png", UriKind.Relative));
+                    break;
+                case 4: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_brown.png", UriKind.Relative));
+                    break;
+                case 5: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_green.png", UriKind.Relative));
+                    break;
+                case 6: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_orange.png", UriKind.Relative));
+                    break;
+                case 7: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_pink.png", UriKind.Relative));
+                    break;
+                case 8: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_purple.png", UriKind.Relative));
+                    break;
+                case 9: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_red.png", UriKind.Relative));
+                    break;
+                case 10: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_yellow.png", UriKind.Relative));
+                    break;
+            }
+            
+
                 var circle = new Ellipse { Width = size * 2, Height = size * 2, Stroke = brushStroke };
                 
                 if (circle.Stroke != null)
@@ -429,7 +476,7 @@ namespace BubblesGame
 
         // The Thing struct represents a single object that is flying through the air, and
         // all of its properties.
-        private struct Thing
+        public struct Thing
         {
             public Point Center;
             public double Size;
@@ -446,6 +493,7 @@ namespace BubblesGame
             public double AvgTimeBetweenHits;
             public int Hotness;                 // Score level
             public int FlashCount;
+            public int Number { get; set; }
 
             // Hit testing between this thing and a single segment.  If hit, the center point on
             // the segment being hit is returned, along with the spot on the line from 0 to 1 if

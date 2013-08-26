@@ -8,7 +8,6 @@
 // processing, displaying players on screen, and sending updated player
 // positions to the game portion for hit testing.
 
-using System.Security.Cryptography;
 using System.Windows.Media;
 using BubblesGame.Properties;
 
@@ -22,9 +21,9 @@ namespace BubblesGame
     using System.Runtime.InteropServices;
     using System.Threading;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Threading;
+    using System.Windows.Forms;
     using Microsoft.Kinect;
     using Microsoft.Kinect.Toolkit;
     using Microsoft.Samples.Kinect.WpfViewers;
@@ -56,31 +55,31 @@ namespace BubblesGame
         private const double DefaultDropSize = 64.0;
         private const double DefaultDropGravity = 1.0;
 
-        private readonly Dictionary<int, Player> players = new Dictionary<int, Player>();
-        private readonly SoundPlayer popSound = new SoundPlayer();
-        private readonly SoundPlayer hitSound = new SoundPlayer();
-        private readonly SoundPlayer squeezeSound = new SoundPlayer();
-        private readonly KinectSensorChooser sensorChooser = new KinectSensorChooser();
+        private readonly Dictionary<int, Player> _players = new Dictionary<int, Player>();
+        private readonly SoundPlayer _popSound = new SoundPlayer();
+        private readonly SoundPlayer _hitSound = new SoundPlayer();
+        private readonly SoundPlayer _squeezeSound = new SoundPlayer();
+        private readonly KinectSensorChooser _sensorChooser = new KinectSensorChooser();
 
-        private double dropRate = DefaultDropRate;
-        private double dropSize = DefaultDropSize;
-        private double dropGravity = DefaultDropGravity;
-        private DateTime lastFrameDrawn = DateTime.MinValue;
-        private DateTime predNextFrame = DateTime.MinValue;
-        private double actualFrameTime;
+        private double _dropRate = DefaultDropRate;
+        private double _dropSize = DefaultDropSize;
+        private double _dropGravity = DefaultDropGravity;
+        private DateTime _lastFrameDrawn = DateTime.MinValue;
+        private DateTime _predNextFrame = DateTime.MinValue;
+        private double _actualFrameTime;
 
-        private Skeleton[] skeletonData;
+        private Skeleton[] _skeletonData;
 
         // Player(s) placement in scene (z collapsed):
-        private Rect playerBounds;
-        private Rect screenRect;
+        private Rect _playerBounds;
+        private Rect _screenRect;
 
-        private double targetFramerate = MaxFramerate;
-        private int frameCount;
-        private bool runningGameThread;
-        private FallingThings myFallingThings;
+        private double _targetFramerate = MaxFramerate;
+        private int _frameCount;
+        private bool _runningGameThread;
+        private FallingThings _myFallingThings;
         
-//        private SpeechRecognizer mySpeechRecognizer;
+        private SpeechRecognizer _mySpeechRecognizer;
         #endregion Private State
 
         #region ctor + Window Events
@@ -93,11 +92,11 @@ namespace BubblesGame
 
             InitializeComponent();
 
-            SensorChooserUI.KinectSensorChooser = sensorChooser;
-            sensorChooser.Start();
+            SensorChooserUI.KinectSensorChooser = _sensorChooser;
+            _sensorChooser.Start();
 
             // Bind the KinectSensor from the sensorChooser to the KinectSensor on the KinectSensorManager
-            var kinectSensorBinding = new Binding("Kinect") { Source = sensorChooser };
+            var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = _sensorChooser };
             BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
 
             RestoreWindowState();
@@ -111,11 +110,11 @@ namespace BubblesGame
 
             InitializeComponent();
 
-            SensorChooserUI.KinectSensorChooser = sensorChooser;
-            sensorChooser.Start();
+            SensorChooserUI.KinectSensorChooser = _sensorChooser;
+            _sensorChooser.Start();
 
             // Bind the KinectSensor from the sensorChooser to the KinectSensor on the KinectSensorManager
-            var kinectSensorBinding = new Binding("Kinect") { Source = sensorChooser };
+            var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = _sensorChooser };
             BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
 
             RestoreWindowState();
@@ -152,20 +151,20 @@ namespace BubblesGame
         {
             playfield.ClipToBounds = true;
 
-            myFallingThings = new FallingThings(MaxShapes, targetFramerate, NumIntraFrames);
+            _myFallingThings = new FallingThings(MaxShapes, _targetFramerate, NumIntraFrames, 20);
 
             UpdatePlayfieldSize();
 
-            myFallingThings.SetGravity(dropGravity);
-            myFallingThings.SetDropRate(dropRate);
-            myFallingThings.SetSize(dropSize);
-            myFallingThings.SetPolies(PolyType.Circle);
+            _myFallingThings.SetGravity(_dropGravity);
+            _myFallingThings.SetDropRate(_dropRate);
+            _myFallingThings.SetSize(_dropSize);
+            _myFallingThings.SetPolies(PolyType.Circle);
             
-            popSound.Stream = Properties.Resources.Pop_5;
-            hitSound.Stream = Properties.Resources.Hit_2;
-            squeezeSound.Stream = Properties.Resources.Squeeze;
+            _popSound.Stream = Properties.Resources.Pop_5;
+            _hitSound.Stream = Properties.Resources.Hit_2;
+            _squeezeSound.Stream = Properties.Resources.Squeeze;
 
-            popSound.Play();
+            _popSound.Play();
 
             TimeBeginPeriod(TimerResolution);
             var myGameThread = new Thread(GameThread);
@@ -176,9 +175,9 @@ namespace BubblesGame
 
         private void WindowClosing(object sender, CancelEventArgs e)
         {
-            sensorChooser.Stop();
+            _sensorChooser.Stop();
 
-            runningGameThread = false;
+            _runningGameThread = false;
             Settings.Default.PrevWinPosition = RestoreBounds;
             Settings.Default.WindowState = (int)WindowState;
             Settings.Default.Save();
@@ -228,22 +227,22 @@ namespace BubblesGame
             kinectSensorManager.SkeletonStreamEnabled = true;
             kinectSensorManager.KinectSensorEnabled = true;
 
-/*
+
             if (!kinectSensorManager.KinectSensorAppConflict)
             {
                 // Start speech recognizer after KinectSensor started successfully.
-                mySpeechRecognizer = SpeechRecognizer.Create();
+                _mySpeechRecognizer = SpeechRecognizer.Create();
 
-                if (null != mySpeechRecognizer)
+                if (null != _mySpeechRecognizer)
                 {
-                    mySpeechRecognizer.SaidSomething += RecognizerSaidSomething;
-                    mySpeechRecognizer.Start(sensor.AudioSource);
+                    _mySpeechRecognizer.SaidSomething += RecognizerSaidSomething;
+                    _mySpeechRecognizer.Start(sensor.AudioSource);
                 }
 
-                enableAec.Visibility = Visibility.Visible;
-                UpdateEchoCancellation(enableAec);
+                /*enableAec.Visibility = Visibility.Visible;
+                UpdateEchoCancellation(enableAec);*/
             }
-*/
+
         }
 
         // Kinect enabled apps should uninitialize all Kinect services that were initialized in InitializeKinectServices() here.
@@ -251,15 +250,13 @@ namespace BubblesGame
         {
             sensor.SkeletonFrameReady -= SkeletonsReady;
 
-/*
-            if (null != mySpeechRecognizer)
+            if (null != _mySpeechRecognizer)
             {
-                mySpeechRecognizer.Stop();
-                mySpeechRecognizer.SaidSomething -= RecognizerSaidSomething;
-                mySpeechRecognizer.Dispose();
-                mySpeechRecognizer = null;
+                _mySpeechRecognizer.Stop();
+                _mySpeechRecognizer.SaidSomething -= RecognizerSaidSomething;
+                _mySpeechRecognizer.Dispose();
+                _mySpeechRecognizer = null;
             }
-*/
 
             //enableAec.Visibility = Visibility.Collapsed;
         }
@@ -303,30 +300,30 @@ namespace BubblesGame
                 {
                     int skeletonSlot = 0;
 
-                    if ((skeletonData == null) || (skeletonData.Length != skeletonFrame.SkeletonArrayLength))
+                    if ((_skeletonData == null) || (_skeletonData.Length != skeletonFrame.SkeletonArrayLength))
                     {
-                        skeletonData = new Skeleton[skeletonFrame.SkeletonArrayLength];
+                        _skeletonData = new Skeleton[skeletonFrame.SkeletonArrayLength];
                     }
 
-                    skeletonFrame.CopySkeletonDataTo(skeletonData);
+                    skeletonFrame.CopySkeletonDataTo(_skeletonData);
 
                     //foreach (Skeleton skeleton in skeletonData)
                     //{
-                    Skeleton skeleton = GetPrimarySkeleton(skeletonData);
+                    Skeleton skeleton = GetPrimarySkeleton(_skeletonData);
                     if (skeleton!=null)
                     {
                         if (SkeletonTrackingState.Tracked == skeleton.TrackingState)
                         {
                             Player player;
-                            if (players.ContainsKey(skeletonSlot))
+                            if (_players.ContainsKey(skeletonSlot))
                             {
-                                player = players[skeletonSlot];
+                                player = _players[skeletonSlot];
                             }
                             else
                             {
                                 player = new Player(skeletonSlot);
-                                player.SetBounds(playerBounds);
-                                players.Add(skeletonSlot, player);
+                                player.SetBounds(_playerBounds);
+                                _players.Add(skeletonSlot, player);
                             }
 
                             player.LastUpdated = DateTime.Now;
@@ -383,7 +380,7 @@ namespace BubblesGame
             }
         }
 
-    /*    private void CheckPlayers()
+        /*private void CheckPlayers()
         {
             foreach (var player in players)
             {
@@ -402,30 +399,30 @@ namespace BubblesGame
             {
                 if (alive == 2)
                 {
-                    myFallingThings.SetGameMode(GameMode.TwoPlayer);
+                    _myFallingThings.SetGameMode(GameMode.TwoPlayer);
                 }
                 else if (alive == 1)
                 {
-                    myFallingThings.SetGameMode(GameMode.Solo);
+                    _myFallingThings.SetGameMode(GameMode.Solo);
                 }
                 else if (alive == 0)
                 {
-                    myFallingThings.SetGameMode(GameMode.Off);
+                    _myFallingThings.SetGameMode(GameMode.Off);
                 }
 
-                if ((playersAlive == 0)) // && (mySpeechRecognizer != null))
+                if ((_playersAlive == 0) && (_mySpeechRecognizer != null))
                 {
                     BannerText.NewBanner(
                         Properties.Resources.Vocabulary,
-                        screenRect,
+                        _screenRect,
                         true,
                         Color.FromArgb(200, 255, 255, 255));
                 }
 
                 playersAlive = alive;
             }
-        }
-*/
+        }*/
+
         private void PlayfieldSizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdatePlayfieldSize();
@@ -434,29 +431,29 @@ namespace BubblesGame
         private void UpdatePlayfieldSize()
         {
             // Size of player wrt size of playfield, putting ourselves low on the screen.
-            screenRect.X = 0;
-            screenRect.Y = 0;
-            screenRect.Width = playfield.ActualWidth;
-            screenRect.Height = playfield.ActualHeight;
+            _screenRect.X = 0;
+            _screenRect.Y = 0;
+            _screenRect.Width = playfield.ActualWidth;
+            _screenRect.Height = playfield.ActualHeight;
 
             //BannerText.UpdateBounds(screenRect);
 
-            playerBounds.X = 0;
-            playerBounds.Width = playfield.ActualWidth;
-            playerBounds.Y = playfield.ActualHeight * 0.2;
-            playerBounds.Height = playfield.ActualHeight * 0.75;
+            _playerBounds.X = 0;
+            _playerBounds.Width = playfield.ActualWidth;
+            _playerBounds.Y = playfield.ActualHeight * 0.2;
+            _playerBounds.Height = playfield.ActualHeight * 0.75;
 
-            foreach (var player in players)
+            foreach (var player in _players)
             {
-                player.Value.SetBounds(playerBounds);
+                player.Value.SetBounds(_playerBounds);
             }
 
-            Rect fallingBounds = playerBounds;
+            Rect fallingBounds = _playerBounds;
             fallingBounds.Y = 0;
             fallingBounds.Height = playfield.ActualHeight;
-            if (myFallingThings != null)
+            if (_myFallingThings != null)
             {
-                myFallingThings.SetBoundaries(fallingBounds);
+                _myFallingThings.SetBoundaries(fallingBounds);
             }
         }
         #endregion Kinect Skeleton processing
@@ -464,46 +461,46 @@ namespace BubblesGame
         #region GameTimer/Thread
         private void GameThread()
         {
-            runningGameThread = true;
-            predNextFrame = DateTime.Now;
-            actualFrameTime = 1000.0 / targetFramerate;
+            _runningGameThread = true;
+            _predNextFrame = DateTime.Now;
+            _actualFrameTime = 1000.0 / _targetFramerate;
 
             // Try to dispatch at as constant of a framerate as possible by sleeping just enough since
             // the last time we dispatched.
-            while (runningGameThread)
+            while (_runningGameThread)
             {
                 // Calculate average framerate.  
                 DateTime now = DateTime.Now;
-                if (lastFrameDrawn == DateTime.MinValue)
+                if (_lastFrameDrawn == DateTime.MinValue)
                 {
-                    lastFrameDrawn = now;
+                    _lastFrameDrawn = now;
                 }
 
-                double ms = now.Subtract(lastFrameDrawn).TotalMilliseconds;
-                actualFrameTime = (actualFrameTime * 0.95) + (0.05 * ms);
-                lastFrameDrawn = now;
+                double ms = now.Subtract(_lastFrameDrawn).TotalMilliseconds;
+                _actualFrameTime = (_actualFrameTime * 0.95) + (0.05 * ms);
+                _lastFrameDrawn = now;
 
                 // Adjust target framerate down if we're not achieving that rate
-                frameCount++;
-                if ((frameCount % 100 == 0) && (1000.0 / actualFrameTime < targetFramerate * 0.92))
+                _frameCount++;
+                if ((_frameCount % 100 == 0) && (1000.0 / _actualFrameTime < _targetFramerate * 0.92))
                 {
-                    targetFramerate = Math.Max(MinFramerate, (targetFramerate + (1000.0 / actualFrameTime)) / 2);
+                    _targetFramerate = Math.Max(MinFramerate, (_targetFramerate + (1000.0 / _actualFrameTime)) / 2);
                 }
 
-                if (now > predNextFrame)
+                if (now > _predNextFrame)
                 {
-                    predNextFrame = now;
+                    _predNextFrame = now;
                 }
                 else
                 {
-                    double milliseconds = predNextFrame.Subtract(now).TotalMilliseconds;
+                    double milliseconds = _predNextFrame.Subtract(now).TotalMilliseconds;
                     if (milliseconds >= TimerResolution)
                     {
                         Thread.Sleep((int)(milliseconds + 0.5));
                     }
                 }
 
-                predNextFrame += TimeSpan.FromMilliseconds(1000.0 / targetFramerate);
+                _predNextFrame += TimeSpan.FromMilliseconds(1000.0 / _targetFramerate);
 
                 Dispatcher.Invoke(DispatcherPriority.Send, new Action<int>(HandleGameTimer), 0);
             }
@@ -512,44 +509,53 @@ namespace BubblesGame
         private void HandleGameTimer(int param)
         {
             // Every so often, notify what our actual framerate is
-            if ((frameCount % 100) == 0)
+            if ((_frameCount % 100) == 0)
             {
-                myFallingThings.SetFramerate(1000.0 / actualFrameTime);
+                _myFallingThings.SetFramerate(1000.0 / _actualFrameTime);
             }
 
             // Advance animations, and do hit testing.
             for (int i = 0; i < NumIntraFrames; ++i)
             {
-                foreach (var pair in players)
+                foreach (var pair in _players)
                 {
-                    HitType hit = myFallingThings.LookForHits(pair.Value.Segments, pair.Value.GetId());
+                    HitType hit = _myFallingThings.LookForHits(pair.Value.Segments, pair.Value.GetId());
                     if ((hit & HitType.Squeezed) != 0)
                     {
-                        squeezeSound.Play();
+                        _squeezeSound.Play();
                     }
                     else if ((hit & HitType.Popped) != 0)
                     {
-                        popSound.Play();
+                        _popSound.Play();
                     }
                     else if ((hit & HitType.Hand) != 0)
                     {
-                        hitSound.Play();
+                        _hitSound.Play();
                     }
                 }
 
-                myFallingThings.AdvanceFrame();
+                _myFallingThings.AdvanceFrame();
             }
 
             // Draw new Wpf scene by adding all objects to canvas
             playfield.Children.Clear();
-            myFallingThings.DrawFrame(playfield.Children);
+            _myFallingThings.DrawFrame(playfield.Children);
+            if (_myFallingThings._things.Count == 0 && FallingThings.BubblesFallen > 0)
+            {
+                var result =
+                    System.Windows.MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped + "\nZakończyć?", "", MessageBoxButton.YesNo);
+                /*if (result == MessageBoxResult.OK)
+                    this.Close();*/
+            }
+            
             /*foreach (var player in players)
             {
                 player.Value.Draw(playfield.Children);
             }*/
-            if (players.FirstOrDefault().Value != null)
-                players.FirstOrDefault().Value.Draw(playfield.Children);
-            //BannerText.Draw(playfield.Children);
+            if (_players.FirstOrDefault().Value != null)
+                _players.FirstOrDefault().Value.Draw(playfield.Children);
+            BannerText.NewBanner(FallingThings.BubblesPopped.ToString(), _screenRect,false,Color.FromRgb(0,0,0));
+            BannerText.Draw(playfield.Children);
             //FlyingText.Draw(playfield.Children);
 
             //CheckPlayers();
@@ -563,98 +569,98 @@ namespace BubblesGame
         }
         
         #region Kinect Speech processing
-      /*  private void RecognizerSaidSomething(object sender, SpeechRecognizer.SaidSomethingEventArgs e)
+        private void RecognizerSaidSomething(object sender, SpeechRecognizer.SaidSomethingEventArgs e)
         {
-            FlyingText.NewFlyingText(screenRect.Width / 30, new Point(screenRect.Width / 2, screenRect.Height / 2), e.Matched);
+            FlyingText.NewFlyingText(_screenRect.Width / 30, new Point(_screenRect.Width / 2, _screenRect.Height / 2), e.Matched);
             switch (e.Verb)
             {
                 case SpeechRecognizer.Verbs.Pause:
-                    myFallingThings.SetDropRate(0);
-                    myFallingThings.SetGravity(0);
+                    _myFallingThings.SetDropRate(0);
+                    _myFallingThings.SetGravity(0);
                     break;
                 case SpeechRecognizer.Verbs.Resume:
-                    myFallingThings.SetDropRate(dropRate);
-                    myFallingThings.SetGravity(dropGravity);
+                    _myFallingThings.SetDropRate(_dropRate);
+                    _myFallingThings.SetGravity(_dropGravity);
                     break;
-                case SpeechRecognizer.Verbs.Reset:
-                    dropRate = DefaultDropRate;
-                    dropSize = DefaultDropSize;
-                    dropGravity = DefaultDropGravity;
-                    myFallingThings.SetPolies(PolyType.All);
-                    myFallingThings.SetDropRate(dropRate);
-                    myFallingThings.SetGravity(dropGravity);
-                    myFallingThings.SetSize(dropSize);
-                    myFallingThings.SetShapesColor(Color.FromRgb(0, 0, 0), true);
-                    myFallingThings.Reset();
+                /*case SpeechRecognizer.Verbs.Reset:
+                    _dropRate = DefaultDropRate;
+                    _dropSize = DefaultDropSize;
+                    _dropGravity = DefaultDropGravity;
+                    _myFallingThings.SetPolies(PolyType.All);
+                    _myFallingThings.SetDropRate(_dropRate);
+                    _myFallingThings.SetGravity(_dropGravity);
+                    _myFallingThings.SetSize(_dropSize);
+                    _myFallingThings.SetShapesColor(Color.FromRgb(0, 0, 0), true);
+                    _myFallingThings.Reset();
                     break;
                 case SpeechRecognizer.Verbs.DoShapes:
-                    myFallingThings.SetPolies(e.Shape);
+                    _myFallingThings.SetPolies(e.Shape);
                     break;
                 case SpeechRecognizer.Verbs.RandomColors:
-                    myFallingThings.SetShapesColor(Color.FromRgb(0, 0, 0), true);
+                    _myFallingThings.SetShapesColor(Color.FromRgb(0, 0, 0), true);
                     break;
                 case SpeechRecognizer.Verbs.Colorize:
-                    myFallingThings.SetShapesColor(e.RgbColor, false);
+                    _myFallingThings.SetShapesColor(e.RgbColor, false);
                     break;
                 case SpeechRecognizer.Verbs.ShapesAndColors:
-                    myFallingThings.SetPolies(e.Shape);
-                    myFallingThings.SetShapesColor(e.RgbColor, false);
+                    _myFallingThings.SetPolies(e.Shape);
+                    _myFallingThings.SetShapesColor(e.RgbColor, false);
                     break;
                 case SpeechRecognizer.Verbs.More:
-                    dropRate *= 1.5;
-                    myFallingThings.SetDropRate(dropRate);
+                    _dropRate *= 1.5;
+                    _myFallingThings.SetDropRate(_dropRate);
                     break;
                 case SpeechRecognizer.Verbs.Fewer:
-                    dropRate /= 1.5;
-                    myFallingThings.SetDropRate(dropRate);
+                    _dropRate /= 1.5;
+                    _myFallingThings.SetDropRate(_dropRate);
                     break;
                 case SpeechRecognizer.Verbs.Bigger:
-                    dropSize *= 1.5;
-                    if (dropSize > MaxShapeSize)
+                    _dropSize *= 1.5;
+                    if (_dropSize > MaxShapeSize)
                     {
-                        dropSize = MaxShapeSize;
+                        _dropSize = MaxShapeSize;
                     }
 
-                    myFallingThings.SetSize(dropSize);
+                    _myFallingThings.SetSize(_dropSize);
                     break;
                 case SpeechRecognizer.Verbs.Biggest:
-                    dropSize = MaxShapeSize;
-                    myFallingThings.SetSize(dropSize);
+                    _dropSize = MaxShapeSize;
+                    _myFallingThings.SetSize(_dropSize);
                     break;
                 case SpeechRecognizer.Verbs.Smaller:
-                    dropSize /= 1.5;
-                    if (dropSize < MinShapeSize)
+                    _dropSize /= 1.5;
+                    if (_dropSize < MinShapeSize)
                     {
-                        dropSize = MinShapeSize;
+                        _dropSize = MinShapeSize;
                     }
 
-                    myFallingThings.SetSize(dropSize);
+                    _myFallingThings.SetSize(_dropSize);
                     break;
                 case SpeechRecognizer.Verbs.Smallest:
-                    dropSize = MinShapeSize;
-                    myFallingThings.SetSize(dropSize);
+                    _dropSize = MinShapeSize;
+                    _myFallingThings.SetSize(_dropSize);
                     break;
                 case SpeechRecognizer.Verbs.Faster:
-                    dropGravity *= 1.25;
-                    if (dropGravity > 4.0)
+                    _dropGravity *= 1.25;
+                    if (_dropGravity > 4.0)
                     {
-                        dropGravity = 4.0;
+                        _dropGravity = 4.0;
                     }
 
-                    myFallingThings.SetGravity(dropGravity);
+                    _myFallingThings.SetGravity(_dropGravity);
                     break;
                 case SpeechRecognizer.Verbs.Slower:
-                    dropGravity /= 1.25;
-                    if (dropGravity < 0.25)
+                    _dropGravity /= 1.25;
+                    if (_dropGravity < 0.25)
                     {
-                        dropGravity = 0.25;
+                        _dropGravity = 0.25;
                     }
 
-                    myFallingThings.SetGravity(dropGravity);
-                    break;
+                    _myFallingThings.SetGravity(_dropGravity);
+                    break;*/
             }
         }
-*/
+
 /*
         private void EnableAecChecked(object sender, RoutedEventArgs e)
         {
