@@ -46,7 +46,7 @@ namespace BubblesGame
         #region Private State
         private const int TimerResolution = 2;  // ms
         private const int NumIntraFrames = 3;
-        private const int MaxShapes = 80;
+        private static int MaxShapes = 80;
         private const double MaxFramerate = 70;
         private const double MinFramerate = 15;
         private const double MinShapeSize = 12;
@@ -80,6 +80,8 @@ namespace BubblesGame
         private FallingThings _myFallingThings;
         
         private SpeechRecognizer _mySpeechRecognizer;
+
+        private BubblesGameConfig config;
         #endregion Private State
 
         #region ctor + Window Events
@@ -107,7 +109,7 @@ namespace BubblesGame
             KinectSensorManager = new KinectSensorManager();
             KinectSensorManager.KinectSensorChanged += KinectSensorChanged;
             DataContext = KinectSensorManager;
-
+            this.config = config;
             InitializeComponent();
 
             SensorChooserUI.KinectSensorChooser = _sensorChooser;
@@ -151,9 +153,15 @@ namespace BubblesGame
         {
             playfield.ClipToBounds = true;
 
-            _myFallingThings = new FallingThings(MaxShapes, _targetFramerate, NumIntraFrames, 20);
+            _dropSize = config.BubblesSize;
+            MaxShapes = config.BubblesCount;
+            _dropGravity = config.BubblesFallSpeed;
+            _dropRate = config.BubblesApperanceFrequency;
+
+            _myFallingThings = new FallingThings(MaxShapes, _targetFramerate, NumIntraFrames, MaxShapes);
 
             UpdatePlayfieldSize();
+            
 
             _myFallingThings.SetGravity(_dropGravity);
             _myFallingThings.SetDropRate(_dropRate);
