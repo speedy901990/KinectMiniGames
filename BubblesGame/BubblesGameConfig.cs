@@ -12,5 +12,9 @@
         public int BubblesFallSpeed { get; set; }
 
         public int BubblesCount { get; set; }
+
+        public int BubblesSize { get; set; }
+
+        public int BubblesApperanceFrequency { get; set; }
     }
 }
