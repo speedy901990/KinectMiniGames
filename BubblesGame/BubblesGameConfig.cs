@@ -1,20 +1,51 @@
-﻿namespace BubblesGame
+﻿using Microsoft.Kinect;
+using Microsoft.Kinect.Toolkit;
+
+namespace BubblesGame
 {
     public class BubblesGameConfig
     {
-        public BubblesGameConfig()
-        {
+        private KinectSensorChooser kinectSensor;
+        private string username;
+        private int bubbleSize;
+        private int bubblesCount;
+        private int bubbleFallSpeed;
+        private int bubblesApperanceFrequency;
 
+        public string Username
+        {
+            get { return this.username; }
+            set { this.username = value;}
         }
 
-        public string Username { get; set; }
+        public int BubblesFallSpeed
+        {
+            get { return this.bubbleFallSpeed; }
+            set { this.bubbleFallSpeed = value; }
+        }
 
-        public int BubblesFallSpeed { get; set; }
+        public int BubblesCount
+        {
+            get { return this.bubblesCount; }
+            set { this.bubblesCount = value; }
+        }
 
-        public int BubblesCount { get; set; }
+        public int BubblesSize 
+        {
+            get { return this.bubbleSize; }
+            set { this.bubbleSize = value; }
+        }
 
-        public int BubblesSize { get; set; }
+        public int BubblesApperanceFrequency
+        {
+            get { return this.bubblesApperanceFrequency; }
+            set { this.bubblesApperanceFrequency = value; }
+        }
 
-        public int BubblesApperanceFrequency { get; set; }
+        public KinectSensorChooser PassedKinectSensorChooser
+        {
+            get { return this.kinectSensor; }
+            set { this.kinectSensor = value; }
+        }
     }
 }

@@ -1,21 +1,26 @@
-﻿namespace KinectMiniGames
+﻿using System.Windows.Controls;
+using BubblesGame;
+using Microsoft.Kinect;
+using Microsoft.Kinect.Toolkit;
+using Microsoft.Kinect.Toolkit.Controls;
+
+namespace KinectMiniGames
 {
-    using System.Windows.Controls;
-    using BubblesGame;
     /// <summary>
     /// Interaction logic for BubblesGameConfigPage.xaml
     /// </summary>
     public partial class BubblesGameConfigPage : UserControl
     {
-        
+        KinectSensorChooser kinectSensor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectionDisplay"/> class. 
         /// </summary>
         /// <param name="itemId">ID of the item that was selected</param>
-        public BubblesGameConfigPage(string itemId)
+        public BubblesGameConfigPage(string itemId, KinectSensorChooser kinectSensor)
         {
             this.InitializeComponent();
+            this.kinectSensor = kinectSensor;
 
             //this.messageTextBlock.Text = string.Format(CultureInfo.CurrentCulture, KinectMiniGames.Properties.Resources.SelectedMessage, itemId);
         }
@@ -35,6 +40,7 @@
         {
             BubblesGameConfig config = new BubblesGameConfig();
             config = (BubblesGameConfig)this.FindResource("bubblesGameConfig");
+            config.PassedKinectSensorChooser = this.kinectSensor;
             BubblesGame.MainWindow window = new BubblesGame.MainWindow(config);
             window.Show();
         }

@@ -54,17 +54,19 @@
                     </TextBox.Text>
                 </TextBox>
                 <Label FontSize="15" Height="35" HorizontalAlignment="Left">Trees</Label>
-                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbTreesCount" VerticalAlignment="Top" Width="150">
-                    <TextBox.Text>
-                        <Binding Source="{StaticResource applesGameConfig}" Path="TreesCount" UpdateSourceTrigger="PropertyChanged"/>
-                    </TextBox.Text>
-                </TextBox>
+                <TextBlock FontSize="20" Height="35" HorizontalAlignment="Left"  x:Name="txbTreesCount"  VerticalAlignment="Top" Width="150" Text="{Binding TreesCount, Source={StaticResource applesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
+                <Slider Minimum="1" BorderThickness="20,10" Width="200" HorizontalAlignment="Left" Maximum="5">
+                    <Slider.Value>
+                        <Binding Source="{StaticResource applesGameConfig}" TargetNullValue="1" Path="TreesCount" UpdateSourceTrigger="PropertyChanged"/>
+                    </Slider.Value>
+                </Slider>
                 <Label FontSize="15" Height="35" HorizontalAlignment="Left">Apples On Tree</Label>
-                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbApplesOnTreeCount" VerticalAlignment="Top" Width="150">
-                    <TextBox.Text>
-                        <Binding Source="{StaticResource applesGameConfig}" Path="ApplesOnTreeCount" UpdateSourceTrigger="PropertyChanged"/>
-                    </TextBox.Text>
-                </TextBox>
+                <TextBlock FontSize="20" Height="35" HorizontalAlignment="Left"  x:Name="txbApplesOnTreeCount"  VerticalAlignment="Top" Width="150" Text="{Binding ApplesOnTreeCount, Source={StaticResource applesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
+                <Slider Minimum="1" BorderThickness="20,10" Width="200" HorizontalAlignment="Left" Maximum="50">
+                    <Slider.Value>
+                        <Binding Source="{StaticResource applesGameConfig}" TargetNullValue="1" Path="ApplesOnTreeCount" UpdateSourceTrigger="PropertyChanged"/>
+                    </Slider.Value>
+                </Slider>
                 <Button Click="submitApplesConfig_Click" FontSize="25" x:Name="submitApplesConfig" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Uruchom Grę"/>
             </StackPanel>
             <Button FontSize="25" x:Name="btnBackToMenu" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Wróć od menu" Click="btnBackToMenu_Click"/>

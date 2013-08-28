@@ -64,10 +64,15 @@ namespace ApplesGame
         {
             treesCount = config.TreesCount;
             applesOnTree = config.ApplesOnTreeCount;
-            this.sensorChooser = sensorChooser;
 
             InitializeComponent();
-            Loaded += OnLoaded;
+
+            this.sensorChooser = new KinectSensorChooser();
+            this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
+            this.sensorChooserUI.KinectSensorChooser = config.PassedKinectSensorChooser;
+            this.sensorChooser.Start();
+            var regionSensorBinding = new Binding("Kinect") { Source = config.PassedKinectSensorChooser };
+            BindingOperations.SetBinding(this.kinectRegion, Microsoft.Kinect.Toolkit.Controls.KinectRegion.KinectSensorProperty, regionSensorBinding);
 
             //generating trees
             Canvas[] tree = new Canvas[treesCount];

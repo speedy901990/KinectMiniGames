@@ -1,19 +1,26 @@
-﻿namespace KinectMiniGames
+﻿using System.Windows.Controls;
+using ApplesGame;
+using Microsoft.Kinect;
+using Microsoft.Kinect.Toolkit;
+using Microsoft.Kinect.Toolkit.Controls;
+
+namespace KinectMiniGames
 {
-    using System.Windows.Controls;
-    using ApplesGame;
+    
     /// <summary>
     /// Interaction logic for ApplesGameConfigPage.xaml
     /// </summary>
     public partial class ApplesGameConfigPage : UserControl
     {
+        KinectSensorChooser kinectSensor;
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectionDisplay"/> class. 
         /// </summary>
         /// <param name="itemId">ID of the item that was selected</param>
-        public ApplesGameConfigPage(string itemId)
+        public ApplesGameConfigPage(string itemId, KinectSensorChooser kinectSensor)
         {
             this.InitializeComponent();
+            this.kinectSensor = kinectSensor;
 
             //this.messageTextBlock.Text = string.Format(CultureInfo.CurrentCulture, KinectMiniGames.Properties.Resources.SelectedMessage, itemId);
         }
@@ -33,6 +40,7 @@
         {
             ApplesGameConfig config = new ApplesGameConfig();
             config = (ApplesGameConfig)this.FindResource("applesGameConfig");
+            config.PassedKinectSensorChooser = this.kinectSensor;
             ApplesGame.MainWindow window = new ApplesGame.MainWindow(config);
             window.Show();
         }

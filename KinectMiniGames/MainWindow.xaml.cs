@@ -170,13 +170,13 @@ namespace KinectMiniGames
             var button = (KinectTileButton)e.OriginalSource;
             if (button.Label == "Apples Game")
             {
-                var applesConfigPage = new ApplesGameConfigPage(button.Label as string);
+                var applesConfigPage = new ApplesGameConfigPage(button.Label as string, this.sensorChooser);
                 this.kinectRegionGrid.Children.Add(applesConfigPage);
                 e.Handled = true;
             }
             else if (button.Label == "Bubbles Game")
             {
-                var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string);
+                var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, this.sensorChooser);
                 this.kinectRegionGrid.Children.Add(bubblesConfigPage);
                 e.Handled = true;
             }

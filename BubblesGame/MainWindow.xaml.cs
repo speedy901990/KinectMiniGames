@@ -112,11 +112,11 @@ namespace BubblesGame
             this.config = config;
             InitializeComponent();
 
-            SensorChooserUI.KinectSensorChooser = _sensorChooser;
+            SensorChooserUI.KinectSensorChooser = config.PassedKinectSensorChooser;
             _sensorChooser.Start();
 
             // Bind the KinectSensor from the sensorChooser to the KinectSensor on the KinectSensorManager
-            var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = _sensorChooser };
+            var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = config.PassedKinectSensorChooser };
             BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
 
             RestoreWindowState();
@@ -152,7 +152,7 @@ namespace BubblesGame
         private void WindowLoaded(object sender, EventArgs e)
         {
             playfield.ClipToBounds = true;
-
+            
             _dropSize = config.BubblesSize;
             MaxShapes = config.BubblesCount;
             _dropGravity = config.BubblesFallSpeed;
@@ -550,10 +550,11 @@ namespace BubblesGame
             _myFallingThings.DrawFrame(playfield.Children);
             if (_myFallingThings._things.Count == 0 && FallingThings.BubblesFallen > 0)
             {
-                var result =
-                    System.Windows.MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped + "\nZakończyć?", "", MessageBoxButton.YesNo);
-                /*if (result == MessageBoxResult.OK)
-                    this.Close();*/
+                var result = System.Windows.MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
+                if (result == System.Windows.MessageBoxResult.OK)
+                {
+                    this.Close();
+                }
             }
             
             /*foreach (var player in players)

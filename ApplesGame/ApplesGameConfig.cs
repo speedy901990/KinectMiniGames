@@ -1,10 +1,15 @@
-﻿namespace ApplesGame
+﻿using Microsoft.Kinect;
+using Microsoft.Kinect.Toolkit;
+using Microsoft.Kinect.Toolkit.Controls;
+
+namespace ApplesGame
 {
     public class ApplesGameConfig
     {
         private string username;
         private int treesCount;
         private int applesOnTreeCount;
+        private KinectSensorChooser kinectSensor;
 
         public ApplesGameConfig()
         {
@@ -27,6 +32,12 @@
         {
             get { return this.applesOnTreeCount; }
             set { this.applesOnTreeCount = value; }
+        }
+
+        public KinectSensorChooser PassedKinectSensorChooser
+        {
+            get { return this.kinectSensor; }
+            set { this.kinectSensor = value; }
         }
     }
 }
