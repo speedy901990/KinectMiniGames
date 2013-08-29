@@ -38,15 +38,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Kinect\v1.7\Assemblies\Microsoft.Kinect.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Kinect.Toolkit">
-      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Kinect\Developer Toolkit v1.7.0\Assemblies\Microsoft.Kinect.Toolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Kinect.Toolkit.Controls">
-      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Kinect\Developer Toolkit v1.7.0\Assemblies\Microsoft.Kinect.Toolkit.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Kinect.Toolkit.Interaction">
-      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Kinect\Developer Toolkit v1.7.0\Assemblies\Microsoft.Kinect.Toolkit.Interaction.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -74,6 +65,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Apple.cs" />
+    <Compile Include="ApplesGameConfig.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -110,6 +102,14 @@
     <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
       <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>
       <Name>Microsoft.Samples.Kinect.WpfViewers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj">
+      <Project>{4508c4d1-85bb-4f3f-9e3b-cc93d231c65d}</Project>
+      <Name>Microsoft.Kinect.Toolkit.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Kinect.Toolkit\Microsoft.Kinect.Toolkit.csproj">
+      <Project>{c6f9c31b-6130-4443-a5cc-ef0664552ecd}</Project>
+      <Name>Microsoft.Kinect.Toolkit</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

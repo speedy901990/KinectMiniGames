@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace ApplesGame
 {
@@ -51,6 +48,10 @@ namespace ApplesGame
             {
                 return this.color;
             }
+            set
+            {
+                this.color = value;
+            }
         }
 
         public Ellipse Figure
@@ -74,19 +75,13 @@ namespace ApplesGame
             
             //Setting random position and size of the apple
             Pos = new Point(rand.Next(xMin, xMax),rand.Next(yMin, yMax));
-            Size = rand.Next(40, 60);
+            Size = rand.Next(80, 100);
             
-            //Creating Ellipse colored with SolidColorBrush
+            //Creating Ellipse filled with image
             Figure = new Ellipse();
-            SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-
             //Coloring (1 - red, 2 - green, 3 - yellow)
             int colorTemp = rand.Next(1, 4);
-            setColor(colorTemp); 
-            mySolidColorBrush.Color = Color;
-            figure.Fill = mySolidColorBrush;
-            figure.StrokeThickness = 2;
-            figure.Stroke = Brushes.Black;
+            setAppleGraphics(colorTemp); 
 
             // Set the width and height of the Ellipse.
             figure.Width = Size;
@@ -97,27 +92,44 @@ namespace ApplesGame
         }
 
         #region setters
-        private void setColor(int colourParam)
+        private void setAppleGraphics(int colourParam)
         {
+            ImageBrush appleImage;
             switch (colourParam)
             {
                 //Red
                 case 1:
-                    color = Color.FromArgb(255, 255, 0, 0);
+                    Color = Colors.Red;
+                    appleImage = new ImageBrush();
+                    appleImage.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
+                    figure.Fill = appleImage;
                     break;
                 
                 //Green
                 case 2:
-                    color = Color.FromArgb(255, 0, 255, 0);
+                    Color = Colors.Green;
+                    appleImage = new ImageBrush();
+                    appleImage.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_apple.png", UriKind.Relative));
+                    figure.Fill = appleImage;
                     break;
                 
                 //Yellow
                 case 3:
-                    color = Color.FromArgb(255, 255, 255, 0);
+                    Color = Colors.Yellow;
+                    appleImage = new ImageBrush();
+                    appleImage.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_apple.png", UriKind.Relative));
+                    figure.Fill = appleImage;
                     break;
                 
                 default:
-                    color = Color.FromArgb(255, 255, 0, 0);
+                    Color = Colors.Red;
+                    appleImage = new ImageBrush();
+                    appleImage.ImageSource =
+                        new BitmapImage(new Uri(@"/../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
+                    figure.Fill = appleImage;
                     break;
             }
         }

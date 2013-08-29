@@ -8,13 +8,14 @@
         Title="ApplesGame"
         x:Name="ApplesGame"
         Closing="WindowClosing"
+        KeyDown="ApplesGame_KeyDown"
         mc:Ignorable="d"
         d:DesignWidth="1920"
         d:DesignHeight="1080"
         MinWidth="800"
         MinHeight="600"
         FontFamily="Segoe UI"
-        >
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
     <Viewbox>
         <Grid x:Name="LayoutRoot" Width="1920" Height="1080">
             <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="sensorChooserUI" Margin="940,0" />
@@ -29,12 +30,7 @@
                             </LinearGradientBrush>
                         </Canvas.Background>
                         <k:KinectUserViewer HorizontalAlignment="Right" Height="100" VerticalAlignment="Top" Width="200" Margin="0,50,50,0"/>
-                        <Canvas x:Name="Tree1" Background="Green" Width="500" Height="600" Margin="20,100,0,0" HorizontalAlignment="Left">
-                        </Canvas>
-                        <Canvas x:Name="Tree2" Background="Green" Width="500" Height="600" Margin="700,100,0,0" HorizontalAlignment="Center">
-                        </Canvas>
-                        <Canvas x:Name="Tree3" Background="Green" Width="500" Height="600" Margin="1400,100,0,0" HorizontalAlignment="Right">
-                        </Canvas>
+                        
                     </Canvas>
                 </Grid>
             </k:KinectRegion>
