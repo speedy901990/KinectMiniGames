@@ -8,12 +8,13 @@
 // hit testing against a set of segments provided by the Kinect NUI, and
 // have shapes react accordingly.
 
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+
 namespace BubblesGame.Utils
 {
     using System;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Media;
     using Microsoft.Kinect;
 
     [Flags]
@@ -169,10 +170,10 @@ namespace BubblesGame.Utils
 
     // BannerText generates a scrolling or still banner of text (along the bottom of the screen).
     // Only one banner exists at a time.  Calling NewBanner() will erase the old one and start the new one.
-    /*public class BannerText
+    public class BannerText
     {
         private readonly Color color;
-        private readonly string text;
+        private readonly string _text;
         private readonly bool doScroll;
         private static BannerText myBannerText;
         private Brush brush;
@@ -183,7 +184,7 @@ namespace BubblesGame.Utils
 
         public BannerText(string s, Rect rect, bool scroll, Color col)
         {
-            text = s;
+            _text = s;
             boundsRect = rect;
             doScroll = scroll;
             brush = null;
@@ -234,7 +235,7 @@ namespace BubblesGame.Utils
 
             if (label == null)
             {
-                //label = FallingThings.MakeSimpleLabel(text, boundsRect, brush);
+                label = FallingThings.MakeSimpleLabel(_text, boundsRect, brush);
                 if (doScroll)
                 {
                     label.FontSize = Math.Max(20, boundsRect.Height / 30);
@@ -243,7 +244,7 @@ namespace BubblesGame.Utils
                 else
                 {
                     label.FontSize = Math.Min(
-                        Math.Max(10, boundsRect.Width * 2 / text.Length), Math.Max(10, boundsRect.Height / 20));
+                        Math.Max(10, boundsRect.Width * 2 / _text.Length), Math.Max(10, boundsRect.Height / 20));
                 }
 
                 label.VerticalContentAlignment = VerticalAlignment.Bottom;
@@ -268,5 +269,5 @@ namespace BubblesGame.Utils
 
             return label;
         }
-    }*/
+    }
 }

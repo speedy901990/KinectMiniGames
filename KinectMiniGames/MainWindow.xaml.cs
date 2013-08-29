@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using Microsoft.Kinect;
@@ -13,7 +12,7 @@ namespace KinectMiniGames
     /// </summary>
     public partial class MainWindow
     {
-        public int gamesCount = 4;
+        public int gamesCount = 2;
 
         public static readonly DependencyProperty PageLeftEnabledProperty = DependencyProperty.Register(
             "PageLeftEnabled", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
@@ -37,7 +36,7 @@ namespace KinectMiniGames
             // initialize the sensor chooser and UI
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
-            //this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
+            this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
 
             // Bind the sensor chooser's current sensor to the KinectRegion
@@ -48,13 +47,21 @@ namespace KinectMiniGames
             this.wrapPanel.Children.Clear();
 
             // Add in display content
-            for (var index = 0; index < gamesCount; ++index)
+            var bApplesGame = new KinectTileButton { Label = "Apples Game"};
+            bApplesGame.Width = 450;
+            bApplesGame.Height = 450;
+            this.wrapPanel.Children.Add(bApplesGame);
+            var bBubblesGame = new KinectTileButton { Label = "Bubbles Game"};
+            bBubblesGame.Width = 450;
+            bBubblesGame.Height = 450;
+            this.wrapPanel.Children.Add(bBubblesGame);
+            /*for (var index = 0; index < gamesCount; ++index)
             {
                 var button = new KinectTileButton { Label = "Game " + (index + 1).ToString(CultureInfo.CurrentCulture) };
                 button.Width = 450;
                 button.Height = 450;
                 this.wrapPanel.Children.Add(button);
-            }
+            }*/
 
             // Bind listner to scrollviwer scroll position change, and check scroll viewer position
             this.UpdatePagingButtonState();
@@ -161,9 +168,18 @@ namespace KinectMiniGames
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
             var button = (KinectTileButton)e.OriginalSource;
-            var selectionDisplay = new SelectionDisplay(button.Label as string);
-            this.kinectRegionGrid.Children.Add(selectionDisplay);
-            e.Handled = true;
+            if (button.Label == "Apples Game")
+            {
+                var applesConfigPage = new ApplesGameConfigPage(button.Label as string, this.sensorChooser);
+                this.kinectRegionGrid.Children.Add(applesConfigPage);
+                e.Handled = true;
+            }
+            else if (button.Label == "Bubbles Game")
+            {
+                var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, this.sensorChooser);
+                this.kinectRegionGrid.Children.Add(bubblesConfigPage);
+                e.Handled = true;
+            }
         }
 
         /// <summary>
@@ -193,6 +209,12 @@ namespace KinectMiniGames
         {
             this.PageLeftEnabled = scrollViewer.HorizontalOffset > ScrollErrorMargin;
             this.PageRightEnabled = scrollViewer.HorizontalOffset < scrollViewer.ScrollableWidth - ScrollErrorMargin;
+        }
+
+        private void key_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Escape)
+                this.Close();
         }
     }
 }

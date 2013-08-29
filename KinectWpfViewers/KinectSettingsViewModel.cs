@@ -8,7 +8,6 @@ namespace Microsoft.Samples.Kinect.WpfViewers
 {
     using System;
     using System.Collections.ObjectModel;
-    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
     using System.Windows.Data;

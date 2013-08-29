@@ -8,10 +8,8 @@ namespace Microsoft.Samples.Kinect.WpfViewers
 {
     using System;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Input;
-    using Microsoft.Kinect;
 
     /// <summary>
     /// Interaction logic for KinectSettings.xaml

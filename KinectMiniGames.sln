@@ -2,8 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectMiniGames", "KinectMiniGames\KinectMiniGames.csproj", "{5587CB0F-49EA-40E9-A567-1C4738554519}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4DE23893-27E7-423F-9BB6-BA21DAC2C45E} = {4DE23893-27E7-423F-9BB6-BA21DAC2C45E}
+		{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815} = {E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplesGame", "ApplesGame\ApplesGame.csproj", "{AA1F470E-60F4-4DAF-89E9-DCB1794D26BC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C6F9C31B-6130-4443-A5CC-EF0664552ECD} = {C6F9C31B-6130-4443-A5CC-EF0664552ECD}
+		{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D} = {4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubblesGame2", "BubblesGame2\BubblesGame2.csproj", "{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}"
 EndProject

@@ -211,7 +211,7 @@ namespace BubblesGame.Speech
             {
                 recognizer = new SpeechRecognizer();
             }
-            catch (Exception)
+            catch
             {
                 // speech prereq isn't installed. a null recognizer will be handled properly by the app.
             }
@@ -408,7 +408,7 @@ namespace BubblesGame.Speech
             }
 
             // Look for a match in the order of the lists below, first match wins.
-            List<Dictionary<string, WhatSaid>> allDicts = new List<Dictionary<string, WhatSaid>> { gameplayPhrases, shapePhrases, colorPhrases, singlePhrases };
+            var allDicts = new List<Dictionary<string, WhatSaid>> { gameplayPhrases, shapePhrases, colorPhrases, singlePhrases };
 
             bool found = false;
             for (int i = 0; i < allDicts.Count && !found; ++i)
