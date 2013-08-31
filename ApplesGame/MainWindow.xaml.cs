@@ -22,8 +22,9 @@ namespace ApplesGame
 
         private int treesCount = 3;
         private int applesOnTree = 10;
-
+        bool GripOverButton = false;
         private KinectSensorChooser sensorChooser;
+        private Apple[,] myApple;
 
         public static readonly DependencyProperty KinectSensorManagerProperty =
             DependencyProperty.Register(
@@ -48,7 +49,7 @@ namespace ApplesGame
 
             //generating trees
             Canvas[] tree = new Canvas[treesCount];
-            Apple[,] myApple = new Apple[treesCount, applesOnTree];
+            myApple = new Apple[treesCount, applesOnTree];
             ImageBrush treeBg = new ImageBrush();
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
             for (int i = 0; i < treesCount; i++)
@@ -74,7 +75,7 @@ namespace ApplesGame
                         Width = myApple[i, j].Figure.Width,
                         Margin = myApple[i, j].Figure.Margin,
                         HorizontalAlignment = HorizontalAlignment.Left,
-                        Content = i
+                        Content = Convert.ToString(i) + Convert.ToString(j),
                         //Visibility=Visibility.Hidden
                     };
                     KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
@@ -131,7 +132,7 @@ namespace ApplesGame
                         Width = myApple[i, j].Figure.Width,
                         Margin = myApple[i, j].Figure.Margin,
                         HorizontalAlignment = HorizontalAlignment.Left,
-                        Content = i
+                        Content = Convert.ToString(i) + Convert.ToString(j),
                         //Visibility=Visibility.Hidden
                     };
                     KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
@@ -225,23 +226,27 @@ namespace ApplesGame
 
         private void OnHandPointerGrip(object sender, HandPointerEventArgs handPointerEventArgs)
         {
+            
+            var button = sender as KinectCircleButton;
             if (handPointerEventArgs.HandPointer.IsInGripInteraction == true)
             {
+                GripOverButton = true;
+                KinectRegion.AddQueryInteractionStatusHandler(kinectRegion, OnQuery);
                 KinectRegion.AddHandPointerGripReleaseHandler(kinectRegion, OnHandPointerGripRelase);
-                var button = sender as KinectCircleButton;
-                
+
                 var Tree = button.Parent as Canvas;
                 Tree.Children.Remove(button);
-
+                String ButtonContent = Convert.ToString(button.Content);
+                int TreeNumber = Convert.ToInt32(ButtonContent.Substring(0,1));
+                int AppleNumber = Convert.ToInt32(ButtonContent.Substring(1,ButtonContent.Length-1));
+                Tree.Children.Remove(myApple[TreeNumber,AppleNumber].Figure);
                 handPointerEventArgs.Handled = true;
             }
-
-            //handPointerEventArgs.Handled = true;
         }
 
         private void OnHandPointerGripRelase(object sender, HandPointerEventArgs handPointerEventArgs)
         {
-            if (handPointerEventArgs.HandPointer.IsInGripInteraction == false)
+            if (handPointerEventArgs.HandPointer.IsInGripInteraction == false && GripOverButton == true)
             {
                 var point = handPointerEventArgs.HandPointer.GetPosition(playfield);
 
@@ -252,6 +257,7 @@ namespace ApplesGame
                 playfield.Children.Add(FallingApple.Figure);
                 handPointerEventArgs.Handled = true;
             }
+            GripOverButton = false;
         }
 
         //Variable to track GripInterationStatus
@@ -264,7 +270,6 @@ namespace ApplesGame
             {
                 isGripinInteraction = true;
                 handPointerEventArgs.IsInGripInteraction = true;
-                //OnHandPointerGrip(sender, handPointerEventArgs);
             }
 
            //If Grip Release detected change the cursor image to open
