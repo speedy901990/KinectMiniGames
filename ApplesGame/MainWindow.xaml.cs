@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Animation;
 
 namespace ApplesGame
 {
@@ -22,9 +23,13 @@ namespace ApplesGame
 
         private int treesCount = 3;
         private int applesOnTree = 10;
-        bool GripOverButton = false;
-        private KinectSensorChooser sensorChooser;
+        private int basketCount = 3;
+        private bool GripOverButton = false;
         private Apple[,] myApple;
+        private Apple GripApple = new Apple(0, 0, 0, 0);
+        private int Treenum;
+
+        private KinectSensorChooser sensorChooser;
 
         public static readonly DependencyProperty KinectSensorManagerProperty =
             DependencyProperty.Register(
@@ -40,7 +45,7 @@ namespace ApplesGame
             // initialize the sensor chooser and UI
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
-            this.sensorChooserUI.KinectSensorChooser = this.sensorChooser;
+            this.SensorChooserUI.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
 
             // Bind the sensor chooser's current sensor to the KinectRegion
@@ -52,6 +57,9 @@ namespace ApplesGame
             myApple = new Apple[treesCount, applesOnTree];
             ImageBrush treeBg = new ImageBrush();
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
+            Canvas[] basket = new Canvas[basketCount];
+            ImageBrush baskeBg = new ImageBrush();
+            baskeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
             for (int i = 0; i < treesCount; i++)
             {
                 tree[i] = new Canvas();
@@ -81,11 +89,19 @@ namespace ApplesGame
                     KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
                     KinectRegion.AddHandPointerGripHandler(button, OnHandPointerGrip);
                     tree[i].Children.Add(button);
-
                 }
             }
-
-
+            for (int i = 0; i < basketCount; i++)
+            {
+                basket[i] = new Canvas();
+                basket[i].Width = 400;
+                basket[i].Height = 400;
+                Canvas.SetLeft(basket[i], (i * (tree[i].Width) + basket[i].Width / 2 - 75));
+                Canvas.SetBottom(basket[i], 0);
+                basket[i].Name = "basket" + i;
+                playfield.Children.Add(basket[i]);
+                basket[i].Background = baskeBg;
+            }
         }
 
         public MainWindow(ApplesGameConfig config)
@@ -97,18 +113,20 @@ namespace ApplesGame
             // initialize the sensor chooser and UI
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
-            this.sensorChooserUI.KinectSensorChooser = this.sensorChooser;
+            this.SensorChooserUI.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
 
             // Bind the sensor chooser's current sensor to the KinectRegion
             var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
-
             //generating trees
             Canvas[] tree = new Canvas[treesCount];
-            Apple[,] myApple = new Apple[treesCount, applesOnTree];
+            myApple = new Apple[treesCount, applesOnTree];
             ImageBrush treeBg = new ImageBrush();
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
+            Canvas[] basket = new Canvas[basketCount];
+            ImageBrush baskeBg = new ImageBrush();
+            baskeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
             for (int i = 0; i < treesCount; i++)
             {
                 tree[i] = new Canvas();
@@ -140,7 +158,17 @@ namespace ApplesGame
                     tree[i].Children.Add(button);
                 }
             }
-
+            for (int i = 0; i < basketCount; i++)
+            {
+                basket[i] = new Canvas();
+                basket[i].Width = 400;
+                basket[i].Height = 400;
+                Canvas.SetLeft(basket[i], (i * (tree[i].Width) + basket[i].Width / 2 - 75));
+                Canvas.SetBottom(basket[i], 0);
+                basket[i].Name = "basket" + i;
+                playfield.Children.Add(basket[i]);
+                basket[i].Background = baskeBg;
+            }
         }
 
         //private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -226,7 +254,7 @@ namespace ApplesGame
 
         private void OnHandPointerGrip(object sender, HandPointerEventArgs handPointerEventArgs)
         {
-            
+
             var button = sender as KinectCircleButton;
             if (handPointerEventArgs.HandPointer.IsInGripInteraction == true)
             {
@@ -237,28 +265,49 @@ namespace ApplesGame
                 var Tree = button.Parent as Canvas;
                 Tree.Children.Remove(button);
                 String ButtonContent = Convert.ToString(button.Content);
-                int TreeNumber = Convert.ToInt32(ButtonContent.Substring(0,1));
-                int AppleNumber = Convert.ToInt32(ButtonContent.Substring(1,ButtonContent.Length-1));
-                Tree.Children.Remove(myApple[TreeNumber,AppleNumber].Figure);
+                int TreeNumber = Convert.ToInt32(ButtonContent.Substring(0, 1));
+                int AppleNumber = Convert.ToInt32(ButtonContent.Substring(1, ButtonContent.Length - 1));
+                GripApple = myApple[TreeNumber, AppleNumber];
+                Tree.Children.Remove(myApple[TreeNumber, AppleNumber].Figure);
+                Treenum = TreeNumber;
                 handPointerEventArgs.Handled = true;
             }
         }
-
         private void OnHandPointerGripRelase(object sender, HandPointerEventArgs handPointerEventArgs)
         {
             if (handPointerEventArgs.HandPointer.IsInGripInteraction == false && GripOverButton == true)
             {
                 var point = handPointerEventArgs.HandPointer.GetPosition(playfield);
-
-                int x = Convert.ToInt32(point.X);
-                int y = Convert.ToInt32(point.Y);
-
-                Apple FallingApple = new Apple(x, x, y, y);
-                playfield.Children.Add(FallingApple.Figure);
+                Apple MovingApple = new Apple(GripApple, point.X, point.Y);
+                playfield.Children.Add(MovingApple.Figure);
+                MoveTo(MovingApple, GripApple.Pos.X, GripApple.Pos.Y, point.X, point.Y);
                 handPointerEventArgs.Handled = true;
             }
             GripOverButton = false;
         }
+
+        public void MoveTo(Apple target, double NewX, double NewY, double HandX, double HandY)
+        {
+            TranslateTransform trans = new TranslateTransform();
+            target.Figure.RenderTransform = trans;
+            //tree[] Canvas and [0,0] differences
+            NewX += ((windowWidth - 300) / treesCount) * Treenum;
+            NewY += (windowHeight - 1000);
+
+
+
+            //ActualHand and [0,0] differences
+            NewX -= HandX;
+            NewY -= HandY;
+
+            NewY -= target.Size;
+            NewX += target.Size / 2;
+            DoubleAnimation anim1 = new DoubleAnimation(0, NewX, TimeSpan.FromSeconds(1));
+            DoubleAnimation anim2 = new DoubleAnimation(0, NewY, TimeSpan.FromSeconds(1));
+            trans.BeginAnimation(TranslateTransform.XProperty, anim1);
+            trans.BeginAnimation(TranslateTransform.YProperty, anim2);
+        }
+
 
         //Variable to track GripInterationStatus
         bool isGripinInteraction = false;
