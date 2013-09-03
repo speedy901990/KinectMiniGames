@@ -23,10 +23,11 @@ namespace ApplesGame
 
         private int treesCount = 3;
         private int applesOnTree = 10;
+        private int appleSize = 150;
         private int basketCount = 3;
         private bool GripOverButton = false;
-        private Apple[,] myApple;
-        private Apple GripApple = new Apple(0, 0, 0, 0);
+        private Apple[] myApple;
+        private Apple GripApple = new Apple(new Point(0,0), new Point(0,0),150,0,0);
         private int Treenum;
 
         private KinectSensorChooser sensorChooser;
@@ -38,6 +39,7 @@ namespace ApplesGame
                 typeof(MainWindow),
                 new PropertyMetadata(null));
 
+
         public MainWindow()
         {
             this.InitializeComponent();
@@ -45,83 +47,45 @@ namespace ApplesGame
             // initialize the sensor chooser and UI
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
-            this.SensorChooserUI.KinectSensorChooser = this.sensorChooser;
+            this.sensorChooserUI.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
 
             // Bind the sensor chooser's current sensor to the KinectRegion
             var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
 
-            //generating trees
-            Canvas[] tree = new Canvas[treesCount];
-            myApple = new Apple[treesCount, applesOnTree];
-            ImageBrush treeBg = new ImageBrush();
-            treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
-            Canvas[] basket = new Canvas[basketCount];
-            ImageBrush baskeBg = new ImageBrush();
-            baskeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
-            for (int i = 0; i < treesCount; i++)
-            {
-                tree[i] = new Canvas();
-                tree[i].Width = (windowWidth - 300) / treesCount;
-                tree[i].Height = 1000;
-                Canvas.SetLeft(tree[i], (i * tree[i].Width + 50));
-                tree[i].Name = "tree" + i;
-                playfield.Children.Add(tree[i]);
-                tree[i].Background = treeBg;
-                for (int j = 0; j < applesOnTree; j++)
-                {
-                    //add apple (minX,maxX,minY,maxY)
-                    myApple[i, j] = new Apple(50, (int)(tree[i].Width) - 80,
-                        80, (int)(tree[i].Height) - 400);
-                    tree[i].Children.Add(myApple[i, j].Figure);
-
-                    //add button
-                    var button = new KinectCircleButton
-                    {
-                        Height = myApple[i, j].Figure.Height,
-                        Width = myApple[i, j].Figure.Width,
-                        Margin = myApple[i, j].Figure.Margin,
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        Content = Convert.ToString(i) + Convert.ToString(j),
-                        //Visibility=Visibility.Hidden
-                    };
-                    KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
-                    KinectRegion.AddHandPointerGripHandler(button, OnHandPointerGrip);
-                    tree[i].Children.Add(button);
-                }
-            }
-            for (int i = 0; i < basketCount; i++)
-            {
-                basket[i] = new Canvas();
-                basket[i].Width = 400;
-                basket[i].Height = 400;
-                Canvas.SetLeft(basket[i], (i * (tree[i].Width) + basket[i].Width / 2 - 75));
-                Canvas.SetBottom(basket[i], 0);
-                basket[i].Name = "basket" + i;
-                playfield.Children.Add(basket[i]);
-                basket[i].Background = baskeBg;
-            }
+            runGame();
         }
 
         public MainWindow(ApplesGameConfig config)
         {
             treesCount = config.TreesCount;
             applesOnTree = config.ApplesOnTreeCount;
+            basketCount = config.TreesCount;
+
             this.InitializeComponent();
 
             // initialize the sensor chooser and UI
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
-            this.SensorChooserUI.KinectSensorChooser = this.sensorChooser;
+            this.sensorChooserUI.KinectSensorChooser = config.PassedKinectSensorChooser;
             this.sensorChooser.Start();
 
             // Bind the sensor chooser's current sensor to the KinectRegion
-            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
+            var regionSensorBinding = new Binding("Kinect") { Source = config.PassedKinectSensorChooser };
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
+            
+            runGame();
+        }
+
+        private void runGame()
+        {
+            Point rangeMin = new Point();
+            Point rangeMax = new Point();
+
             //generating trees
             Canvas[] tree = new Canvas[treesCount];
-            myApple = new Apple[treesCount, applesOnTree];
+            myApple = new Apple[treesCount * applesOnTree];
             ImageBrush treeBg = new ImageBrush();
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
             Canvas[] basket = new Canvas[basketCount];
@@ -136,23 +100,16 @@ namespace ApplesGame
                 tree[i].Name = "tree" + i;
                 playfield.Children.Add(tree[i]);
                 tree[i].Background = treeBg;
-                for (int j = 0; j < applesOnTree; j++)
-                {
-                    //add apple (minX,maxX,minY,maxY)
-                    myApple[i, j] = new Apple(50, (int)(tree[i].Width) - 80,
-                        80, (int)(tree[i].Height) - 400);
-                    tree[i].Children.Add(myApple[i, j].Figure);
 
-                    //add button
-                    var button = new KinectCircleButton
-                    {
-                        Height = myApple[i, j].Figure.Height,
-                        Width = myApple[i, j].Figure.Width,
-                        Margin = myApple[i, j].Figure.Margin,
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        Content = Convert.ToString(i) + Convert.ToString(j),
-                        //Visibility=Visibility.Hidden
-                    };
+                rangeMin.X = 50.0;
+                rangeMin.Y = 80.0;
+                rangeMax.X = (double)(tree[i].Width) - 80;
+                rangeMax.Y = (double)(tree[i].Height) - 400;
+                for (int j = i*applesOnTree; j < applesOnTree * (i+1); j++)
+                {
+                    myApple[j] = new Apple(rangeMin, rangeMax, appleSize, j, i);
+                    
+                    var button = myApple[j].Figure;
                     KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
                     KinectRegion.AddHandPointerGripHandler(button, OnHandPointerGrip);
                     tree[i].Children.Add(button);
@@ -258,18 +215,17 @@ namespace ApplesGame
             var button = sender as KinectCircleButton;
             if (handPointerEventArgs.HandPointer.IsInGripInteraction == true)
             {
+                int buttonContent;
                 GripOverButton = true;
                 KinectRegion.AddQueryInteractionStatusHandler(kinectRegion, OnQuery);
                 KinectRegion.AddHandPointerGripReleaseHandler(kinectRegion, OnHandPointerGripRelase);
 
                 var Tree = button.Parent as Canvas;
                 Tree.Children.Remove(button);
-                String ButtonContent = Convert.ToString(button.Content);
-                int TreeNumber = Convert.ToInt32(ButtonContent.Substring(0, 1));
-                int AppleNumber = Convert.ToInt32(ButtonContent.Substring(1, ButtonContent.Length - 1));
-                GripApple = myApple[TreeNumber, AppleNumber];
-                Tree.Children.Remove(myApple[TreeNumber, AppleNumber].Figure);
-                Treenum = TreeNumber;
+                buttonContent = (int)button.Content;
+                GripApple = myApple[buttonContent];
+                Tree.Children.Remove(myApple[buttonContent].Figure);
+                Treenum = GripApple.TreeNumber;
                 handPointerEventArgs.Handled = true;
             }
         }

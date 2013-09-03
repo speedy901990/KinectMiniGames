@@ -1,8 +1,8 @@
 using System;
-using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Microsoft.Kinect.Toolkit.Controls;
 
 namespace ApplesGame
 {
@@ -13,75 +13,69 @@ namespace ApplesGame
         private int size;
         private Point pos; 
         private Color color;
-        private Ellipse figure;
+        private KinectCircleButton figure;
+        private int number;
+        private int treeNumber;
+
         #endregion private fields
 
         #region accessors
+        public int TreeNumber
+        {
+            get { return this.treeNumber; }
+            set { this.treeNumber = value; }
+        }
+
+        public int Number
+        {
+            get { return this.number; }
+            set { this.number = value; }
+        }
 
         public int Size
         {
-            get
-            {
-                return this.size;
-            }
-            set
-            {
-                this.size = value;
-            }
+            get { return this.size; }
+            set { this.size = value; }
         }
 
         public Point Pos
         {
-            get
-            {
-                return this.pos;
-            }
-            set
-            {
-                pos = value;
-            }
+            get { return this.pos; }
+            set { this.pos = value; }
         }
 
         public Color Color
         {
-            get
-            {
-                return this.color;
-            }
-            set
-            {
-                this.color = value;
-            }
+            get {return this.color;}
+            set {this.color = value;}
         }
 
-        public Ellipse Figure
+        public KinectCircleButton Figure
         {
-            get
-            {
-                return this.figure;
-            }
-            set
-            {
-                this.figure = value;
-            }
+            get { return this.figure;}
+            set {this.figure = value;}
         }
         #endregion accessors
 
         //Constructor take parameters that describe the range
         //to generate apples
-        public Apple(int xMin, int xMax, int yMin, int yMax)
+        public Apple(Point rangeMin, Point rangeMax, int appleSize, int appleNumber, int tree)
         {
             System.Random rand = new Random(Guid.NewGuid().GetHashCode());
-            
+
             //Setting random position and size of the apple
-            Pos = new Point(rand.Next(xMin, xMax),rand.Next(yMin, yMax));
-            Size = rand.Next(80, 100);
-            
+            Pos = new Point(rand.Next((int)rangeMin.X, (int)rangeMax.X),
+                            rand.Next((int)rangeMin.Y, (int)rangeMax.Y));
+            Size = appleSize;
+
+            Number = appleNumber;
+            TreeNumber = tree;
+
             //Creating Ellipse filled with image
-            Figure = new Ellipse();
+            Figure = new KinectCircleButton();
             //Coloring (1 - red, 2 - green, 3 - yellow)
             int colorTemp = rand.Next(1, 4);
-            setAppleGraphics(colorTemp); 
+            setAppleGraphics(colorTemp);
 
             // Set the width and height of the Ellipse.
             figure.Width = Size;
@@ -89,6 +83,9 @@ namespace ApplesGame
 
             // Set position of figure
             figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
+            figure.HorizontalAlignment = HorizontalAlignment.Left;
+            figure.Content = Number;
+            figure.BorderThickness = new Thickness(0,0,0,0);
         }
 
         public Apple(Apple target, double x, double y)
@@ -99,7 +96,7 @@ namespace ApplesGame
             Size = target.Size;
 
             //Creating Ellipse filled with image
-            Figure = new Ellipse();
+            Figure = new KinectCircleButton();
             
 
             if (target.Color == Colors.Red)
@@ -115,9 +112,10 @@ namespace ApplesGame
 
             // Set position of figure
             figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
+            figure.HorizontalAlignment = HorizontalAlignment.Left;
+            figure.Content = target.Number;
         }
 
-        #region setters
         private void setAppleGraphics(int colourParam)
         {
             ImageBrush appleImage;
@@ -129,7 +127,7 @@ namespace ApplesGame
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
-                    figure.Fill = appleImage;
+                    figure.Background = appleImage;
                     break;
                 
                 //Green
@@ -138,7 +136,7 @@ namespace ApplesGame
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_apple.png", UriKind.Relative));
-                    figure.Fill = appleImage;
+                    figure.Background = appleImage;
                     break;
                 
                 //Yellow
@@ -147,7 +145,7 @@ namespace ApplesGame
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_apple.png", UriKind.Relative));
-                    figure.Fill = appleImage;
+                    figure.Background = appleImage;
                     break;
                 
                 default:
@@ -155,12 +153,9 @@ namespace ApplesGame
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"/../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
-                    figure.Fill = appleImage;
+                    figure.Background = appleImage;
                     break;
             }
         }
-        #endregion setters
-
-
     }
 }
