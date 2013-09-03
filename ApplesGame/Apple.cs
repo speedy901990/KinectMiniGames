@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows;
@@ -82,6 +82,32 @@ namespace ApplesGame
             //Coloring (1 - red, 2 - green, 3 - yellow)
             int colorTemp = rand.Next(1, 4);
             setAppleGraphics(colorTemp); 
+
+            // Set the width and height of the Ellipse.
+            figure.Width = Size;
+            figure.Height = Size;
+
+            // Set position of figure
+            figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
+        }
+
+        public Apple(Apple target, double x, double y)
+        {
+
+            //Setting point 
+            Pos = new Point(x, y);
+            Size = target.Size;
+
+            //Creating Ellipse filled with image
+            Figure = new Ellipse();
+            
+
+            if (target.Color == Colors.Red)
+                setAppleGraphics(1); 
+            if (target.Color == Colors.Green)
+                setAppleGraphics(2); 
+            if (target.Color == Colors.Yellow)
+                setAppleGraphics(3);
 
             // Set the width and height of the Ellipse.
             figure.Width = Size;
