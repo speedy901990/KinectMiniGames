@@ -237,6 +237,8 @@ namespace ApplesGame
                 Apple MovingApple = new Apple(GripApple, point.X, point.Y);
                 playfield.Children.Add(MovingApple.Figure);
                 MoveTo(MovingApple, GripApple.Pos.X, GripApple.Pos.Y, point.X, point.Y);
+                KinectRegion.AddQueryInteractionStatusHandler(MovingApple.Figure, OnQuery);
+                KinectRegion.AddHandPointerGripHandler(MovingApple.Figure, OnHandPointerGrip);
                 handPointerEventArgs.Handled = true;
             }
             GripOverButton = false;
