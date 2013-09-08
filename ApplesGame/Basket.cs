@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace ApplesGame
 {
@@ -21,6 +22,8 @@ namespace ApplesGame
         private Point endPosition;
         private int basketNumber;
         private Canvas figure;
+
+        #region accessors
         public Point Position
         {
             get { return this.position; }
@@ -30,6 +33,11 @@ namespace ApplesGame
         {
             get { return this.endPosition; }
             set { this.endPosition = value; }
+        }
+        public Color Color
+        {
+            get { return this.color; }
+            set { this.color = value; }
         }
         public Canvas Figure
         {
@@ -41,6 +49,7 @@ namespace ApplesGame
             get { return this.colorNumber; }
             set { this.colorNumber = value; }
         }
+        #endregion accessors
 
         public Basket(int parWidth, int parHeight, Point parPosition, int parColor)
         {
@@ -57,9 +66,17 @@ namespace ApplesGame
             Figure.Width = width;
             Figure.Margin = new Thickness(Position.X, Position.Y, 0, 0);
             Figure.HorizontalAlignment = HorizontalAlignment.Left;
-
+            
             setGraphics(parColor);
 
+            // temporary colored rectangle to basket
+            // it will be deleted when colored graphics will be ready
+            Rectangle tempRectangle = new Rectangle();
+            tempRectangle.Fill = new SolidColorBrush(this.Color);
+            tempRectangle.Width = 100;
+            tempRectangle.Height = 100;
+            tempRectangle.Margin = new Thickness(150,150,0,0);
+            Figure.Children.Add(tempRectangle);
         }
 
         private void setGraphics(int colourParam)

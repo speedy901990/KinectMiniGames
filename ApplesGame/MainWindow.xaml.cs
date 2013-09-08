@@ -27,6 +27,7 @@ namespace ApplesGame
         private int basketCount = 3;
         private bool GripOverButton = false;
         private Apple[] myApple;
+        private Basket[] basket;
         private Apple GripApple = new Apple(new Point(0,0), new Point(0,0),150,0,0);
         private int Treenum;
 
@@ -88,14 +89,14 @@ namespace ApplesGame
             myApple = new Apple[treesCount * applesOnTree];
             ImageBrush treeBg = new ImageBrush();
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
-            Basket[] basket = new Basket[basketCount];
-            ImageBrush baskeBg = new ImageBrush();
-            baskeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
+            
+            basket = new Basket[basketCount];
             for (int i = 0; i < treesCount; i++)
             {
                 tree[i] = new Canvas();
                 tree[i].Width = (windowWidth - 300) / treesCount;
-                tree[i].Height = 1000;
+                tree[i].Height = 800;
+                Canvas.SetTop(tree[i], 50);
                 Canvas.SetLeft(tree[i], (i * tree[i].Width + 50));
                 tree[i].Name = "tree" + i;
                 playfield.Children.Add(tree[i]);
@@ -118,7 +119,7 @@ namespace ApplesGame
             for (int i = 0; i < basketCount; i++)
             {
                 double x = (windowWidth / basketCount) * i;
-                double y = windowHeight - 600;
+                double y = windowHeight - 400;
                 Point basketPosition = new Point((int)x, (int)y);
                 System.Random rand = new Random(Guid.NewGuid().GetHashCode());
                 int basketColor = rand.Next(1,4);
@@ -256,13 +257,30 @@ namespace ApplesGame
         {
             if (handPointerEventArgs.HandPointer.IsInGripInteraction == false && GripOverButton == true)
             {
-                var point = handPointerEventArgs.HandPointer.GetPosition(playfield);
-                Apple MovingApple = new Apple(GripApple, point.X, point.Y);
-                playfield.Children.Add(MovingApple.Figure);
-                MoveTo(MovingApple, GripApple.Pos.X, GripApple.Pos.Y, point.X, point.Y);
-                KinectRegion.AddQueryInteractionStatusHandler(MovingApple.Figure, OnQuery);
-                KinectRegion.AddHandPointerGripHandler(MovingApple.Figure, OnHandPointerGrip);
-                handPointerEventArgs.Handled = true;
+                bool check = false;
+                Point point = handPointerEventArgs.HandPointer.GetPosition(playfield);
+                for (int i = 0; i < basketCount; i++)
+                 {
+                     if ((point.X >= basket[i].Position.X)
+                         && (point.X <= basket[i].EndPosition.X)
+                         && (point.Y >= basket[i].Position.Y)
+                         && (point.Y <= basket[i].EndPosition.Y)
+                         && GripApple.Color == basket[i].Color)
+                     {
+                         handPointerEventArgs.Handled = true;
+                         check = true;
+                     }
+                 }
+                
+                if (!check)
+                {
+                    Apple MovingApple = new Apple(GripApple, point.X, point.Y);
+                    playfield.Children.Add(MovingApple.Figure);
+                    MoveTo(MovingApple, GripApple.Pos.X, GripApple.Pos.Y, point.X, point.Y);
+                    KinectRegion.AddQueryInteractionStatusHandler(MovingApple.Figure, OnQuery);
+                    KinectRegion.AddHandPointerGripHandler(MovingApple.Figure, OnHandPointerGrip);
+                    handPointerEventArgs.Handled = true;
+                }
             }
             GripOverButton = false;
         }
