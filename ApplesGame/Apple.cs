@@ -84,8 +84,9 @@ namespace ApplesGame
             // Set position of figure
             figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
             figure.HorizontalAlignment = HorizontalAlignment.Left;
-            figure.Content = Number;
-            figure.BorderThickness = new Thickness(0,0,0,0);
+            figure.Name = "Apple" + Number;
+            figure.Content = int.Parse(figure.Name.Substring(5));
+            //figure.BorderThickness =
         }
 
         public Apple(Apple target, double x, double y)

@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Apple.cs" />
     <Compile Include="ApplesGameConfig.cs" />
+    <Compile Include="Basket.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -88,7 +88,7 @@ namespace ApplesGame
             myApple = new Apple[treesCount * applesOnTree];
             ImageBrush treeBg = new ImageBrush();
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
-            Canvas[] basket = new Canvas[basketCount];
+            Basket[] basket = new Basket[basketCount];
             ImageBrush baskeBg = new ImageBrush();
             baskeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
             for (int i = 0; i < treesCount; i++)
@@ -117,14 +117,37 @@ namespace ApplesGame
             }
             for (int i = 0; i < basketCount; i++)
             {
-                basket[i] = new Canvas();
-                basket[i].Width = 400;
-                basket[i].Height = 400;
-                Canvas.SetLeft(basket[i], (i * (tree[i].Width) + basket[i].Width / 2 - 75));
-                Canvas.SetBottom(basket[i], 0);
-                basket[i].Name = "basket" + i;
-                playfield.Children.Add(basket[i]);
-                basket[i].Background = baskeBg;
+                double x = (windowWidth / basketCount) * i;
+                double y = windowHeight - 600;
+                Point basketPosition = new Point((int)x, (int)y);
+                System.Random rand = new Random(Guid.NewGuid().GetHashCode());
+                int basketColor = rand.Next(1,4);
+                if (i != 0)
+                {
+                    bool change;
+                    for ( int j = 0 ; j < i ;)
+                    {
+                        change = false;
+                        if (basketColor == basket[j].ColorNumber)
+                        {
+                            if (basketColor == 3)
+                            {
+                                basketColor--;
+                            }
+                            else
+                            {
+                                basketColor++;
+                            }
+                            change = true;
+                        }
+                        if (change)
+                            j = 0;
+                        else
+                            j++;
+                    }
+                }
+                basket[i] = new Basket(400, 400, basketPosition, basketColor);
+                playfield.Children.Add(basket[i].Figure);
             }
         }
 
