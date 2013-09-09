@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:toolkit="clr-namespace:Microsoft.Kinect.Toolkit;assembly=Microsoft.Kinect.Toolkit"
         Title="Kinect Shape Game" FontStyle="Italic" SizeToContent="WidthAndHeight"
-        Loaded="WindowLoaded" Closed="WindowClosed" Closing="WindowClosing" KeyDown="Window_KeyDown"
+        Loaded="WindowLoaded" Closing="WindowClosing" KeyDown="Window_KeyDown"
         WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Opacity="Infinity" Background="Black">
     <Grid>
         <StackPanel Orientation="Vertical" Background="#FF46BC44">
