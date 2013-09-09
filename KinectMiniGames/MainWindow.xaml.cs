@@ -4,6 +4,8 @@ using System.Windows.Data;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace KinectMiniGames
 {
@@ -32,6 +34,11 @@ namespace KinectMiniGames
         public MainWindow()
         {
             this.InitializeComponent();
+
+            //creating background for menu
+            ImageBrush sky = new ImageBrush(new BitmapImage(new Uri(@"../../../Graphics/Common/sky.png", UriKind.Relative)));
+            sky.Stretch = Stretch.UniformToFill;
+            mainGrid.Background = sky;       
 
             // initialize the sensor chooser and UI
             this.sensorChooser = new KinectSensorChooser();
