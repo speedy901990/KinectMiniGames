@@ -111,6 +111,7 @@ namespace ApplesGame
                     myApple[j] = new Apple(rangeMin, rangeMax, appleSize, j, i);
                     
                     var button = myApple[j].Figure;
+                    button.Foreground = new SolidColorBrush(Colors.Transparent);
                     KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
                     KinectRegion.AddHandPointerGripHandler(button, OnHandPointerGrip);
                     tree[i].Children.Add(button);
