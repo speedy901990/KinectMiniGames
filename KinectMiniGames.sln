@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplesGame", "ApplesGame\Ap
 		{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D} = {4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubblesGame2", "BubblesGame2\BubblesGame2.csproj", "{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Kinect.Toolkit", "Microsoft.Kinect.Toolkit\Microsoft.Kinect.Toolkit.csproj", "{C6F9C31B-6130-4443-A5CC-EF0664552ECD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Kinect.Toolkit.Controls", "Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj", "{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}"
@@ -53,16 +51,6 @@ Global
 		{AA1F470E-60F4-4DAF-89E9-DCB1794D26BC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AA1F470E-60F4-4DAF-89E9-DCB1794D26BC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AA1F470E-60F4-4DAF-89E9-DCB1794D26BC}.Release|x86.ActiveCfg = Release|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{E3C86C95-0154-40B5-B5D5-5BBE46344B4E}.Release|x86.ActiveCfg = Release|Any CPU
 		{C6F9C31B-6130-4443-A5CC-EF0664552ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C6F9C31B-6130-4443-A5CC-EF0664552ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6F9C31B-6130-4443-A5CC-EF0664552ECD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
