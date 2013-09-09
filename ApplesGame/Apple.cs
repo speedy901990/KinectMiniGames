@@ -13,6 +13,7 @@ namespace ApplesGame
         private int size;
         private Point pos; 
         private Color color;
+        private int colorsNumber;
         private KinectCircleButton figure;
         private int number;
         private int treeNumber;
@@ -50,6 +51,11 @@ namespace ApplesGame
             set {this.color = value;}
         }
 
+        public int ColorsNumber
+        {
+            get { return this.colorsNumber; }
+            set { this.colorsNumber = value; }
+        }
         public KinectCircleButton Figure
         {
             get { return this.figure;}
@@ -59,7 +65,7 @@ namespace ApplesGame
 
         //Constructor take parameters that describe the range
         //to generate apples
-        public Apple(Point rangeMin, Point rangeMax, int appleSize, int appleNumber, int tree)
+        public Apple(Point rangeMin, Point rangeMax, int appleSize, int appleNumber, int tree, int parColors)
         {
             System.Random rand = new Random(Guid.NewGuid().GetHashCode());
 
@@ -70,23 +76,23 @@ namespace ApplesGame
 
             Number = appleNumber;
             TreeNumber = tree;
+            ColorsNumber = parColors;
 
             //Creating Ellipse filled with image
             Figure = new KinectCircleButton();
             //Coloring (1 - red, 2 - green, 3 - yellow)
-            int colorTemp = rand.Next(1, 4);
+            int colorTemp = rand.Next(1, ColorsNumber + 1);
             setAppleGraphics(colorTemp);
 
             // Set the width and height of the Ellipse.
-            figure.Width = Size;
-            figure.Height = Size;
+            Figure.Width = Size;
+            Figure.Height = Size;
 
             // Set position of figure
-            figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
-            figure.HorizontalAlignment = HorizontalAlignment.Left;
-            figure.Name = "Apple" + Number;
-            figure.Content = int.Parse(figure.Name.Substring(5));
-            //figure.BorderThickness =
+            Figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
+            Figure.Name = "Apple" + Number;
+            Figure.Content = int.Parse(figure.Name.Substring(5));
+            Figure.Foreground = new SolidColorBrush(Colors.Transparent);
         }
 
         public Apple(Apple target, double x, double y)
@@ -106,15 +112,20 @@ namespace ApplesGame
                 setAppleGraphics(2); 
             if (target.Color == Colors.Yellow)
                 setAppleGraphics(3);
+            if (target.Color == Colors.Orange)
+                setAppleGraphics(4);
+            if (target.Color == Colors.Brown)
+                setAppleGraphics(5);
 
             // Set the width and height of the Ellipse.
-            figure.Width = Size;
-            figure.Height = Size;
+            Figure.Width = target.Size;
+            Figure.Height = target.Size;
 
             // Set position of figure
-            figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
-            figure.HorizontalAlignment = HorizontalAlignment.Left;
-            figure.Content = target.Number;
+            Figure.Margin = new Thickness(Pos.X, Pos.Y, 0, 0);
+            Figure.Name = "Apple" + target.Number;
+            Figure.Content = int.Parse(Figure.Name.Substring(5));
+            Figure.Foreground = new SolidColorBrush(Colors.Transparent);
         }
 
         private void setAppleGraphics(int colourParam)
@@ -128,7 +139,7 @@ namespace ApplesGame
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
-                    figure.Background = appleImage;
+                    Figure.Background = appleImage;
                     break;
                 
                 //Green
@@ -137,7 +148,7 @@ namespace ApplesGame
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_apple.png", UriKind.Relative));
-                    figure.Background = appleImage;
+                    Figure.Background = appleImage;
                     break;
                 
                 //Yellow
@@ -146,7 +157,25 @@ namespace ApplesGame
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_apple.png", UriKind.Relative));
-                    figure.Background = appleImage;
+                    Figure.Background = appleImage;
+                    break;
+
+                //Orange
+                case 4:
+                    Color = Colors.DarkOrange;
+                    appleImage = new ImageBrush();
+                    appleImage.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_apple.png", UriKind.Relative));
+                    Figure.Background = appleImage;
+                    break;
+
+                //Brown
+                case 5:
+                    Color = Colors.Brown;
+                    appleImage = new ImageBrush();
+                    appleImage.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/blue_apple.png", UriKind.Relative));
+                    Figure.Background = appleImage;
                     break;
                 
                 default:
@@ -154,7 +183,7 @@ namespace ApplesGame
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"/../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
-                    figure.Background = appleImage;
+                    Figure.Background = appleImage;
                     break;
             }
         }

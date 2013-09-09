@@ -19,17 +19,19 @@ namespace ApplesGame
     public partial class MainWindow : Window
     {
         private int windowHeight = 1080;
-        private int windowWidth = 1920;
+        private int windowWidth = 1620;
 
         private int treesCount = 3;
-        private int applesOnTree = 10;
+        private int applesOnTree = 5;
         private int appleSize = 150;
+        private int colorsCount = 4;
         private int basketCount = 3;
         private bool GripOverButton = false;
         private Apple[] myApple;
         private Basket[] basket;
-        private Apple GripApple = new Apple(new Point(0,0), new Point(0,0),150,0,0);
+        private Apple GripApple;
         private int Treenum;
+        private Score gameScore;
 
         private KinectSensorChooser sensorChooser;
 
@@ -81,8 +83,24 @@ namespace ApplesGame
 
         private void runGame()
         {
+            ImageBrush bg = new ImageBrush();
+            bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/background.png", UriKind.Relative));
+            kinectRegionGrid.Background = bg;
+
             Point rangeMin = new Point();
             Point rangeMax = new Point();
+
+            if (applesOnTree < 10)
+                appleSize = 200;
+            else if (applesOnTree > 10 && applesOnTree < 20)
+                appleSize = 150;
+            else
+                appleSize = 125;
+
+            basketCount = colorsCount;
+
+            gameScore = new Score(treesCount*applesOnTree);
+            kinectRegionGrid.Children.Add(gameScore.Scoreboard);
 
             //generating trees
             Canvas[] tree = new Canvas[treesCount];
@@ -98,17 +116,18 @@ namespace ApplesGame
                 tree[i].Height = 800;
                 Canvas.SetTop(tree[i], 50);
                 Canvas.SetLeft(tree[i], (i * tree[i].Width + 50));
+                tree[i].Margin = new Thickness((i*0.2*tree[i].Width), 0, 50, 0);
                 tree[i].Name = "tree" + i;
                 playfield.Children.Add(tree[i]);
                 tree[i].Background = treeBg;
 
                 rangeMin.X = 50.0;
                 rangeMin.Y = 80.0;
-                rangeMax.X = (double)(tree[i].Width) - 80;
-                rangeMax.Y = (double)(tree[i].Height) - 400;
+                rangeMax.X = (double)(tree[i].Width) - 100;
+                rangeMax.Y = (double)(tree[i].Height) - 450;
                 for (int j = i*applesOnTree; j < applesOnTree * (i+1); j++)
                 {
-                    myApple[j] = new Apple(rangeMin, rangeMax, appleSize, j, i);
+                    myApple[j] = new Apple(rangeMin, rangeMax, appleSize, j, i, colorsCount);
                     
                     var button = myApple[j].Figure;
                     button.Foreground = new SolidColorBrush(Colors.Transparent);
@@ -123,7 +142,7 @@ namespace ApplesGame
                 double y = windowHeight - 400;
                 Point basketPosition = new Point((int)x, (int)y);
                 System.Random rand = new Random(Guid.NewGuid().GetHashCode());
-                int basketColor = rand.Next(1,4);
+                int basketColor = rand.Next(1, colorsCount+1);
                 if (i != 0)
                 {
                     bool change;
@@ -132,7 +151,7 @@ namespace ApplesGame
                         change = false;
                         if (basketColor == basket[j].ColorNumber)
                         {
-                            if (basketColor == 3)
+                            if (basketColor == colorsCount)
                             {
                                 basketColor--;
                             }
@@ -152,16 +171,6 @@ namespace ApplesGame
                 playfield.Children.Add(basket[i].Figure);
             }
         }
-
-        //private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        //{
-        //    this.sensorChooser = new KinectSensorChooser();
-        //    this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
-        //    this.sensorChooserUI.KinectSensorChooser = this.sensorChooser;
-        //    this.sensorChooser.Start();
-        //    var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
-        //    BindingOperations.SetBinding(this.kinectRegion, Microsoft.Kinect.Toolkit.Controls.KinectRegion.KinectSensorProperty, regionSensorBinding);
-        //}
 
         #region Kinect discovery + setup
         private void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs args)
@@ -265,11 +274,20 @@ namespace ApplesGame
                      if ((point.X >= basket[i].Position.X)
                          && (point.X <= basket[i].EndPosition.X)
                          && (point.Y >= basket[i].Position.Y)
-                         && (point.Y <= basket[i].EndPosition.Y)
-                         && GripApple.Color == basket[i].Color)
+                         && (point.Y <= basket[i].EndPosition.Y))
                      {
-                         handPointerEventArgs.Handled = true;
-                         check = true;
+                         if (GripApple.Color == basket[i].Color)
+                         {
+                             handPointerEventArgs.Handled = true;
+                             gameScore.collectSuccess();
+                             check = true;
+                         }
+                         else
+                         {
+                             handPointerEventArgs.Handled = true;
+                             gameScore.collectFail();
+                             check = false;
+                         }
                      }
                  }
                 
