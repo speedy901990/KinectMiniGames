@@ -84,7 +84,8 @@ namespace ApplesGame
         private void runGame()
         {
             ImageBrush bg = new ImageBrush();
-            bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/background.png", UriKind.Relative));
+            bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/ApplesGameBackground.png", UriKind.Relative));
+            bg.Stretch = Stretch.UniformToFill;
             kinectRegionGrid.Background = bg;
 
             Point rangeMin = new Point();

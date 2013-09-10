@@ -36,7 +36,7 @@ namespace KinectMiniGames
             this.InitializeComponent();
 
             //creating background for menu
-            ImageBrush sky = new ImageBrush(new BitmapImage(new Uri(@"../../../Graphics/Common/sky.png", UriKind.Relative)));
+            ImageBrush sky = new ImageBrush(new BitmapImage(new Uri(@"../../../Graphics/Common/MenuBackground.png", UriKind.Relative)));
             sky.Stretch = Stretch.UniformToFill;
             mainGrid.Background = sky;       
 

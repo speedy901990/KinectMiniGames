@@ -18,19 +18,19 @@
         WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
     <Viewbox>
         <Grid x:Name="LayoutRoot" Width="1920" Height="1080">
-            <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="sensorChooserUI" Margin="940,0" />
+            <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="sensorChooserUI" Margin="940,0" Panel.ZIndex="2" />
             <k:KinectRegion Grid.Row="0" x:Name="kinectRegion" Height="1080" VerticalAlignment="Top" Grid.RowSpan="2">
-                <Grid x:Name="kinectRegionGrid" Margin="0,40,0,0" Width="1920" Height="1080">
+                <Grid x:Name="kinectRegionGrid" Width="1920" Height="1080">
                     <Canvas Margin="0" x:Name="playfield" Height="Auto" Width="1620" HorizontalAlignment="Left">
                     </Canvas>
-                                        
+
                     <Canvas x:Name="UserViewer" HorizontalAlignment="Right" VerticalAlignment="Top" Width="300" Height="180">
                         <Border HorizontalAlignment="Right" Width="250" Height="180" VerticalAlignment="Top"  Margin="25,0,0,0" BorderThickness="5" BorderBrush="White">
                         </Border>
                         <k:KinectUserViewer HorizontalAlignment="Right" Width="250" Height="180" VerticalAlignment="Top"  Margin="25,0,0,0" />
                     </Canvas>
                 </Grid>
-            </k:KinectRegion>            
+            </k:KinectRegion>
         </Grid>
     </Viewbox>
 </Window>
