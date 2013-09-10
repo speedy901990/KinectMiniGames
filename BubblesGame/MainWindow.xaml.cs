@@ -29,6 +29,7 @@ namespace BubblesGame
     using Microsoft.Samples.Kinect.WpfViewers;
     using Speech;
     using Utils;
+    using System.Windows.Media.Imaging;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -152,6 +153,11 @@ namespace BubblesGame
         private void WindowLoaded(object sender, EventArgs e)
         {
             playfield.ClipToBounds = true;
+
+            ImageBrush bg = new ImageBrush();
+            bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/ApplesGameBackground.png", UriKind.Relative));
+            bg.Stretch = Stretch.UniformToFill;
+            bgCanvas.Background = bg;
             
             _dropSize = config.BubblesSize;
             MaxShapes = config.BubblesCount;
