@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="clr-namespace:BubblesGame;assembly=BubblesGame"
              mc:Ignorable="d" 
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             d:DesignHeight="668"
+             d:DesignWidth="924"
              Background="Transparent"
              FontFamily="Segoe UI"
              FontSize="30">
@@ -35,8 +35,8 @@
             <BeginStoryboard x:Name="OnLoadedStoryboard_BeginStoryboard" Storyboard="{StaticResource OnLoadedStoryboard}"/>
         </EventTrigger>
     </UserControl.Triggers-->
-    <Grid x:Name="layoutRoot" Margin="-829,-350,0,0">
-        <Grid x:Name="grid" Background="{DynamicResource BlueBrush}" RenderTransformOrigin="0.5,0.5" Margin="10,0,-10,0">
+    <Grid x:Name="layoutRoot" Margin="0,0,0,0">
+        <Grid x:Name="grid" Background="{DynamicResource BlueBrush}" RenderTransformOrigin="0.5,0.5" Margin="10,0,10,0">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -45,12 +45,12 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <StackPanel Margin="5,5,5,5" Height="{Binding ElementName=grid, Path=ActualHeight}">
+            <StackPanel Margin="5,5,5,5" Height="{Binding ElementName=grid, Path=ActualHeight}" Width="{Binding ElementName=grid, Path=ActualHeight}">
                 <TextBlock x:Name="messageTextBlock" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top">Bubbles Game Config</TextBlock>
                 <Label FontSize="15" Height="35" HorizontalAlignment="Left">Username</Label>
-                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbUsername" VerticalAlignment="Top" Width="150">
+                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbUsername" VerticalAlignment="Top" Width="200">
                     <TextBox.Text>
-                        <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="User" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
+                        <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="Gracz" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
                     </TextBox.Text>
                 </TextBox>
                 <Label FontSize="15" Height="35" HorizontalAlignment="Left">Fall speed</Label>

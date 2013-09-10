@@ -64,7 +64,7 @@ namespace ApplesGame
         {
             treesCount = config.TreesCount;
             applesOnTree = config.ApplesOnTreeCount;
-            basketCount = config.TreesCount;
+            basketCount = config.BasketCount;
 
             this.InitializeComponent();
 
@@ -93,7 +93,7 @@ namespace ApplesGame
 
             if (applesOnTree < 10)
                 appleSize = 200;
-            else if (applesOnTree > 10 && applesOnTree < 20)
+            else if (applesOnTree >= 10 && applesOnTree <= 20)
                 appleSize = 150;
             else
                 appleSize = 125;
@@ -110,6 +110,7 @@ namespace ApplesGame
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
             
             basket = new Basket[basketCount];
+            int appleCounter = 0;
             for (int i = 0; i < treesCount; i++)
             {
                 tree[i] = new Canvas();
@@ -126,15 +127,15 @@ namespace ApplesGame
                 rangeMin.Y = 80.0;
                 rangeMax.X = (double)(tree[i].Width) - 100;
                 rangeMax.Y = (double)(tree[i].Height) - 450;
-                for (int j = i*applesOnTree; j < applesOnTree * (i+1); j++)
+                for (int j = 0; j < applesOnTree; j++)
                 {
-                    myApple[j] = new Apple(rangeMin, rangeMax, appleSize, j, i, colorsCount);
-                    
-                    var button = myApple[j].Figure;
+                    myApple[appleCounter] = new Apple(rangeMin, rangeMax, appleSize, j, i, colorsCount);
+                    var button = myApple[appleCounter].Figure;
                     button.Foreground = new SolidColorBrush(Colors.Transparent);
                     KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
                     KinectRegion.AddHandPointerGripHandler(button, OnHandPointerGrip);
                     tree[i].Children.Add(button);
+                    appleCounter++;
                 }
             }
             for (int i = 0; i < basketCount; i++)

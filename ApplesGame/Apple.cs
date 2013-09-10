@@ -68,7 +68,6 @@ namespace ApplesGame
         public Apple(Point rangeMin, Point rangeMax, int appleSize, int appleNumber, int tree, int parColors)
         {
             System.Random rand = new Random(Guid.NewGuid().GetHashCode());
-
             //Setting random position and size of the apple
             Pos = new Point(rand.Next((int)rangeMin.X, (int)rangeMax.X),
                             rand.Next((int)rangeMin.Y, (int)rangeMax.Y));

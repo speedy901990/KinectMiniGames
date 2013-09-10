@@ -41,6 +41,25 @@ namespace KinectMiniGames
             ApplesGameConfig config = new ApplesGameConfig();
             config = (ApplesGameConfig)this.FindResource("applesGameConfig");
             config.PassedKinectSensorChooser = this.kinectSensor;
+            config.TreesCount = 3;
+            if (rbLvl1.IsChecked == true)
+            {
+                config.ApplesOnTreeCount = 4;
+                config.ColorCount = 3;
+                config.BasketCount = 3;
+            }
+            else if (rbLvl2.IsChecked == true)
+            {
+                config.ApplesOnTreeCount = 6;
+                config.ColorCount = 4;
+                config.BasketCount = 4;
+            }
+            else if (rbLvl3.IsChecked == true)
+            {
+                config.ApplesOnTreeCount = 10;
+                config.ColorCount = 5;
+                config.BasketCount = 6;
+            }  
             ApplesGame.MainWindow window = new ApplesGame.MainWindow(config);
             window.Show();
         }

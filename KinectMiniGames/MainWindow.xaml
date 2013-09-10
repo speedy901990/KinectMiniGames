@@ -124,7 +124,7 @@
                     <RowDefinition />
                     <RowDefinition Height="220"/>
                 </Grid.RowDefinitions>
-                <k:KinectScrollViewer Grid.Row="0" Name="scrollViewer" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled" Margin="0,75,0,10">
+                <k:KinectScrollViewer Grid.Row="0" Name="scrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" Margin="0,75,0,10">
                     <WrapPanel VerticalAlignment="Center" x:Name="wrapPanel" Orientation="Vertical" k:KinectTileButton.Click="KinectTileButtonClick" HorizontalAlignment="Center">
                         <!-- items for design layout.  They will be replaced at runtime. -->
                         <k:KinectTileButton Label="1"/>

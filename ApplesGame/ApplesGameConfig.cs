@@ -9,11 +9,25 @@ namespace ApplesGame
         private string username;
         private int treesCount;
         private int applesOnTreeCount;
+        private int colorCount;
+        private int basketCount;
         private KinectSensorChooser kinectSensor;
 
         public ApplesGameConfig()
         {
 
+        }
+
+        public int BasketCount
+        {
+            get { return this.basketCount; }
+            set { this.basketCount = value; }
+        }
+
+        public int ColorCount
+        {
+            get { return this.colorCount; }
+            set { this.colorCount = value; }
         }
 
         public string Username
