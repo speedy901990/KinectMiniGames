@@ -6,18 +6,16 @@ namespace ApplesGame
 {
     public class ApplesGameConfig
     {
+        #region Private State
         private string username;
         private int treesCount;
         private int applesOnTreeCount;
         private int colorCount;
         private int basketCount;
         private KinectSensorChooser kinectSensor;
+        #endregion
 
-        public ApplesGameConfig()
-        {
-
-        }
-
+        #region Public State
         public int BasketCount
         {
             get { return this.basketCount; }
@@ -53,5 +51,13 @@ namespace ApplesGame
             get { return this.kinectSensor; }
             set { this.kinectSensor = value; }
         }
+        #endregion
+
+        #region Ctor
+        public ApplesGameConfig()
+        {
+
+        }  
+        #endregion
     }
 }

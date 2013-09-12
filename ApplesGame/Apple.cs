@@ -8,7 +8,7 @@ namespace ApplesGame
 {
     public class Apple
     {
-        #region private fields
+        #region Private State
         
         private int size;
         private Point pos; 
@@ -18,9 +18,9 @@ namespace ApplesGame
         private int number;
         private int treeNumber;
 
-        #endregion private fields
+        #endregion Private State
 
-        #region accessors
+        #region Accessors
         public int TreeNumber
         {
             get { return this.treeNumber; }
@@ -61,8 +61,9 @@ namespace ApplesGame
             get { return this.figure;}
             set {this.figure = value;}
         }
-        #endregion accessors
+        #endregion Accessors
 
+        #region Ctor + Config
         //Constructor take parameters that describe the range
         //to generate apples
         public Apple(Point rangeMin, Point rangeMax, int appleSize, int appleNumber, int tree, int parColors)
@@ -103,7 +104,6 @@ namespace ApplesGame
 
             //Creating Ellipse filled with image
             Figure = new KinectCircleButton();
-            
 
             if (target.Color == Colors.Red)
                 setAppleGraphics(1); 
@@ -186,5 +186,6 @@ namespace ApplesGame
                     break;
             }
         }
+        #endregion
     }
 }
