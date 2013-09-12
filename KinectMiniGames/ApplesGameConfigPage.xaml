@@ -71,7 +71,7 @@
                         </RadioButton.RenderTransform>
                     </RadioButton>
                 </DockPanel>
-                <Button Click="submitApplesConfig_Click" FontSize="25" x:Name="submitApplesConfig" Width="200" Margin="232,5,236,5"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Uruchom Grę"/>
+                <Button Click="submitApplesConfig_Click" FontSize="25" x:Name="submitApplesConfig" Width="200" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Content="Uruchom Grę"/>
             </StackPanel>
             <Button FontSize="25" x:Name="btnBackToMenu" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Wróć od menu" Click="btnBackToMenu_Click"/>
         </Grid>
