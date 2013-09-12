@@ -9,109 +9,75 @@ using System.Windows.Media.Imaging;
 
 namespace KinectMiniGames
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow
     {
+        #region Public State
         public int gamesCount = 2;
 
         public static readonly DependencyProperty PageLeftEnabledProperty = DependencyProperty.Register(
             "PageLeftEnabled", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
-
         public static readonly DependencyProperty PageRightEnabledProperty = DependencyProperty.Register(
             "PageRightEnabled", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
 
+        public bool PageLeftEnabled
+        {
+            get { return (bool)GetValue(PageLeftEnabledProperty); }
+            set { this.SetValue(PageLeftEnabledProperty, value); }
+        }
+        public bool PageRightEnabled
+        {
+            get { return (bool)GetValue(PageRightEnabledProperty); }
+            set { this.SetValue(PageRightEnabledProperty, value); }
+        }
+        #endregion
+
+        #region Private State
         private const double ScrollErrorMargin = 0.001;
-
         private const int PixelScrollByAmount = 10;
+        private KinectSensorChooser sensorChooser;
+        #endregion
 
-        private readonly KinectSensorChooser sensorChooser;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class. 
-        /// </summary>
+        #region Ctor + Config
         public MainWindow()
         {
             this.InitializeComponent();
+            setMenuBackground();
+            setupKinectSensor();
+            createMenuButtons();           
+        }
 
-            //creating background for menu
+        private void setMenuBackground()
+        {
             ImageBrush sky = new ImageBrush(new BitmapImage(new Uri(@"../../../Graphics/Common/MenuBackground.png", UriKind.Relative)));
             sky.Stretch = Stretch.UniformToFill;
-            mainGrid.Background = sky;       
+            mainGrid.Background = sky;
+        }
 
-            // initialize the sensor chooser and UI
+        private void setupKinectSensor()
+        {
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
             this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
             this.sensorChooser.Start();
-
-            // Bind the sensor chooser's current sensor to the KinectRegion
             var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
             BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
+        }
 
-            // Clear out placeholder content
+        private void createMenuButtons()
+        {
             this.wrapPanel.Children.Clear();
-
-            // Add in display content
-            var bApplesGame = new KinectTileButton { Label = "Apples Game"};
+            var bApplesGame = new KinectTileButton { Label = "Apples Game" };
             bApplesGame.Width = 450;
             bApplesGame.Height = 450;
             this.wrapPanel.Children.Add(bApplesGame);
-            var bBubblesGame = new KinectTileButton { Label = "Bubbles Game"};
+            var bBubblesGame = new KinectTileButton { Label = "Bubbles Game" };
             bBubblesGame.Width = 450;
             bBubblesGame.Height = 450;
             this.wrapPanel.Children.Add(bBubblesGame);
-            /*for (var index = 0; index < gamesCount; ++index)
-            {
-                var button = new KinectTileButton { Label = "Game " + (index + 1).ToString(CultureInfo.CurrentCulture) };
-                button.Width = 450;
-                button.Height = 450;
-                this.wrapPanel.Children.Add(button);
-            }*/
-
-            // Bind listner to scrollviwer scroll position change, and check scroll viewer position
-            this.UpdatePagingButtonState();
-            scrollViewer.ScrollChanged += (o, e) => this.UpdatePagingButtonState();
         }
+        #endregion
 
-        /// <summary>
-        /// CLR Property Wrappers for PageLeftEnabledProperty
-        /// </summary>
-        public bool PageLeftEnabled
-        {
-            get
-            {
-                return (bool)GetValue(PageLeftEnabledProperty);
-            }
-
-            set
-            {
-                this.SetValue(PageLeftEnabledProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// CLR Property Wrappers for PageRightEnabledProperty
-        /// </summary>
-        public bool PageRightEnabled
-        {
-            get
-            {
-                return (bool)GetValue(PageRightEnabledProperty);
-            }
-
-            set
-            {
-                this.SetValue(PageRightEnabledProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Called when the KinectSensorChooser gets a new sensor
-        /// </summary>
-        /// <param name="sender">sender of the event</param>
-        /// <param name="args">event arguments</param>
+        #region Kinect discovery + setup
         private static void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs args)
         {
             if (args.OldSensor != null)
@@ -157,21 +123,6 @@ namespace KinectMiniGames
             }
         }
 
-        /// <summary>
-        /// Execute shutdown tasks
-        /// </summary>
-        /// <param name="sender">object sending the event</param>
-        /// <param name="e">event arguments</param>
-        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            this.sensorChooser.Stop();
-        }
-
-        /// <summary>
-        /// Handle a button click from the wrap panel.
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="e">Event arguments</param>
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
             var button = (KinectTileButton)e.OriginalSource;
@@ -188,34 +139,12 @@ namespace KinectMiniGames
                 e.Handled = true;
             }
         }
+        #endregion
 
-        /// <summary>
-        /// Handle paging right (next button).
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="e">Event arguments</param>
-        private void PageRightButtonClick(object sender, RoutedEventArgs e)
+        #region Window closing
+        private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset + PixelScrollByAmount);
-        }
-
-        /// <summary>
-        /// Handle paging left (previous button).
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="e">Event arguments</param>
-        private void PageLeftButtonClick(object sender, RoutedEventArgs e)
-        {
-            scrollViewer.ScrollToHorizontalOffset(scrollViewer.HorizontalOffset - PixelScrollByAmount);
-        }
-
-        /// <summary>
-        /// Change button state depending on scroll viewer position
-        /// </summary>
-        private void UpdatePagingButtonState()
-        {
-            this.PageLeftEnabled = scrollViewer.HorizontalOffset > ScrollErrorMargin;
-            this.PageRightEnabled = scrollViewer.HorizontalOffset < scrollViewer.ScrollableWidth - ScrollErrorMargin;
+            this.sensorChooser.Stop();
         }
 
         private void key_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -223,5 +152,6 @@ namespace KinectMiniGames
             if (e.Key == System.Windows.Input.Key.Escape)
                 this.Close();
         }
+        #endregion
     }
 }

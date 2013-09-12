@@ -1,48 +1,35 @@
-﻿//------------------------------------------------------------------------------
-// <copyright file="MainWindow.xaml.cs" company="Microsoft">
-//     Copyright (c) Microsoft Corporation.  All rights reserved.
-// </copyright>
-//------------------------------------------------------------------------------
-
-// This module contains code to do Kinect NUI initialization,
-// processing, displaying players on screen, and sending updated player
-// positions to the game portion for hit testing.
-
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using BubblesGame.Properties;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Media;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Threading;
+using System.Windows.Forms;
+using Microsoft.Kinect;
+using Microsoft.Kinect.Toolkit;
+using Microsoft.Samples.Kinect.WpfViewers;
+using BubblesGame.Speech;
+using BubblesGame.Utils;
+using System.Windows.Media.Imaging;
 
 namespace BubblesGame
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Media;
-    using System.Runtime.InteropServices;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Data;
-    using System.Windows.Threading;
-    using System.Windows.Forms;
-    using Microsoft.Kinect;
-    using Microsoft.Kinect.Toolkit;
-    using Microsoft.Samples.Kinect.WpfViewers;
-    using Speech;
-    using Utils;
-    using System.Windows.Media.Imaging;
-
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
     public partial class MainWindow : Window
     {
+        #region Public State
         public static readonly DependencyProperty KinectSensorManagerProperty =
             DependencyProperty.Register(
                 "KinectSensorManager",
                 typeof(KinectSensorManager),
                 typeof(MainWindow),
                 new PropertyMetadata(null));
+        #endregion
 
         #region Private State
         private const int TimerResolution = 2;  // ms
@@ -89,38 +76,73 @@ namespace BubblesGame
 
         public MainWindow()
         {
-            KinectSensorManager = new KinectSensorManager();
-            KinectSensorManager.KinectSensorChanged += KinectSensorChanged;
-            DataContext = KinectSensorManager;
-
             InitializeComponent();
-
-            SensorChooserUI.KinectSensorChooser = _sensorChooser;
-            _sensorChooser.Start();
-
-            // Bind the KinectSensor from the sensorChooser to the KinectSensor on the KinectSensorManager
-            var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = _sensorChooser };
-            BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
-
+            setupKinectSensor();
             RestoreWindowState();
         }
 
         public MainWindow(BubblesGameConfig config)
         {
+            InitializeComponent();
+            this.config = config;
+            setupKinectSensor(config);
+            RestoreWindowState();
+        }
+
+        private void setupKinectSensor(BubblesGameConfig config = null)
+        {
             KinectSensorManager = new KinectSensorManager();
             KinectSensorManager.KinectSensorChanged += KinectSensorChanged;
             DataContext = KinectSensorManager;
-            this.config = config;
-            InitializeComponent();
 
-            SensorChooserUI.KinectSensorChooser = config.PassedKinectSensorChooser;
-            _sensorChooser.Start();
+            if (config == null)
+            {
+                SensorChooserUI.KinectSensorChooser = _sensorChooser;
+                _sensorChooser.Start();
+                var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = _sensorChooser };
+                BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
+            }
+            else
+            {
+                SensorChooserUI.KinectSensorChooser = config.PassedKinectSensorChooser;
+                _sensorChooser.Start();
+                var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = config.PassedKinectSensorChooser };
+                BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
+            }
+        }
 
-            // Bind the KinectSensor from the sensorChooser to the KinectSensor on the KinectSensorManager
-            var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = config.PassedKinectSensorChooser };
-            BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
+        private void setBackground()
+        {
+            ImageBrush bg = new ImageBrush();
+            bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/ApplesGameBackground.png", UriKind.Relative));
+            bg.Stretch = Stretch.UniformToFill;
+            bgCanvas.Background = bg;
+        }
 
-            RestoreWindowState();
+        private void setupConfiguration()
+        {
+            
+            _dropSize = config.BubblesSize;
+            MaxShapes = config.BubblesCount;
+            _dropGravity = config.BubblesFallSpeed;
+            _dropRate = config.BubblesApperanceFrequency;
+
+            _myFallingThings = new FallingThings(MaxShapes, _targetFramerate, NumIntraFrames, MaxShapes);
+
+            UpdatePlayfieldSize();
+
+            _myFallingThings.SetGravity(_dropGravity);
+            _myFallingThings.SetDropRate(_dropRate);
+            _myFallingThings.SetSize(_dropSize);
+            _myFallingThings.SetPolies(PolyType.Circle);
+
+            _popSound.Stream = Properties.Resources.Pop_5;
+            _hitSound.Stream = Properties.Resources.Hit_2;
+            _squeezeSound.Stream = Properties.Resources.Squeeze;
+
+            _popSound.Play();
+
+            TimeBeginPeriod(TimerResolution);
         }
 
         public KinectSensorManager KinectSensorManager
@@ -153,39 +175,13 @@ namespace BubblesGame
         private void WindowLoaded(object sender, EventArgs e)
         {
             playfield.ClipToBounds = true;
-
-            ImageBrush bg = new ImageBrush();
-            bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/ApplesGameBackground.png", UriKind.Relative));
-            bg.Stretch = Stretch.UniformToFill;
-            bgCanvas.Background = bg;
+            setBackground();
+            setupConfiguration();
             
-            _dropSize = config.BubblesSize;
-            MaxShapes = config.BubblesCount;
-            _dropGravity = config.BubblesFallSpeed;
-            _dropRate = config.BubblesApperanceFrequency;
-
-            _myFallingThings = new FallingThings(MaxShapes, _targetFramerate, NumIntraFrames, MaxShapes);
-
-            UpdatePlayfieldSize();
-            
-
-            _myFallingThings.SetGravity(_dropGravity);
-            _myFallingThings.SetDropRate(_dropRate);
-            _myFallingThings.SetSize(_dropSize);
-            _myFallingThings.SetPolies(PolyType.Circle);
-            
-            _popSound.Stream = Properties.Resources.Pop_5;
-            _hitSound.Stream = Properties.Resources.Hit_2;
-            _squeezeSound.Stream = Properties.Resources.Squeeze;
-
-            _popSound.Play();
-
-            TimeBeginPeriod(TimerResolution);
             var myGameThread = new Thread(GameThread);
             myGameThread.SetApartmentState(ApartmentState.STA);
             myGameThread.Start();
-
-      }
+        }
 
         private void WindowClosing(object sender, CancelEventArgs e)
         {
@@ -576,12 +572,6 @@ namespace BubblesGame
             //CheckPlayers();
         }
         #endregion GameTimer/Thread
-
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == System.Windows.Input.Key.Escape)
-                this.Close();
-        }
         
         #region Kinect Speech processing
         private void RecognizerSaidSomething(object sender, SpeechRecognizer.SaidSomethingEventArgs e)
@@ -692,5 +682,13 @@ namespace BubblesGame
         }
 */
         #endregion Kinect Speech processing
+
+        #region Closing window
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Escape)
+                this.Close();
+        }
+        #endregion
     }
 }
