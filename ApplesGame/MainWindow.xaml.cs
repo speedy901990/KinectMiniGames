@@ -187,10 +187,9 @@ namespace ApplesGame
                             }
                             change = true;
                         }
+                        j++;
                         if (change)
                             j = 0;
-                        else
-                            j++;
                     }
                 }
                 basket [i] = new Basket(400, 400, basketPosition, basketColor);

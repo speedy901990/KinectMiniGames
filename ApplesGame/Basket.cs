@@ -68,15 +68,6 @@ namespace ApplesGame
             Figure.HorizontalAlignment = HorizontalAlignment.Left;
             
             setGraphics(parColor);
-
-            // temporary colored rectangle to basket
-            // it will be deleted when colored graphics will be ready
-            Rectangle tempRectangle = new Rectangle();
-            tempRectangle.Fill = new SolidColorBrush(this.Color);
-            tempRectangle.Width = 100;
-            tempRectangle.Height = 100;
-            tempRectangle.Margin = new Thickness(150,150,0,0);
-            Figure.Children.Add(tempRectangle);
         }
 
         private void setGraphics(int colourParam)
@@ -89,7 +80,7 @@ namespace ApplesGame
                     color = Colors.Red;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
 
@@ -98,7 +89,7 @@ namespace ApplesGame
                     color = Colors.Green;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
 
@@ -107,7 +98,7 @@ namespace ApplesGame
                     color = Colors.Yellow;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
 
@@ -115,14 +106,14 @@ namespace ApplesGame
                     Color = Colors.DarkOrange;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
                 case 5:
                     Color = Colors.Brown;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/brown_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
 
@@ -130,7 +121,7 @@ namespace ApplesGame
                     color = Colors.Red;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
             }
