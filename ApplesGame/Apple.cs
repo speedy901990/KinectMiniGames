@@ -173,7 +173,7 @@ namespace ApplesGame
                     Color = Colors.Brown;
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/blue_apple.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/brown_apple.png", UriKind.Relative));
                     Figure.Background = appleImage;
                     break;
                 
