@@ -124,19 +124,17 @@ namespace ApplesGame
             for (int i = 0; i < treesCount; i++)
             {
                 tree [i] = new Canvas();
-                tree [i].Width = (windowWidth - 300) / treesCount;
-                tree [i].Height = 800;
+                tree[i].Width = (int)(windowWidth / treesCount * 0.5) * 1.5;//*1.7;
+                tree [i].Height = (int)(windowHeight / 1.25);
                 Canvas.SetTop(tree [i], 50);
-                Canvas.SetLeft(tree [i], (i * tree [i].Width + 50));
-                tree [i].Margin = new Thickness((i * 0.2 * tree [i].Width), 0, 50, 0);
+                Canvas.SetLeft(tree [i], (i * tree [i].Width + 20));
+                tree [i].Margin = new Thickness((i * 0.2 * tree [i].Width), 0, 20, 0);
                 tree [i].Name = "tree" + i;
                 playfield.Children.Add(tree [i]);
                 tree [i].Background = treeBg;
 
-                rangeMin.X = 50.0;
-                rangeMin.Y = 80.0;
-                rangeMax.X = (double)(tree [i].Width) - 100;
-                rangeMax.Y = (double)(tree [i].Height) - 450;
+                setApplesArena(ref rangeMin, ref rangeMax); 
+               
                 for (int j = 0; j < applesOnTree; j++)
                 {
                     myApple [appleCounter] = new Apple(rangeMin, rangeMax, appleSize, j, i, colorsCount);
@@ -147,6 +145,23 @@ namespace ApplesGame
                     tree [i].Children.Add(button);
                     appleCounter++;
                 }
+            }
+        }
+
+        private void setApplesArena(ref Point rangeMin, ref Point rangeMax)
+        {
+            //TODO: Check if always looks good --first test passed--
+            rangeMin.X = 10;
+            rangeMin.Y = 10;
+            if (windowWidth < 1440)
+            {
+                rangeMax.X = 300;
+                rangeMax.Y = 180;
+            }
+            else
+            {
+                rangeMax.X = 350;
+                rangeMax.Y = 380;
             }
         }
 

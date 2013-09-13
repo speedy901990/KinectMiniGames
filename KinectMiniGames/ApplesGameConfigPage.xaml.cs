@@ -29,10 +29,7 @@ namespace KinectMiniGames
 
         private void submitApplesConfig_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Config.PassedKinectSensorChooser = this.kinectSensor;
-            if (Application.Current.MainWindow.Width < 1280)
-                Config.TreesCount = 1;
-            else if (Application.Current.MainWindow.Width < 1440)
+            if (Application.Current.MainWindow.Width < 1440)
                 Config.TreesCount = 2;
             else
                 Config.TreesCount = 3;
