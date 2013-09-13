@@ -155,7 +155,7 @@ namespace ApplesGame
             rangeMin.Y = 10;
             if (windowWidth < 1440)
             {
-                rangeMax.X = 300;
+                rangeMax.X = 280;
                 rangeMax.Y = 180;
             }
             else

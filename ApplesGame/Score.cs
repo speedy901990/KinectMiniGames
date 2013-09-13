@@ -50,8 +50,8 @@ namespace ApplesGame
             Success = 0;
             Fail = 0;
             Scoreboard = new Canvas();
-            Scoreboard.Width = 200;
-            Scoreboard.Height = 300;
+            Scoreboard.Width = 150;
+            Scoreboard.Height = 150;
             Scoreboard.HorizontalAlignment = HorizontalAlignment.Right;
             Scoreboard.VerticalAlignment = VerticalAlignment.Top;
             Scoreboard.Margin = new Thickness(0, 400, 50, 0);
@@ -73,8 +73,8 @@ namespace ApplesGame
             Success = 0;
             Fail = 0;
             Scoreboard = new Canvas();
-            Scoreboard.Width = 250;
-            Scoreboard.Height = 350;
+            Scoreboard.Width = 150;
+            Scoreboard.Height = 150;
             Scoreboard.HorizontalAlignment = HorizontalAlignment.Right;
             Scoreboard.VerticalAlignment = VerticalAlignment.Top;
             Scoreboard.Margin = new Thickness(0, 200, 25, 0);
@@ -85,8 +85,8 @@ namespace ApplesGame
             ActualScore.Height = 200;
             ActualScore.HorizontalAlignment = HorizontalAlignment.Right;
             ActualScore.VerticalAlignment = VerticalAlignment.Top;
-            ActualScore.Margin = new Thickness(0, 20, 0, 0);
-            ActualScore.FontSize = 150;
+            ActualScore.Margin = new Thickness(0, 30, 0, 0);
+            ActualScore.FontSize = 90;
             ActualScore.HorizontalContentAlignment = HorizontalAlignment.Center;
             ActualScore.Foreground = new SolidColorBrush(Colors.White);
             ActualScore.Content = Success;
@@ -97,7 +97,7 @@ namespace ApplesGame
             description.HorizontalAlignment = HorizontalAlignment.Right;
             description.VerticalAlignment = VerticalAlignment.Top;
             description.Margin = new Thickness(0, 10, 0, 0);
-            description.FontSize = 50;
+            description.FontSize = 40;
             description.Foreground = new SolidColorBrush(Colors.White);
             description.Content = "Wynik:";
 

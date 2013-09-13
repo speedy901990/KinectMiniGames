@@ -24,8 +24,8 @@
                 <Grid x:Name="kinectRegionGrid" Width="{Binding Width, ElementName=ApplesGame}" Height="{Binding Height, ElementName=ApplesGame}">
                     <Canvas Margin="0" x:Name="playfield" Width="{Binding Width, ElementName=ApplesGame}" Height="{Binding Height, ElementName=ApplesGame}" HorizontalAlignment="Left">
                     </Canvas>
-                    <Canvas x:Name="UserViewer" HorizontalAlignment="Right" VerticalAlignment="Top" Width="300" Height="180">
-                        <Border HorizontalAlignment="Right" Width="250" Height="180" VerticalAlignment="Top"  Margin="25,0,0,0" BorderThickness="5" BorderBrush="White">
+                    <Canvas x:Name="UserViewer" HorizontalAlignment="Right" VerticalAlignment="Top" Width="200" Height="180" Panel.ZIndex="0">
+                        <Border HorizontalAlignment="Right" Width="200" Height="180" VerticalAlignment="Top" BorderThickness="5" BorderBrush="White">
                         </Border>
                         <k:KinectUserViewer HorizontalAlignment="Right" Width="250" Height="180" VerticalAlignment="Top"  Margin="25,0,0,0" />
                     </Canvas>
