@@ -25,8 +25,8 @@ namespace ApplesGame
         #endregion
 
         #region Private State
-        private int windowHeight = 1080;
-        private int windowWidth = 1620;
+        private double windowHeight = 768;
+        private double windowWidth = 1024;
         private int treesCount = 3;
         private int applesOnTree = 5;
         private int appleSize = 150;
@@ -62,6 +62,8 @@ namespace ApplesGame
             treesCount = config.TreesCount;
             applesOnTree = config.ApplesOnTreeCount;
             basketCount = config.BasketCount;
+            windowWidth = Application.Current.MainWindow.Width;
+            windowHeight = Application.Current.MainWindow.Height;
         }
 
         private void setupKinectSensor(ApplesGameConfig config = null)
