@@ -11,7 +11,6 @@
              FontFamily="Segoe UI"
              FontSize="30">
     <UserControl.Resources>
-        <c:ApplesGameConfig x:Key="applesGameConfig"/>
         <Storyboard x:Key="OnLoadedStoryboard" Completed="OnLoadedStoryboardCompleted">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="grid">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.1"/>
@@ -60,7 +59,7 @@
                     <Label FontSize="30" HorizontalAlignment="Left" Content="Username:" FontWeight="Medium" Margin="0,30,0,0"/>
                     <TextBox FontSize="25"  HorizontalAlignment="Left"  Name="txbUsername" VerticalAlignment="Top" Width="200">
                         <TextBox.Text>
-                            <Binding Source="{StaticResource applesGameConfig}" TargetNullValue="Gracz" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
+                            <Binding Mode="TwoWay" TargetNullValue="Gracz" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
                         </TextBox.Text>
                     </TextBox>
                 </StackPanel>

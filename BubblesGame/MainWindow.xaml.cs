@@ -116,7 +116,6 @@ namespace BubblesGame
             ImageBrush bg = new ImageBrush();
             bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/ApplesGameBackground.png", UriKind.Relative));
             bg.Stretch = Stretch.UniformToFill;
-            //bgCanvas.Background = bg;
             grid.Background = bg;
         }
 
@@ -125,8 +124,8 @@ namespace BubblesGame
             
             _dropSize = config.BubblesSize;
             MaxShapes = config.BubblesCount;
-            _dropGravity = config.BubblesFallSpeed;
-            _dropRate = config.BubblesApperanceFrequency;
+            _dropGravity = config.BubblesFallSpeed * 0.2;
+            _dropRate = config.BubblesApperanceFrequency * 0.4;
 
             _myFallingThings = new FallingThings(MaxShapes, _targetFramerate, NumIntraFrames, MaxShapes);
 
@@ -556,6 +555,7 @@ namespace BubblesGame
                 var result = System.Windows.MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
                 if (result == System.Windows.MessageBoxResult.OK)
                 {
+                    FallingThings.BubblesFallen = 0;
                     this.Close();
                 }
             }
@@ -688,7 +688,10 @@ namespace BubblesGame
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Escape)
+            {
+                FallingThings.BubblesFallen = 0;
                 this.Close();
+            }
         }
         #endregion
     }

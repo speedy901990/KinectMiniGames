@@ -149,7 +149,7 @@ namespace KinectMiniGames
 
         private void key_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Escape)
+            if (e.Key == System.Windows.Input.Key.Escape) 
                 this.Close();
         }
         #endregion

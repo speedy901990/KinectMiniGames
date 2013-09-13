@@ -111,7 +111,7 @@
             <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
             <TextBlock HorizontalAlignment="Right" Margin="0 0 -1 0" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontSize="18">Kinect Mini Games</TextBlock>
         </Grid>
-        <k:KinectRegion Grid.Row="1" x:Name="kinectRegion" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" KeyDown="key_KeyDown" Margin="0,0,0,-39" Grid.RowSpan="2">
+        <k:KinectRegion Grid.Row="1" x:Name="kinectRegion" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" KeyDown="key_KeyDown" Margin="0,0,0,10">
             <Grid x:Name="kinectRegionGrid" Margin="10,20,10,20">
                 <Grid.RowDefinitions>
                     <RowDefinition />
