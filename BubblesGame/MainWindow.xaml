@@ -1,41 +1,33 @@
-﻿<Window x:Class="BubblesGame.MainWindow"
+﻿<Window x:Name="window" x:Class="BubblesGame.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:kt="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:toolkit="clr-namespace:Microsoft.Kinect.Toolkit;assembly=Microsoft.Kinect.Toolkit"
         Title="Kinect Shape Game" FontStyle="Italic" SizeToContent="WidthAndHeight"
         Loaded="WindowLoaded" Closing="WindowClosing" KeyDown="Window_KeyDown"
+        Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
         WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Opacity="Infinity" Background="Black">
-    <Grid>
-        <StackPanel Orientation="Vertical" Background="White">
-            <Grid>
-                <Border BorderThickness="1" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="right" Height="120" Width="150" Panel.ZIndex="3">
-                    <kt:KinectColorViewer KinectSensorManager="{Binding}" Panel.ZIndex="2" Height="120" Width="150"/>
-                </Border>
-                <toolkit:KinectSensorChooserUI x:Name="SensorChooserUI" IsListening="True"  HorizontalAlignment="Center" VerticalAlignment="Top" Panel.ZIndex="2" />
-                <Canvas Name="bgCanvas" Height="1080" Width="1920">                    
-                    <Canvas HorizontalAlignment="Center" x:Name="playfield" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged" Margin="650,150,650,0" Panel.ZIndex="3">
-                    </Canvas>
-                    <Border>
-                        <Border.Effect>
-                            <BlurEffect Radius="30" RenderingBias="Quality" />
-                        </Border.Effect>
-                        <Canvas HorizontalAlignment="Center" x:Name="playfieldBackground" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged" Margin="650,150,650,0" >                        
-                            <Canvas.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity=".6">
-                                    <GradientStop Color="#FF055301" Offset="2" />
-                                    <GradientStop Color="#FF0B530D" Offset="0.71"/>
-                                    <GradientStop Color="#FF005E63" Offset="-2" />
-                                    <GradientStop Color="#FF25A9AE" Offset="0.45"/>                                    
-                                </LinearGradientBrush>                                
-                            </Canvas.Background>                            
-                        </Canvas>                        
-                    </Border>                    
-                </Canvas>
-            </Grid>
-            <!--<CheckBox x:Name="enableAec" Foreground="White" FontSize="20" Margin="19,0,0,18" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Collapsed" Checked="EnableAecChecked" Unchecked="EnableAecChecked" IsEnabled="False">
-                Enable Echo Cancellation on Default Speakers
-            </CheckBox>-->
-        </StackPanel>
+    <Grid x:Name="grid" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
+        <Border BorderThickness="1" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="right" Height="120" Width="150" Panel.ZIndex="3">
+            <kt:KinectColorViewer KinectSensorManager="{Binding}" Panel.ZIndex="2" Height="120" Width="150"/>
+        </Border>
+        <toolkit:KinectSensorChooserUI x:Name="SensorChooserUI" IsListening="True"  HorizontalAlignment="Center" VerticalAlignment="Top" Panel.ZIndex="2" />
+        <Canvas HorizontalAlignment="Center" x:Name="playfield" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged" VerticalAlignment="Center" Panel.ZIndex="3">
+        </Canvas>
+        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Border.Effect>
+                <BlurEffect Radius="30" RenderingBias="Quality" />
+            </Border.Effect>
+            <Canvas x:Name="playfieldBackground" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged">
+                <Canvas.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity=".6">
+                        <GradientStop Color="#FF055301" Offset="2" />
+                        <GradientStop Color="#FF0B530D" Offset="0.71"/>
+                        <GradientStop Color="#FF005E63" Offset="-2" />
+                        <GradientStop Color="#FF25A9AE" Offset="0.45"/>
+                    </LinearGradientBrush>
+                </Canvas.Background>
+            </Canvas>
+        </Border>
     </Grid>
 </Window>

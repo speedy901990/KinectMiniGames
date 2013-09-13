@@ -11,18 +11,15 @@
         mc:Ignorable="d"
         d:DesignWidth="1024"
         d:DesignHeight="768"
-        Width="1024"
-        Height="768"
         MinWidth="500"
         MinHeight="700"
+        Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
         FontFamily="Segoe UI" WindowStartupLocation="CenterScreen" WindowState="Normal" WindowStyle="None" ResizeMode="NoResize"  
         KeyDown="key_KeyDown">
-    
     <Window.Resources>
         <PathGeometry x:Key="ChevronGeometry" x:Shared="False">
             F1M150.001,146.9932L126.565,169.3822L126.565,153.5962L150.001,130.6182L173.435,153.5962L173.435,169.3822z
         </PathGeometry>
-
         <Path x:Key="ChevronUp" Height="48" Width="48" Stretch="Uniform" Canvas.Top="0" x:Shared="False"
           Data="{StaticResource ChevronGeometry}"
           Fill="{Binding FallbackValue=Black, Path=Foreground,RelativeSource={RelativeSource AncestorType={x:Type local:KinectHoverButton}}}">
@@ -31,7 +28,6 @@
                 <RotateTransform Angle="0"/>
             </Path.RenderTransform>
         </Path>
-
         <Path x:Key="ChevronRight" Height="48" Width="48" Stretch="Uniform" Canvas.Top="0" x:Shared="False"
           Data="{StaticResource ChevronGeometry}"
           Fill="{Binding FallbackValue=Black, Path=Foreground,RelativeSource={RelativeSource AncestorType={x:Type local:KinectHoverButton}}}">
@@ -40,7 +36,6 @@
                 <RotateTransform Angle="90"/>
             </Path.RenderTransform>
         </Path>
-
         <Path x:Key="ChevronDown" Height="48" Width="48" Stretch="Uniform" Canvas.Top="0" x:Shared="False"
           Data="{StaticResource ChevronGeometry}"
           Fill="{Binding FallbackValue=Black, Path=Foreground,RelativeSource={RelativeSource AncestorType={x:Type local:KinectHoverButton}}}">
@@ -49,7 +44,6 @@
                 <RotateTransform Angle="180"/>
             </Path.RenderTransform>
         </Path>
-
         <Path x:Key="ChevronLeft" Height="48" Width="48" Stretch="Uniform" Canvas.Top="0" x:Shared="False"
           Data="{StaticResource ChevronGeometry}"
           Fill="{Binding FallbackValue=Black, Path=Foreground,RelativeSource={RelativeSource AncestorType={x:Type local:KinectHoverButton}}}">
@@ -58,7 +52,6 @@
                 <RotateTransform Angle="270"/>
             </Path.RenderTransform>
         </Path>
-
         <Style x:Key="KinectHoverButtonStyle" TargetType="{x:Type local:KinectHoverButton}">
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="BorderBrush" Value="DarkGray"/>
@@ -104,7 +97,6 @@
             <Setter Property="Content" Value="{StaticResource ChevronLeft}"/>
         </Style>
     </Window.Resources>
-
     <Grid Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" MinHeight="120" />
@@ -119,7 +111,6 @@
             <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
             <TextBlock HorizontalAlignment="Right" Margin="0 0 -1 0" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontSize="18">Kinect Mini Games</TextBlock>
         </Grid>
-
         <k:KinectRegion Grid.Row="1" x:Name="kinectRegion" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" KeyDown="key_KeyDown" Margin="0,0,0,-39" Grid.RowSpan="2">
             <Grid x:Name="kinectRegionGrid" Margin="10,20,10,20">
                 <Grid.RowDefinitions>

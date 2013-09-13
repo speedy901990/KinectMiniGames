@@ -116,7 +116,8 @@ namespace BubblesGame
             ImageBrush bg = new ImageBrush();
             bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/ApplesGameBackground.png", UriKind.Relative));
             bg.Stretch = Stretch.UniformToFill;
-            bgCanvas.Background = bg;
+            //bgCanvas.Background = bg;
+            grid.Background = bg;
         }
 
         private void setupConfiguration()
