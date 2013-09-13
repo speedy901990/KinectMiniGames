@@ -9,11 +9,13 @@
         Title="Kinect Mini Games"
         Closing="WindowClosing"
         mc:Ignorable="d"
-        d:DesignWidth="1200"
-        d:DesignHeight="700"
+        d:DesignWidth="1024"
+        d:DesignHeight="768"
+        Width="1024"
+        Height="768"
         MinWidth="500"
         MinHeight="700"
-        FontFamily="Segoe UI" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize"  
+        FontFamily="Segoe UI" WindowStartupLocation="CenterScreen" WindowState="Normal" WindowStyle="None" ResizeMode="NoResize"  
         KeyDown="key_KeyDown">
     
     <Window.Resources>
@@ -122,9 +124,9 @@
             <Grid x:Name="kinectRegionGrid" Margin="10,20,10,20">
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition Height="220"/>
+                    <RowDefinition Height="120"/>
                 </Grid.RowDefinitions>
-                <k:KinectScrollViewer Grid.Row="0" Name="scrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" Margin="0,75,0,10">
+                <k:KinectScrollViewer Grid.Row="0" Name="scrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,63" Grid.RowSpan="2">
                     <WrapPanel VerticalAlignment="Center" x:Name="wrapPanel" Orientation="Vertical" k:KinectTileButton.Click="KinectTileButtonClick" HorizontalAlignment="Center">
                         <!-- items for design layout.  They will be replaced at runtime. -->
                         <k:KinectTileButton Label="1"/>

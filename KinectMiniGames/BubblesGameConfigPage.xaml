@@ -36,7 +36,7 @@
         </EventTrigger>
     </UserControl.Triggers-->
     <Grid x:Name="layoutRoot" Margin="0,0,0,0">
-        <Grid x:Name="grid" Background="{DynamicResource BlueBrush}" RenderTransformOrigin="0.5,0.5" Margin="10,0,10,0">
+        <Grid x:Name="grid" Background="{DynamicResource BlueBrush}" RenderTransformOrigin="0.5,0.5" Margin="20,0,0,0">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -45,44 +45,65 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <StackPanel Margin="5,5,5,5" Height="{Binding ElementName=grid, Path=ActualHeight}" Width="{Binding ElementName=grid, Path=ActualHeight}">
-                <TextBlock x:Name="messageTextBlock" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top">Bubbles Game Config</TextBlock>
-                <Label FontSize="15" Height="35" HorizontalAlignment="Left">Username</Label>
-                <TextBox FontSize="20" Height="35" HorizontalAlignment="Left"  Name="txbUsername" VerticalAlignment="Top" Width="200">
-                    <TextBox.Text>
-                        <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="Gracz" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
-                    </TextBox.Text>
-                </TextBox>
-                <Label FontSize="15" Height="35" HorizontalAlignment="Left">Fall speed</Label>
-                <TextBlock FontSize="20" Height="35" HorizontalAlignment="Left"  x:Name="txbFallSpeed"  VerticalAlignment="Top" Width="150" Text="{Binding BubblesFallSpeed, Source={StaticResource bubblesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
-                <Slider Minimum="1" BorderThickness="20,10" Width="200" HorizontalAlignment="Left">
-                    <Slider.Value>
-                        <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="1" Path="BubblesFallSpeed" UpdateSourceTrigger="PropertyChanged"/>
-                    </Slider.Value>
-                </Slider>
-                <Label FontSize="15" Height="35" HorizontalAlignment="Left">Bubbles count</Label>
-                <TextBlock FontSize="20" Height="35" HorizontalAlignment="Left"  x:Name="txbBubblesCount"  VerticalAlignment="Top" Width="150" Text="{Binding BubblesCount, Source={StaticResource bubblesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
-                <Slider Minimum="10" BorderThickness="20,10" Width="200" HorizontalAlignment="Left" Maximum="100">
-                    <Slider.Value>
-                        <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="1" Path="BubblesCount" UpdateSourceTrigger="PropertyChanged"/>
-                    </Slider.Value>
-                </Slider>
-                <Label FontSize="15" Height="35" HorizontalAlignment="Left">Bubbles size</Label>
-                <TextBlock FontSize="20" Height="35" HorizontalAlignment="Left"  x:Name="txbBubblesSize"  VerticalAlignment="Top" Width="150" Text="{Binding BubblesSize, Source={StaticResource bubblesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
-                <Slider Minimum="30" BorderThickness="20,10" Width="200" HorizontalAlignment="Left" Maximum="90">
-                    <Slider.Value>
-                        <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="1" Path="BubblesSize" UpdateSourceTrigger="PropertyChanged"/>
-                    </Slider.Value>
-                </Slider>
-                <Label FontSize="15" Height="35" HorizontalAlignment="Left">Bubbles appearance frequency</Label>
-                <TextBlock FontSize="20" Height="35" HorizontalAlignment="Left"  x:Name="txbBubblesApperanceFrequency"  VerticalAlignment="Top" Width="150" Text="{Binding BubblesApperanceFrequency, Source={StaticResource bubblesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
-                <Slider Minimum="1" BorderThickness="20,10" Width="200" HorizontalAlignment="Left">
-                    <Slider.Value>
-                        <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="1" Path="BubblesApperanceFrequency" UpdateSourceTrigger="PropertyChanged"/>
-                    </Slider.Value>
-                </Slider>
-                <Button Click="submitBubblesConfig_Click"  FontSize="25" x:Name="submitBubblesConfig" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Content="Uruchom Grę"/>
-            </StackPanel>
+            <Grid Margin="5,5,5,5" Height="{Binding ElementName=grid, Path=ActualHeight}" Width="{Binding ElementName=grid, Path=ActualWidth}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="120" />
+                    <RowDefinition Height="120" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="messageTextBlock" FontSize="45" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top">Bubbles Game Config</TextBlock>
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+                    <Label FontSize="20" Height="35" HorizontalAlignment="Center" FontWeight="Medium">Username</Label>
+                    <TextBox FontSize="20" Height="35" HorizontalAlignment="Center"  Name="txbUsername" VerticalAlignment="Top" Width="200">
+                        <TextBox.Text>
+                            <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="Gracz" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
+                    <Label FontSize="20" Height="35" FontWeight="Medium" HorizontalAlignment="Center">Fall speed</Label>
+                    <TextBlock FontSize="20" Height="35" x:Name="txbFallSpeed"  VerticalAlignment="Top" Width="150" Text="{Binding BubblesFallSpeed, Source={StaticResource bubblesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
+                    <Slider Minimum="1" BorderThickness="20,10" Width="200">
+                        <Slider.Value>
+                            <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="1" Path="BubblesFallSpeed" UpdateSourceTrigger="PropertyChanged"/>
+                        </Slider.Value>
+                    </Slider>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
+                    <Label FontSize="20" Height="35" FontWeight="Medium" HorizontalAlignment="Center">Bubbles count</Label>
+                    <TextBlock FontSize="20" Height="35" x:Name="txbBubblesCount" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Text="{Binding BubblesCount, Source={StaticResource bubblesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
+                    <Slider Minimum="10" BorderThickness="20,10" Width="200" Maximum="100" HorizontalAlignment="Center">
+                        <Slider.Value>
+                            <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="1" Path="BubblesCount" UpdateSourceTrigger="PropertyChanged"/>
+                        </Slider.Value>
+                    </Slider>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center">
+                    <Label FontSize="20" Height="35" FontWeight="Medium" HorizontalAlignment="Center">Bubbles size</Label>
+                    <TextBlock FontSize="20" Height="35" x:Name="txbBubblesSize" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Text="{Binding BubblesSize, Source={StaticResource bubblesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
+                    <Slider Minimum="30" BorderThickness="20,10" Width="200" Maximum="90" HorizontalAlignment="Center">
+                        <Slider.Value>
+                            <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="1" Path="BubblesSize" UpdateSourceTrigger="PropertyChanged"/>
+                        </Slider.Value>
+                    </Slider>
+                </StackPanel>
+                <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
+                    <Label FontSize="20" Height="35" FontWeight="Medium" HorizontalAlignment="Center">Bubbles appearance frequency</Label>
+                    <TextBlock FontSize="20" Height="35" x:Name="txbBubblesApperanceFrequency" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Text="{Binding BubblesApperanceFrequency, Source={StaticResource bubblesGameConfig}, TargetNullValue=1, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
+                    <Slider Minimum="1" BorderThickness="20,10" Width="200" HorizontalAlignment="Center">
+                        <Slider.Value>
+                            <Binding Source="{StaticResource bubblesGameConfig}" TargetNullValue="1" Path="BubblesApperanceFrequency" UpdateSourceTrigger="PropertyChanged"/>
+                        </Slider.Value>
+                    </Slider>
+                </StackPanel>
+                <Button Grid.Row="1" Grid.Column="1" Click="submitBubblesConfig_Click"  FontSize="25" x:Name="submitBubblesConfig" Width="200" Margin="0,5,5,5"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="Uruchom Grę"/>
+            </Grid>
             <Button Click="btnBackToMenu_Click"  FontSize="25" x:Name="btnBackToMenu" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Wróć do menu"/>
         </Grid>
     </Grid>

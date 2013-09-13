@@ -45,34 +45,47 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <StackPanel Margin="5,5,5,5" Height="{Binding ElementName=grid, Path=ActualHeight}" Width="{Binding ElementName=grid, Path=ActualHeight}">
-                <TextBlock x:Name="messageTextBlock" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="45" FontWeight="Bold">Apples Game Config</TextBlock>
-                <Label FontSize="30" HorizontalAlignment="Left" Content="Username:" FontWeight="Medium" Margin="0,30,0,0"/>
-                <TextBox FontSize="25"  HorizontalAlignment="Left"  Name="txbUsername" VerticalAlignment="Top" Width="200">
-                    <TextBox.Text>
-                        <Binding Source="{StaticResource applesGameConfig}" TargetNullValue="Gracz" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
-                    </TextBox.Text>
-                </TextBox>                
-                <Label Content="Game level:" FontSize="30" FontWeight="Medium" Margin="0,30,0,0"/>
-                <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50">
-                    <RadioButton HorizontalAlignment="Left" FontSize="10" FontWeight="Normal" Name="rbLvl1" Content="Level 1" VerticalAlignment="Top" Margin="20,0,90,0" GroupName="lvl" IsChecked="True">
-                        <RadioButton.RenderTransform>
-                            <ScaleTransform ScaleX="2.5" ScaleY="2.5"/>
-                        </RadioButton.RenderTransform>
-                    </RadioButton>
-                    <RadioButton HorizontalAlignment="Left" FontSize="10" FontWeight="Normal" Name="rbLvl2" Content="Level 2" VerticalAlignment="Top" Margin="20,0,90,0" GroupName="lvl">
-                        <RadioButton.RenderTransform>
-                            <ScaleTransform ScaleX="2.5" ScaleY="2.5"/>
-                        </RadioButton.RenderTransform>
-                    </RadioButton>
-                    <RadioButton HorizontalAlignment="Left" FontSize="10" FontWeight="Normal" Name="rbLvl3" Content="Level 3" VerticalAlignment="Top" Margin="20,0,90,0" GroupName="lvl">
-                        <RadioButton.RenderTransform>
-                            <ScaleTransform ScaleX="2.5" ScaleY="2.5"/>
-                        </RadioButton.RenderTransform>
-                    </RadioButton>
-                </DockPanel>
-                <Button Click="submitApplesConfig_Click" FontSize="25" x:Name="submitApplesConfig" Width="200" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Content="Uruchom Grę"/>
-            </StackPanel>
+            <Grid Margin="5,5,5,5" Height="{Binding ElementName=grid, Path=ActualHeight}" Width="{Binding ElementName=grid, Path=ActualWidth}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="messageTextBlock" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="45" FontWeight="Bold">Apples Game Config</TextBlock>
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+                    <Label FontSize="30" HorizontalAlignment="Left" Content="Username:" FontWeight="Medium" Margin="0,30,0,0"/>
+                    <TextBox FontSize="25"  HorizontalAlignment="Left"  Name="txbUsername" VerticalAlignment="Top" Width="200">
+                        <TextBox.Text>
+                            <Binding Source="{StaticResource applesGameConfig}" TargetNullValue="Gracz" Path="Username" UpdateSourceTrigger="PropertyChanged"/>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                    <Label Content="Game level:" FontSize="30" FontWeight="Medium" Margin="0,30,0,0"/>
+                    <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="50">
+                        <RadioButton HorizontalAlignment="Left" FontSize="10" FontWeight="Normal" Name="rbLvl1" Content="Level 1" VerticalAlignment="Top" Margin="20,0,90,0" GroupName="lvl" IsChecked="True">
+                            <RadioButton.RenderTransform>
+                                <ScaleTransform ScaleX="2.5" ScaleY="2.5"/>
+                            </RadioButton.RenderTransform>
+                        </RadioButton>
+                        <RadioButton HorizontalAlignment="Left" FontSize="10" FontWeight="Normal" Name="rbLvl2" Content="Level 2" VerticalAlignment="Top" Margin="20,0,90,0" GroupName="lvl">
+                            <RadioButton.RenderTransform>
+                                <ScaleTransform ScaleX="2.5" ScaleY="2.5"/>
+                            </RadioButton.RenderTransform>
+                        </RadioButton>
+                        <RadioButton HorizontalAlignment="Left" FontSize="10" FontWeight="Normal" Name="rbLvl3" Content="Level 3" VerticalAlignment="Top" Margin="20,0,90,0" GroupName="lvl">
+                            <RadioButton.RenderTransform>
+                                <ScaleTransform ScaleX="2.5" ScaleY="2.5"/>
+                            </RadioButton.RenderTransform>
+                        </RadioButton>
+                    </DockPanel>
+                </StackPanel>
+                <Button Grid.Row="1" Grid.Column="1" Click="submitApplesConfig_Click" FontSize="25" x:Name="submitApplesConfig" Width="200" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="Uruchom Grę"/>
+            </Grid>
             <Button FontSize="25" x:Name="btnBackToMenu" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Wróć od menu" Click="btnBackToMenu_Click"/>
         </Grid>
     </Grid>
