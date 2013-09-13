@@ -124,7 +124,7 @@ namespace ApplesGame
             for (int i = 0; i < treesCount; i++)
             {
                 tree [i] = new Canvas();
-                tree[i].Width = (int)(windowWidth / treesCount * 0.5) * 1.5;//*1.7;
+                tree[i].Width = (int)(windowWidth / treesCount * 0.5) * 1.5;//*1.7 - full screen of trees;
                 tree [i].Height = (int)(windowHeight / 1.25);
                 Canvas.SetTop(tree [i], 50);
                 Canvas.SetLeft(tree [i], (i * tree [i].Width + 20));
@@ -178,11 +178,16 @@ namespace ApplesGame
         private void createBaskets()
         {
             basket = new Basket [basketCount];
+            int basketSize;
+            if (windowWidth < 1440)
+                basketSize = 300;
+            else
+                basketSize = 400;
 
             for (int i = 0; i < basketCount; i++)
             {
                 double x = (windowWidth / basketCount) * i;
-                double y = windowHeight - 400;
+                double y = windowHeight - basketSize * 0.85;
                 Point basketPosition = new Point((int)x, (int)y);
                 System.Random rand = new Random(Guid.NewGuid().GetHashCode());
                 int basketColor = rand.Next(1, colorsCount + 1);
@@ -209,8 +214,8 @@ namespace ApplesGame
                             j = 0;
                     }
                 }
-                basket [i] = new Basket(400, 400, basketPosition, basketColor);
-                playfield.Children.Add(basket [i].Figure);
+                basket[i] = new Basket(basketSize, basketSize, basketPosition, basketColor);
+                playfield.Children.Add(basket[i].Figure);
             }
         }
         #endregion
