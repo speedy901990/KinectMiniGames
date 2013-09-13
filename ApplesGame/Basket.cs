@@ -75,53 +75,46 @@ namespace ApplesGame
             ImageBrush basketBg;
             switch (colourParam)
             {
-                //Red
-                case 1:
+                case 0:
                     color = Colors.Red;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
-
-                //Green
-                case 2:
+                case 1:
                     color = Colors.Green;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
-
-                //Yellow
-                case 3:
+                case 2:
                     color = Colors.Yellow;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
-
-                case 4:
+                case 3:
                     Color = Colors.DarkOrange;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
-                case 5:
+                case 4:
                     Color = Colors.Brown;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/brown_basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
-
                 default:
                     color = Colors.Red;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_basket.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
                     Figure.Background = basketBg;
                     break;
             }

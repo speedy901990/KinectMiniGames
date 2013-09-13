@@ -115,34 +115,34 @@ namespace ApplesGame
 
             Point rangeMin = new Point();
             Point rangeMax = new Point();
-            Canvas [] tree = new Canvas [treesCount];
-            myApple = new Apple [treesCount * applesOnTree];
+            Canvas[] tree = new Canvas[treesCount];
+            myApple = new Apple[treesCount * applesOnTree];
             ImageBrush treeBg = new ImageBrush();
             treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
 
             int appleCounter = 0;
             for (int i = 0; i < treesCount; i++)
             {
-                tree [i] = new Canvas();
+                tree[i] = new Canvas();
                 tree[i].Width = (int)(windowWidth / treesCount * 0.5) * 1.5;//*1.7 - full screen of trees;
-                tree [i].Height = (int)(windowHeight / 1.25);
-                Canvas.SetTop(tree [i], 50);
-                Canvas.SetLeft(tree [i], (i * tree [i].Width + 20));
-                tree [i].Margin = new Thickness((i * 0.2 * tree [i].Width), 0, 20, 0);
-                tree [i].Name = "tree" + i;
-                playfield.Children.Add(tree [i]);
-                tree [i].Background = treeBg;
+                tree[i].Height = (int)(windowHeight / 1.25);
+                Canvas.SetTop(tree[i], 50);
+                Canvas.SetLeft(tree[i], (i * tree[i].Width + 20));
+                tree[i].Margin = new Thickness((i * 0.2 * tree[i].Width), 0, 20, 0);
+                tree[i].Name = "tree" + i;
+                playfield.Children.Add(tree[i]);
+                tree[i].Background = treeBg;
 
-                setApplesArena(ref rangeMin, ref rangeMax); 
-               
+                setApplesArena(ref rangeMin, ref rangeMax);
+
                 for (int j = 0; j < applesOnTree; j++)
                 {
-                    myApple [appleCounter] = new Apple(rangeMin, rangeMax, appleSize, j, i, colorsCount);
-                    var button = myApple [appleCounter].Figure;
+                    myApple[appleCounter] = new Apple(rangeMin, rangeMax, appleSize, j, i, colorsCount);
+                    var button = myApple[appleCounter].Figure;
                     button.Foreground = new SolidColorBrush(Colors.Transparent);
                     KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
                     KinectRegion.AddHandPointerGripHandler(button, OnHandPointerGrip);
-                    tree [i].Children.Add(button);
+                    tree[i].Children.Add(button);
                     appleCounter++;
                 }
             }
@@ -177,7 +177,9 @@ namespace ApplesGame
 
         private void createBaskets()
         {
-            basket = new Basket [basketCount];
+            basket = new Basket[basketCount];
+            bool [] basketColors = new bool[basketCount];
+
             int basketSize;
             if (windowWidth < 1440)
                 basketSize = 300;
@@ -186,37 +188,24 @@ namespace ApplesGame
 
             for (int i = 0; i < basketCount; i++)
             {
-                double x = (windowWidth / basketCount) * i;
+                double x = (windowWidth / basketCount) * i - 30;
                 double y = windowHeight - basketSize * 0.85;
-                Point basketPosition = new Point((int)x, (int)y);
-                System.Random rand = new Random(Guid.NewGuid().GetHashCode());
-                int basketColor = rand.Next(1, colorsCount + 1);
-                if (i != 0)
-                {
-                    bool change;
-                    for (int j = 0; j < i; )
-                    {
-                        change = false;
-                        if (basketColor == basket [j].ColorNumber)
-                        {
-                            if (basketColor == colorsCount)
-                            {
-                                basketColor--;
-                            }
-                            else
-                            {
-                                basketColor++;
-                            }
-                            change = true;
-                        }
-                        j++;
-                        if (change)
-                            j = 0;
-                    }
-                }
-                basket[i] = new Basket(basketSize, basketSize, basketPosition, basketColor);
+                Point basketPosition = new Point((int)x, (int)y);                
+                basket[i] = new Basket(basketSize, basketSize, basketPosition, randomColor(ref basketColors, basketCount));
                 playfield.Children.Add(basket[i].Figure);
             }
+        }
+
+        private int randomColor(ref bool[] basketColors, int size)
+        {
+            System.Random rand = new Random(Guid.NewGuid().GetHashCode());
+            int color = rand.Next(0, size - 1);
+            while (basketColors[color % size] == true)
+            {
+                color++;
+            }
+            basketColors[color % size] = true;
+            return color;
         }
         #endregion
 
@@ -288,8 +277,8 @@ namespace ApplesGame
                 var Tree = button.Parent as Canvas;
                 Tree.Children.Remove(button);
                 buttonContent = (int)button.Content;
-                GripApple = myApple [buttonContent];
-                Tree.Children.Remove(myApple [buttonContent].Figure);
+                GripApple = myApple[buttonContent];
+                Tree.Children.Remove(myApple[buttonContent].Figure);
                 Treenum = GripApple.TreeNumber;
                 handPointerEventArgs.Handled = true;
             }
@@ -302,12 +291,12 @@ namespace ApplesGame
                 Point point = handPointerEventArgs.HandPointer.GetPosition(playfield);
                 for (int i = 0; i < basketCount; i++)
                 {
-                    if ((point.X >= basket [i].Position.X)
-                        && (point.X <= basket [i].EndPosition.X)
-                        && (point.Y >= basket [i].Position.Y)
-                        && (point.Y <= basket [i].EndPosition.Y))
+                    if ((point.X >= basket[i].Position.X)
+                        && (point.X <= basket[i].EndPosition.X)
+                        && (point.Y >= basket[i].Position.Y)
+                        && (point.Y <= basket[i].EndPosition.Y))
                     {
-                        if (GripApple.Color == basket [i].Color)
+                        if (GripApple.Color == basket[i].Color)
                         {
                             handPointerEventArgs.Handled = true;
                             gameScore.collectSuccess();
@@ -395,7 +384,7 @@ namespace ApplesGame
         {
             KinectSensorManager.KinectSensor = null;
         }
-        
+
 
         private void ApplesGame_KeyDown(object sender, KeyEventArgs e)
         {
