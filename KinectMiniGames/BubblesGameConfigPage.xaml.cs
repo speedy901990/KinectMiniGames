@@ -6,30 +6,19 @@ using Microsoft.Kinect.Toolkit.Controls;
 
 namespace KinectMiniGames
 {
-    /// <summary>
-    /// Interaction logic for BubblesGameConfigPage.xaml
-    /// </summary>
     public partial class BubblesGameConfigPage : UserControl
     {
         KinectSensorChooser kinectSensor;
+        public BubblesGameConfig Config { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SelectionDisplay"/> class. 
-        /// </summary>
-        /// <param name="itemId">ID of the item that was selected</param>
         public BubblesGameConfigPage(string itemId, KinectSensorChooser kinectSensor)
         {
             this.InitializeComponent();
             this.kinectSensor = kinectSensor;
-
-            //this.messageTextBlock.Text = string.Format(CultureInfo.CurrentCulture, KinectMiniGames.Properties.Resources.SelectedMessage, itemId);
+            Config = new BubblesGameConfig();
+            this.DataContext = Config;
         }
 
-        /// <summary>
-        /// Called when the OnLoaded storyboard completes.
-        /// </summary>
-        /// <param name="sender">Event sender</param>
-        /// <param name="e">Event arguments</param>
         private void OnLoadedStoryboardCompleted(object sender, System.EventArgs e)
         {
             var parent = (Panel)this.Parent;
@@ -38,10 +27,8 @@ namespace KinectMiniGames
 
         private void submitBubblesConfig_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            BubblesGameConfig config = new BubblesGameConfig();
-            config = (BubblesGameConfig)this.FindResource("bubblesGameConfig");
-            config.PassedKinectSensorChooser = this.kinectSensor;
-            BubblesGame.MainWindow window = new BubblesGame.MainWindow(config);
+            Config.PassedKinectSensorChooser = this.kinectSensor;
+            BubblesGame.MainWindow window = new BubblesGame.MainWindow(Config);
             window.Show();
         }
 
