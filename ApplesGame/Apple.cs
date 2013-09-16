@@ -161,7 +161,7 @@ namespace ApplesGame
 
                 //Orange
                 case 4:
-                    Color = Colors.DarkOrange;
+                    Color = Colors.Orange;
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_apple.png", UriKind.Relative));
@@ -181,7 +181,7 @@ namespace ApplesGame
                     Color = Colors.Red;
                     appleImage = new ImageBrush();
                     appleImage.ImageSource =
-                        new BitmapImage(new Uri(@"/../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
                     Figure.Background = appleImage;
                     break;
             }

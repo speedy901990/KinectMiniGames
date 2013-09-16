@@ -134,15 +134,20 @@ namespace ApplesGame
                 tree[i].Background = treeBg;
 
                 setApplesArena(ref rangeMin, ref rangeMax);
+                colorsCount = basketCount;
 
                 for (int j = 0; j < applesOnTree; j++)
                 {
-                    myApple[appleCounter] = new Apple(rangeMin, rangeMax, appleSize, j, i, colorsCount);
+                    myApple[appleCounter] = new Apple(rangeMin, rangeMax, appleSize, appleCounter, i, colorsCount);
                     var button = myApple[appleCounter].Figure;
                     button.Foreground = new SolidColorBrush(Colors.Transparent);
                     KinectRegion.AddQueryInteractionStatusHandler(button, OnQuery);
                     KinectRegion.AddHandPointerGripHandler(button, OnHandPointerGrip);
                     tree[i].Children.Add(button);
+                    button.MouseEnter += button_MouseEnter;
+                    button.StylusEnter += button_StylusEnter;
+                    button.MouseLeave += button_MouseLeave;
+                    button.StylusLeave += button_StylusLeave;
                     appleCounter++;
                 }
             }
@@ -371,6 +376,104 @@ namespace ApplesGame
             }
 
             handPointerEventArgs.Handled = true;
+        }
+
+        void button_StylusEnter(object sender, StylusEventArgs e)
+        {
+            Apple hoveredApple;
+            var button = sender as KinectCircleButton;
+            hoveredApple = myApple[(int)button.Content];
+            appleHoverBackground(hoveredApple);    
+        }
+        void button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Apple hoveredApple;
+            var button = sender as KinectCircleButton;
+            hoveredApple = myApple[(int)button.Content];
+            appleHoverBackground(hoveredApple);
+        }
+
+        void button_StylusLeave(object sender, StylusEventArgs e)
+        {
+            Apple hoveredApple;
+            var button = sender as KinectCircleButton;
+            hoveredApple = myApple[(int)button.Content];
+            restoreAppleBackground(hoveredApple);
+        }
+        void button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Apple hoveredApple;
+            var button = sender as KinectCircleButton;
+            hoveredApple = myApple[(int)button.Content];
+            restoreAppleBackground(hoveredApple);
+        }
+
+        void appleHoverBackground(Apple sender)
+        {
+            ImageBrush bg = new ImageBrush();
+            //conditions
+            {
+                if (sender.Color == Colors.Red)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_red.png", UriKind.Relative));
+                }
+                if (sender.Color == Colors.Yellow)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_yellow.png", UriKind.Relative));
+                }
+                if (sender.Color == Colors.Green)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_green.png", UriKind.Relative));
+                }
+                if (sender.Color == Colors.Orange)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_orange.png", UriKind.Relative));
+                }
+                if (sender.Color == Colors.Brown)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_brown.png", UriKind.Relative));
+                }
+            }
+            sender.Figure.Background = bg;
+        }
+
+        void restoreAppleBackground(Apple sender)
+        {
+            ImageBrush bg = new ImageBrush();
+            //conditions
+            {
+                if (sender.Color == Colors.Red)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
+                }
+                if (sender.Color == Colors.Yellow)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_apple.png", UriKind.Relative));
+                }
+                if (sender.Color == Colors.Green)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_apple.png", UriKind.Relative));
+                }
+                if (sender.Color == Colors.Orange)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_apple.png", UriKind.Relative));
+                }
+                if (sender.Color == Colors.Brown)
+                {
+                    bg.ImageSource =
+                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/brown_apple.png", UriKind.Relative));
+                }
+            }
+            sender.Figure.Background = bg;
         }
         #endregion
 
