@@ -335,7 +335,7 @@ namespace ApplesGame
             target.Figure.RenderTransform = trans;
             //tree[] Canvas and [0,0] differences
             NewX += ((windowWidth - 300) / treesCount) * Treenum;
-            NewY += (windowHeight - 1000);
+            NewY += (windowHeight - 500);
 
             //ActualHand and [0,0] differences
             NewX -= HandX;
