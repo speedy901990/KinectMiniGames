@@ -51,7 +51,8 @@ namespace KinectMiniGames
                 Config.ApplesOnTreeCount = 10;
                 Config.ColorCount = 5;
                 Config.BasketCount = 6;
-            }  
+            }
+            Config.PassedKinectSensorChooser = this.kinectSensor;
             ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
             window.Show();
         }
