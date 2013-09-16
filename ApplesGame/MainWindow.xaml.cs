@@ -134,6 +134,7 @@ namespace ApplesGame
                 tree[i].Background = treeBg;
 
                 setApplesArena(ref rangeMin, ref rangeMax);
+                colorsCount = basketCount;
 
                 for (int j = 0; j < applesOnTree; j++)
                 {
