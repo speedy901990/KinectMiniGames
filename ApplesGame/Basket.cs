@@ -97,7 +97,7 @@ namespace ApplesGame
                     Figure.Background = basketBg;
                     break;
                 case 3:
-                    Color = Colors.DarkOrange;
+                    Color = Colors.Orange;
                     basketBg = new ImageBrush();
                     basketBg.ImageSource =
                         new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_basket.png", UriKind.Relative));
