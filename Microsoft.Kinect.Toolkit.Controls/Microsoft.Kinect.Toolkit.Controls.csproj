@@ -12,6 +12,7 @@
     <AssemblyName>Microsoft.Kinect.Toolkit.Controls</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup>
     <OutputPath>$(SolutionDir)$(PlatformTarget).$(Configuration)\</OutputPath>

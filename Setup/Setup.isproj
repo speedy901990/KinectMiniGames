@@ -1,0 +1,56 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+	<PropertyGroup>
+		<!-- Select a Product Configuration -->
+		<InstallShieldProductConfiguration>Express</InstallShieldProductConfiguration>
+		<!-- Select a Visual Studio Configuration / InstallShield Release -->
+		<Configuration>Debug</Configuration>
+		<InstallShieldRelease>$(Configuration)</InstallShieldRelease>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- The InstallShieldProject item selects the project to build -->
+		<InstallShieldProject Include="$(MSBuildProjectDirectory)\$(MSBuildProjectName).isl"/>
+		<!-- The InstallShieldReleaseFlags sets Release Flags -->
+		<!--<InstallShieldReleaseFlags Include=""/>-->
+		<!-- The InstallShieldMergeModulePath specifies what directories are
+		searched for Merge Modules -->
+		<!--<InstallShieldMergeModulePath Include=""/>-->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The ProjectReference items refer to any Visual Studio solutions you want to automatically probe for Project Output Groups.  -->
+	</ItemGroup>
+	<ItemGroup>
+		<!-- The TaggedOutputs items allow you to explicitly add extra files to output groups. Each item must include both Name and OutputGroup, as well as TargetPath metadata values. -->
+		<!--<TaggedOutputs Include="C:\My Test Exe.exe">
+			<Name>My Test Project</Name>
+			<OutputGroup>Primary output</OutputGroup>
+			<TargetPath>My Test Exe.exe</TargetPath>
+		</TaggedOutputs> -->
+	</ItemGroup>
+	<Import Project="$(MSBuildExtensionsPath32)\InstallShield\2012SpringLimited\InstallShield.targets"/>
+	<ItemGroup>
+		<ProjectReference Include="..\ApplesGame\ApplesGame.csproj">
+			<Name>ApplesGame</Name>
+			<Project>{AA1F470E-60F4-4DAF-89E9-DCB1794D26BC}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\BubblesGame\BubblesGame.csproj">
+			<Name>BubblesGame</Name>
+			<Project>{E61846BF-FE80-4B50-A7FF-CFCD9E4A4815}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\KinectMiniGames\KinectMiniGames.csproj">
+			<Name>KinectMiniGames</Name>
+			<Project>{5587CB0F-49EA-40E9-A567-1C4738554519}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Microsoft.Kinect.Toolkit\Microsoft.Kinect.Toolkit.csproj">
+			<Name>Microsoft.Kinect.Toolkit</Name>
+			<Project>{C6F9C31B-6130-4443-A5CC-EF0664552ECD}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj">
+			<Name>Microsoft.Kinect.Toolkit.Controls</Name>
+			<Project>{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}</Project>
+		</ProjectReference>
+		<ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
+			<Name>Microsoft.Samples.Kinect.WpfViewers</Name>
+			<Project>{4DE23893-27E7-423F-9BB6-BA21DAC2C45E}</Project>
+		</ProjectReference>
+	</ItemGroup>
+</Project>
