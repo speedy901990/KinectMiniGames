@@ -165,7 +165,40 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <None Include="Resources\bubble.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_blue2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_brown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_pink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_purple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bubble_yellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ApplesGameBackground.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

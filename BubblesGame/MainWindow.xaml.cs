@@ -17,6 +17,7 @@ using Microsoft.Samples.Kinect.WpfViewers;
 using BubblesGame.Speech;
 using BubblesGame.Utils;
 using System.Windows.Media.Imaging;
+using System.Resources;
 
 namespace BubblesGame
 {
@@ -113,10 +114,17 @@ namespace BubblesGame
 
         private void setBackground()
         {
-            ImageBrush bg = new ImageBrush();
-            bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/ApplesGameBackground.png", UriKind.Relative));
+            ImageBrush bg = new ImageBrush(convertBitmapToBitmapSource(Properties.Resources.ApplesGameBackground));
             bg.Stretch = Stretch.UniformToFill;
             grid.Background = bg;
+        }
+
+        private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
         }
 
         private void setupConfiguration()

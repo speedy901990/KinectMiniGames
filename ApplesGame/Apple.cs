@@ -127,6 +127,14 @@ namespace ApplesGame
             Figure.Foreground = new SolidColorBrush(Colors.Transparent);
         }
 
+        private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
+        }
+
         private void setAppleGraphics(int colourParam)
         {
             ImageBrush appleImage;
@@ -136,8 +144,7 @@ namespace ApplesGame
                 case 1:
                     Color = Colors.Red;
                     appleImage = new ImageBrush();
-                    appleImage.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
+                    appleImage.ImageSource = convertBitmapToBitmapSource(Properties.Resources.red_apple);                        
                     Figure.Background = appleImage;
                     break;
                 
@@ -145,8 +152,7 @@ namespace ApplesGame
                 case 2:
                     Color = Colors.Green;
                     appleImage = new ImageBrush();
-                    appleImage.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_apple.png", UriKind.Relative));
+                    appleImage.ImageSource = convertBitmapToBitmapSource(Properties.Resources.green_apple); 
                     Figure.Background = appleImage;
                     break;
                 
@@ -154,8 +160,7 @@ namespace ApplesGame
                 case 3:
                     Color = Colors.Yellow;
                     appleImage = new ImageBrush();
-                    appleImage.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_apple.png", UriKind.Relative));
+                    appleImage.ImageSource = convertBitmapToBitmapSource(Properties.Resources.yellow_apple); 
                     Figure.Background = appleImage;
                     break;
 
@@ -163,8 +168,7 @@ namespace ApplesGame
                 case 4:
                     Color = Colors.Orange;
                     appleImage = new ImageBrush();
-                    appleImage.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_apple.png", UriKind.Relative));
+                    appleImage.ImageSource = convertBitmapToBitmapSource(Properties.Resources.orange_apple); 
                     Figure.Background = appleImage;
                     break;
 
@@ -172,16 +176,14 @@ namespace ApplesGame
                 case 5:
                     Color = Colors.Brown;
                     appleImage = new ImageBrush();
-                    appleImage.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/brown_apple.png", UriKind.Relative));
+                    appleImage.ImageSource = convertBitmapToBitmapSource(Properties.Resources.brown_apple); 
                     Figure.Background = appleImage;
                     break;
                 
                 default:
                     Color = Colors.Red;
                     appleImage = new ImageBrush();
-                    appleImage.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
+                    appleImage.ImageSource = convertBitmapToBitmapSource(Properties.Resources.red_apple); 
                     Figure.Background = appleImage;
                     break;
             }

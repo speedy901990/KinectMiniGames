@@ -342,19 +342,12 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
-		<row><td>ApplesGame.Primary_output</td><td>{752CDCE4-0132-4180-B232-DDF2EACD13AC}</td><td>GAMEEXECS2</td><td>2</td><td/><td>applesgame.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>BubblesGame.Primary_output</td><td>{AEA8FA87-B49C-415C-9BB7-3F0DED58F573}</td><td>GAMEEXECS2</td><td>2</td><td/><td>bubblesgame.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td>{EB46F7FC-C7E3-4EA4-8345-FD5D7047AB33}</td><td>GRAPHICS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{326B7681-EE9A-4927-B080-143D6F4219A4}</td><td>APPLESGAME</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT2</td><td>{9B1C4C94-5593-4286-877D-F899E0302560}</td><td>BUBBLESGAME</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{47508FD5-52EE-4A4B-825E-8D9404C33400}</td><td>COMMON</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td>{B7C68EF9-016F-443F-8A21-A13383AF917A}</td><td>GAMEEXECS</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT5</td><td>{56A25A37-A036-4E38-8E2E-495F436FF323}</td><td>GAMEEXECS1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT6</td><td>{A6CFBDB3-7B8C-4C75-93C9-16EC4FA5DC1D}</td><td>GAMEEXECS2</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>KinectMiniGames.Primary_output</td><td>{15EF9C44-E5CD-4501-A8FD-ADBFDB0C38FE}</td><td>GAMEEXECS2</td><td>2</td><td/><td>kinectminigames.primary_outp</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>Microsoft.Kinect.Toolkit.Controls.Primary_output</td><td>{D97ED9F5-C2E4-4B78-B3DB-A377F37B8A2D}</td><td>GAMEEXECS2</td><td>2</td><td/><td>microsoft.kinect.toolkit.con2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>Microsoft.Kinect.Toolkit.Primary_output</td><td>{DABE7821-0AD5-42B0-9442-CD8A1A0CF943}</td><td>GAMEEXECS2</td><td>2</td><td/><td>microsoft.kinect.toolkit.pri</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>Microsoft.Samples.Kinect.WpfViewers.Primary_output</td><td>{20656416-22B5-4FB8-A562-5F774DD2D0E5}</td><td>GAMEEXECS2</td><td>2</td><td/><td>microsoft.samples.kinect.wpf1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ApplesGame.Primary_output</td><td>{E7530141-BF17-4C95-99FC-1627C6139972}</td><td>INSTALLDIR</td><td>2</td><td/><td>applesgame.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>BubblesGame.Primary_output</td><td>{E1297711-40B3-4B84-B669-B98CF06A1A6E}</td><td>INSTALLDIR</td><td>2</td><td/><td>bubblesgame.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>KinectMiniGames.Primary_output</td><td>{51770717-9641-4D58-9E4D-4110CE33A0E6}</td><td>INSTALLDIR</td><td>2</td><td/><td>kinectminigames.primary_outp</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Microsoft.Kinect.Toolkit.Controls.Primary_output</td><td>{65A0695A-ECA0-4AFA-94DE-54EBC94C79A8}</td><td>INSTALLDIR</td><td>2</td><td/><td>microsoft.kinect.toolkit.con</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Microsoft.Kinect.Toolkit.Primary_output</td><td>{DF683039-7B01-4ECB-956C-83BEF467B901}</td><td>INSTALLDIR</td><td>2</td><td/><td>microsoft.kinect.toolkit.pri</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Microsoft.Samples.Kinect.WpfViewers.Primary_output</td><td>{7979E2AD-5053-41B3-91BF-A4E231B69679}</td><td>INSTALLDIR</td><td>2</td><td/><td>microsoft.samples.kinect.wpf</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -1064,10 +1057,6 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
-		<row><td>GAMEEXECS</td><td>ISX_DEFAULTCOMPONENT4</td></row>
-		<row><td>GAMEEXECS1</td><td>ISX_DEFAULTCOMPONENT5</td></row>
-		<row><td>GAMEEXECS2</td><td>ISX_DEFAULTCOMPONENT6</td></row>
-		<row><td>GRAPHICS</td><td>ISX_DEFAULTCOMPONENT</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1148,21 +1137,14 @@
 		<col def="I4">ISAttributes</col>
 		<col def="S255">ISFolderName</col>
 		<row><td>ALLUSERSPROFILE</td><td>TARGETDIR</td><td>.:ALLUSE~1|All Users</td><td/><td>0</td><td/></row>
-		<row><td>APPLESGAME</td><td>GRAPHICS</td><td>APPLES~1|ApplesGame</td><td/><td>0</td><td/></row>
 		<row><td>AdminToolsFolder</td><td>TARGETDIR</td><td>.:Admint~1|AdminTools</td><td/><td>0</td><td/></row>
 		<row><td>AppDataFolder</td><td>TARGETDIR</td><td>.:APPLIC~1|Application Data</td><td/><td>0</td><td/></row>
-		<row><td>BUBBLESGAME</td><td>GRAPHICS</td><td>BUBBLE~1|BubblesGame</td><td/><td>0</td><td/></row>
-		<row><td>COMMON</td><td>GRAPHICS</td><td>Common</td><td/><td>0</td><td/></row>
 		<row><td>CommonAppDataFolder</td><td>TARGETDIR</td><td>.:Common~1|CommonAppData</td><td/><td>0</td><td/></row>
 		<row><td>CommonFilesFolder</td><td>TARGETDIR</td><td>.:Common</td><td/><td>0</td><td/></row>
 		<row><td>DATABASEDIR</td><td>ISYourDataBaseDir</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>DesktopFolder</td><td>TARGETDIR</td><td>.:Desktop</td><td/><td>3</td><td/></row>
 		<row><td>FavoritesFolder</td><td>TARGETDIR</td><td>.:FAVORI~1|Favorites</td><td/><td>0</td><td/></row>
 		<row><td>FontsFolder</td><td>TARGETDIR</td><td>.:Fonts</td><td/><td>0</td><td/></row>
-		<row><td>GAMEEXECS</td><td>INSTALLDIR</td><td>GAMEEX~1|GameExecs</td><td/><td>0</td><td/></row>
-		<row><td>GAMEEXECS1</td><td>GAMEEXECS</td><td>GAMEEX~1|GameExecs</td><td/><td>0</td><td/></row>
-		<row><td>GAMEEXECS2</td><td>GAMEEXECS1</td><td>GAMEEX~1|GameExecs</td><td/><td>0</td><td/></row>
-		<row><td>GRAPHICS</td><td>INSTALLDIR</td><td>Graphics</td><td/><td>0</td><td/></row>
 		<row><td>GlobalAssemblyCache</td><td>TARGETDIR</td><td>.:Global~1|GlobalAssemblyCache</td><td/><td>0</td><td/></row>
 		<row><td>INSTALLDIR</td><td>KINECTMINIGAMES</td><td>.</td><td/><td>0</td><td/></row>
 		<row><td>ISCommonFilesFolder</td><td>CommonFilesFolder</td><td>Instal~1|InstallShield</td><td/><td>0</td><td/></row>
@@ -1887,13 +1869,6 @@
 		<col key="yes" def="s72">Component_</col>
 		<row><td>AlwaysInstall</td><td>ApplesGame.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>BubblesGame.Primary_output</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT2</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT4</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT5</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT6</td></row>
 		<row><td>AlwaysInstall</td><td>KinectMiniGames.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>Microsoft.Kinect.Toolkit.Controls.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>Microsoft.Kinect.Toolkit.Primary_output</td></row>
@@ -1913,43 +1888,11 @@
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
 		<row><td>applesgame.primary_output</td><td>ApplesGame.Primary_output</td><td>ApplesGame.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;ApplesGame&gt;|Built</td><td>3</td><td/></row>
-		<row><td>applesgamebackground.png</td><td>ISX_DEFAULTCOMPONENT3</td><td>APPLES~1.PNG|ApplesGameBackground.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\Common\ApplesGameBackground.png</td><td>1</td><td/></row>
-		<row><td>basket.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>basket.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\basket.png</td><td>1</td><td/></row>
-		<row><td>bgl_brown.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>BGL_BR~1.PNG|bgl_brown.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\bgl_brown.png</td><td>1</td><td/></row>
-		<row><td>bgl_green.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>BGL_GR~1.PNG|bgl_green.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\bgl_green.png</td><td>1</td><td/></row>
-		<row><td>bgl_orange.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>BGL_OR~1.PNG|bgl_orange.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\bgl_orange.png</td><td>1</td><td/></row>
-		<row><td>bgl_red.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>bgl_red.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\bgl_red.png</td><td>1</td><td/></row>
-		<row><td>bgl_yellow.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>BGL_YE~1.PNG|bgl_yellow.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\bgl_yellow.png</td><td>1</td><td/></row>
-		<row><td>brown_apple.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>BROWN_~1.PNG|brown_apple.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\brown_apple.png</td><td>1</td><td/></row>
-		<row><td>brown_basket.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>BROWN_~1.PNG|brown_basket.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\brown_basket.png</td><td>1</td><td/></row>
-		<row><td>bubble.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>bubble.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble.png</td><td>1</td><td/></row>
-		<row><td>bubble_black.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_black.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_black.png</td><td>1</td><td/></row>
-		<row><td>bubble_blue.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_blue.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_blue.png</td><td>1</td><td/></row>
-		<row><td>bubble_blue2.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_blue2.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_blue2.png</td><td>1</td><td/></row>
-		<row><td>bubble_brown.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_brown.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_brown.png</td><td>1</td><td/></row>
-		<row><td>bubble_green.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_green.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_green.png</td><td>1</td><td/></row>
-		<row><td>bubble_orange.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_orange.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_orange.png</td><td>1</td><td/></row>
-		<row><td>bubble_pink.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_pink.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_pink.png</td><td>1</td><td/></row>
-		<row><td>bubble_purple.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_purple.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_purple.png</td><td>1</td><td/></row>
-		<row><td>bubble_red.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_red.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_red.png</td><td>1</td><td/></row>
-		<row><td>bubble_yellow.png</td><td>ISX_DEFAULTCOMPONENT2</td><td>BUBBLE~1.PNG|bubble_yellow.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\BubblesGame\bubble_yellow.png</td><td>1</td><td/></row>
 		<row><td>bubblesgame.primary_output</td><td>BubblesGame.Primary_output</td><td>BubblesGame.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;BubblesGame&gt;|Built</td><td>3</td><td/></row>
-		<row><td>grass2.png</td><td>ISX_DEFAULTCOMPONENT3</td><td>grass2.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\Common\grass2.png</td><td>1</td><td/></row>
-		<row><td>green_apple.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>GREEN_~1.PNG|green_apple.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\green_apple.png</td><td>1</td><td/></row>
-		<row><td>green_basket.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>GREEN_~1.PNG|green_basket.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\green_basket.png</td><td>1</td><td/></row>
 		<row><td>kinectminigames.primary_outp</td><td>KinectMiniGames.Primary_output</td><td>KinectMiniGames.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;KinectMiniGames&gt;|Built</td><td>3</td><td/></row>
-		<row><td>menubackground.png</td><td>ISX_DEFAULTCOMPONENT3</td><td>MENUBA~1.PNG|MenuBackground.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\Common\MenuBackground.png</td><td>1</td><td/></row>
-		<row><td>microsoft.kinect.toolkit.con2</td><td>Microsoft.Kinect.Toolkit.Controls.Primary_output</td><td>Microsoft.Kinect.Toolkit.Controls.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Microsoft.Kinect.Toolkit.Controls&gt;|Built</td><td>3</td><td/></row>
+		<row><td>microsoft.kinect.toolkit.con</td><td>Microsoft.Kinect.Toolkit.Controls.Primary_output</td><td>Microsoft.Kinect.Toolkit.Controls.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Microsoft.Kinect.Toolkit.Controls&gt;|Built</td><td>3</td><td/></row>
 		<row><td>microsoft.kinect.toolkit.pri</td><td>Microsoft.Kinect.Toolkit.Primary_output</td><td>Microsoft.Kinect.Toolkit.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Microsoft.Kinect.Toolkit&gt;|Built</td><td>3</td><td/></row>
-		<row><td>microsoft.samples.kinect.wpf1</td><td>Microsoft.Samples.Kinect.WpfViewers.Primary_output</td><td>Microsoft.Samples.Kinect.WpfViewers.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Microsoft.Samples.Kinect.WpfViewers&gt;|Built</td><td>3</td><td/></row>
-		<row><td>orange_apple.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>ORANGE~1.PNG|orange_apple.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\orange_apple.png</td><td>1</td><td/></row>
-		<row><td>orange_basket.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>ORANGE~1.PNG|orange_basket.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\orange_basket.png</td><td>1</td><td/></row>
-		<row><td>red_apple.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>RED_AP~1.PNG|red_apple.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\red_apple.png</td><td>1</td><td/></row>
-		<row><td>red_basket.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>RED_BA~1.PNG|red_basket.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\red_basket.png</td><td>1</td><td/></row>
-		<row><td>sky.png</td><td>ISX_DEFAULTCOMPONENT3</td><td>sky.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\Common\sky.png</td><td>1</td><td/></row>
-		<row><td>tree.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>tree.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\tree.png</td><td>1</td><td/></row>
-		<row><td>yellow_apple.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>YELLOW~1.PNG|yellow_apple.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\yellow_apple.png</td><td>1</td><td/></row>
-		<row><td>yellow_basket.png</td><td>ISX_DEFAULTCOMPONENT1</td><td>YELLOW~1.PNG|yellow_basket.png</td><td>0</td><td/><td/><td/><td>1</td><td>D:\Programming\Kinect\KinectMiniGames\Graphics\ApplesGame\yellow_basket.png</td><td>1</td><td/></row>
+		<row><td>microsoft.samples.kinect.wpf</td><td>Microsoft.Samples.Kinect.WpfViewers.Primary_output</td><td>Microsoft.Samples.Kinect.WpfViewers.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Microsoft.Samples.Kinect.WpfViewers&gt;|Built</td><td>3</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2207,19 +2150,12 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
-		<row><td>ApplesGame.Primary_output</td><td/><td/><td>_2081DCB8_E34D_4603_AF5F_15B05DA3AFE5_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>BubblesGame.Primary_output</td><td/><td/><td>_9BA6460A_8694_4868_AB23_421A2969BFD9_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_9AF4C4E6_284F_4510_8078_7CBC3F5E117A_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_EA603F80_1A43_41EA_8844_B2F37B5FDA51_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT2</td><td/><td/><td>_7F3A9B03_3539_4D30_A72D_54A730C1B5A4_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_DA4F3E08_9DF9_4D80_BF08_835105DA13A9_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT4</td><td/><td/><td>_4AB4CDA3_0B25_4690_A08B_16EE6B6B96A8_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT5</td><td/><td/><td>_11287B63_7476_40E1_94B9_1628E11DE822_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT6</td><td/><td/><td>_B3EA3B06_3C06_4303_86F0_5F0A5F9F355F_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>KinectMiniGames.Primary_output</td><td/><td/><td>_93FC6A17_9EB9_43A7_BFDF_93D4D7F3E1F7_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>Microsoft.Kinect.Toolkit.Controls.Primary_output</td><td/><td/><td>_5767A832_D89B_44B5_9C03_EF5E98D3F608_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>Microsoft.Kinect.Toolkit.Primary_output</td><td/><td/><td>_3A0584C9_E1BA_4A31_B047_16E43732EC2F_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>Microsoft.Samples.Kinect.WpfViewers.Primary_output</td><td/><td/><td>_27F39835_FFFF_4126_9B36_4A07135447EB_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ApplesGame.Primary_output</td><td/><td/><td>_24600F00_3021_4D78_9B23_2A25175C7AA5_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>BubblesGame.Primary_output</td><td/><td/><td>_319AF882_984C_4E41_8EF4_54FDA2CD148A_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>KinectMiniGames.Primary_output</td><td/><td/><td>_4151DAB2_62A0_44DC_B588_B7B098303EFC_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Microsoft.Kinect.Toolkit.Controls.Primary_output</td><td/><td/><td>_24B6BA52_B2FF_4898_94B3_D4DFC9C849D4_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Microsoft.Kinect.Toolkit.Primary_output</td><td/><td/><td>_40467C77_03F2_406C_B5E3_FC05C6B5AE18_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Microsoft.Samples.Kinect.WpfViewers.Primary_output</td><td/><td/><td>_42B3E87D_3DE4_42CF_A0F8_51B84A291721_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -2854,7 +2790,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>MetalCoders</td><td>0</td><td/><td>-1667126230</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>MetalCoders</td><td>0</td><td/><td>-1667120627</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION40CLIENT</td><td>1033</td><td>Microsoft .NET Framework 4.0 Client Package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-1667145943</td></row>
@@ -3668,6 +3604,8 @@
 		<row><td>IDS_PROGMSG_XML_UPDATE_FILE</td><td>1033</td><td>Updating XML file %s...</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDS_SETUPEXE_EXPIRE_MSG</td><td>1033</td><td>This setup works until %s. The setup will now exit.</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1667148758</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>1033</td><td>KinectMiniGames</td><td>0</td><td/><td>-1667139189</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME3</td><td>1033</td><td>KinectMiniGames</td><td>0</td><td/><td>-1667153395</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1033</td><td>From the list of servers below, select the database server you would like to target.</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1033</td><td>From the list of catalog names below, select the database catalog you would like to target.</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1033</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>-1667150103</td></row>
@@ -3957,9 +3895,11 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>-1667143959</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.MetalCoders.com</td><td>0</td><td/><td>-1667126230</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>MetalCoders</td><td>0</td><td/><td>-1667126230</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.MetalCoders.com</td><td>0</td><td/><td>-1667120627</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>MetalCoders</td><td>0</td><td/><td>-1667120627</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1667140566</td></row>
+		<row><td>ID_STRING5</td><td>1033</td><td>KinectMiniGames</td><td>0</td><td/><td>-1667139189</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>KinectMiniGames</td><td>0</td><td/><td>-1667151347</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-1667150103</td></row>
 	</table>
 
@@ -4182,8 +4122,8 @@
 		<col def="S0">Value</col>
 		<row><td>ActiveLanguage</td><td>1033</td></row>
 		<row><td>Comments</td><td/></row>
-		<row><td>CurrentMedia</td><td dt:dt="bin.base64" md5="de9f554a3bc05c12be9c31b998217995">
-UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
+		<row><td>CurrentMedia</td><td dt:dt="bin.base64" md5="a4f66fafb30885f14d732b73e196bba0">
+RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 			</td></row>
 		<row><td>DefaultProductConfiguration</td><td>Express</td></row>
 		<row><td>EnableSwidtag</td><td>1</td></row>
@@ -4200,7 +4140,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{D40AF7D2-CD72-4CEF-9BC0-653D445DB22A}</td></row>
 		<row><td>ISUSSignature</td><td>{48234F32-EAE4-40F4-852B-D640B79BE4AC}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewAppFiles,viewFeatureFiles,viewObjects</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewAppFiles,viewFeatureFiles,viewObjects,viewISToday,viewProject,viewRelease,viewDependencies</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4548,7 +4488,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>IS_SQLSERVER_USERNAME</td><td>sa</td><td/></row>
 		<row><td>InstallChoice</td><td>AR</td><td/></row>
 		<row><td>LAUNCHPROGRAM</td><td>1</td><td/></row>
-		<row><td>LAUNCHPROGRAMCOMPCODE</td><td>{13B4B6DE-D8D9-44F5-AB80-FBFCCA06222C}</td><td/></row>
+		<row><td>LAUNCHPROGRAMCOMPCODE</td><td>{51770717-9641-4D58-9E4D-4110CE33A0E6}</td><td/></row>
 		<row><td>LAUNCHPROGRAMFILEKEY</td><td>kinectminigames.primary_outp</td><td/></row>
 		<row><td>LAUNCHREADME</td><td>1</td><td/></row>
 		<row><td>Manufacturer</td><td>##COMPANY_NAME##</td><td/></row>
@@ -4658,8 +4598,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
-		<row><td>FileKey1</td><td>KinectMiniGames.Primary_output</td><td/><td>metalc_1_metalcoders</td><td>2</td></row>
-		<row><td>FileKey2</td><td>KinectMiniGames.Primary_output</td><td/><td>kinect_1_kinectminigames</td><td>2</td></row>
 		<row><td>_Built</td><td>KinectMiniGames.Primary_output</td><td/><td>kinect_1_kinectminigames</td><td>2</td></row>
 	</table>
 
@@ -4746,8 +4684,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISComments</col>
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
-		<row><td>_Built</td><td>kinect_1_kinectminigames</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>KinectMiniGames.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>KinectMiniGames.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built</td><td>kinect_1_kinectminigames</td><td>##IDS_SHORTCUT_DISPLAY_NAME3##</td><td>KinectMiniGames.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME3##</td><td>KinectMiniGames.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">

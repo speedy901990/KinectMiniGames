@@ -6,6 +6,8 @@ using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Resources;
+using System.Resources;
 
 namespace KinectMiniGames
 {
@@ -43,14 +45,22 @@ namespace KinectMiniGames
             this.InitializeComponent();
             setMenuBackground();
             setupKinectSensor();
-            createMenuButtons();           
+            createMenuButtons();
         }
 
         private void setMenuBackground()
         {
-            ImageBrush sky = new ImageBrush(new BitmapImage(new Uri(@"../../../Graphics/Common/MenuBackground.png", UriKind.Relative)));
+            ImageBrush sky = new ImageBrush(convertBitmapToBitmapSource(Properties.Resources.sky));
             sky.Stretch = Stretch.UniformToFill;
             mainGrid.Background = sky;
+        }
+
+        private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
         }
 
         private void setupKinectSensor()
@@ -149,7 +159,7 @@ namespace KinectMiniGames
 
         private void key_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Escape) 
+            if (e.Key == System.Windows.Input.Key.Escape)
                 this.Close();
         }
         #endregion

@@ -70,6 +70,14 @@ namespace ApplesGame
             setGraphics(parColor);
         }
 
+        private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
+        }
+
         private void setGraphics(int colourParam)
         {
             ImageBrush basketBg;
@@ -78,43 +86,37 @@ namespace ApplesGame
                 case 0:
                     color = Colors.Red;
                     basketBg = new ImageBrush();
-                    basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_basket.png", UriKind.Relative));
+                    basketBg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.red_basket);
                     Figure.Background = basketBg;
                     break;
                 case 1:
                     color = Colors.Green;
                     basketBg = new ImageBrush();
-                    basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_basket.png", UriKind.Relative));
+                    basketBg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.green_basket);
                     Figure.Background = basketBg;
                     break;
                 case 2:
                     color = Colors.Yellow;
                     basketBg = new ImageBrush();
-                    basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_basket.png", UriKind.Relative));
+                    basketBg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.yellow_basket);
                     Figure.Background = basketBg;
                     break;
                 case 3:
                     Color = Colors.Orange;
                     basketBg = new ImageBrush();
-                    basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_basket.png", UriKind.Relative));
+                    basketBg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.orange_basket);
                     Figure.Background = basketBg;
                     break;
                 case 4:
                     Color = Colors.Brown;
                     basketBg = new ImageBrush();
-                    basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/brown_basket.png", UriKind.Relative));
+                    basketBg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.brown_basket);
                     Figure.Background = basketBg;
                     break;
                 default:
                     color = Colors.Red;
                     basketBg = new ImageBrush();
-                    basketBg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/basket.png", UriKind.Relative));
+                    basketBg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.basket);
                     Figure.Background = basketBg;
                     break;
             }

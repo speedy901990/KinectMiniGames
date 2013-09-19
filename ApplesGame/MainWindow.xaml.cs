@@ -98,7 +98,7 @@ namespace ApplesGame
         private void setBackground()
         {
             ImageBrush bg = new ImageBrush();
-            bg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/Common/ApplesGameBackground.png", UriKind.Relative));
+            bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.ApplesGameBackground);
             bg.Stretch = Stretch.UniformToFill;
             kinectRegionGrid.Background = bg;
         }
@@ -107,6 +107,14 @@ namespace ApplesGame
         {
             gameScore = new Score(treesCount * applesOnTree);
             kinectRegionGrid.Children.Add(gameScore.Scoreboard);
+        }
+
+        private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
         }
 
         private void createApplesAndTrees()
@@ -118,7 +126,7 @@ namespace ApplesGame
             Canvas[] tree = new Canvas[treesCount];
             myApple = new Apple[treesCount * applesOnTree];
             ImageBrush treeBg = new ImageBrush();
-            treeBg.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/tree.png", UriKind.Relative));
+            treeBg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.tree);
 
             int appleCounter = 0;
             for (int i = 0; i < treesCount; i++)
@@ -415,28 +423,23 @@ namespace ApplesGame
             {
                 if (sender.Color == Colors.Red)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_red.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bgl_red);
                 }
                 if (sender.Color == Colors.Yellow)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_yellow.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bgl_yellow);
                 }
                 if (sender.Color == Colors.Green)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_green.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bgl_green);
                 }
                 if (sender.Color == Colors.Orange)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_orange.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bgl_orange);
                 }
                 if (sender.Color == Colors.Brown)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/bgl_brown.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bgl_brown);
                 }
             }
             sender.Figure.Background = bg;
@@ -449,28 +452,23 @@ namespace ApplesGame
             {
                 if (sender.Color == Colors.Red)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/red_apple.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.red_apple);
                 }
                 if (sender.Color == Colors.Yellow)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/yellow_apple.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.yellow_apple);
                 }
                 if (sender.Color == Colors.Green)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/green_apple.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.green_apple);
                 }
                 if (sender.Color == Colors.Orange)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/orange_apple.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.orange_apple);
                 }
                 if (sender.Color == Colors.Brown)
                 {
-                    bg.ImageSource =
-                        new BitmapImage(new Uri(@"../../../Graphics/ApplesGame/brown_apple.png", UriKind.Relative));
+                    bg.ImageSource = convertBitmapToBitmapSource(Properties.Resources.brown_apple);
                 }
             }
             sender.Figure.Background = bg;

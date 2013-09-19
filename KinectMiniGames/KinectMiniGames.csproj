@@ -76,6 +76,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -213,9 +214,20 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resources\ShapeGame.ico" />
+    <None Include="Resources\ShapeGame.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ApplesGameBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\grass2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sky.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
