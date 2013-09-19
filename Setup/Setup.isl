@@ -227,6 +227,7 @@
 		<col key="yes" def="s72">Signature_</col>
 		<row><td>DOTNETVERSION40CLIENT</td><td>DotNet40Client</td></row>
 		<row><td>DOTNETVERSION40FULL</td><td>DotNet40Full</td></row>
+		<row><td>MICROSOFT.KINECT</td><td>NewSignature1</td></row>
 	</table>
 
 	<table name="BBControl">
@@ -1175,7 +1176,9 @@
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
 		<row><td>kinect_1_kinectminigames</td><td>metalc_1_metalcoders</td><td>KINECT~1|KinectMiniGames</td><td/><td>1</td><td/></row>
+		<row><td>kinectminigames</td><td>metalcoders</td><td>KinectMiniGames</td><td/><td>1</td><td/></row>
 		<row><td>metalc_1_metalcoders</td><td>ProgramMenuFolder</td><td>METALC~1|MetalCoders</td><td/><td>1</td><td/></row>
+		<row><td>metalcoders</td><td>ProgramMenuFolder</td><td>MetalCoders</td><td/><td>1</td><td/></row>
 	</table>
 
 	<table name="DrLocator">
@@ -1183,6 +1186,7 @@
 		<col key="yes" def="S72">Parent</col>
 		<col key="yes" def="S255">Path</col>
 		<col def="I2">Depth</col>
+		<row><td>NewSignature1</td><td></td><td>[ProgramFilesFolder]Microsoft SDKs\Kinect</td><td>10</td></row>
 	</table>
 
 	<table name="DuplicateFile">
@@ -2795,6 +2799,7 @@
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION40CLIENT</td><td>1033</td><td>Microsoft .NET Framework 4.0 Client Package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-1667145943</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION40FULL</td><td>1033</td><td>Microsoft .NET Framework 4.0 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-1667145943</td></row>
+		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_MICROSOFT.KINECT</td><td>1033</td><td>Install Microsoft Kinect SDK</td><td>0</td><td/><td>-1667132267</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
@@ -3606,6 +3611,7 @@
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1667148758</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>1033</td><td>KinectMiniGames</td><td>0</td><td/><td>-1667139189</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME3</td><td>1033</td><td>KinectMiniGames</td><td>0</td><td/><td>-1667153395</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME4</td><td>1033</td><td>Launch KinectRuntime-v1.7-Setup.exe</td><td>0</td><td/><td>-1667138507</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1033</td><td>From the list of servers below, select the database server you would like to target.</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1033</td><td>From the list of catalog names below, select the database catalog you would like to target.</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1033</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>-1667150103</td></row>
@@ -3895,7 +3901,7 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-1667150103</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>-1667143959</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.MetalCoders.com</td><td>0</td><td/><td>-1667120627</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://enterthis.no-ip.org</td><td>0</td><td/><td>-1667113195</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>MetalCoders</td><td>0</td><td/><td>-1667120627</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-1667140566</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>KinectMiniGames</td><td>0</td><td/><td>-1667139189</td></row>
@@ -4008,6 +4014,7 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
 		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\setupicon.ico</td><td>0</td></row>
+		<row><td>KinectRuntime_v1.7_25F2FA3C0D05410DBB033B6FC6AD241B.exe</td><td/><td>C:\Program Files\Microsoft SDKs\Kinect\v1.7\Redist\KinectRuntime-v1.7-Setup.exe</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
@@ -4140,7 +4147,7 @@ RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{D40AF7D2-CD72-4CEF-9BC0-653D445DB22A}</td></row>
 		<row><td>ISUSSignature</td><td>{48234F32-EAE4-40F4-852B-D640B79BE4AC}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewAppFiles,viewFeatureFiles,viewObjects,viewISToday,viewProject,viewRelease,viewDependencies</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewAppFiles,viewFeatureFiles,viewObjects,viewISToday,viewProject,viewRelease,viewDependencies,viewAppV,viewEnvironmentVariables,viewUpgradePaths,viewUpdateService</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4533,7 +4540,7 @@ RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>SERIALNUMBER</td><td/><td/></row>
 		<row><td>SERIALNUMVALSUCCESSRETVAL</td><td>1</td><td/></row>
 		<row><td>SHOWLAUNCHPROGRAM</td><td>-1</td><td/></row>
-		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION40CLIENT;DOTNETVERSION40FULL</td><td/></row>
+		<row><td>SecureCustomProperties</td><td>ISFOUNDNEWERPRODUCTVERSION;USERNAME;COMPANYNAME;ISX_SERIALNUM;SUPPORTDIR;DOTNETVERSION40CLIENT;DOTNETVERSION40FULL;MICROSOFT.KINECT</td><td/></row>
 		<row><td>SelectedSetupType</td><td>##IDS__DisplayName_Typical##</td><td/></row>
 		<row><td>SetupType</td><td>Typical</td><td/></row>
 		<row><td>UpgradeCode</td><td>{D60636CB-41CA-4AAF-9FEE-2BCB0B789EDB}</td><td/></row>
@@ -4698,6 +4705,7 @@ RABWAEQALQA1AAEARQB4AHAAcgBlAHMAcwA=
 		<col def="I4">MinDate</col>
 		<col def="I4">MaxDate</col>
 		<col def="S255">Languages</col>
+		<row><td>NewSignature1</td><td>Microsoft.Kinect.dll</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="TextStyle">
