@@ -18,58 +18,58 @@ namespace BubblesGame
         #region Public State
         public string Username
         {
-            get { return this.username; }
+            get { return username; }
             set
             {
-                this.username = value;
+                username = value;
                 OnPropertyChanged("Username");
             }
         }
 
         public int BubblesFallSpeed
         {
-            get { return this.bubbleFallSpeed; }
+            get { return bubbleFallSpeed; }
             set
             {
-                this.bubbleFallSpeed = value;
+                bubbleFallSpeed = value;
                 OnPropertyChanged("BubblesFallSpeed");
             }
         }
 
         public int BubblesCount
         {
-            get { return this.bubblesCount; }
+            get { return bubblesCount; }
             set
             {
-                this.bubblesCount = value;
+                bubblesCount = value;
                 OnPropertyChanged("BubblesCount");
             }
         }
 
         public int BubblesSize
         {
-            get { return this.bubbleSize; }
+            get { return bubbleSize; }
             set
             {
-                this.bubbleSize = value;
+                bubbleSize = value;
                 OnPropertyChanged("BubblesSize");
             }
         }
 
         public int BubblesApperanceFrequency
         {
-            get { return this.bubblesApperanceFrequency; }
+            get { return bubblesApperanceFrequency; }
             set
             {
-                this.bubblesApperanceFrequency = value;
+                bubblesApperanceFrequency = value;
                 OnPropertyChanged("BubblesApperanceFrequency");
             }
         }
 
         public KinectSensorChooser PassedKinectSensorChooser
         {
-            get { return this.kinectSensor; }
-            set { this.kinectSensor = value; }
+            get { return kinectSensor; }
+            set { kinectSensor = value; }
         }
         #endregion
 

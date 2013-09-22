@@ -1,4 +1,7 @@
-﻿using System.Windows.Media;
+﻿using System.Drawing;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
 using BubblesGame.Properties;
 using System;
 using System.Collections.Generic;
@@ -18,6 +21,11 @@ using BubblesGame.Speech;
 using BubblesGame.Utils;
 using System.Windows.Media.Imaging;
 using System.Resources;
+using Binding = System.Windows.Data.Binding;
+using Color = System.Windows.Media.Color;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.MessageBox;
+using Point = System.Windows.Point;
 
 namespace BubblesGame
 {
@@ -33,9 +41,9 @@ namespace BubblesGame
         #endregion
 
         #region Private State
+
         private const int TimerResolution = 2;  // ms
         private const int NumIntraFrames = 3;
-        private static int MaxShapes = 80;
         private const double MaxFramerate = 70;
         private const double MinFramerate = 15;
         private const double MinShapeSize = 12;
@@ -43,7 +51,8 @@ namespace BubblesGame
         private const double DefaultDropRate = 1;
         private const double DefaultDropSize = 64.0;
         private const double DefaultDropGravity = 1.0;
-
+        private static int _maxShapes = 80;
+        
         private readonly Dictionary<int, Player> _players = new Dictionary<int, Player>();
         private readonly SoundPlayer _popSound = new SoundPlayer();
         private readonly SoundPlayer _hitSound = new SoundPlayer();
@@ -78,7 +87,7 @@ namespace BubblesGame
         public MainWindow()
         {
             InitializeComponent();
-            setupKinectSensor();
+            SetupKinectSensor();
             RestoreWindowState();
         }
 
@@ -86,11 +95,11 @@ namespace BubblesGame
         {
             InitializeComponent();
             this.config = config;
-            setupKinectSensor(config);
+            SetupKinectSensor(config);
             RestoreWindowState();
         }
 
-        private void setupKinectSensor(BubblesGameConfig config = null)
+        private void SetupKinectSensor(BubblesGameConfig config = null)
         {
             KinectSensorManager = new KinectSensorManager();
             KinectSensorManager.KinectSensorChanged += KinectSensorChanged;
@@ -100,42 +109,43 @@ namespace BubblesGame
             {
                 SensorChooserUI.KinectSensorChooser = _sensorChooser;
                 _sensorChooser.Start();
-                var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = _sensorChooser };
+                var kinectSensorBinding = new Binding("Kinect") { Source = _sensorChooser };
                 BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
             }
             else
             {
                 SensorChooserUI.KinectSensorChooser = config.PassedKinectSensorChooser;
                 _sensorChooser.Start();
-                var kinectSensorBinding = new System.Windows.Data.Binding("Kinect") { Source = config.PassedKinectSensorChooser };
+                var kinectSensorBinding = new Binding("Kinect") { Source = config.PassedKinectSensorChooser };
                 BindingOperations.SetBinding(KinectSensorManager, KinectSensorManager.KinectSensorProperty, kinectSensorBinding);
             }
         }
 
-        private void setBackground()
+        private void SetBackground()
         {
-            ImageBrush bg = new ImageBrush(convertBitmapToBitmapSource(Properties.Resources.ApplesGameBackground));
-            bg.Stretch = Stretch.UniformToFill;
+            var bg = new ImageBrush(convertBitmapToBitmapSource(Properties.Resources.ApplesGameBackground))
+            {
+                Stretch = Stretch.UniformToFill
+            };
             grid.Background = bg;
         }
 
-        private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
+        private BitmapSource convertBitmapToBitmapSource(Bitmap bm)
         {
             var bitmap = bm;
-            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             bitmap.Dispose();
             return bitmapSource;
         }
 
-        private void setupConfiguration()
+        private void SetupConfiguration()
         {
-            
             _dropSize = config.BubblesSize;
-            MaxShapes = config.BubblesCount;
+            _maxShapes = config.BubblesCount;
             _dropGravity = config.BubblesFallSpeed * 0.2;
             _dropRate = config.BubblesApperanceFrequency * 0.4;
 
-            _myFallingThings = new FallingThings(MaxShapes, _targetFramerate, NumIntraFrames, MaxShapes);
+            _myFallingThings = new FallingThings(_maxShapes, _targetFramerate, NumIntraFrames, _maxShapes);
 
             UpdatePlayfieldSize();
 
@@ -180,15 +190,19 @@ namespace BubblesGame
             WindowState = (WindowState)Settings.Default.WindowState;
         }
 
+        private void WindowsRendered(object sender, EventArgs e)
+        {
+            var myGameThread = new Thread(GameThread);
+            myGameThread.SetApartmentState(ApartmentState.STA);
+
+            myGameThread.Start();
+        }
+
         private void WindowLoaded(object sender, EventArgs e)
         {
             playfield.ClipToBounds = true;
-            setBackground();
-            setupConfiguration();
-            
-            var myGameThread = new Thread(GameThread);
-            myGameThread.SetApartmentState(ApartmentState.STA);
-            myGameThread.Start();
+            SetBackground();
+            SetupConfiguration();
         }
 
         private void WindowClosing(object sender, CancelEventArgs e)
@@ -560,11 +574,12 @@ namespace BubblesGame
             _myFallingThings.DrawFrame(playfield.Children);
             if (_myFallingThings._things.Count == 0 && FallingThings.BubblesFallen > 0)
             {
-                var result = System.Windows.MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
-                if (result == System.Windows.MessageBoxResult.OK)
+                var result = MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
+                if (result == MessageBoxResult.OK)
                 {
                     FallingThings.BubblesFallen = 0;
-                    this.Close();
+                    FallingThings.BubblesPopped = 0;
+                    Close();
                 }
             }
             
@@ -693,12 +708,13 @@ namespace BubblesGame
         #endregion Kinect Speech processing
 
         #region Closing window
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Escape)
+            if (e.Key == Key.Escape)
             {
                 FallingThings.BubblesFallen = 0;
-                this.Close();
+                FallingThings.BubblesPopped = 0;
+                Close();
             }
         }
         #endregion

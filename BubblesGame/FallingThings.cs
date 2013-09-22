@@ -8,6 +8,10 @@
 // hit testing against a set of segments provided by the Kinect NUI, and
 // have shapes react accordingly.
 
+using System.Drawing;
+using System.Windows.Interop;
+using BubblesGame.Properties;
+
 namespace BubblesGame
 {
     using System;
@@ -422,10 +426,10 @@ namespace BubblesGame
             }
         }
 
-        private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
+        private BitmapSource convertBitmapToBitmapSource(Bitmap bm)
         {
             var bitmap = bm;
-            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             bitmap.Dispose();
             return bitmapSource;
         }
@@ -435,27 +439,27 @@ namespace BubblesGame
                 var myBrush = new ImageBrush();
             switch (number)
             {
-                case 0: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble);
+                case 0: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble);
                     break;
-                case 1: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_black);
+                case 1: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_black);
                     break;
-                case 2: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_blue);
+                case 2: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_blue);
                     break;
-                case 3: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_blue2);
+                case 3: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_blue2);
                     break;
-                case 4: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_brown);
+                case 4: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_brown);
                     break;
-                case 5: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_green);
+                case 5: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_green);
                     break;
-                case 6: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_orange);
+                case 6: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_orange);
                     break;
-                case 7: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_pink);
+                case 7: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_pink);
                     break;
-                case 8: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_purple);
+                case 8: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_purple);
                     break;
-                case 9: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_red);
+                case 9: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_red);
                     break;
-                case 10: myBrush.ImageSource = convertBitmapToBitmapSource(Properties.Resources.bubble_yellow);
+                case 10: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_yellow);
                     break;
             }
             
@@ -468,8 +472,8 @@ namespace BubblesGame
                 }
                 
                 circle.StrokeThickness = strokeThickness * ((numSides == 1) ? 1 : 2);
-                //circle.Fill = (numSides == 1) ? brush : null;
-                circle.Fill = myBrush;
+                circle.Fill = (numSides == 1) ? brush : null;
+                //circle.Fill = myBrush;
                 circle.SetValue(Canvas.LeftProperty, center.X - size);
                 circle.SetValue(Canvas.TopProperty, center.Y - size);
                 return circle;
