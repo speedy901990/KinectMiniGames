@@ -106,7 +106,7 @@
 
         <Grid Grid.Row="0"  Margin="10 0 10 20" Panel.ZIndex="2">
             <!--Image HorizontalAlignment="Left" VerticalAlignment="Bottom" Source="Images\Logo.png" Stretch="None" Margin="0 0 0 4"/-->
-            <Border BorderThickness="1" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Center" Height="100" Width="113">
+            <Border x:Name="kinectViewBorder" BorderThickness="1" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="Center" Height="100" Width="113">
                 <k:KinectUserViewer Name="kinectUserViewer" k:KinectRegion.KinectRegion="{Binding ElementName=kinectRegion}" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,5,0,0" RenderTransformOrigin="0.615,0.477" Width="117" />
             </Border>
             <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />

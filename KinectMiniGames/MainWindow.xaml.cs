@@ -165,14 +165,18 @@ namespace KinectMiniGames
 
         private void KinectMiniGames_Deactivated(object sender, EventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            //this.WindowState = WindowState.Minimized;
+            kinectViewBorder.Visibility = System.Windows.Visibility.Hidden;
+            sensorChooserUi.Visibility = System.Windows.Visibility.Hidden;
         }
 
         #endregion
 
         private void KinectMiniGames_Activated(object sender, EventArgs e)
         {
-            this.WindowState = WindowState.Maximized;
+            //this.WindowState = WindowState.Maximized;
+            kinectViewBorder.Visibility = System.Windows.Visibility.Visible;
+            sensorChooserUi.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }
