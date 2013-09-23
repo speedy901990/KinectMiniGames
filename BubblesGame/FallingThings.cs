@@ -472,8 +472,8 @@ namespace BubblesGame
                 }
                 
                 circle.StrokeThickness = strokeThickness * ((numSides == 1) ? 1 : 2);
-                circle.Fill = (numSides == 1) ? brush : null;
-                //circle.Fill = myBrush;
+                //circle.Fill = (numSides == 1) ? brush : null;
+                circle.Fill = myBrush;
                 circle.SetValue(Canvas.LeftProperty, center.X - size);
                 circle.SetValue(Canvas.TopProperty, center.Y - size);
                 return circle;
