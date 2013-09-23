@@ -183,7 +183,7 @@ namespace ApplesGame
         private void createBaskets()
         {
             basket = new Basket[basketCount];
-            bool [] basketColors = new bool[basketCount];
+            bool[] basketColors = new bool[basketCount];
 
             int basketSize;
             if (windowWidth < 1440)
@@ -195,7 +195,7 @@ namespace ApplesGame
             {
                 double x = (windowWidth / basketCount) * i - 30;
                 double y = windowHeight - basketSize * 0.85;
-                Point basketPosition = new Point((int)x, (int)y);                
+                Point basketPosition = new Point((int)x, (int)y);
                 basket[i] = new Basket(basketSize, basketSize, basketPosition, randomColor(ref basketColors, basketCount));
                 playfield.Children.Add(basket[i].Figure);
             }
@@ -307,17 +307,14 @@ namespace ApplesGame
                             gameScore.collectSuccess();
                             check = true;
                         }
-                        else
-                        {
-                            handPointerEventArgs.Handled = true;
-                            gameScore.collectFail();
-                            check = false;
-                        }
                     }
                 }
 
                 if (!check)
                 {
+                    handPointerEventArgs.Handled = true;
+                    gameScore.collectFail();
+                    check = false;
                     Apple MovingApple = new Apple(GripApple, point.X, point.Y);
                     playfield.Children.Add(MovingApple.Figure);
                     MoveTo(MovingApple, GripApple.Pos.X, GripApple.Pos.Y, point.X, point.Y);
@@ -331,22 +328,28 @@ namespace ApplesGame
 
         public void MoveTo(Apple target, double NewX, double NewY, double HandX, double HandY)
         {
-            TranslateTransform trans = new TranslateTransform();
-            target.Figure.RenderTransform = trans;
-            //tree[] Canvas and [0,0] differences
-            NewX += ((windowWidth - 300) / treesCount) * Treenum;
-            NewY += (windowHeight - 500);
+                TranslateTransform trans = new TranslateTransform();
+                target.Figure.RenderTransform = trans;
+                //tree[] Canvas and [0,0] differences
+                NewX += ((windowWidth / treesCount * 0.5) * 1.5 * Treenum + 20) + (70 * Treenum);
+                NewY += windowHeight - (windowHeight / 1.25);
 
-            //ActualHand and [0,0] differences
-            NewX -= HandX;
-            NewY -= HandY;
+                //tree[i].Width = (int)(windowWidth / treesCount * 0.5) * 1.5;//*1.7 - full screen of trees;
+                //tree[i].Height = (int)(windowHeight / 1.25);
+                //Canvas.SetTop(tree[i], 50);
+                //Canvas.SetLeft(tree[i], (i * tree[i].Width + 20));
+                //tree[i].Margin = new Thickness((i * 0.2 * tree[i].Width), 0, 20, 0);
 
-            NewY -= target.Size;
-            NewX += target.Size / 2;
-            DoubleAnimation anim1 = new DoubleAnimation(0, NewX, TimeSpan.FromSeconds(1));
-            DoubleAnimation anim2 = new DoubleAnimation(0, NewY, TimeSpan.FromSeconds(1));
-            trans.BeginAnimation(TranslateTransform.XProperty, anim1);
-            trans.BeginAnimation(TranslateTransform.YProperty, anim2);
+                //ActualHand and [0,0] differences
+                NewX -= HandX;
+                NewY -= HandY;
+
+                NewY -= target.Size / 2;
+                // NewX += target.Size / 2;
+                DoubleAnimation anim1 = new DoubleAnimation(0, NewX, TimeSpan.FromSeconds(1));
+                DoubleAnimation anim2 = new DoubleAnimation(0, NewY, TimeSpan.FromSeconds(1));
+                trans.BeginAnimation(TranslateTransform.XProperty, anim1);
+                trans.BeginAnimation(TranslateTransform.YProperty, anim2);
         }
 
 
@@ -383,7 +386,7 @@ namespace ApplesGame
             Apple hoveredApple;
             var button = sender as KinectCircleButton;
             hoveredApple = myApple[(int)button.Content];
-            appleHoverBackground(hoveredApple);    
+            appleHoverBackground(hoveredApple);
         }
         void button_MouseEnter(object sender, MouseEventArgs e)
         {
