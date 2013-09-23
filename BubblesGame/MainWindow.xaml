@@ -6,7 +6,7 @@
         Title="Kinect Shape Game" FontStyle="Italic" SizeToContent="WidthAndHeight"
         Loaded="WindowLoaded" Closing="WindowClosing" KeyDown="Window_KeyDown" ContentRendered="WindowsRendered"
         Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Opacity="Infinity" Background="Black">
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center">
     <Grid x:Name="grid" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
         <Border BorderThickness="1" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="right" Height="120" Width="150" Panel.ZIndex="3">
             <kt:KinectColorViewer KinectSensorManager="{Binding}" Panel.ZIndex="2" Height="120" Width="150"/>

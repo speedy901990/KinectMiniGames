@@ -15,7 +15,7 @@
         MinHeight="700"
         Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
         FontFamily="Segoe UI" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize"  
-        KeyDown="key_KeyDown">
+        KeyDown="key_KeyDown" Deactivated="KinectMiniGames_Deactivated" Activated="KinectMiniGames_Activated">
     <Window.Resources>
         <ImageBrush ImageSource="..\Graphics\Common\sky.png" x:Key="sky" x:Name="sky"/>
         <PathGeometry x:Key="ChevronGeometry" x:Shared="False">

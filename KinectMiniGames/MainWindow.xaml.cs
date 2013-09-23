@@ -162,6 +162,17 @@ namespace KinectMiniGames
             if (e.Key == System.Windows.Input.Key.Escape)
                 this.Close();
         }
+
+        private void KinectMiniGames_Deactivated(object sender, EventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
         #endregion
+
+        private void KinectMiniGames_Activated(object sender, EventArgs e)
+        {
+            this.WindowState = WindowState.Maximized;
+        }
     }
 }
