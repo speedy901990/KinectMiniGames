@@ -127,7 +127,7 @@ namespace BubblesGame
             {
                 Stretch = Stretch.UniformToFill
             };
-            grid.Background = bg;
+            //grid.Background = bg;
         }
 
         private BitmapSource convertBitmapToBitmapSource(Bitmap bm)
