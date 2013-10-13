@@ -9,9 +9,9 @@ namespace ApplesGame
     public class Apple
     {
         #region Private State
-        
+
         private int size;
-        private Point pos; 
+        private Point pos;
         private Color color;
         private int colorsNumber;
         private KinectCircleButton figure;
@@ -47,8 +47,8 @@ namespace ApplesGame
 
         public Color Color
         {
-            get {return this.color;}
-            set {this.color = value;}
+            get { return this.color; }
+            set { this.color = value; }
         }
 
         public int ColorsNumber
@@ -58,8 +58,8 @@ namespace ApplesGame
         }
         public KinectCircleButton Figure
         {
-            get { return this.figure;}
-            set {this.figure = value;}
+            get { return this.figure; }
+            set { this.figure = value; }
         }
         #endregion Accessors
 
@@ -106,9 +106,9 @@ namespace ApplesGame
             Figure = new KinectCircleButton();
 
             if (target.Color == Colors.Red)
-                setAppleGraphics(1); 
+                setAppleGraphics(1);
             if (target.Color == Colors.Green)
-                setAppleGraphics(2); 
+                setAppleGraphics(2);
             if (target.Color == Colors.Yellow)
                 setAppleGraphics(3);
             if (target.Color == Colors.Orange)
@@ -125,6 +125,7 @@ namespace ApplesGame
             Figure.Name = "Apple" + target.Number;
             Figure.Content = int.Parse(Figure.Name.Substring(5));
             Figure.Foreground = new SolidColorBrush(Colors.Transparent);
+            TreeNumber = target.TreeNumber;
         }
 
         private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
