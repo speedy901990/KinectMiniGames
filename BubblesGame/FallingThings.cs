@@ -456,6 +456,27 @@ namespace BubblesGame
                 {
                     case 0:
                         myBrush.ImageSource = _bitmaps[0];
+                //case 1: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_black);
+                //    break;
+                //case 2: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_blue);
+                //    break;
+                //case 3: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_blue2);
+                //    break;
+                //case 4: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_brown);
+                //    break;
+                //case 5: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_green);
+                //    break;
+                //case 6: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_orange);
+                //    break;
+                //case 7: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_pink);
+                //    break;
+                //case 8: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_purple);
+                //    break;
+                //case 9: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_red);
+                //    break;
+                //case 10: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_yellow);
+                //    break;
+                case 0: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble.png", UriKind.Relative));
                         break;
                     case 1:
                         myBrush.ImageSource = _bitmaps[1];
