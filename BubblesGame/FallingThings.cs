@@ -45,6 +45,21 @@ namespace BubblesGame
             };
 
         public readonly List<Thing> _things = new List<Thing>();
+
+        private readonly List<BitmapImage> _bitmaps = new List<BitmapImage>
+        {
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_black.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_blue.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_blue2.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_brown.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_green.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_orange.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_pink.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_purple.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_red.png", UriKind.Relative)),
+            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_yellow.png", UriKind.Relative))
+        };
         private readonly Random _rnd = new Random();
         private readonly Random _rnd2 = new Random();
         private readonly int _maxThings;
@@ -437,53 +452,42 @@ namespace BubblesGame
         private Shape MakeSimpleShape(int numSides, int skip, double size, Point center, Brush brush, int number, Brush brushStroke, double strokeThickness, double opacity)
         {
                 var myBrush = new ImageBrush();
-            switch (number)
-            {
-                //case 0: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble);
-                //    break;
-                //case 1: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_black);
-                //    break;
-                //case 2: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_blue);
-                //    break;
-                //case 3: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_blue2);
-                //    break;
-                //case 4: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_brown);
-                //    break;
-                //case 5: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_green);
-                //    break;
-                //case 6: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_orange);
-                //    break;
-                //case 7: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_pink);
-                //    break;
-                //case 8: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_purple);
-                //    break;
-                //case 9: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_red);
-                //    break;
-                //case 10: myBrush.ImageSource = convertBitmapToBitmapSource(Resources.bubble_yellow);
-                //    break;
-                case 0: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble.png", UriKind.Relative));
-                    break;
-                case 1: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_black.png", UriKind.Relative));
-                    break;
-                case 2: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_blue.png", UriKind.Relative));
-                    break;
-                case 3: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_blue2.png", UriKind.Relative));
-                    break;
-                case 4: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_brown.png", UriKind.Relative));
-                    break;
-                case 5: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_green.png", UriKind.Relative));
-                    break;
-                case 6: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_orange.png", UriKind.Relative));
-                    break;
-                case 7: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_pink.png", UriKind.Relative));
-                    break;
-                case 8: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_purple.png", UriKind.Relative));
-                    break;
-                case 9: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_red.png", UriKind.Relative));
-                    break;
-                case 10: myBrush.ImageSource = new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_yellow.png", UriKind.Relative));
-                    break;
-            }
+                switch (number)
+                {
+                    case 0:
+                        myBrush.ImageSource = _bitmaps[0];
+                        break;
+                    case 1:
+                        myBrush.ImageSource = _bitmaps[1];
+                        break;
+                    case 2:
+                        myBrush.ImageSource = _bitmaps[2];
+                        break;
+                    case 3:
+                        myBrush.ImageSource = _bitmaps[3];
+                        break;
+                    case 4:
+                        myBrush.ImageSource = _bitmaps[4];
+                        break;
+                    case 5:
+                        myBrush.ImageSource = _bitmaps[5];
+                        break;
+                    case 6:
+                        myBrush.ImageSource = _bitmaps[6];
+                        break;
+                    case 7:
+                        myBrush.ImageSource = _bitmaps[7];
+                        break;
+                    case 8:
+                        myBrush.ImageSource = _bitmaps[8];
+                        break;
+                    case 9:
+                        myBrush.ImageSource = _bitmaps[9];
+                        break;
+                    case 10:
+                        myBrush.ImageSource = _bitmaps[10];
+                        break;
+                }
             
 
                 var circle = new Ellipse { Width = size * 2, Height = size * 2, Stroke = brushStroke };

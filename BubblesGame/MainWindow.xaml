@@ -14,20 +14,9 @@
         <toolkit:KinectSensorChooserUI x:Name="SensorChooserUI" IsListening="True"  HorizontalAlignment="Center" VerticalAlignment="Top" Panel.ZIndex="2" />
         <Canvas HorizontalAlignment="Center" x:Name="playfield" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged" VerticalAlignment="Center" Panel.ZIndex="3">
         </Canvas>
-        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Border.Effect>
-                <BlurEffect Radius="30" RenderingBias="Quality" />
-            </Border.Effect>
-            <Canvas x:Name="playfieldBackground" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged">
-                <Canvas.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity=".6">
-                        <GradientStop Color="#FF055301" Offset="2" />
-                        <GradientStop Color="#FF0B530D" Offset="0.71"/>
-                        <GradientStop Color="#FF005E63" Offset="-2" />
-                        <GradientStop Color="#FF25A9AE" Offset="0.45"/>
-                    </LinearGradientBrush>
-                </Canvas.Background>
-            </Canvas>
-        </Border>
+
+        <Canvas x:Name="playfieldBackground" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged">
+        </Canvas>
+
     </Grid>
 </Window>
