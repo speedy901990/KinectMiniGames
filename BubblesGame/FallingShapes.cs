@@ -121,7 +121,7 @@ namespace BubblesGame.Utils
         {
             LastSegment = Segment;
             Segment = s;
-            
+            // TODO check here
             DateTime cur = DateTime.Now;
             double fMs = cur.Subtract(TimeLastUpdated).TotalMilliseconds;
             if (fMs < 10.0)

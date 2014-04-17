@@ -17,7 +17,6 @@ using System.Windows.Forms;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Samples.Kinect.WpfViewers;
-using BubblesGame.Speech;
 using BubblesGame.Utils;
 using System.Windows.Media.Imaging;
 using System.Resources;
@@ -76,8 +75,6 @@ namespace BubblesGame
         private int _frameCount;
         private bool _runningGameThread;
         private FallingThings _myFallingThings;
-        
-        private SpeechRecognizer _mySpeechRecognizer;
 
         private BubblesGameConfig config;
         #endregion Private State
@@ -259,36 +256,12 @@ namespace BubblesGame
             kinectSensorManager.SkeletonStreamEnabled = true;
             kinectSensorManager.KinectSensorEnabled = true;
 
-
-            if (!kinectSensorManager.KinectSensorAppConflict)
-            {
-                // Start speech recognizer after KinectSensor started successfully.
-                _mySpeechRecognizer = SpeechRecognizer.Create();
-
-                if (null != _mySpeechRecognizer)
-                {
-                    _mySpeechRecognizer.SaidSomething += RecognizerSaidSomething;
-                    _mySpeechRecognizer.Start(sensor.AudioSource);
-                }
-
-                /*enableAec.Visibility = Visibility.Visible;
-                UpdateEchoCancellation(enableAec);*/
-            }
-
         }
 
         // Kinect enabled apps should uninitialize all Kinect services that were initialized in InitializeKinectServices() here.
         private void UninitializeKinectServices(KinectSensor sensor)
         {
             sensor.SkeletonFrameReady -= SkeletonsReady;
-
-            if (null != _mySpeechRecognizer)
-            {
-                _mySpeechRecognizer.Stop();
-                _mySpeechRecognizer.SaidSomething -= RecognizerSaidSomething;
-                _mySpeechRecognizer.Dispose();
-                _mySpeechRecognizer = null;
-            }
 
             //enableAec.Visibility = Visibility.Collapsed;
         }
@@ -491,6 +464,7 @@ namespace BubblesGame
         #endregion Kinect Skeleton processing
 
         #region GameTimer/Thread
+        //TODO check here
         private void GameThread()
         {
             _runningGameThread = true;
@@ -597,116 +571,6 @@ namespace BubblesGame
         }
         #endregion GameTimer/Thread
         
-        #region Kinect Speech processing
-        private void RecognizerSaidSomething(object sender, SpeechRecognizer.SaidSomethingEventArgs e)
-        {
-            FlyingText.NewFlyingText(_screenRect.Width / 30, new Point(_screenRect.Width / 2, _screenRect.Height / 2), e.Matched);
-            switch (e.Verb)
-            {
-                case SpeechRecognizer.Verbs.Pause:
-                    _myFallingThings.SetDropRate(0);
-                    _myFallingThings.SetGravity(0);
-                    break;
-                case SpeechRecognizer.Verbs.Resume:
-                    _myFallingThings.SetDropRate(_dropRate);
-                    _myFallingThings.SetGravity(_dropGravity);
-                    break;
-                /*case SpeechRecognizer.Verbs.Reset:
-                    _dropRate = DefaultDropRate;
-                    _dropSize = DefaultDropSize;
-                    _dropGravity = DefaultDropGravity;
-                    _myFallingThings.SetPolies(PolyType.All);
-                    _myFallingThings.SetDropRate(_dropRate);
-                    _myFallingThings.SetGravity(_dropGravity);
-                    _myFallingThings.SetSize(_dropSize);
-                    _myFallingThings.SetShapesColor(Color.FromRgb(0, 0, 0), true);
-                    _myFallingThings.Reset();
-                    break;
-                case SpeechRecognizer.Verbs.DoShapes:
-                    _myFallingThings.SetPolies(e.Shape);
-                    break;
-                case SpeechRecognizer.Verbs.RandomColors:
-                    _myFallingThings.SetShapesColor(Color.FromRgb(0, 0, 0), true);
-                    break;
-                case SpeechRecognizer.Verbs.Colorize:
-                    _myFallingThings.SetShapesColor(e.RgbColor, false);
-                    break;
-                case SpeechRecognizer.Verbs.ShapesAndColors:
-                    _myFallingThings.SetPolies(e.Shape);
-                    _myFallingThings.SetShapesColor(e.RgbColor, false);
-                    break;
-                case SpeechRecognizer.Verbs.More:
-                    _dropRate *= 1.5;
-                    _myFallingThings.SetDropRate(_dropRate);
-                    break;
-                case SpeechRecognizer.Verbs.Fewer:
-                    _dropRate /= 1.5;
-                    _myFallingThings.SetDropRate(_dropRate);
-                    break;
-                case SpeechRecognizer.Verbs.Bigger:
-                    _dropSize *= 1.5;
-                    if (_dropSize > MaxShapeSize)
-                    {
-                        _dropSize = MaxShapeSize;
-                    }
-
-                    _myFallingThings.SetSize(_dropSize);
-                    break;
-                case SpeechRecognizer.Verbs.Biggest:
-                    _dropSize = MaxShapeSize;
-                    _myFallingThings.SetSize(_dropSize);
-                    break;
-                case SpeechRecognizer.Verbs.Smaller:
-                    _dropSize /= 1.5;
-                    if (_dropSize < MinShapeSize)
-                    {
-                        _dropSize = MinShapeSize;
-                    }
-
-                    _myFallingThings.SetSize(_dropSize);
-                    break;
-                case SpeechRecognizer.Verbs.Smallest:
-                    _dropSize = MinShapeSize;
-                    _myFallingThings.SetSize(_dropSize);
-                    break;
-                case SpeechRecognizer.Verbs.Faster:
-                    _dropGravity *= 1.25;
-                    if (_dropGravity > 4.0)
-                    {
-                        _dropGravity = 4.0;
-                    }
-
-                    _myFallingThings.SetGravity(_dropGravity);
-                    break;
-                case SpeechRecognizer.Verbs.Slower:
-                    _dropGravity /= 1.25;
-                    if (_dropGravity < 0.25)
-                    {
-                        _dropGravity = 0.25;
-                    }
-
-                    _myFallingThings.SetGravity(_dropGravity);
-                    break;*/
-            }
-        }
-
-/*
-        private void EnableAecChecked(object sender, RoutedEventArgs e)
-        {
-            var enableAecCheckBox = (CheckBox)sender;
-            UpdateEchoCancellation(enableAecCheckBox);
-        }
-*/
-
-        /*private void UpdateEchoCancellation(CheckBox aecCheckBox)
-        {
-            mySpeechRecognizer.EchoCancellationMode = aecCheckBox.IsChecked != null && aecCheckBox.IsChecked.Value
-                ? EchoCancellationMode.CancellationAndSuppression
-                : EchoCancellationMode.None;
-        }
-*/
-        #endregion Kinect Speech processing
-
         #region Closing window
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {

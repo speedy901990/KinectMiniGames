@@ -64,10 +64,12 @@ namespace BubblesGame
         private readonly Random _rnd2 = new Random();
         private readonly int _maxThings;
         private readonly int _maxBubbles;
+        // TODO check this
         private readonly int _intraFrames = 1;
         private readonly Dictionary<int, int> _scores = new Dictionary<int, int>();
         private const double DissolveTime = 0.4;
         private Rect _sceneRect;
+        //TODO check this
         private double _targetFrameRate = 60;
         private double _dropRate = 2.0;
         private double _shapeSize = 1.0;
@@ -202,7 +204,7 @@ namespace BubblesGame
         {
             _polyTypes = polies;
         }
-
+        //TODO analyse this
         public HitType LookForHits(Dictionary<Bone, BoneData> segments, int playerId)
         {
             var cur = DateTime.Now;
