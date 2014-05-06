@@ -27,10 +27,10 @@ namespace KinectMiniGames
 
         private void submitBubblesConfig_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Config.PassedKinectSensorChooser = this.kinectSensor;
+            this.kinectSensor.Stop();
             BubblesGame.MainWindow window = new BubblesGame.MainWindow(Config);
             window.Show();
-            
+            App.Current.MainWindow.Close();            
         }
 
         private void btnBackToMenu_Click(object sender, System.Windows.RoutedEventArgs e)
