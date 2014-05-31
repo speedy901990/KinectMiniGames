@@ -51,7 +51,7 @@ namespace BubblesGame
         private const double DefaultDropSize = 64.0;
         private const double DefaultDropGravity = 1.0;
         private static int _maxShapes = 80;
-        
+
         private readonly Dictionary<int, Player> _players = new Dictionary<int, Player>();
         private readonly SoundPlayer _popSound = new SoundPlayer();
         private readonly SoundPlayer _hitSound = new SoundPlayer();
@@ -246,13 +246,13 @@ namespace BubblesGame
 
             sensor.SkeletonFrameReady += SkeletonsReady;
             kinectSensorManager.TransformSmoothParameters = new TransformSmoothParameters
-                                             {
-                                                 Smoothing = 0.5f,
-                                                 Correction = 0.5f,
-                                                 Prediction = 0.5f,
-                                                 JitterRadius = 0.05f,
-                                                 MaxDeviationRadius = 0.04f
-                                             };
+            {
+                Smoothing = 0.5f,
+                Correction = 0.5f,
+                Prediction = 0.5f,
+                JitterRadius = 0.05f,
+                MaxDeviationRadius = 0.04f
+            };
             kinectSensorManager.SkeletonStreamEnabled = true;
             kinectSensorManager.KinectSensorEnabled = true;
 
@@ -315,7 +315,7 @@ namespace BubblesGame
                     //foreach (Skeleton skeleton in skeletonData)
                     //{
                     Skeleton skeleton = GetPrimarySkeleton(_skeletonData);
-                    if (skeleton!=null)
+                    if (skeleton != null)
                     {
                         if (SkeletonTrackingState.Tracked == skeleton.TrackingState)
                         {
@@ -556,21 +556,21 @@ namespace BubblesGame
                     Close();
                 }
             }
-            
+
             /*foreach (var player in players)
             {
                 player.Value.Draw(playfield.Children);
             }*/
             if (_players.FirstOrDefault().Value != null)
                 _players.FirstOrDefault().Value.Draw(playfield.Children);
-            BannerText.NewBanner(FallingThings.BubblesPopped.ToString(), _screenRect,false,Color.FromRgb(0,0,0));
+            BannerText.NewBanner(FallingThings.BubblesPopped.ToString(), _screenRect, false, Color.FromRgb(0, 0, 0));
             BannerText.Draw(playfield.Children);
             //FlyingText.Draw(playfield.Children);
 
             //CheckPlayers();
         }
         #endregion GameTimer/Thread
-        
+
         #region Closing window
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
