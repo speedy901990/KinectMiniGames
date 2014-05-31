@@ -385,49 +385,6 @@ namespace BubblesGame
             }
         }
 
-        /*private void CheckPlayers()
-        {
-            foreach (var player in players)
-            {
-                if (!player.Value.IsAlive)
-                {
-                    // Player left scene since we aren't tracking it anymore, so remove from dictionary
-                    players.Remove(player.Value.GetId());
-                    break;
-                }
-            }
-
-            // Count alive players
-            int alive = players.Count(player => player.Value.IsAlive);
-
-            if (alive != playersAlive)
-            {
-                if (alive == 2)
-                {
-                    _myFallingThings.SetGameMode(GameMode.TwoPlayer);
-                }
-                else if (alive == 1)
-                {
-                    _myFallingThings.SetGameMode(GameMode.Solo);
-                }
-                else if (alive == 0)
-                {
-                    _myFallingThings.SetGameMode(GameMode.Off);
-                }
-
-                if ((_playersAlive == 0) && (_mySpeechRecognizer != null))
-                {
-                    BannerText.NewBanner(
-                        Properties.Resources.Vocabulary,
-                        _screenRect,
-                        true,
-                        Color.FromArgb(200, 255, 255, 255));
-                }
-
-                playersAlive = alive;
-            }
-        }*/
-
         private void PlayfieldSizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdatePlayfieldSize();

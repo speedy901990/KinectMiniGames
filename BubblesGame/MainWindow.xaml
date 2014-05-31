@@ -1,8 +1,21 @@
 ﻿<Window x:Class="BubblesGame.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="300" Width="300">
-    <Grid>
-        
+        xmlns:k="http://schemas.microsoft.com/kinect/2013"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BubblesGame"
+        Title="Bubbles Game"
+        Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
+        FontFamily="Segoe UI" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" KeyDown="Window_KeyDown_1">
+    <Grid Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" MinHeight="120" />
+            <RowDefinition Height= "*" MinHeight="120" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"  Margin="10 0 10 20" Panel.ZIndex="2">
+            <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
+        </Grid>
+        <Label Name="PleaseWaitLabel" Grid.Row="1" Content="Proszę czekać, trwa ładowanie gry..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></Label>
     </Grid>
 </Window>
