@@ -22,7 +22,7 @@ namespace BubblesGame
     public partial class MainWindow : Window
     {
         private BubblesGameConfig config;
-        private readonly KinectSensorChooser _sensorChooser = new KinectSensorChooser();
+        private KinectSensorChooser _sensorChooser;
 
         #region kinect setup
         public static readonly DependencyProperty KinectSensorManagerProperty =
@@ -38,27 +38,29 @@ namespace BubblesGame
             set { SetValue(KinectSensorManagerProperty, value); }
         }
 
-        private void KinectSensorChanged(object sender, KinectSensorManagerEventArgs<KinectSensor> args)
-        {
-            if (_sensorChooser.Status == ChooserStatus.SensorStarted)
-            {
-                GameWindow window = new GameWindow(this.config);
-                window.Show();
-                this.Close();
-            }
-        }
         #endregion
 
         #region ctor
         public MainWindow()
         {
             InitializeComponent();
+            this.config = new BubblesGameConfig();
+            this._sensorChooser = new KinectSensorChooser();
+            this._sensorChooser.KinectChanged +=_sensorChooser_KinectChanged;
+            this.sensorChooserUi.KinectSensorChooser = this._sensorChooser;
+            this.config.PassedKinectSensorChooser = this._sensorChooser;
+            this._sensorChooser.Start();
         }
 
         public MainWindow(BubblesGameConfig config)
         {
             InitializeComponent();
             this.config = config;
+            this._sensorChooser = new KinectSensorChooser();
+            this._sensorChooser.KinectChanged += _sensorChooser_KinectChanged;
+            this.sensorChooserUi.KinectSensorChooser = this._sensorChooser;
+            this.config.PassedKinectSensorChooser = this._sensorChooser;
+            this._sensorChooser.Start();
         }
         #endregion
 
@@ -78,5 +80,94 @@ namespace BubblesGame
             }
         }
         #endregion
+
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            //_sensorChooser.KinectChanged += _sensorChooser_KinectChanged;
+        }
+
+        void _sensorChooser_KinectChanged(object sender, KinectChangedEventArgs e)
+        {
+            if (e.OldSensor != null)
+            {
+                try
+                {
+                    e.OldSensor.DepthStream.Range = DepthRange.Default;
+                    e.OldSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    e.OldSensor.DepthStream.Disable();
+                    e.OldSensor.SkeletonStream.Disable();
+                    e.OldSensor.ColorStream.Disable();
+                    e.OldSensor.Stop();
+                }
+                catch (InvalidOperationException)
+                {
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+            }
+
+            if (e.NewSensor != null)
+            {
+                try
+                {
+                    e.NewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
+                    e.NewSensor.SkeletonStream.Enable();
+                    //e.NewSensor.ColorStream.Enable();
+
+                    try
+                    {
+                        e.NewSensor.DepthStream.Range = DepthRange.Near;
+                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = true;
+                        e.NewSensor.Start();
+                        this.openGameWindow();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // Non Kinect for Windows devices do not support Near mode, so reset back to default mode.
+                        e.NewSensor.DepthStream.Range = DepthRange.Default;
+                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                        e.NewSensor.Start();
+                        this.openGameWindow();
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+            }
+            //throw new NotImplementedException();
+        }
+
+        void newSensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
+
+        private void openGameWindow()
+        {
+
+            if (_sensorChooser.Kinect.IsRunning)
+            {
+                GameWindow window = new GameWindow(this.config);
+                window.Show();
+                this.Close();
+            }
+        }
+
+        private void stopKinect(KinectSensor sensor)
+        {
+            if (sensor != null)
+            {
+                sensor.Stop();
+                sensor.AudioSource.Stop();
+            }
+        }
+
     }
 }

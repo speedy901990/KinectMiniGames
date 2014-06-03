@@ -7,14 +7,14 @@
         xmlns:local="clr-namespace:BubblesGame"
         Title="Bubbles Game"
         Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
-        FontFamily="Segoe UI" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" KeyDown="Window_KeyDown_1">
+        FontFamily="Segoe UI" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" KeyDown="Window_KeyDown_1" Closing="Window_Closing_1">
     <Grid Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" MinHeight="120" />
             <RowDefinition Height= "*" MinHeight="120" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0"  Margin="10 0 10 20" Panel.ZIndex="2">
-            <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" Name="sensorChooserUi" />
+            <k:KinectSensorChooserUI Name="sensorChooserUi" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
         </Grid>
         <Label Name="PleaseWaitLabel" Grid.Row="1" Content="Proszę czekać, trwa ładowanie gry..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></Label>
     </Grid>

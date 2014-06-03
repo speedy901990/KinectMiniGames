@@ -30,7 +30,7 @@ namespace KinectMiniGames
             this.kinectSensor.Stop();
             BubblesGame.MainWindow window = new BubblesGame.MainWindow(Config);
             window.Show();
-            App.Current.MainWindow.Close();            
+            //App.Current.MainWindow.Close();            
         }
 
         private void btnBackToMenu_Click(object sender, System.Windows.RoutedEventArgs e)
