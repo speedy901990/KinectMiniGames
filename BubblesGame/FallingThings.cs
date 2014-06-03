@@ -46,30 +46,28 @@ namespace BubblesGame
 
         public readonly List<Thing> _things = new List<Thing>();
 
-        private readonly List<BitmapImage> _bitmaps = new List<BitmapImage>
+        private readonly List<ImageBrush> _bitmaps = new List<ImageBrush>
         {
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_black.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_blue.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_blue2.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_brown.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_green.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_orange.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_pink.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_purple.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_red.png", UriKind.Relative)),
-            new BitmapImage(new Uri(@"../../../Graphics/BubblesGame/bubble_yellow.png", UriKind.Relative))
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_black)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_blue)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_blue2)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_brown)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_green)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_orange)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_pink)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_purple)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_red)),
+            new ImageBrush(Utilities.convertBitmapToBitmapSource(Properties.Resources.bubble_yellow))
         };
         private readonly Random _rnd = new Random();
         private readonly Random _rnd2 = new Random();
         private readonly int _maxThings;
         private readonly int _maxBubbles;
-        // TODO check this
         private readonly int _intraFrames = 1;
         private readonly Dictionary<int, int> _scores = new Dictionary<int, int>();
         private const double DissolveTime = 0.4;
         private Rect _sceneRect;
-        //TODO check this
         private double _targetFrameRate = 60;
         private double _dropRate = 2.0;
         private double _shapeSize = 1.0;
@@ -204,7 +202,6 @@ namespace BubblesGame
         {
             _polyTypes = polies;
         }
-        //TODO analyse this
         public HitType LookForHits(Dictionary<Bone, BoneData> segments, int playerId)
         {
             var cur = DateTime.Now;
@@ -453,59 +450,19 @@ namespace BubblesGame
 
         private Shape MakeSimpleShape(int numSides, int skip, double size, Point center, Brush brush, int number, Brush brushStroke, double strokeThickness, double opacity)
         {
-                var myBrush = new ImageBrush();
-                switch (number)
-                {
-                    case 0:
-                        myBrush.ImageSource = _bitmaps[0];
-                        break;
-                    case 1:
-                        myBrush.ImageSource = _bitmaps[1];
-                        break;
-                    case 2:
-                        myBrush.ImageSource = _bitmaps[2];
-                        break;
-                    case 3:
-                        myBrush.ImageSource = _bitmaps[3];
-                        break;
-                    case 4:
-                        myBrush.ImageSource = _bitmaps[4];
-                        break;
-                    case 5:
-                        myBrush.ImageSource = _bitmaps[5];
-                        break;
-                    case 6:
-                        myBrush.ImageSource = _bitmaps[6];
-                        break;
-                    case 7:
-                        myBrush.ImageSource = _bitmaps[7];
-                        break;
-                    case 8:
-                        myBrush.ImageSource = _bitmaps[8];
-                        break;
-                    case 9:
-                        myBrush.ImageSource = _bitmaps[9];
-                        break;
-                    case 10:
-                        myBrush.ImageSource = _bitmaps[10];
-                        break;
-                }
-            
-
-                var circle = new Ellipse { Width = size * 2, Height = size * 2, Stroke = brushStroke };
+            var circle = new Ellipse { Width = size * 2, Height = size * 2, Stroke = brushStroke };
                 
-                if (circle.Stroke != null)
-                {
-                    circle.Stroke.Opacity = opacity;
-                }
+            if (circle.Stroke != null)
+            {
+                circle.Stroke.Opacity = opacity;
+            }
                 
-                circle.StrokeThickness = strokeThickness * ((numSides == 1) ? 1 : 2);
-                //circle.Fill = (numSides == 1) ? brush : null;
-                circle.Fill = myBrush;
-                circle.SetValue(Canvas.LeftProperty, center.X - size);
-                circle.SetValue(Canvas.TopProperty, center.Y - size);
-                return circle;
-            
+            circle.StrokeThickness = strokeThickness * ((numSides == 1) ? 1 : 2);
+            //circle.Fill = (numSides == 1) ? brush : null;
+            circle.Fill = this._bitmaps[number];
+            circle.SetValue(Canvas.LeftProperty, center.X - size);
+            circle.SetValue(Canvas.TopProperty, center.Y - size);
+            return circle;
         }
 
         internal struct PolyDef
