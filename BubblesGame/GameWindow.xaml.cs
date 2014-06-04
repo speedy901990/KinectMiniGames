@@ -421,7 +421,6 @@ namespace BubblesGame
         #endregion Kinect Skeleton processing
 
         #region GameTimer/Thread
-        //TODO check here
         private void GameThread()
         {
             _runningGameThread = true;
@@ -508,9 +507,10 @@ namespace BubblesGame
                 var result = MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
                 if (result == MessageBoxResult.OK)
                 {
-                    FallingThings.BubblesFallen = 0;
-                    FallingThings.BubblesPopped = 0;
-                    Close();
+                    this.exitGame();
+                    //FallingThings.BubblesFallen = 0;
+                    //FallingThings.BubblesPopped = 0;
+                    //Close();
                 }
             }
 
@@ -533,10 +533,28 @@ namespace BubblesGame
         {
             if (e.Key == Key.Escape)
             {
-                FallingThings.BubblesFallen = 0;
-                FallingThings.BubblesPopped = 0;
-                Close();
+                this.exitGame();
             }
+        }
+        private void exitGame()
+        {
+            FallingThings.BubblesFallen = 0;
+            FallingThings.BubblesPopped = 0;
+            //this.stopKinect();
+            this.Close();
+        }
+        private void stopKinect()
+        {
+            try
+            {
+                this._sensorChooser.Kinect.Stop();
+                this._sensorChooser.Kinect.AudioSource.Stop();
+            }
+            catch (NullReferenceException)
+            {
+                //throw;
+            }
+            this._sensorChooser.Stop();
         }
         #endregion
     }

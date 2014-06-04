@@ -83,7 +83,7 @@ namespace BubblesGame
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            //_sensorChooser.KinectChanged += _sensorChooser_KinectChanged;
+           
         }
 
         void _sensorChooser_KinectChanged(object sender, KinectChangedEventArgs e)
@@ -144,11 +144,6 @@ namespace BubblesGame
             throw new NotImplementedException();
         }
 
-        private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
         private void openGameWindow()
         {
 
@@ -166,6 +161,7 @@ namespace BubblesGame
             {
                 sensor.Stop();
                 sensor.AudioSource.Stop();
+                this._sensorChooser.Stop();
             }
         }
 
