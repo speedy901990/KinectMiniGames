@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen" 
         WindowState="Maximized" 
         WindowStyle="None" 
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" KeyDown="Window_KeyDown_1">
     <Grid Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" MinHeight="120" />
