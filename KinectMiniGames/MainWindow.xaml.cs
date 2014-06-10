@@ -43,7 +43,7 @@ namespace KinectMiniGames
         public MainWindow()
         {
             this.InitializeComponent();
-            setMenuBackground();
+            //setMenuBackground();
             setupKinectSensor();
             createMenuButtons();
         }
@@ -76,14 +76,23 @@ namespace KinectMiniGames
         private void createMenuButtons()
         {
             this.wrapPanel.Children.Clear();
-            var bApplesGame = new KinectTileButton { Label = "Apples Game" };
-            bApplesGame.Width = 450;
-            bApplesGame.Height = 450;
-            this.wrapPanel.Children.Add(bApplesGame);
-            var bBubblesGame = new KinectTileButton { Label = "Bubbles Game" };
-            bBubblesGame.Width = 450;
-            bBubblesGame.Height = 450;
-            this.wrapPanel.Children.Add(bBubblesGame);
+            this.wrapPanel.Children.Add(this.createSingleButton("Apples Game"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Bubbles Game"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Letters Game"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Painting Game"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Dancing Steps"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Song Movements"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Simple Excersises"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Train of Words"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Steps of Activity"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Educational Kinesiology"));
+        }
+
+        private KinectTileButton createSingleButton(String buttonLabel)
+        {
+            var newButton = new KinectTileButton { Label = buttonLabel, Width = 450, Height = 450 };
+            return newButton;
         }
         #endregion
 
@@ -136,22 +145,28 @@ namespace KinectMiniGames
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
             var button = (KinectTileButton)e.OriginalSource;
-            if ((String)button.Label == "Apples Game")
+            switch ((String)button.Label)
             {
-                var applesConfigPage = new ApplesGameConfigPage(button.Label as string, this.sensorChooser);
-                this.kinectRegionGrid.Children.Add(applesConfigPage);
-                e.Handled = true;
-            }
-            else if ((String)button.Label == "Bubbles Game")
-            {
-                var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, this.sensorChooser);
-                this.kinectRegionGrid.Children.Add(bubblesConfigPage);
-                e.Handled = true;
+                case "Apples Game":
+                    var applesConfigPage = new ApplesGameConfigPage(button.Label as string, this.sensorChooser);
+                    this.kinectRegionGrid.Children.Add(applesConfigPage);
+                    e.Handled = true;
+                    break;
+                case "Bubbles Game":
+                    var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, this.sensorChooser);
+                    this.kinectRegionGrid.Children.Add(bubblesConfigPage);
+                    e.Handled = true;
+                    break;
+                case "Letters Game":
+                    break;
+
+                default:
+                    break;
             }
         }
         #endregion
 
-        #region Window closing
+        #region Window events
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.sensorChooser.Stop();
@@ -163,18 +178,8 @@ namespace KinectMiniGames
                 this.Close();
         }
 
-        private void KinectMiniGames_Deactivated(object sender, EventArgs e)
-        {
-            //this.WindowState = WindowState.Minimized;
-            kinectViewBorder.Visibility = System.Windows.Visibility.Hidden;
-            sensorChooserUi.Visibility = System.Windows.Visibility.Hidden;
-        }
-
-        #endregion
-
         private void KinectMiniGames_Activated(object sender, EventArgs e)
         {
-            //this.WindowState = WindowState.Maximized;
             kinectViewBorder.Visibility = System.Windows.Visibility.Visible;
             sensorChooserUi.Visibility = System.Windows.Visibility.Visible;
 
@@ -183,5 +188,14 @@ namespace KinectMiniGames
                 this.sensorChooser.Start();
             }
         }
+
+        private void KinectMiniGames_Deactivated(object sender, EventArgs e)
+        {
+            //this.WindowState = WindowState.Minimized;
+            kinectViewBorder.Visibility = System.Windows.Visibility.Hidden;
+            sensorChooserUi.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        #endregion
     }
 }
