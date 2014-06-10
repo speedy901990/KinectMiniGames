@@ -13,18 +13,16 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Samples.Kinect.WpfViewers;
 using BubblesGame.Utils;
 using System.Windows.Media.Imaging;
-using System.Resources;
 using Binding = System.Windows.Data.Binding;
 using Color = System.Windows.Media.Color;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
-using Point = System.Windows.Point;
 
 namespace BubblesGame
 {
@@ -56,7 +54,7 @@ namespace BubblesGame
         private readonly SoundPlayer _popSound = new SoundPlayer();
         private readonly SoundPlayer _hitSound = new SoundPlayer();
         private readonly SoundPlayer _squeezeSound = new SoundPlayer();
-        private readonly KinectSensorChooser _sensorChooser = new KinectSensorChooser();
+        private KinectSensorChooser _sensorChooser = new KinectSensorChooser();
 
         private double _dropRate = DefaultDropRate;
         private double _dropSize = DefaultDropSize;
@@ -204,7 +202,7 @@ namespace BubblesGame
 
         private void WindowClosing(object sender, CancelEventArgs e)
         {
-            _sensorChooser.Stop();
+            //_sensorChooser.Stop();
 
             _runningGameThread = false;
             Settings.Default.PrevWinPosition = RestoreBounds;
@@ -540,21 +538,20 @@ namespace BubblesGame
         {
             FallingThings.BubblesFallen = 0;
             FallingThings.BubblesPopped = 0;
-            //this.stopKinect();
+            this.stopKinect();
             this.Close();
         }
         private void stopKinect()
         {
             try
             {
-                this._sensorChooser.Kinect.Stop();
-                this._sensorChooser.Kinect.AudioSource.Stop();
+                this.KinectSensorManager.KinectSensor.Stop();
+                this.KinectSensorManager.KinectSensor.AudioSource.Stop();
             }
             catch (NullReferenceException)
             {
                 //throw;
             }
-            this._sensorChooser.Stop();
         }
         #endregion
     }
