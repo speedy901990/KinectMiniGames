@@ -55,6 +55,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Game.cs" />
+    <Compile Include="Letter.cs" />
+    <Compile Include="Resources\Letters.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Letters.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LettersAndNames.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LettersAndNames.resx</DependentUpon>
+    </Compile>
+    <Compile Include="View\FirstLevelView.xaml.cs">
+      <DependentUpon>FirstLevelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SecondLevelView.xaml.cs">
+      <DependentUpon>SecondLevelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ThirdLevelView.xaml.cs">
+      <DependentUpon>ThirdLevelView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +89,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\FirstLevelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SecondLevelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ThirdLevelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,6 +119,14 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Letters.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Letters.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LettersAndNames.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LettersAndNames.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LettersGame.View;
 
 namespace LettersGame
 {
@@ -28,7 +29,7 @@ namespace LettersGame
         private LettersGameConfig config;
         #endregion
         
-        #region ctor
+        #region constructor
         public MainWindow()
         {
             InitializeComponent();
@@ -37,20 +38,27 @@ namespace LettersGame
             this.sensorChooser.KinectChanged += sensorChooser_KinectChanged;
             this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
             this.config.PassedSensorChooser = this.sensorChooser;
+            this.config.CurrentLevel = 1;
+            this.config.WindowHeight = this.Height;
+            this.config.WindowWidth = this.Width;
             this.sensorChooser.Start();
         }
 
-        //public MainWindow(LettersGameConfig config)
-        //{
-        //    InitializeComponent();
-        //    this.config = config;
-        //    this.sensorChooser = new KinectSensorChooser();
-        //    this.sensorChooser.KinectChanged += sensorChooser_KinectChanged;
-        //    this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
-        //    this.config.PassedSensorChooser = this.sensorChooser;
-        //    this.sensorChooser.Start();
-        //}
+        public MainWindow(LettersGameConfig config)
+        {
+            InitializeComponent();
+            this.config = config;
+            this.sensorChooser = new KinectSensorChooser();
+            this.sensorChooser.KinectChanged += sensorChooser_KinectChanged;
+            this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
+            this.config.PassedSensorChooser = this.sensorChooser;
+            this.config.WindowHeight = this.Height;
+            this.config.WindowWidth = this.Width;
+            this.sensorChooser.Start();
+        }
+        #endregion
 
+        #region kinect setup
         void sensorChooser_KinectChanged(object sender, KinectChangedEventArgs e)
         {
             if (e.OldSensor != null)
@@ -76,20 +84,22 @@ namespace LettersGame
                 try
                 {
                     e.NewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
-                    e.NewSensor.SkeletonStream.Enable();
+                    //e.NewSensor.SkeletonStream.Enable();
 
                     try
                     {
                         e.NewSensor.DepthStream.Range = DepthRange.Near;
-                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = true;
+                        //e.NewSensor.SkeletonStream.EnableTrackingInNearRange = true;
                         e.NewSensor.Start();
+                        this.runGame();
                     }
                     catch (InvalidOperationException)
                     {
                         // Non Kinect for Windows devices do not support Near mode, so reset back to default mode.
                         e.NewSensor.DepthStream.Range = DepthRange.Default;
-                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                        //e.NewSensor.SkeletonStream.EnableTrackingInNearRange = false;
                         e.NewSensor.Start();
+                        this.runGame();
                     }
                 }
                 catch (InvalidOperationException)
@@ -101,12 +111,67 @@ namespace LettersGame
         }
         #endregion
 
+        #region window operations
+
+        private void runGame()
+        {
+            if (this.sensorChooser.Kinect.IsRunning)
+            {
+                switch (this.config.CurrentLevel)
+                {
+                    case 1:
+                        this.clearMainGrid();
+                        //this.mainGrid
+                        break;
+                    case 2:
+                        this.clearMainGrid();
+                        break;
+                    case 3:
+                        this.clearMainGrid();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void clearMainGrid()
+        {
+            this.mainGrid.Children.Clear();
+            this.mainGrid.RowDefinitions.Clear();
+            this.mainGrid.ColumnDefinitions.Clear();
+        }
+
         private void Window_KeyDown_1(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
                 this.Close();
             }
+            if (e.Key == Key.C)
+            {
+                this.clearMainGrid();
+            }
+            if (e.Key == Key.R)
+            {
+                switch (this.config.CurrentLevel)
+                {
+                    case 1:
+                        this.clearMainGrid();
+                        Frame frame = new Frame { Content = new FirstLevelView(this.config) };
+                        this.mainGrid.Children.Add(frame);
+                        break;
+                    case 2:
+                        this.clearMainGrid();
+                        break;
+                    case 3:
+                        this.clearMainGrid();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
+        #endregion
     }
 }

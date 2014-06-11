@@ -11,13 +11,15 @@
         WindowStyle="None" 
         ResizeMode="NoResize" KeyDown="Window_KeyDown_1">
     <Grid Name="mainGrid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" MinHeight="120" />
-            <RowDefinition Height= "*" MinHeight="120" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0"  Margin="10 0 10 20" Panel.ZIndex="2">
-            <k:KinectSensorChooserUI Name="sensorChooserUi" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" MinHeight="120" />
+                <RowDefinition Height= "*" MinHeight="120" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"  Margin="10 0 10 20" Panel.ZIndex="2">
+                <k:KinectSensorChooserUI Name="sensorChooserUi" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
+            </Grid>
+            <Label Name="PleaseWaitLabel" Grid.Row="1" Content="Proszę czekać, trwa ładowanie gry..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></Label>
         </Grid>
-        <Label Name="PleaseWaitLabel" Grid.Row="1" Content="Proszę czekać, trwa ładowanie gry..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></Label>
     </Grid>
 </Window>

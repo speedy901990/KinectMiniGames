@@ -117,4 +117,106 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="a" xml:space="preserve">
+    <value>a</value>
+  </data>
+  <data name="a1" xml:space="preserve">
+    <value>ą</value>
+  </data>
+  <data name="b" xml:space="preserve">
+    <value>b</value>
+  </data>
+  <data name="c" xml:space="preserve">
+    <value>c</value>
+  </data>
+  <data name="c1" xml:space="preserve">
+    <value>ć</value>
+  </data>
+  <data name="d" xml:space="preserve">
+    <value>d</value>
+  </data>
+  <data name="e" xml:space="preserve">
+    <value>e</value>
+  </data>
+  <data name="e1" xml:space="preserve">
+    <value>ę</value>
+  </data>
+  <data name="f" xml:space="preserve">
+    <value>f</value>
+  </data>
+  <data name="g" xml:space="preserve">
+    <value>g</value>
+  </data>
+  <data name="h" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="i" xml:space="preserve">
+    <value>i</value>
+  </data>
+  <data name="j" xml:space="preserve">
+    <value>j</value>
+  </data>
+  <data name="k" xml:space="preserve">
+    <value>k</value>
+  </data>
+  <data name="l" xml:space="preserve">
+    <value>l</value>
+  </data>
+  <data name="l1" xml:space="preserve">
+    <value>ł</value>
+  </data>
+  <data name="m" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="n" xml:space="preserve">
+    <value>n</value>
+  </data>
+  <data name="n1" xml:space="preserve">
+    <value>ń</value>
+  </data>
+  <data name="o" xml:space="preserve">
+    <value>o</value>
+  </data>
+  <data name="o1" xml:space="preserve">
+    <value>ó</value>
+  </data>
+  <data name="p" xml:space="preserve">
+    <value>p</value>
+  </data>
+  <data name="r" xml:space="preserve">
+    <value>r</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value>s</value>
+  </data>
+  <data name="s1" xml:space="preserve">
+    <value>ś</value>
+  </data>
+  <data name="t" xml:space="preserve">
+    <value>t</value>
+  </data>
+  <data name="u" xml:space="preserve">
+    <value>u</value>
+  </data>
+  <data name="v" xml:space="preserve">
+    <value>v</value>
+  </data>
+  <data name="w" xml:space="preserve">
+    <value>w</value>
+  </data>
+  <data name="x" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="y" xml:space="preserve">
+    <value>y</value>
+  </data>
+  <data name="z" xml:space="preserve">
+    <value>z</value>
+  </data>
+  <data name="z1" xml:space="preserve">
+    <value>ż</value>
+  </data>
+  <data name="z2" xml:space="preserve">
+    <value>ź</value>
+  </data>
 </root>
