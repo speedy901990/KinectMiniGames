@@ -97,21 +97,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ApplesGameConfigPage.xaml.cs">
+    <Compile Include="ConfigPages\ApplesGameConfigPage.xaml.cs">
       <DependentUpon>ApplesGameConfigPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BubblesGameConfigPage.xaml.cs">
+    <Compile Include="ConfigPages\BubblesGameConfigPage.xaml.cs">
       <DependentUpon>BubblesGameConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigPages\LettersGameConfigPage.xaml.cs">
+      <DependentUpon>LettersGameConfigPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="KinectHoverButton.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
     </Compile>
-    <Page Include="ApplesGameConfigPage.xaml">
+    <Page Include="ConfigPages\ApplesGameConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BubblesGameConfigPage.xaml">
+    <Page Include="ConfigPages\BubblesGameConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfigPages\LettersGameConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

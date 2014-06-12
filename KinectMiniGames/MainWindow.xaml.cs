@@ -8,13 +8,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using System.Resources;
+using KinectMiniGames.ConfigPages;
 
 namespace KinectMiniGames
 {
     public partial class MainWindow
     {
         #region Public State
-        public int gamesCount = 2;
+        public int gamesCount = 3;
 
         public static readonly DependencyProperty PageLeftEnabledProperty = DependencyProperty.Register(
             "PageLeftEnabled", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
@@ -79,14 +80,14 @@ namespace KinectMiniGames
             this.wrapPanel.Children.Add(this.createSingleButton("Apples Game"));
             this.wrapPanel.Children.Add(this.createSingleButton("Bubbles Game"));
             this.wrapPanel.Children.Add(this.createSingleButton("Letters Game"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Painting Game"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Dancing Steps"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Song Movements"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Simple Excersises"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Train of Words"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Steps of Activity"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Educational Kinesiology"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Painting Game"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Dancing Steps"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Song Movements"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Simple Excersises"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Train of Words"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Steps of Activity"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Educational Kinesiology"));
         }
 
         private KinectTileButton createSingleButton(String buttonLabel)
@@ -158,6 +159,9 @@ namespace KinectMiniGames
                     e.Handled = true;
                     break;
                 case "Letters Game":
+                    var lettersConfigPage = new LettersGameConfigPage();
+                    this.kinectRegionGrid.Children.Add(lettersConfigPage);
+                    e.Handled = true;
                     break;
 
                 default:
