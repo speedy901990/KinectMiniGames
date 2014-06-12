@@ -159,7 +159,7 @@ namespace KinectMiniGames
                     e.Handled = true;
                     break;
                 case "Letters Game":
-                    var lettersConfigPage = new LettersGameConfigPage();
+                    var lettersConfigPage = new LettersGameConfigPage(button.Label as string, this.sensorChooser);
                     this.kinectRegionGrid.Children.Add(lettersConfigPage);
                     e.Handled = true;
                     break;

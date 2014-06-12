@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LettersGame;
+using Microsoft.Kinect.Toolkit;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,43 @@ namespace KinectMiniGames.ConfigPages
     /// </summary>
     public partial class LettersGameConfigPage : UserControl
     {
-        public LettersGameConfigPage()
+        private LettersGameConfig config;
+
+        public LettersGameConfig Config
+        {
+            get { return config; }
+            set { config = value; }
+        }
+        private KinectSensorChooser sensorChooser;
+
+        public KinectSensorChooser SensorChooser
+        {
+            get { return sensorChooser; }
+            set { sensorChooser = value; }
+        }
+
+        public LettersGameConfigPage(string itemId, KinectSensorChooser sensorChooser)
         {
             InitializeComponent();
+            this.sensorChooser = sensorChooser;
+            this.config = new LettersGameConfig();
+            this.DataContext = Config;
+        }
+
+        private void ktbBackToMenu_Click(object sender, RoutedEventArgs e)
+        {
+            var parent = (Panel)this.Parent;
+            parent.Children.Remove(this);
+        }
+
+        private void ktbRunGame_Click(object sender, RoutedEventArgs e)
+        {
+            this.sensorChooser.Stop();
+            this.config.PlayerName = this.tbUsername.Text;
+            //troche hardkodu
+            this.config.CurrentLevel = 1;
+            LettersGame.MainWindow window = new LettersGame.MainWindow(Config);
+            window.Show();
         }
     }
 }

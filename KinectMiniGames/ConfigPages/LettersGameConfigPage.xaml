@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
                 <Label Content="Username:" FontSize="20" MinWidth="200"/>
-                <TextBox FontSize="20" BorderBrush="Black" MinWidth="200"></TextBox>
+                <TextBox Name="tbUsername" FontSize="20" BorderBrush="Black" MinWidth="200" Text="Gracz"></TextBox>
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -34,8 +34,8 @@
                 <k:KinectCircleButton Grid.Column="2" Name="kcbLevel3" Label="Level 3"/>
             </Grid>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <k:KinectTileButton Name="ktbRunGame" Grid.Row="2" Height="70" Label="Uruchom Grę"/>
-                <k:KinectTileButton Name="ktbBackToMenu" Grid.Row="2" Height="70" Label="Wróć do menu"/>
+                <k:KinectTileButton Name="ktbRunGame" Grid.Row="2" Height="75" Label="Uruchom Grę" Click="ktbRunGame_Click"/>
+                <k:KinectTileButton Name="ktbBackToMenu" Grid.Row="2" Height="75" Label="Wróć do menu" Click="ktbBackToMenu_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

@@ -16,6 +16,14 @@ namespace LettersGame
             this.firstLevelLettersCount = 8;
         }
 
+        private string playerName;
+
+        public string PlayerName
+        {
+            get { return playerName; }
+            set { playerName = value; }
+        }
+
         private KinectSensorChooser passedSensorChooser;
 
         public KinectSensorChooser PassedSensorChooser
