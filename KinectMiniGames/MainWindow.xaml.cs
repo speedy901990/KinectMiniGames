@@ -136,13 +136,13 @@ namespace KinectMiniGames
         private void KinectTileButtonClick(object sender, RoutedEventArgs e)
         {
             var button = (KinectTileButton)e.OriginalSource;
-            if (button.Label == "Apples Game")
+            if ((String)button.Label == "Apples Game")
             {
                 var applesConfigPage = new ApplesGameConfigPage(button.Label as string, this.sensorChooser);
                 this.kinectRegionGrid.Children.Add(applesConfigPage);
                 e.Handled = true;
             }
-            else if (button.Label == "Bubbles Game")
+            else if ((String)button.Label == "Bubbles Game")
             {
                 var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, this.sensorChooser);
                 this.kinectRegionGrid.Children.Add(bubblesConfigPage);
@@ -177,6 +177,11 @@ namespace KinectMiniGames
             //this.WindowState = WindowState.Maximized;
             kinectViewBorder.Visibility = System.Windows.Visibility.Visible;
             sensorChooserUi.Visibility = System.Windows.Visibility.Visible;
+
+            if (this.sensorChooser.Status == ChooserStatus.None)
+            {
+                this.sensorChooser.Start();
+            }
         }
     }
 }

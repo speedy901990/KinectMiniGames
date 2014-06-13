@@ -1,35 +1,21 @@
-﻿<Window x:Name="window" x:Class="BubblesGame.MainWindow"
+﻿<Window x:Class="BubblesGame.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:kt="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:toolkit="clr-namespace:Microsoft.Kinect.Toolkit;assembly=Microsoft.Kinect.Toolkit"
-        Title="Kinect Shape Game" FontStyle="Italic" SizeToContent="WidthAndHeight"
-        Loaded="WindowLoaded" Closing="WindowClosing" KeyDown="Window_KeyDown" ContentRendered="WindowsRendered"
+        xmlns:k="http://schemas.microsoft.com/kinect/2013"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BubblesGame"
+        Title="Bubbles Game"
         Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Background="Black" HorizontalAlignment="Center" VerticalAlignment="Center">
-    <Grid x:Name="grid" HorizontalAlignment="Center" VerticalAlignment="Center" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
-        <Border BorderThickness="1" BorderBrush="Black" VerticalAlignment="Top" HorizontalAlignment="right" Height="120" Width="150" Panel.ZIndex="3">
-            <kt:KinectColorViewer KinectSensorManager="{Binding}" Panel.ZIndex="2" Height="120" Width="150"/>
-        </Border>
-        <toolkit:KinectSensorChooserUI x:Name="SensorChooserUI" IsListening="True"  HorizontalAlignment="Center" VerticalAlignment="Top" Panel.ZIndex="2" />
-        <Canvas HorizontalAlignment="Center" x:Name="playfield" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged" VerticalAlignment="Center" Panel.ZIndex="3">
-        </Canvas>
-
-        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <Border.Effect>
-                <BlurEffect Radius="30" RenderingBias="Performance" />
-            </Border.Effect>
-            <Canvas x:Name="playfieldBackground" Height="688" Width="620" SizeChanged="PlayfieldSizeChanged">
-                <Canvas.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity=".6">
-                        <GradientStop Color="#FF055301" Offset="2" />
-                        <GradientStop Color="#FF0B530D" Offset="0.71"/>
-                        <GradientStop Color="#FF005E63" Offset="-2" />
-                        <GradientStop Color="#FF25A9AE" Offset="0.45"/>
-                    </LinearGradientBrush>
-                </Canvas.Background>
-            </Canvas>
-        </Border>
-
+        FontFamily="Segoe UI" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" KeyDown="Window_KeyDown_1">
+    <Grid Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" MinHeight="120" />
+            <RowDefinition Height= "*" MinHeight="120" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"  Margin="10 0 10 20" Panel.ZIndex="2">
+            <k:KinectSensorChooserUI Name="sensorChooserUi" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
+        </Grid>
+        <Label Name="PleaseWaitLabel" Grid.Row="1" Content="Proszę czekać, trwa ładowanie gry..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"></Label>
     </Grid>
 </Window>
