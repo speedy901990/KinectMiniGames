@@ -1,0 +1,579 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KinectMiniGamesModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="KinectMiniGamesModelStoreContainer">
+          <EntitySet Name="Authors" EntityType="KinectMiniGamesModel.Store.Authors" store:Type="Tables" />
+          <EntitySet Name="GameParams" EntityType="KinectMiniGamesModel.Store.GameParams" store:Type="Tables" />
+          <EntitySet Name="GameResults" EntityType="KinectMiniGamesModel.Store.GameResults" store:Type="Tables" />
+          <EntitySet Name="Games" EntityType="KinectMiniGamesModel.Store.Games" store:Type="Tables" />
+          <EntitySet Name="History" EntityType="KinectMiniGamesModel.Store.History" store:Type="Tables" />
+          <EntitySet Name="HistoryParams" EntityType="KinectMiniGamesModel.Store.HistoryParams" store:Type="Tables" />
+          <EntitySet Name="HistoryResults" EntityType="KinectMiniGamesModel.Store.HistoryResults" store:Type="Tables" />
+          <EntitySet Name="Players" EntityType="KinectMiniGamesModel.Store.Players" store:Type="Tables" />
+          <AssociationSet Name="FK_GameParams_0_0" Association="KinectMiniGamesModel.Store.FK_GameParams_0_0">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="GameParams" EntitySet="GameParams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameResults_0_0" Association="KinectMiniGamesModel.Store.FK_GameResults_0_0">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="GameResults" EntitySet="GameResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Games_0_0" Association="KinectMiniGamesModel.Store.FK_Games_0_0">
+            <End Role="Authors" EntitySet="Authors" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History_0_0" Association="KinectMiniGamesModel.Store.FK_History_0_0">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="History" EntitySet="History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History_1_0" Association="KinectMiniGamesModel.Store.FK_History_1_0">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="History" EntitySet="History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryParams_0_0" Association="KinectMiniGamesModel.Store.FK_HistoryParams_0_0">
+            <End Role="GameParams" EntitySet="GameParams" />
+            <End Role="HistoryParams" EntitySet="HistoryParams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryParams_1_0" Association="KinectMiniGamesModel.Store.FK_HistoryParams_1_0">
+            <End Role="History" EntitySet="History" />
+            <End Role="HistoryParams" EntitySet="HistoryParams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryResults_0_0" Association="KinectMiniGamesModel.Store.FK_HistoryResults_0_0">
+            <End Role="GameResults" EntitySet="GameResults" />
+            <End Role="HistoryResults" EntitySet="HistoryResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryResults_1_0" Association="KinectMiniGamesModel.Store.FK_HistoryResults_1_0">
+            <End Role="History" EntitySet="History" />
+            <End Role="HistoryResults" EntitySet="HistoryResults" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Authors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="surname" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="GameParams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id_game" Type="integer" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="GameResults">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id_game" Type="integer" Nullable="false" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Games">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="author_id" Type="integer" />
+        </EntityType>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id_game" Type="integer" Nullable="false" />
+          <Property Name="id_player" Type="integer" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HistoryParams">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id_history" Type="integer" Nullable="false" />
+          <Property Name="id_game_params" Type="integer" Nullable="false" />
+          <Property Name="value" Type="decimal" Nullable="false" Precision="53" />
+        </EntityType>
+        <EntityType Name="HistoryResults">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="id_history" Type="integer" />
+          <Property Name="id_game_results" Type="integer" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="surname" Type="varchar" MaxLength="50" />
+          <Property Name="age" Type="integer" />
+        </EntityType>
+        <Association Name="FK_GameParams_0_0">
+          <End Role="Games" Type="KinectMiniGamesModel.Store.Games" Multiplicity="1" />
+          <End Role="GameParams" Type="KinectMiniGamesModel.Store.GameParams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="GameParams">
+              <PropertyRef Name="id_game" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameResults_0_0">
+          <End Role="Games" Type="KinectMiniGamesModel.Store.Games" Multiplicity="1" />
+          <End Role="GameResults" Type="KinectMiniGamesModel.Store.GameResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="GameResults">
+              <PropertyRef Name="id_game" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Games_0_0">
+          <End Role="Authors" Type="KinectMiniGamesModel.Store.Authors" Multiplicity="0..1" />
+          <End Role="Games" Type="KinectMiniGamesModel.Store.Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Authors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History_0_0">
+          <End Role="Players" Type="KinectMiniGamesModel.Store.Players" Multiplicity="1" />
+          <End Role="History" Type="KinectMiniGamesModel.Store.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="id_player" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History_1_0">
+          <End Role="Games" Type="KinectMiniGamesModel.Store.Games" Multiplicity="1" />
+          <End Role="History" Type="KinectMiniGamesModel.Store.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="id_game" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryParams_0_0">
+          <End Role="GameParams" Type="KinectMiniGamesModel.Store.GameParams" Multiplicity="1" />
+          <End Role="HistoryParams" Type="KinectMiniGamesModel.Store.HistoryParams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameParams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryParams">
+              <PropertyRef Name="id_game_params" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryParams_1_0">
+          <End Role="History" Type="KinectMiniGamesModel.Store.History" Multiplicity="1" />
+          <End Role="HistoryParams" Type="KinectMiniGamesModel.Store.HistoryParams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="History">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryParams">
+              <PropertyRef Name="id_history" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryResults_0_0">
+          <End Role="GameResults" Type="KinectMiniGamesModel.Store.GameResults" Multiplicity="0..1" />
+          <End Role="HistoryResults" Type="KinectMiniGamesModel.Store.HistoryResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameResults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryResults">
+              <PropertyRef Name="id_game_results" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryResults_1_0">
+          <End Role="History" Type="KinectMiniGamesModel.Store.History" Multiplicity="0..1" />
+          <End Role="HistoryResults" Type="KinectMiniGamesModel.Store.HistoryResults" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="History">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryResults">
+              <PropertyRef Name="id_history" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KinectMiniGamesModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Authors" EntityType="KinectMiniGamesModel.Author" />
+          <EntitySet Name="GameParams" EntityType="KinectMiniGamesModel.GameParam" />
+          <EntitySet Name="GameResults" EntityType="KinectMiniGamesModel.GameResult" />
+          <EntitySet Name="Games" EntityType="KinectMiniGamesModel.Game" />
+          <EntitySet Name="Histories" EntityType="KinectMiniGamesModel.History" />
+          <EntitySet Name="HistoryParams" EntityType="KinectMiniGamesModel.HistoryParam" />
+          <EntitySet Name="HistoryResults" EntityType="KinectMiniGamesModel.HistoryResult" />
+          <EntitySet Name="Players" EntityType="KinectMiniGamesModel.Player" />
+          <AssociationSet Name="FK_Games_0_0" Association="KinectMiniGamesModel.FK_Games_0_0">
+            <End Role="Authors" EntitySet="Authors" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameParams_0_0" Association="KinectMiniGamesModel.FK_GameParams_0_0">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="GameParams" EntitySet="GameParams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryParams_0_0" Association="KinectMiniGamesModel.FK_HistoryParams_0_0">
+            <End Role="GameParams" EntitySet="GameParams" />
+            <End Role="HistoryParams" EntitySet="HistoryParams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameResults_0_0" Association="KinectMiniGamesModel.FK_GameResults_0_0">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="GameResults" EntitySet="GameResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryResults_0_0" Association="KinectMiniGamesModel.FK_HistoryResults_0_0">
+            <End Role="GameResults" EntitySet="GameResults" />
+            <End Role="HistoryResults" EntitySet="HistoryResults" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History_1_0" Association="KinectMiniGamesModel.FK_History_1_0">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="History" EntitySet="Histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_History_0_0" Association="KinectMiniGamesModel.FK_History_0_0">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="History" EntitySet="Histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryParams_1_0" Association="KinectMiniGamesModel.FK_HistoryParams_1_0">
+            <End Role="History" EntitySet="Histories" />
+            <End Role="HistoryParams" EntitySet="HistoryParams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryResults_1_0" Association="KinectMiniGamesModel.FK_HistoryResults_1_0">
+            <End Role="History" EntitySet="Histories" />
+            <End Role="HistoryResults" EntitySet="HistoryResults" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="surname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Games" Relationship="KinectMiniGamesModel.FK_Games_0_0" FromRole="Authors" ToRole="Games" />
+        </EntityType>
+        <EntityType Name="GameParam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id_game" Type="Int64" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Game" Relationship="KinectMiniGamesModel.FK_GameParams_0_0" FromRole="GameParams" ToRole="Games" />
+          <NavigationProperty Name="HistoryParams" Relationship="KinectMiniGamesModel.FK_HistoryParams_0_0" FromRole="GameParams" ToRole="HistoryParams" />
+        </EntityType>
+        <EntityType Name="GameResult">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id_game" Type="Int64" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Game" Relationship="KinectMiniGamesModel.FK_GameResults_0_0" FromRole="GameResults" ToRole="Games" />
+          <NavigationProperty Name="HistoryResults" Relationship="KinectMiniGamesModel.FK_HistoryResults_0_0" FromRole="GameResults" ToRole="HistoryResults" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="author_id" Type="Int64" />
+          <NavigationProperty Name="Author" Relationship="KinectMiniGamesModel.FK_Games_0_0" FromRole="Games" ToRole="Authors" />
+          <NavigationProperty Name="GameParams" Relationship="KinectMiniGamesModel.FK_GameParams_0_0" FromRole="Games" ToRole="GameParams" />
+          <NavigationProperty Name="GameResults" Relationship="KinectMiniGamesModel.FK_GameResults_0_0" FromRole="Games" ToRole="GameResults" />
+          <NavigationProperty Name="Histories" Relationship="KinectMiniGamesModel.FK_History_1_0" FromRole="Games" ToRole="History" />
+        </EntityType>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id_game" Type="Int64" Nullable="false" />
+          <Property Name="id_player" Type="Int64" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Game" Relationship="KinectMiniGamesModel.FK_History_1_0" FromRole="History" ToRole="Games" />
+          <NavigationProperty Name="Player" Relationship="KinectMiniGamesModel.FK_History_0_0" FromRole="History" ToRole="Players" />
+          <NavigationProperty Name="HistoryParams" Relationship="KinectMiniGamesModel.FK_HistoryParams_1_0" FromRole="History" ToRole="HistoryParams" />
+          <NavigationProperty Name="HistoryResults" Relationship="KinectMiniGamesModel.FK_HistoryResults_1_0" FromRole="History" ToRole="HistoryResults" />
+        </EntityType>
+        <EntityType Name="HistoryParam">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id_history" Type="Int64" Nullable="false" />
+          <Property Name="id_game_params" Type="Int64" Nullable="false" />
+          <Property Name="value" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
+          <NavigationProperty Name="GameParam" Relationship="KinectMiniGamesModel.FK_HistoryParams_0_0" FromRole="HistoryParams" ToRole="GameParams" />
+          <NavigationProperty Name="History" Relationship="KinectMiniGamesModel.FK_HistoryParams_1_0" FromRole="HistoryParams" ToRole="History" />
+        </EntityType>
+        <EntityType Name="HistoryResult">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="id_history" Type="Int64" />
+          <Property Name="id_game_results" Type="Int64" />
+          <NavigationProperty Name="GameResult" Relationship="KinectMiniGamesModel.FK_HistoryResults_0_0" FromRole="HistoryResults" ToRole="GameResults" />
+          <NavigationProperty Name="History" Relationship="KinectMiniGamesModel.FK_HistoryResults_1_0" FromRole="HistoryResults" ToRole="History" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="surname" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="age" Type="Int64" />
+          <NavigationProperty Name="Histories" Relationship="KinectMiniGamesModel.FK_History_0_0" FromRole="Players" ToRole="History" />
+        </EntityType>
+        <Association Name="FK_Games_0_0">
+          <End Role="Authors" Type="KinectMiniGamesModel.Author" Multiplicity="0..1" />
+          <End Role="Games" Type="KinectMiniGamesModel.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Authors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="author_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameParams_0_0">
+          <End Role="Games" Type="KinectMiniGamesModel.Game" Multiplicity="1" />
+          <End Role="GameParams" Type="KinectMiniGamesModel.GameParam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="GameParams">
+              <PropertyRef Name="id_game" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryParams_0_0">
+          <End Role="GameParams" Type="KinectMiniGamesModel.GameParam" Multiplicity="1" />
+          <End Role="HistoryParams" Type="KinectMiniGamesModel.HistoryParam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameParams">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryParams">
+              <PropertyRef Name="id_game_params" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameResults_0_0">
+          <End Role="Games" Type="KinectMiniGamesModel.Game" Multiplicity="1" />
+          <End Role="GameResults" Type="KinectMiniGamesModel.GameResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="GameResults">
+              <PropertyRef Name="id_game" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryResults_0_0">
+          <End Role="GameResults" Type="KinectMiniGamesModel.GameResult" Multiplicity="0..1" />
+          <End Role="HistoryResults" Type="KinectMiniGamesModel.HistoryResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameResults">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryResults">
+              <PropertyRef Name="id_game_results" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History_1_0">
+          <End Role="Games" Type="KinectMiniGamesModel.Game" Multiplicity="1" />
+          <End Role="History" Type="KinectMiniGamesModel.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="id_game" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_History_0_0">
+          <End Role="Players" Type="KinectMiniGamesModel.Player" Multiplicity="1" />
+          <End Role="History" Type="KinectMiniGamesModel.History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="History">
+              <PropertyRef Name="id_player" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryParams_1_0">
+          <End Role="History" Type="KinectMiniGamesModel.History" Multiplicity="1" />
+          <End Role="HistoryParams" Type="KinectMiniGamesModel.HistoryParam" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="History">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryParams">
+              <PropertyRef Name="id_history" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryResults_1_0">
+          <End Role="History" Type="KinectMiniGamesModel.History" Multiplicity="0..1" />
+          <End Role="HistoryResults" Type="KinectMiniGamesModel.HistoryResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="History">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HistoryResults">
+              <PropertyRef Name="id_history" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KinectMiniGamesModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Authors">
+            <EntityTypeMapping TypeName="KinectMiniGamesModel.Author">
+              <MappingFragment StoreEntitySet="Authors">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameParams">
+            <EntityTypeMapping TypeName="KinectMiniGamesModel.GameParam">
+              <MappingFragment StoreEntitySet="GameParams">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_game" ColumnName="id_game" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameResults">
+            <EntityTypeMapping TypeName="KinectMiniGamesModel.GameResult">
+              <MappingFragment StoreEntitySet="GameResults">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_game" ColumnName="id_game" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="KinectMiniGamesModel.Game">
+              <MappingFragment StoreEntitySet="Games">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="author_id" ColumnName="author_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Histories">
+            <EntityTypeMapping TypeName="KinectMiniGamesModel.History">
+              <MappingFragment StoreEntitySet="History">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_game" ColumnName="id_game" />
+                <ScalarProperty Name="id_player" ColumnName="id_player" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistoryParams">
+            <EntityTypeMapping TypeName="KinectMiniGamesModel.HistoryParam">
+              <MappingFragment StoreEntitySet="HistoryParams">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_history" ColumnName="id_history" />
+                <ScalarProperty Name="id_game_params" ColumnName="id_game_params" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistoryResults">
+            <EntityTypeMapping TypeName="KinectMiniGamesModel.HistoryResult">
+              <MappingFragment StoreEntitySet="HistoryResults">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_history" ColumnName="id_history" />
+                <ScalarProperty Name="id_game_results" ColumnName="id_game_results" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="KinectMiniGamesModel.Player">
+              <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="age" ColumnName="age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
