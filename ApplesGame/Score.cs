@@ -45,39 +45,18 @@ namespace ApplesGame
         }
         #endregion accessors
         
-        public Score()
-        {
-            Success = 0;
-            Fail = 0;
-            Scoreboard = new Canvas();
-            Scoreboard.Width = 150;
-            Scoreboard.Height = 150;
-            Scoreboard.HorizontalAlignment = HorizontalAlignment.Right;
-            Scoreboard.VerticalAlignment = VerticalAlignment.Top;
-            Scoreboard.Margin = new Thickness(0, 400, 50, 0);
 
-            ActualScore = new Label();
-            ActualScore.Width = 150;
-            ActualScore.Height = 250;
-            ActualScore.HorizontalAlignment = HorizontalAlignment.Right;
-            ActualScore.VerticalAlignment = VerticalAlignment.Top;
-            ActualScore.Margin = new Thickness(0, 50, 50, 0);
-            ActualScore.Content = Success;
-
-            Scoreboard.Children.Add(ActualScore);
-        }
-
-        public Score(int applesCountPar)
+        public Score(int applesCountPar = 0)
         {
             ApplesLeft = applesCountPar;
             Success = 0;
             Fail = 0;
             Scoreboard = new Canvas();
-            Scoreboard.Width = 150;
+            Scoreboard.Width = 200;
             Scoreboard.Height = 150;
             Scoreboard.HorizontalAlignment = HorizontalAlignment.Right;
             Scoreboard.VerticalAlignment = VerticalAlignment.Top;
-            Scoreboard.Margin = new Thickness(0, 200, 25, 0);
+            Scoreboard.Margin = new Thickness(0, 200, 0, 0);
             Scoreboard.Background = new SolidColorBrush(Colors.Blue);
 
             ActualScore = new Label();
@@ -89,7 +68,7 @@ namespace ApplesGame
             ActualScore.FontSize = 90;
             ActualScore.HorizontalContentAlignment = HorizontalAlignment.Center;
             ActualScore.Foreground = new SolidColorBrush(Colors.White);
-            ActualScore.Content = Success;
+            ActualScore.Content = ApplesLeft;
 
             Label description = new Label();
             description.Width = 200;
@@ -99,7 +78,7 @@ namespace ApplesGame
             description.Margin = new Thickness(0, 10, 0, 0);
             description.FontSize = 40;
             description.Foreground = new SolidColorBrush(Colors.White);
-            description.Content = "Wynik:";
+            description.Content = "Pozostało:";
 
             Scoreboard.Children.Add(description);
             Scoreboard.Children.Add(ActualScore);

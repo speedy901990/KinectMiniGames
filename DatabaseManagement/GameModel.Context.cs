@@ -13,10 +13,10 @@ namespace DatabaseManagement
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class GameModelContext : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public GameModelContext()
+            : base("name=GameModelContext")
         {
         }
     

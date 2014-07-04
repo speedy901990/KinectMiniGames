@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Animation;
+using DatabaseManagement;
 
 namespace ApplesGame
 {
@@ -39,6 +40,7 @@ namespace ApplesGame
         private int Treenum;
         private Score gameScore;
         private KinectSensorChooser sensorChooser;
+        private ApplesGameConfig config;
         #endregion
 
         #region Ctor + Config
@@ -54,6 +56,7 @@ namespace ApplesGame
             this.InitializeComponent();
             setupConfiguration(config);
             setupKinectSensor(config);
+            this.config = config;
             runGame();
         }
 
@@ -314,6 +317,10 @@ namespace ApplesGame
                             handPointerEventArgs.Handled = true;
                             gameScore.collectSuccess();
                             check = true;
+                            if (gameScore.ApplesLeft == 0)
+                            {
+                                this.EndGame();
+                            }
                         }
                     }
                 }
@@ -479,6 +486,16 @@ namespace ApplesGame
         #endregion
 
         #region Closing window
+        private void EndGame()
+        {
+            var result = MessageBox.Show("Gratulacje! Wszystkie jab³ka zosta³y wrzucone!", "", MessageBoxButton.OK);
+            if (result == MessageBoxResult.OK)
+            {
+                ApplesGameManager manager = new ApplesGameManager(this.config.Username);
+                //this.Close();
+            }
+        }
+
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.sensorChooser.Stop();
@@ -494,6 +511,10 @@ namespace ApplesGame
         {
             if (e.Key == System.Windows.Input.Key.Escape)
                 this.Close();
+            if (e.Key == Key.S)
+            {
+                this.EndGame();
+            }
         }
         #endregion
     }
