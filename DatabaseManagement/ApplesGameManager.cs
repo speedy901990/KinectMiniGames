@@ -77,7 +77,10 @@ namespace DatabaseManagement
                 var gameParams = from b in context.GameParams
                                  where b.Game == this.game
                                  select b;
-                this.gameParams = gameParams.ToList();
+                foreach (var item in gameParams)
+                {
+                    this.gameParams.Add(item as GameParam);
+                }
             }
         }
 
@@ -88,7 +91,11 @@ namespace DatabaseManagement
                 var gameResults = from b in context.GameResults
                                   where b.Game == this.game
                                   select b;
-                this.gameResults = gameResults.ToList();
+                //this.gameResults = gameResults.ToList();
+                foreach (var item in gameResults)
+                {
+                    this.gameResults.Add(item as GameResult);
+                }
             }
         }
     }
