@@ -32,15 +32,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="SQLite.Designer, Version=1.0.93.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Data.SQLite, Version=1.0.93.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86" />
     <Reference Include="System.Data.SQLite.EF6, Version=1.0.93.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL" />
     <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,11 +54,68 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Author.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Game.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GameModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GameModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GameModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="GameParam.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GameResult.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="History.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryParam.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryResult.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Player.cs">
+      <DependentUpon>GameModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="GameModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GameModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="GameModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GameModel.edmx</DependentUpon>
+      <LastGenOutput>GameModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="GameModel.edmx.diagram">
+      <DependentUpon>GameModel.edmx</DependentUpon>
+    </None>
+    <None Include="GameModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GameModel.edmx</DependentUpon>
+      <LastGenOutput>GameModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
