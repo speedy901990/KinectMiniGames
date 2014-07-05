@@ -13,7 +13,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
-//using System.Windows.Forms;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Samples.Kinect.WpfViewers;
@@ -23,6 +22,8 @@ using Binding = System.Windows.Data.Binding;
 using Color = System.Windows.Media.Color;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
+using DatabaseManagement;
+using DatabaseManagement.Params;
 
 namespace BubblesGame
 {
@@ -75,6 +76,8 @@ namespace BubblesGame
         private FallingThings _myFallingThings;
 
         private BubblesGameConfig config;
+        private DateTime startTime;
+        private DateTime endTime;
         #endregion Private State
 
         #region ctor + Window Events
@@ -91,6 +94,7 @@ namespace BubblesGame
             InitializeComponent();
             this.config = config;
             SetupKinectSensor(config);
+            startTime = DateTime.Now;
             RestoreWindowState();
         }
 
@@ -502,27 +506,18 @@ namespace BubblesGame
             _myFallingThings.DrawFrame(playfield.Children);
             if (_myFallingThings._things.Count == 0 && FallingThings.BubblesFallen > 0)
             {
+                this.endTime = DateTime.Now;
                 var result = MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
                 if (result == MessageBoxResult.OK)
                 {
                     this.exitGame();
-                    //FallingThings.BubblesFallen = 0;
-                    //FallingThings.BubblesPopped = 0;
-                    //Close();
                 }
             }
 
-            /*foreach (var player in players)
-            {
-                player.Value.Draw(playfield.Children);
-            }*/
             if (_players.FirstOrDefault().Value != null)
                 _players.FirstOrDefault().Value.Draw(playfield.Children);
             BannerText.NewBanner(FallingThings.BubblesPopped.ToString(), _screenRect, false, Color.FromRgb(0, 0, 0));
             BannerText.Draw(playfield.Children);
-            //FlyingText.Draw(playfield.Children);
-
-            //CheckPlayers();
         }
         #endregion GameTimer/Thread
 
@@ -536,6 +531,17 @@ namespace BubblesGame
         }
         private void exitGame()
         {
+            TimeSpan time = endTime - startTime;
+            //FallingThings.BubblesPopped
+            BubblesGameParams gameParams = new BubblesGameParams
+            {
+                Success = FallingThings.BubblesPopped,
+                Time = (int)time.TotalMilliseconds,
+                Level = 1
+            };
+            BubblesGameManager manager = new BubblesGameManager(this.config.Username);
+            manager.SaveGameResult(gameParams);
+
             FallingThings.BubblesFallen = 0;
             FallingThings.BubblesPopped = 0;
             this.stopKinect();

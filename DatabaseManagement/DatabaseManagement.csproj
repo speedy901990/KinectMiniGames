@@ -54,7 +54,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplesGameManager.cs" />
+    <Compile Include="Managers\ApplesGameManager.cs" />
     <Compile Include="Author.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
@@ -91,7 +91,9 @@
     <Compile Include="HistoryResult.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Managers\BubblesGameManager.cs" />
     <Compile Include="Params\ApplesGameParams.cs" />
+    <Compile Include="Params\BubblesGameParams.cs" />
     <Compile Include="Player.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
