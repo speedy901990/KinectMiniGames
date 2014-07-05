@@ -42,6 +42,7 @@ namespace ApplesGame
         private Score gameScore;
         private KinectSensorChooser sensorChooser;
         private ApplesGameConfig config;
+        private DateTime startTime;
         #endregion
 
         #region Ctor + Config
@@ -50,6 +51,7 @@ namespace ApplesGame
             this.InitializeComponent();
             setupKinectSensor();
             runGame();
+            this.startTime = DateTime.Now;
         }
 
         public MainWindow(ApplesGameConfig config)
@@ -59,6 +61,7 @@ namespace ApplesGame
             setupKinectSensor(config);
             this.config = config;
             runGame();
+            this.startTime = DateTime.Now;
         }
 
         private void setupConfiguration(ApplesGameConfig config)
@@ -489,6 +492,8 @@ namespace ApplesGame
         #region Closing window
         private void EndGame()
         {
+            DateTime endTime = DateTime.Now;
+            TimeSpan time = endTime - startTime;
             var result = MessageBox.Show("Gratulacje! Wszystkie jab³ka zosta³y wrzucone!", "", MessageBoxButton.OK);
             if (result == MessageBoxResult.OK)
             {
@@ -498,9 +503,9 @@ namespace ApplesGame
                     Apples = this.config.ApplesOnTreeCount * this.config.TreesCount,
                     Colors = this.config.ColorCount,
                     Baskets = this.config.BasketCount,
-                    CorrectTrials = 5,
-                    Failures = 2,
-                    Time = 30
+                    CorrectTrials = this.gameScore.Success,
+                    Failures = this.gameScore.Fail,
+                    Time = (int)time.TotalMilliseconds
                 };
                 manager.SaveGameResult(gameParams);
                 this.Close();

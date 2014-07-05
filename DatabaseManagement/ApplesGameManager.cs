@@ -29,29 +29,29 @@ namespace DatabaseManagement
         {
             using (var context = new GameModelContext())
             {
-                DateTime date = new DateTime();
+                DateTime date = DateTime.Now;
 
                 var history = new History
                 {
-                    //id_game = this.game.id,
-                    //id_player = this.player.id,
+                    id_game = this.game.id,
+                    id_player = this.player.id,
                     date = date
                 };
 
                 List<HistoryParam> historyParams = new List<HistoryParam>();
                 historyParams.Add(new HistoryParam
                 {
-                    GameParam = this.gameParams["apples"],
+                    id_game_params = this.gameParams["apples"].id,
                     value = apg.Apples
                 });
                 historyParams.Add(new HistoryParam
                 {
-                    GameParam = this.gameParams["colors"],
+                    id_game_params = this.gameParams["colors"].id,
                     value = apg.Colors
                 });
                 historyParams.Add(new HistoryParam
                 {
-                    GameParam = this.gameParams["baskets"],
+                    id_game_params = this.gameParams["baskets"].id,
                     value = apg.Baskets
                 });
                 foreach (HistoryParam item in historyParams)
@@ -62,17 +62,17 @@ namespace DatabaseManagement
                 List<HistoryResult> historyResults = new List<HistoryResult>();
                 historyResults.Add(new HistoryResult
                 {
-                    GameResult = this.gameResults["correctTrials"],
+                    id_game_results = this.gameResults["correctTrials"].id,
                     value = apg.CorrectTrials
                 });
                 historyResults.Add(new HistoryResult
                 {
-                    GameResult = this.gameResults["failures"],
+                    id_game_results = this.gameResults["failures"].id,
                     value = apg.Failures
                 });
                 historyResults.Add(new HistoryResult
                 {
-                    GameResult = this.gameResults["time"],
+                    id_game_results = this.gameResults["time"].id,
                     value = apg.Time
                 });
                 foreach (HistoryResult item in historyResults)
@@ -81,15 +81,7 @@ namespace DatabaseManagement
                 }
 
                 context.Histories.Add(history);
-                //this.game.Histories.Add(history);
                 context.SaveChanges();
-                // Create and save a new Blog 
-                //Console.Write("Enter a name for a new Blog: "); 
-                //var name = Console.ReadLine(); 
-
-                //var blog = new Blog { Name = name }; 
-                //db.Blogs.Add(blog); 
-                //db.SaveChanges(); 
             }
         }
 

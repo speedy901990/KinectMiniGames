@@ -88,7 +88,7 @@ namespace ApplesGame
         {
             Success++;
             ApplesLeft--;
-            ActualScore.Content = Success;
+            ActualScore.Content = ApplesLeft;
         }
 
         public void collectFail()

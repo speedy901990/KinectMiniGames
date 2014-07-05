@@ -56,10 +56,6 @@ namespace DatabaseManagement.Params
             set { baskets = value; }
         }
         
-        
-        
-
-
         public ApplesGameParams()
         {
 
