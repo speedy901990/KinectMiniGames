@@ -17,6 +17,7 @@ namespace DatabaseManagement
         public long id { get; set; }
         public Nullable<long> id_history { get; set; }
         public Nullable<long> id_game_results { get; set; }
+        public decimal value { get; set; }
     
         public virtual GameResult GameResult { get; set; }
         public virtual History History { get; set; }

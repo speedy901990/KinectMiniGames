@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Animation;
 using DatabaseManagement;
+using DatabaseManagement.Params;
 
 namespace ApplesGame
 {
@@ -492,7 +493,17 @@ namespace ApplesGame
             if (result == MessageBoxResult.OK)
             {
                 ApplesGameManager manager = new ApplesGameManager(this.config.Username);
-                //this.Close();
+                ApplesGameParams gameParams = new ApplesGameParams
+                {
+                    Apples = this.config.ApplesOnTreeCount * this.config.TreesCount,
+                    Colors = this.config.ColorCount,
+                    Baskets = this.config.BasketCount,
+                    CorrectTrials = 5,
+                    Failures = 2,
+                    Time = 30
+                };
+                manager.SaveGameResult(gameParams);
+                this.Close();
             }
         }
 

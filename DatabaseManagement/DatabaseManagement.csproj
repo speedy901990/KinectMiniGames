@@ -91,6 +91,7 @@
     <Compile Include="HistoryResult.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Params\ApplesGameParams.cs" />
     <Compile Include="Player.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>

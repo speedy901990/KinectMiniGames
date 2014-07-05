@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GameModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GameModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="GameModelStoreContainer">
           <EntitySet Name="Authors" EntityType="GameModel.Store.Authors" store:Type="Tables" />
           <EntitySet Name="GameParams" EntityType="GameModel.Store.GameParams" store:Type="Tables" />
@@ -109,6 +109,7 @@
           <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="id_history" Type="integer" />
           <Property Name="id_game_results" Type="integer" />
+          <Property Name="value" Type="decimal" Nullable="false" Precision="53" />
         </EntityType>
         <EntityType Name="Players">
           <Key>
@@ -227,8 +228,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GameModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -353,6 +353,7 @@
           <Property Name="id_game_results" Type="Int64" />
           <NavigationProperty Name="GameResult" Relationship="GameModel.FK_HistoryResults_0_0" FromRole="HistoryResults" ToRole="GameResults" />
           <NavigationProperty Name="History" Relationship="GameModel.FK_HistoryResults_1_0" FromRole="HistoryResults" ToRole="History" />
+          <Property Type="Decimal" Name="value" Nullable="false" Precision="53" Scale="0" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -538,6 +539,7 @@
           <EntitySetMapping Name="HistoryResults">
             <EntityTypeMapping TypeName="GameModel.HistoryResult">
               <MappingFragment StoreEntitySet="HistoryResults">
+                <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="id_history" ColumnName="id_history" />
                 <ScalarProperty Name="id_game_results" ColumnName="id_game_results" />
