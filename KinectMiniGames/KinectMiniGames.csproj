@@ -9,12 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KinectMiniGames</RootNamespace>
     <AssemblyName>KinectMiniGames</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <PublishUrl>D:\Programming\Kinect\PublishKinect\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -40,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,6 +51,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>BBECC3F253692556E74F4ECEA99E2DBE1A6DEE8B</ManifestCertificateThumbprint>
@@ -97,21 +100,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ApplesGameConfigPage.xaml.cs">
+    <Compile Include="ConfigPages\ApplesGameConfigPage.xaml.cs">
       <DependentUpon>ApplesGameConfigPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BubblesGameConfigPage.xaml.cs">
+    <Compile Include="ConfigPages\BubblesGameConfigPage.xaml.cs">
       <DependentUpon>BubblesGameConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigPages\LettersGameConfigPage.xaml.cs">
+      <DependentUpon>LettersGameConfigPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="KinectHoverButton.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
     </Compile>
-    <Page Include="ApplesGameConfigPage.xaml">
+    <Page Include="ConfigPages\ApplesGameConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BubblesGameConfigPage.xaml">
+    <Page Include="ConfigPages\BubblesGameConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfigPages\LettersGameConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,9 +179,17 @@
       <Project>{e61846bf-fe80-4b50-a7ff-cfcd9e4a4815}</Project>
       <Name>BubblesGame</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatabaseManagement\DatabaseManagement.csproj">
+      <Project>{32f1cd97-43e8-4c97-8248-b7612ed9cd4e}</Project>
+      <Name>DatabaseManagement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
       <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>
       <Name>Microsoft.Samples.Kinect.WpfViewers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LettersGame\LettersGame.csproj">
+      <Project>{f61d744c-02ed-4aaa-bdbc-6eded406dea0}</Project>
+      <Name>LettersGame</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj">
       <Project>{4508c4d1-85bb-4f3f-9e3b-cc93d231c65d}</Project>

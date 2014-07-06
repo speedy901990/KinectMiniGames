@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Animation;
+using DatabaseManagement;
+using DatabaseManagement.Params;
 
 namespace ApplesGame
 {
@@ -39,6 +41,8 @@ namespace ApplesGame
         private int Treenum;
         private Score gameScore;
         private KinectSensorChooser sensorChooser;
+        private ApplesGameConfig config;
+        private DateTime startTime;
         #endregion
 
         #region Ctor + Config
@@ -47,6 +51,7 @@ namespace ApplesGame
             this.InitializeComponent();
             setupKinectSensor();
             runGame();
+            this.startTime = DateTime.Now;
         }
 
         public MainWindow(ApplesGameConfig config)
@@ -54,7 +59,9 @@ namespace ApplesGame
             this.InitializeComponent();
             setupConfiguration(config);
             setupKinectSensor(config);
+            this.config = config;
             runGame();
+            this.startTime = DateTime.Now;
         }
 
         private void setupConfiguration(ApplesGameConfig config)
@@ -314,6 +321,10 @@ namespace ApplesGame
                             handPointerEventArgs.Handled = true;
                             gameScore.collectSuccess();
                             check = true;
+                            if (gameScore.ApplesLeft == 0)
+                            {
+                                this.EndGame();
+                            }
                         }
                     }
                 }
@@ -479,6 +490,28 @@ namespace ApplesGame
         #endregion
 
         #region Closing window
+        private void EndGame()
+        {
+            DateTime endTime = DateTime.Now;
+            TimeSpan time = endTime - startTime;
+            var result = MessageBox.Show("Gratulacje! Wszystkie jab³ka zosta³y wrzucone!", "", MessageBoxButton.OK);
+            if (result == MessageBoxResult.OK)
+            {
+                ApplesGameManager manager = new ApplesGameManager(this.config.Username);
+                ApplesGameParams gameParams = new ApplesGameParams
+                {
+                    Apples = this.config.ApplesOnTreeCount * this.config.TreesCount,
+                    Colors = this.config.ColorCount,
+                    Baskets = this.config.BasketCount,
+                    CorrectTrials = this.gameScore.Success,
+                    Failures = this.gameScore.Fail,
+                    Time = (int)time.TotalMilliseconds
+                };
+                manager.SaveGameResult(gameParams);
+                this.Close();
+            }
+        }
+
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.sensorChooser.Stop();
@@ -494,6 +527,10 @@ namespace ApplesGame
         {
             if (e.Key == System.Windows.Input.Key.Escape)
                 this.Close();
+            if (e.Key == Key.S)
+            {
+                this.EndGame();
+            }
         }
         #endregion
     }

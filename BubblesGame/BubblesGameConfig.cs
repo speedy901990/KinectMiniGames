@@ -9,6 +9,7 @@ namespace BubblesGame
         #region Private State
         private KinectSensorChooser kinectSensor;
         private string username = "Gracz";
+        private string userSurname = "Testowy";
         private int bubbleSize = 40;
         private int bubblesCount = 20;
         private int bubbleFallSpeed = 3;
@@ -24,6 +25,12 @@ namespace BubblesGame
                 username = value;
                 OnPropertyChanged("Username");
             }
+        }
+
+        public string UserSurname
+        {
+            get { return userSurname; }
+            set { userSurname = value; }
         }
 
         public int BubblesFallSpeed
