@@ -172,6 +172,10 @@
       <Project>{e61846bf-fe80-4b50-a7ff-cfcd9e4a4815}</Project>
       <Name>BubblesGame</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatabaseManagement\DatabaseManagement.csproj">
+      <Project>{32f1cd97-43e8-4c97-8248-b7612ed9cd4e}</Project>
+      <Name>DatabaseManagement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
       <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>
       <Name>Microsoft.Samples.Kinect.WpfViewers</Name>
