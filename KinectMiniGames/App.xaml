@@ -6,6 +6,7 @@
         <ResourceDictionary>
             <SolidColorBrush x:Key="BlueBrush" Color="#FF00BCF2" />
             <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e"/>
+            <SolidColorBrush x:Key="PurpleBrush" Color="#FF52318F"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,0 +1,10 @@
+﻿<Application x:Class="LettersGame.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <SolidColorBrush x:Key="PurpleBrush" Color="#FF52318F"/>
+
+    </Application.Resources>
+</Application>

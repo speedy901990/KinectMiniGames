@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="KinectMiniGames.ConfigPages.LettersGameConfigPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:k="http://schemas.microsoft.com/kinect/2013"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000"
+             FontFamily="Segoe UI" BorderBrush="{DynamicResource PurpleBrush}" BorderThickness="5">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Letters Game Config" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" />
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Label Content="Username:" FontSize="20" MinWidth="200"/>
+                <TextBox Name="tbUsername" FontSize="20" BorderBrush="Black" MinWidth="200" Text="Gracz"></TextBox>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <k:KinectCircleButton Grid.Column="0" Name="kcbLevel1" Label="Level 1"/>
+                <k:KinectCircleButton Grid.Column="1" Name="kcbLevel2" Label="Level 2"/>
+                <k:KinectCircleButton Grid.Column="2" Name="kcbLevel3" Label="Level 3"/>
+            </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <k:KinectTileButton Name="ktbRunGame" Grid.Row="2" Height="75" Label="Uruchom Grę" Click="ktbRunGame_Click"/>
+                <k:KinectTileButton Name="ktbBackToMenu" Grid.Row="2" Height="75" Label="Wróć do menu" Click="ktbBackToMenu_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

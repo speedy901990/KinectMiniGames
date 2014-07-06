@@ -100,21 +100,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ApplesGameConfigPage.xaml.cs">
+    <Compile Include="ConfigPages\ApplesGameConfigPage.xaml.cs">
       <DependentUpon>ApplesGameConfigPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BubblesGameConfigPage.xaml.cs">
+    <Compile Include="ConfigPages\BubblesGameConfigPage.xaml.cs">
       <DependentUpon>BubblesGameConfigPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigPages\LettersGameConfigPage.xaml.cs">
+      <DependentUpon>LettersGameConfigPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="KinectHoverButton.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
     </Compile>
-    <Page Include="ApplesGameConfigPage.xaml">
+    <Page Include="ConfigPages\ApplesGameConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BubblesGameConfigPage.xaml">
+    <Page Include="ConfigPages\BubblesGameConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfigPages\LettersGameConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,6 +186,10 @@
     <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
       <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>
       <Name>Microsoft.Samples.Kinect.WpfViewers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LettersGame\LettersGame.csproj">
+      <Project>{f61d744c-02ed-4aaa-bdbc-6eded406dea0}</Project>
+      <Name>LettersGame</Name>
     </ProjectReference>
     <ProjectReference Include="..\Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj">
       <Project>{4508c4d1-85bb-4f3f-9e3b-cc93d231c65d}</Project>
