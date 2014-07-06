@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Animation;
 using DatabaseManagement;
 using DatabaseManagement.Params;
+using System.Threading;
 
 namespace ApplesGame
 {
@@ -43,6 +44,7 @@ namespace ApplesGame
         private KinectSensorChooser sensorChooser;
         private ApplesGameConfig config;
         private DateTime startTime;
+        private Thread saveResults;
         #endregion
 
         #region Ctor + Config
@@ -490,26 +492,40 @@ namespace ApplesGame
         #endregion
 
         #region Closing window
-        private void EndGame()
+        public void CloseGame()
+        {
+            if (this.saveResults.ThreadState == ThreadState.Running)
+            {
+                this.saveResults.Join();
+            }
+            this.Close();
+        }
+
+        private void SaveResults()
         {
             DateTime endTime = DateTime.Now;
             TimeSpan time = endTime - startTime;
-            var result = MessageBox.Show("Gratulacje! Wszystkie jab³ka zosta³y wrzucone!", "", MessageBoxButton.OK);
-            if (result == MessageBoxResult.OK)
+            ApplesGameManager manager = new ApplesGameManager(this.config.Username);
+            ApplesGameParams gameParams = new ApplesGameParams
             {
-                ApplesGameManager manager = new ApplesGameManager(this.config.Username);
-                ApplesGameParams gameParams = new ApplesGameParams
-                {
-                    Apples = this.config.ApplesOnTreeCount * this.config.TreesCount,
-                    Colors = this.config.ColorCount,
-                    Baskets = this.config.BasketCount,
-                    CorrectTrials = this.gameScore.Success,
-                    Failures = this.gameScore.Fail,
-                    Time = (int)time.TotalMilliseconds
-                };
-                manager.SaveGameResult(gameParams);
-                this.Close();
-            }
+                Apples = this.config.ApplesOnTreeCount * this.config.TreesCount,
+                Colors = this.config.ColorCount,
+                Baskets = this.config.BasketCount,
+                CorrectTrials = this.gameScore.Success,
+                Failures = this.gameScore.Fail,
+                Time = (int)time.TotalMilliseconds
+            };
+            manager.SaveGameResult(gameParams);
+        }
+
+        private void EndGame()
+        {
+            this.saveResults = new Thread(SaveResults);
+            this.saveResults.Start();
+            GameOverPopup popup = new GameOverPopup(this);
+            popup.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+            popup.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+            kinectRegionGrid.Children.Add(popup);
         }
 
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)

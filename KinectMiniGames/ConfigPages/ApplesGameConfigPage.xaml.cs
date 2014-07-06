@@ -27,6 +27,13 @@ namespace KinectMiniGames
             parent.Children.Remove(this);
         }
 
+        private void ShowGameWindow()
+        {
+            Config.PassedKinectSensorChooser = this.kinectSensor;
+            ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
+            window.Show();
+        }
+
         private void kcbLevel1_Click(object sender, RoutedEventArgs e)
         {
             if (Application.Current.MainWindow.Width < 1440)
@@ -38,9 +45,7 @@ namespace KinectMiniGames
             Config.ColorCount = 3;
             Config.BasketCount = 3;
 
-            Config.PassedKinectSensorChooser = this.kinectSensor;
-            ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
-            window.Show();
+            this.ShowGameWindow();
         }
 
         private void kcbLevel2_Click(object sender, RoutedEventArgs e)
@@ -54,9 +59,7 @@ namespace KinectMiniGames
             Config.ColorCount = 4;
             Config.BasketCount = 4;
 
-            Config.PassedKinectSensorChooser = this.kinectSensor;
-            ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
-            window.Show();
+            this.ShowGameWindow();
         }
 
         private void kcbLevel3_Click(object sender, RoutedEventArgs e)
@@ -70,9 +73,7 @@ namespace KinectMiniGames
             Config.ColorCount = 5;
             Config.BasketCount = 6;
 
-            Config.PassedKinectSensorChooser = this.kinectSensor;
-            ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
-            window.Show();
+            this.ShowGameWindow();
         }
 
         private void ktbBackToMenu_Click(object sender, RoutedEventArgs e)
