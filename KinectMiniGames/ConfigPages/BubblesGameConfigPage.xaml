@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="clr-namespace:BubblesGame;assembly=BubblesGame"
+             xmlns:k="http://schemas.microsoft.com/kinect/2013"
              mc:Ignorable="d" 
              d:DesignHeight="668"
              d:DesignWidth="924"
@@ -29,77 +30,37 @@
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-    <!--UserControl.Triggers>
-        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard x:Name="OnLoadedStoryboard_BeginStoryboard" Storyboard="{StaticResource OnLoadedStoryboard}"/>
-        </EventTrigger>
-    </UserControl.Triggers-->
-    <Grid x:Name="layoutRoot" Margin="0,0,0,0">
-        <Grid x:Name="grid" Background="{DynamicResource BlueBrush}" RenderTransformOrigin="0.5,0.5" Margin="20,0,0,0">
-            <Grid.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Grid.RenderTransform>
-            <Grid Margin="5,5,5,5" Height="{Binding ElementName=grid, Path=ActualHeight}" Width="{Binding ElementName=grid, Path=ActualWidth}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="70" />
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="120" />
-                    <RowDefinition Height="120" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Bubbles Game Config" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" />
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Label Content="Username:" FontSize="20" MinWidth="200"/>
+                <TextBox Name="tbUsername" FontSize="20" BorderBrush="Black" MinWidth="200" Text="Gracz"></TextBox>
+            </StackPanel>
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="messageTextBlock" FontSize="45" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top">Bubbles Game Config</TextBlock>
-                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
-                    <Label FontSize="20" Height="35" HorizontalAlignment="Center" FontWeight="Medium">Username</Label>
-                    <TextBox FontSize="20" Height="35" HorizontalAlignment="Center"  Name="txbUsername" VerticalAlignment="Top" Width="200" Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
-                    <Label FontSize="20" Height="35" FontWeight="Medium" HorizontalAlignment="Center">Fall speed</Label>
-                    <TextBlock FontSize="20" Height="35" x:Name="txbFallSpeed"  VerticalAlignment="Top" Width="150" Text="{Binding BubblesFallSpeed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
-                    <Slider Minimum="1" BorderThickness="20,10" Width="200" SmallChange="0.5" Maximum="5">
-                        <Slider.Value>
-                            <Binding Mode="TwoWay" TargetNullValue="1" Path="BubblesFallSpeed" UpdateSourceTrigger="PropertyChanged"/>
-                        </Slider.Value>
-                    </Slider>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
-                    <Label FontSize="20" Height="35" FontWeight="Medium" HorizontalAlignment="Center">Bubbles count</Label>
-                    <TextBlock FontSize="20" Height="35" x:Name="txbBubblesCount" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Text="{Binding BubblesCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
-                    <Slider Minimum="10" BorderThickness="20,10" Width="200" Maximum="100" HorizontalAlignment="Center">
-                        <Slider.Value>
-                            <Binding Mode="TwoWay" TargetNullValue="1" Path="BubblesCount" UpdateSourceTrigger="PropertyChanged"/>
-                        </Slider.Value>
-                    </Slider>
-                </StackPanel>
-                <StackPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center">
-                    <Label FontSize="20" Height="35" FontWeight="Medium" HorizontalAlignment="Center">Bubbles size</Label>
-                    <TextBlock FontSize="20" Height="35" x:Name="txbBubblesSize" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Text="{Binding BubblesSize,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
-                    <Slider Minimum="30" BorderThickness="20,10" Width="200" Maximum="90" HorizontalAlignment="Center">
-                        <Slider.Value>
-                            <Binding Mode="TwoWay" TargetNullValue="1" Path="BubblesSize" UpdateSourceTrigger="PropertyChanged"/>
-                        </Slider.Value>
-                    </Slider>
-                </StackPanel>
-                <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
-                    <Label FontSize="20" Height="35" FontWeight="Medium" HorizontalAlignment="Center">Bubbles appearance frequency</Label>
-                    <TextBlock FontSize="20" Height="35" x:Name="txbBubblesApperanceFrequency" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" Text="{Binding BubblesApperanceFrequency,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="20,0,0,0" TextAlignment="Center"/>
-                    <Slider Minimum="1" BorderThickness="20,10" Width="200" HorizontalAlignment="Center" Maximum="5" >
-                        <Slider.Value>
-                            <Binding Mode="TwoWay" TargetNullValue="1" Path="BubblesApperanceFrequency" UpdateSourceTrigger="PropertyChanged"/>
-                        </Slider.Value>
-                    </Slider>
-                </StackPanel>
-                <Button Grid.Row="1" Grid.Column="1" Click="submitBubblesConfig_Click"  FontSize="25" x:Name="submitBubblesConfig" Width="200" Margin="0,5,5,5"  VerticalAlignment="Center" HorizontalAlignment="Center" Content="Uruchom Grę"/>
+                <k:KinectCircleButton Grid.Column="0" Width="auto" Name="kcbLevel1" Label="Poziom 1" Click="kcbLevel1_Click"/>
+                <k:KinectCircleButton Grid.Column="1" Width="auto" Name="kcbLevel2" Label="Poziom 2" Click="kcbLevel2_Click"/>
+                <k:KinectCircleButton Grid.Column="2" Width="auto" Name="kcbLevel3" Label="Poziom 3" Click="kcbLevel3_Click"/>
+                <k:KinectCircleButton Grid.Column="3" Width="auto" Name="kcbLevel4" Label="Poziom 4"/>
             </Grid>
-            <Button Click="btnBackToMenu_Click"  FontSize="25" x:Name="btnBackToMenu" Width="200" Margin="0,5,5,5"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Wróć do menu"/>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <k:KinectTileButton Name="ktbBackToMenu" Grid.Row="2" Height="auto" MaxHeight="75" Width="250" Label="Wróć do menu" Click="ktbBackToMenu_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
