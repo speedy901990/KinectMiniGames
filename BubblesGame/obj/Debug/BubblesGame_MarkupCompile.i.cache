@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Kinect\KinectMiniGames\BubblesGame\App.xaml
-2-114757256
+31297376337
 
-16-617866
+171384749148
 18-699211086
-GameWindow.xaml;MainWindow.xaml;
+GameOverPopup.xaml;GameWindow.xaml;MainWindow.xaml;
 
-True
+False
 

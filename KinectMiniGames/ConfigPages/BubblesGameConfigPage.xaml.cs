@@ -41,6 +41,7 @@ namespace KinectMiniGames
             Config.BubblesApperanceFrequency = 1;
             Config.BubblesCount = 20;
             Config.BubblesSize = 90;
+            Config.Level = 1;
             this.RunGame();
         }
 
@@ -53,6 +54,7 @@ namespace KinectMiniGames
             Config.BubblesApperanceFrequency = 2;
             Config.BubblesCount = 40;
             Config.BubblesSize = 70;
+            Config.Level = 2;
             this.RunGame();
         }
 
@@ -65,6 +67,7 @@ namespace KinectMiniGames
             Config.BubblesApperanceFrequency = 3;
             Config.BubblesCount = 60;
             Config.BubblesSize = 50;
+            Config.Level = 3;
             this.RunGame();
         }
 
@@ -77,6 +80,7 @@ namespace KinectMiniGames
             Config.BubblesApperanceFrequency = 5;
             Config.BubblesCount = 60;
             Config.BubblesSize = 40;
+            Config.Level = 4;
             this.RunGame();
         }
 
