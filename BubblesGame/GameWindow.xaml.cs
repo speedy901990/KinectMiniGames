@@ -554,7 +554,7 @@ namespace BubblesGame
                 Time = (int)time.TotalMilliseconds,
                 Level = this.config.Level
             };
-            BubblesGameManager manager = new BubblesGameManager(this.config.Username);
+            BubblesGameManager manager = new BubblesGameManager(this.config.Player);
             manager.SaveGameResult(gameParams);
 
             FallingThings.BubblesFallen = 0;

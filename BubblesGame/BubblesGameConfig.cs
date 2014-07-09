@@ -8,6 +8,7 @@ namespace BubblesGame
     {
         #region Private State
         private KinectSensorChooser kinectSensor;
+        private DatabaseManagement.Player player;
         private string username = "Gracz";
         private string userSurname = "Testowy";
         private int bubbleSize = 40;
@@ -32,6 +33,12 @@ namespace BubblesGame
         {
             get { return userSurname; }
             set { userSurname = value; }
+        }
+
+        public DatabaseManagement.Player Player
+        {
+            get { return player; }
+            set { player = value; }
         }
 
         public int BubblesFallSpeed
