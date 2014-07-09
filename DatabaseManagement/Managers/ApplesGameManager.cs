@@ -25,6 +25,12 @@ namespace DatabaseManagement
             this.GetPlayer(playerName);
         }
 
+        public ApplesGameManager(Player player)
+        {
+            this.GetGame();
+            this.GetPlayer(player);
+        }
+
         public void SaveGameResult(ApplesGameParams apg)
         {
             using (var context = new GameModelContext())
@@ -112,6 +118,11 @@ namespace DatabaseManagement
                     .Where(b => b.name == playerName).FirstOrDefault();
                 this.player = user as Player;
             }
+        }
+
+        private void GetPlayer(Player player)
+        {
+            this.player = player;
         }
     }
 }

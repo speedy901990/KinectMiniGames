@@ -5,8 +5,9 @@ using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using System;
 using System.Windows;
+using System.Threading;
 
-namespace KinectMiniGames
+namespace KinectMiniGames.ConfigPages
 {
     public partial class ApplesGameConfigPage : UserControl
     {
@@ -27,6 +28,17 @@ namespace KinectMiniGames
             parent.Children.Remove(this);
         }
 
+        private void ShowGameWindow()
+        {
+            if (MainWindow.SelectedPlayer != null)
+            {
+                Config.Player = MainWindow.SelectedPlayer;
+                Config.PassedKinectSensorChooser = this.kinectSensor;
+                ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
+                window.Show();
+            }
+        }
+
         private void kcbLevel1_Click(object sender, RoutedEventArgs e)
         {
             if (Application.Current.MainWindow.Width < 1440)
@@ -38,9 +50,7 @@ namespace KinectMiniGames
             Config.ColorCount = 3;
             Config.BasketCount = 3;
 
-            Config.PassedKinectSensorChooser = this.kinectSensor;
-            ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
-            window.Show();
+            this.ShowGameWindow();
         }
 
         private void kcbLevel2_Click(object sender, RoutedEventArgs e)
@@ -54,9 +64,7 @@ namespace KinectMiniGames
             Config.ColorCount = 4;
             Config.BasketCount = 4;
 
-            Config.PassedKinectSensorChooser = this.kinectSensor;
-            ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
-            window.Show();
+            this.ShowGameWindow();
         }
 
         private void kcbLevel3_Click(object sender, RoutedEventArgs e)
@@ -70,15 +78,27 @@ namespace KinectMiniGames
             Config.ColorCount = 5;
             Config.BasketCount = 6;
 
-            Config.PassedKinectSensorChooser = this.kinectSensor;
-            ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
-            window.Show();
+            this.ShowGameWindow();
         }
 
         private void ktbBackToMenu_Click(object sender, RoutedEventArgs e)
         {
             var parent = (Panel)this.Parent;
             parent.Children.Remove(this);
+        }
+
+        private void btnSelectPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            var playerSelection = new PlayerSelection();
+            rootGrid.Children.Add(playerSelection);
+        }
+
+        private void UserControl_LayoutUpdated_1(object sender, EventArgs e)
+        {
+            if (this.IsInitialized && MainWindow.SelectedPlayer != null)
+            {
+                lbPlayer.Content = MainWindow.SelectedPlayer.name + " " + MainWindow.SelectedPlayer.surname;
+            }
         }
     }
 }

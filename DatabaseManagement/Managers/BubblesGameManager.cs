@@ -25,6 +25,12 @@ namespace DatabaseManagement
             this.GetPlayer(playerName);
         }
 
+        public BubblesGameManager(Player player)
+        {
+            this.GetGame();
+            this.player = player;
+        }
+
         public void SaveGameResult(BubblesGameParams bgp)
         {
             using (var context = new GameModelContext())

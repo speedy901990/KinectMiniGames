@@ -8,7 +8,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using System.Resources;
+using System.Threading;
 using KinectMiniGames.ConfigPages;
+using DatabaseManagement;
+using DatabaseManagement.Managers;
+using System.Collections.Generic;
 
 namespace KinectMiniGames
 {
@@ -32,12 +36,32 @@ namespace KinectMiniGames
             get { return (bool)GetValue(PageRightEnabledProperty); }
             set { this.SetValue(PageRightEnabledProperty, value); }
         }
+
+        public static Thread PlayersThread
+        {
+            get { return playersThread; }
+        }
+
+        public static List<Player> PlayerList
+        {
+            get { return MainWindow.playerList; }
+            set { MainWindow.playerList = value; }
+        }
+
+        public static Player SelectedPlayer
+        {
+            get { return MainWindow.selectedPlayer; }
+            set { MainWindow.selectedPlayer = value; }
+        }
         #endregion
 
         #region Private State
         private const double ScrollErrorMargin = 0.001;
         private const int PixelScrollByAmount = 10;
         private KinectSensorChooser sensorChooser;
+        private static Thread playersThread;
+        private static List<Player> playerList;
+        private static Player selectedPlayer;
         #endregion
 
         #region Ctor + Config
@@ -47,6 +71,8 @@ namespace KinectMiniGames
             //setMenuBackground();
             setupKinectSensor();
             createMenuButtons();
+            MainWindow.playersThread = new Thread(GetPlayersFromDatabase);
+            MainWindow.playersThread.Start();
         }
 
         private void setMenuBackground()
@@ -94,6 +120,12 @@ namespace KinectMiniGames
         {
             var newButton = new KinectTileButton { Label = buttonLabel, Width = 450, Height = 450 };
             return newButton;
+        }
+
+        private void GetPlayersFromDatabase()
+        {
+            PlayersManager manager = new PlayersManager();
+            MainWindow.playerList = manager.PlayerList;
         }
         #endregion
 

@@ -78,6 +78,9 @@ namespace BubblesGame
         private BubblesGameConfig config;
         private DateTime startTime;
         private DateTime endTime;
+        private GameOverPopup popup = new GameOverPopup();
+        private bool popupShown = false;
+        public static int bubblesPopped;
         #endregion Private State
 
         #region ctor + Window Events
@@ -506,9 +509,22 @@ namespace BubblesGame
             _myFallingThings.DrawFrame(playfield.Children);
             if (_myFallingThings._things.Count == 0 && FallingThings.BubblesFallen > 0)
             {
+                //this._runningGameThread = false;
+                GameWindow.bubblesPopped = FallingThings.BubblesPopped;
                 this.endTime = DateTime.Now;
-                var result = MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
-                if (result == MessageBoxResult.OK)
+                if (!popupShown)
+                {
+                    popup.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                    popup.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+                    grid.Children.Add(popup);
+                    popupShown = true;
+                }
+                //var result = MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
+                //if (result == MessageBoxResult.OK)
+                //{
+                //    this.exitGame();
+                //}
+                if (popup.Ok)
                 {
                     this.exitGame();
                 }
@@ -529,17 +545,16 @@ namespace BubblesGame
                 this.exitGame();
             }
         }
-        private void exitGame()
+        public void exitGame()
         {
             TimeSpan time = endTime - startTime;
-            //FallingThings.BubblesPopped
             BubblesGameParams gameParams = new BubblesGameParams
             {
-                Success = FallingThings.BubblesPopped,
+                Success = GameWindow.bubblesPopped,
                 Time = (int)time.TotalMilliseconds,
-                Level = 1
+                Level = this.config.Level
             };
-            BubblesGameManager manager = new BubblesGameManager(this.config.Username);
+            BubblesGameManager manager = new BubblesGameManager(this.config.Player);
             manager.SaveGameResult(gameParams);
 
             FallingThings.BubblesFallen = 0;
@@ -556,7 +571,7 @@ namespace BubblesGame
             }
             catch (NullReferenceException)
             {
-                //throw;
+                
             }
         }
         #endregion
