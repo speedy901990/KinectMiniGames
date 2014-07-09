@@ -92,6 +92,7 @@
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Managers\BubblesGameManager.cs" />
+    <Compile Include="Managers\PlayersManager.cs" />
     <Compile Include="Params\ApplesGameParams.cs" />
     <Compile Include="Params\BubblesGameParams.cs" />
     <Compile Include="Player.cs">

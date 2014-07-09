@@ -5,8 +5,9 @@ using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using System;
 using System.Windows;
+using System.Threading;
 
-namespace KinectMiniGames
+namespace KinectMiniGames.ConfigPages
 {
     public partial class ApplesGameConfigPage : UserControl
     {
@@ -29,9 +30,13 @@ namespace KinectMiniGames
 
         private void ShowGameWindow()
         {
-            Config.PassedKinectSensorChooser = this.kinectSensor;
-            ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
-            window.Show();
+            if (MainWindow.SelectedPlayer != null)
+            {
+                Config.Player = MainWindow.SelectedPlayer;
+                Config.PassedKinectSensorChooser = this.kinectSensor;
+                ApplesGame.MainWindow window = new ApplesGame.MainWindow(Config);
+                window.Show();
+            }
         }
 
         private void kcbLevel1_Click(object sender, RoutedEventArgs e)
@@ -80,6 +85,20 @@ namespace KinectMiniGames
         {
             var parent = (Panel)this.Parent;
             parent.Children.Remove(this);
+        }
+
+        private void btnSelectPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            var playerSelection = new PlayerSelection();
+            rootGrid.Children.Add(playerSelection);
+        }
+
+        private void UserControl_LayoutUpdated_1(object sender, EventArgs e)
+        {
+            if (this.IsInitialized && MainWindow.SelectedPlayer != null)
+            {
+                lbPlayer.Content = MainWindow.SelectedPlayer.name + " " + MainWindow.SelectedPlayer.surname;
+            }
         }
     }
 }

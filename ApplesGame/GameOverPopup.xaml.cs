@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,6 +22,8 @@ namespace ApplesGame
     public partial class GameOverPopup : UserControl
     {
         private MainWindow mw;
+        private Timer timer;
+
         public GameOverPopup()
         {
             InitializeComponent();
@@ -32,11 +35,20 @@ namespace ApplesGame
             InitializeComponent();
         }
 
-        private void ktbSubmit_Click(object sender, RoutedEventArgs e)
+        private void UserControl_Loaded_1(object sender, RoutedEventArgs e)
         {
-            this.mw.CloseGame();
-            var parent = (Panel)this.Parent;
-            parent.Children.Remove(this);
+            this.timer = new Timer();
+            timer.Interval = 3000;
+            timer.Elapsed += timer_Elapsed;
+            timer.Start();
+        }
+
+        void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                this.mw.CloseGame();
+            }), null);
         }
     }
 }

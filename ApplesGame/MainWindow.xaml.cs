@@ -505,7 +505,7 @@ namespace ApplesGame
         {
             DateTime endTime = DateTime.Now;
             TimeSpan time = endTime - startTime;
-            ApplesGameManager manager = new ApplesGameManager(this.config.Username);
+            ApplesGameManager manager = new ApplesGameManager(this.config.Player);
             ApplesGameParams gameParams = new ApplesGameParams
             {
                 Apples = this.config.ApplesOnTreeCount * this.config.TreesCount,

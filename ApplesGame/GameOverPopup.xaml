@@ -6,17 +6,13 @@
              xmlns:k="http://schemas.microsoft.com/kinect/2013" 
              mc:Ignorable="d" 
              Width="300" Height="300"
-             BorderBrush="#FF4E3876" BorderThickness="5">
+             BorderBrush="#FF4E3876" BorderThickness="5" Loaded="UserControl_Loaded_1">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="Koniec Gry!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
-        <Label Grid.Row="1" Content="Wszystkie jabłka zostały wrzucone!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-
-        <k:KinectTileButton x:Name="ktbSubmit" Content="OK" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top" Width="Auto" Height="Auto" Background="#FF967EC1" Foreground="#FFFFFFE1" FontWeight="Normal" FontSize="72" FontFamily="Segoe UI" Click="ktbSubmit_Click"/>
-
+        <Label Grid.Row="0" Content="Koniec Gry!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"/>
+        <TextBlock x:Name="tblResult" Grid.Row="1" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" MaxWidth="300" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" TextAlignment="Center">Wszystkie jabłka zostały wrzucone!</TextBlock>
     </Grid>
 </UserControl>

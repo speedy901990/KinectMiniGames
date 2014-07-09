@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="KinectMiniGames.ApplesGameConfigPage"
+﻿<UserControl x:Class="KinectMiniGames.ConfigPages.ApplesGameConfigPage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,7 +10,7 @@
              d:DesignWidth="924"
              Background="Transparent"
              FontFamily="Segoe UI"
-             FontSize="30">
+             FontSize="30" LayoutUpdated="UserControl_LayoutUpdated_1">
     <UserControl.Resources>
         <Storyboard x:Key="OnLoadedStoryboard" Completed="OnLoadedStoryboardCompleted">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="grid">
@@ -30,35 +30,39 @@
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="Apples Game Config" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" />
-        <Grid Grid.Row="1">
+    <Grid x:Name="rootGrid">
+        <Grid x:Name="mainGrid" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <Label Content="Username:" FontSize="20" MinWidth="200"/>
-                <TextBox Name="tbUsername" FontSize="20" BorderBrush="Black" MinWidth="200" Text="Gracz"></TextBox>
-            </StackPanel>
+            <Label Grid.Row="0" Content="Apples Game Config" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36" FontWeight="Bold" />
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <k:KinectCircleButton Grid.Column="0" Width="auto" Name="kcbLevel1" Label="Poziom 1" Click="kcbLevel1_Click"/>
-                <k:KinectCircleButton Grid.Column="1" Width="auto" Name="kcbLevel2" Label="Poziom 2" Click="kcbLevel2_Click"/>
-                <k:KinectCircleButton Grid.Column="2" Width="auto" Name="kcbLevel3" Label="Poziom 3" Click="kcbLevel3_Click"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <WrapPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <Label Content="Gracz:" FontSize="36" MinWidth="200" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <Label x:Name="lbPlayer" Content="" FontSize="36" MinWidth="200" VerticalContentAlignment="Center"/>
+                    <!--<Button x:Name="btnSelectPlayer" Content="Wybierz gracza" Click="btnSelectPlayer_Click"></Button>-->
+                    <k:KinectTileButton Name="ktbSelectPlayer" Height="auto" MaxHeight="250" Width="250" Content="Wybierz gracza" Foreground="White" Click="btnSelectPlayer_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </WrapPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <k:KinectCircleButton Grid.Column="0" Width="auto" Name="kcbLevel1" Label="Poziom 1" Click="kcbLevel1_Click"/>
+                    <k:KinectCircleButton Grid.Column="1" Width="auto" Name="kcbLevel2" Label="Poziom 2" Click="kcbLevel2_Click"/>
+                    <k:KinectCircleButton Grid.Column="2" Width="auto" Name="kcbLevel3" Label="Poziom 3" Click="kcbLevel3_Click"/>
+                </Grid>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <k:KinectTileButton Name="ktbBackToMenu" Grid.Row="2" Height="auto" MaxHeight="150" Width="250" Content="Wróć do menu" Foreground="White" Click="ktbBackToMenu_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
             </Grid>
-            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <k:KinectTileButton Name="ktbBackToMenu" Grid.Row="2" Height="auto" MaxHeight="75" Width="250" Label="Wróć do menu" Click="ktbBackToMenu_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
