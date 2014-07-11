@@ -7,6 +7,22 @@
              d:DesignHeight="300" d:DesignWidth="300"
              HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="UserControl_Loaded_1">
     <Grid>
-        <Label x:Name="lbContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="200"></Label>
+        <Label x:Name="lbContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="200">
+            <Label.Style>
+                <Style TargetType="Label">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Label.Loaded">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard TargetProperty="Opacity">
+                                        <DoubleAnimation  Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
     </Grid>
 </UserControl>
