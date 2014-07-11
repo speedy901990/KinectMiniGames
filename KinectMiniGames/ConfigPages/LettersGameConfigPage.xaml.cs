@@ -50,7 +50,7 @@ namespace KinectMiniGames.ConfigPages
             parent.Children.Remove(this);
         }
 
-        private void ktbRunGame_Click(object sender, RoutedEventArgs e)
+        private void kcbLevel1_Click(object sender, RoutedEventArgs e)
         {
             this.sensorChooser.Stop();
             this.config.PlayerName = this.tbUsername.Text;
@@ -58,6 +58,16 @@ namespace KinectMiniGames.ConfigPages
             this.config.CurrentLevel = 1;
             LettersGame.MainWindow window = new LettersGame.MainWindow(Config);
             window.Show();
+        }
+
+        private void kcbLevel2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void kcbLevel3_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

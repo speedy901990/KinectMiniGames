@@ -109,6 +109,9 @@
     <Compile Include="ConfigPages\LettersGameConfigPage.xaml.cs">
       <DependentUpon>LettersGameConfigPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfigPages\PlayerSelection.xaml.cs">
+      <DependentUpon>PlayerSelection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KinectHoverButton.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
@@ -122,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ConfigPages\LettersGameConfigPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfigPages\PlayerSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -2,12 +2,14 @@
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using System.ComponentModel;
+using DatabaseManagement;
 
 namespace ApplesGame
 {
     public class ApplesGameConfig : INotifyPropertyChanged
     {
         #region Private State
+        private Player player;
         private string username = "Gracz";
         private int treesCount;
         private int applesOnTreeCount;
@@ -17,6 +19,12 @@ namespace ApplesGame
         #endregion
 
         #region Public State
+        public Player Player
+        {
+            get { return player; }
+            set { player = value; }
+        }
+
         public int BasketCount
         {
             get { return this.basketCount; }

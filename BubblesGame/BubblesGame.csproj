@@ -80,7 +80,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BubblesGameConfig.cs" />
+    <Compile Include="GameOverPopup.xaml.cs">
+      <DependentUpon>GameOverPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities.cs" />
+    <Page Include="GameOverPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
