@@ -70,8 +70,14 @@
     <Compile Include="View\FirstLevelView.xaml.cs">
       <DependentUpon>FirstLevelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\GameOverPopup.xaml.cs">
+      <DependentUpon>GameOverPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SecondLevelView.xaml.cs">
       <DependentUpon>SecondLevelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SmallPopup.xaml.cs">
+      <DependentUpon>SmallPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ThirdLevelView.xaml.cs">
       <DependentUpon>ThirdLevelView.xaml</DependentUpon>
@@ -93,7 +99,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\GameOverPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SecondLevelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SmallPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

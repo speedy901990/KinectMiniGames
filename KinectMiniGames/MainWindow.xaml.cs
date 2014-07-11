@@ -105,7 +105,7 @@ namespace KinectMiniGames
             this.wrapPanel.Children.Clear();
             this.wrapPanel.Children.Add(this.createSingleButton("Apples Game"));
             this.wrapPanel.Children.Add(this.createSingleButton("Bubbles Game"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Letters Game"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Letters Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Painting Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Dancing Steps"));

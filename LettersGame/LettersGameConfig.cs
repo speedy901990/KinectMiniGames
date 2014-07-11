@@ -13,7 +13,8 @@ namespace LettersGame
     {
         public LettersGameConfig()
         {
-            this.firstLevelLettersCount = 8;
+            this.FirstLevelLettersCount = 8;
+            this.LettersFontSize = 100;
         }
 
         private string playerName;
@@ -62,6 +63,14 @@ namespace LettersGame
         {
             get { return firstLevelLettersCount; }
             set { firstLevelLettersCount = value; }
+        }
+
+        private int lettersFontSize;
+
+        public int LettersFontSize
+        {
+            get { return lettersFontSize; }
+            set { lettersFontSize = value; }
         }
     }
 }

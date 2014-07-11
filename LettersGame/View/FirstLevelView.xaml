@@ -5,14 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:k="http://schemas.microsoft.com/kinect/2013"
              mc:Ignorable="d" 
-             Loaded="UserControl_Loaded_1" 
              Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" 
-             Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
+             Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
+             Background="{DynamicResource PurpleBrush}">
     <Grid>
         <k:KinectRegion>
-            <Canvas Name="firstLevelMainCanvas" Background="{DynamicResource PurpleBrush}">
-                <k:KinectTileButton />
-            </Canvas>
+            <Grid x:Name="buttonsGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Canvas x:Name="mainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0" MouseMove="letter_MouseMove" MouseUp="letter_MouseUp"></Canvas>
+                <WrapPanel x:Name="popupPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
+            </Grid>
         </k:KinectRegion>
     </Grid>
 </UserControl>

@@ -14,7 +14,7 @@ namespace KinectMiniGames
     using Microsoft.Kinect.Toolkit.Controls;
 
     /// <summary>
-    /// A button that continually triggers a click when the mouse or hand pointer hovers over it
+    /// A bigLetter that continually triggers a click when the mouse or hand pointer hovers over it
     /// </summary>
     internal class KinectHoverButton : KinectButtonBase
     {
@@ -50,7 +50,7 @@ namespace KinectMiniGames
         }
 
         /// <summary>
-        /// Boolean value that returns true if a mouse or hand pointer is over this button
+        /// Boolean value that returns true if a mouse or hand pointer is over this bigLetter
         /// </summary>
         public bool IsHandPointerOver
         {

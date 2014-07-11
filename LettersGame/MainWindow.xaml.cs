@@ -33,24 +33,26 @@ namespace LettersGame
         public MainWindow()
         {
             InitializeComponent();
-            this.config = new LettersGameConfig();
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += sensorChooser_KinectChanged;
             this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
-            this.config.PassedSensorChooser = this.sensorChooser;
-            this.config.CurrentLevel = 1;
-            this.config.WindowHeight = this.Height;
-            this.config.WindowWidth = this.Width;
+            this.config = new LettersGameConfig
+            {
+                PassedSensorChooser = this.sensorChooser,
+                CurrentLevel = 1,
+                WindowHeight = this.Height,
+                WindowWidth = this.Width
+            };
             this.sensorChooser.Start();
         }
 
         public MainWindow(LettersGameConfig config)
         {
             InitializeComponent();
-            this.config = config;
             this.sensorChooser = new KinectSensorChooser();
             this.sensorChooser.KinectChanged += sensorChooser_KinectChanged;
             this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
+            this.config = config;
             this.config.PassedSensorChooser = this.sensorChooser;
             this.config.WindowHeight = this.Height;
             this.config.WindowWidth = this.Width;
@@ -158,8 +160,10 @@ namespace LettersGame
                 {
                     case 1:
                         this.clearMainGrid();
-                        Frame frame = new Frame { Content = new FirstLevelView(this.config) };
-                        this.mainGrid.Children.Add(frame);
+                        var content = new FirstLevelView(this.config);
+                        //content.Tag = this;
+                        //Frame frame = new Frame { Content = content };
+                        this.mainGrid.Children.Add(content);
                         break;
                     case 2:
                         this.clearMainGrid();
