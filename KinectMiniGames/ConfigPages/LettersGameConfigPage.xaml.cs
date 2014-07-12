@@ -44,20 +44,28 @@ namespace KinectMiniGames.ConfigPages
             this.DataContext = Config;
         }
 
+        private void ShowGameWindow()
+        {
+            if (MainWindow.SelectedPlayer != null)
+            {
+                Config.Player = MainWindow.SelectedPlayer;
+                LettersGame.MainWindow window = new LettersGame.MainWindow(Config);
+                window.Show();
+            }
+        }
+
         private void ktbBackToMenu_Click(object sender, RoutedEventArgs e)
         {
             var parent = (Panel)this.Parent;
             parent.Children.Remove(this);
         }
-
         private void kcbLevel1_Click(object sender, RoutedEventArgs e)
         {
             this.sensorChooser.Stop();
-            this.config.PlayerName = this.tbUsername.Text;
-            //troche hardkodu
-            this.config.CurrentLevel = 1;
-            LettersGame.MainWindow window = new LettersGame.MainWindow(Config);
-            window.Show();
+            Config.FirstLevelLettersCount = 8;
+            Config.CurrentLevel = 1;
+
+            this.ShowGameWindow();
         }
 
         private void kcbLevel2_Click(object sender, RoutedEventArgs e)
@@ -68,6 +76,20 @@ namespace KinectMiniGames.ConfigPages
         private void kcbLevel3_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnSelectPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            var playerSelection = new PlayerSelection();
+            rootGrid.Children.Add(playerSelection);
+        }
+
+        private void UserControl_LayoutUpdated_1(object sender, EventArgs e)
+        {
+            if (this.IsInitialized && MainWindow.SelectedPlayer != null)
+            {
+                lbPlayer.Content = MainWindow.SelectedPlayer.name + " " + MainWindow.SelectedPlayer.surname;
+            }
         }
     }
 }

@@ -6,12 +6,15 @@ using System.Resources;
 using System.Globalization;
 using System.Collections;
 using System.Threading;
+using DatabaseManagement.Managers;
+using DatabaseManagement.Params;
 
 namespace LettersGame
 {
     class Game
     {
         #region private state
+        private LettersGameConfig config;
         private List<Letter> smallLetters;
         private List<Letter> bigLetters;
         private int correctTrials;
@@ -24,8 +27,10 @@ namespace LettersGame
 
 
         #region constructor
-        public Game(int numOfLetters = 8)
+        public Game(LettersGameConfig config)
         {
+            this.config = config;
+            int numOfLetters = config.LettersCount;
             using (ResourceSet resourceSet = Resources.Letters.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
             {
                 List<Letter> allLetters = new List<Letter>();
@@ -48,6 +53,7 @@ namespace LettersGame
             this.CorrectTrials = 0;
             this.Fails = 0;
             this.LettersLeft = numOfLetters;
+            this.startTime = DateTime.Now;
         }
         #endregion
 
@@ -108,7 +114,16 @@ namespace LettersGame
 
         private void SaveToDatabase()
         {
-            //conncection with db
+            LettersGameManager manager = new LettersGameManager(this.config.Player);
+            LettersGameParams gameParams = new LettersGameParams
+            {
+                Level = this.config.CurrentLevel,
+                LettersCount = this.config.LettersCount,
+                CorrectTrials = this.correctTrials,
+                Failures = this.Fails,
+                Time = (int)this.Time.TotalMilliseconds
+            };
+            manager.SaveGameResult(gameParams);
         }
     }
 }

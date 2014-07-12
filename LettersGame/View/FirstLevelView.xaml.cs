@@ -35,7 +35,8 @@ namespace LettersGame.View
         {
             InitializeComponent();
             this.config = config;
-            this.game = new Game(this.config.FirstLevelLettersCount);
+            this.config.LettersCount = this.config.FirstLevelLettersCount;
+            this.game = new Game(this.config);
             this.letterHeight = (int)(this.config.WindowHeight / 5);
             this.letterWidth = (int)(this.config.WindowWidth / this.config.FirstLevelLettersCount);
             this.SetGameField();
@@ -123,7 +124,6 @@ namespace LettersGame.View
                     this.linkingLine = null;
                     letterButton.IsEnabled = false;
                     this.selectedLetterButton.IsEnabled = false;
-                    //MessageBox.Show("DOBRZE!");
                     this.NotifySuccess();
                 }
                 else
@@ -132,7 +132,6 @@ namespace LettersGame.View
                     mainCanvas.Children.Remove(this.linkingLine);
                     this.linkingLine = null;
                     this.drawingEnabled = false;
-                    //MessageBox.Show("ZLE");
                     this.NotifyFail();
                 }
             }
@@ -195,6 +194,7 @@ namespace LettersGame.View
 
         private void EndGame()
         {
+            this.game.CalculateTime(DateTime.Now);
             this.game.SaveResults();
             var popup = new GameOverPopup
             {

@@ -22,6 +22,7 @@ namespace DatabaseManagement
         public long id { get; set; }
         public long id_game { get; set; }
         public string name { get; set; }
+        public string value { get; set; }
     
         public virtual Game Game { get; set; }
         public virtual ICollection<HistoryParam> HistoryParams { get; set; }

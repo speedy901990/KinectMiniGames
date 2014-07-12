@@ -1,4 +1,5 @@
-﻿using Microsoft.Kinect.Toolkit;
+﻿using DatabaseManagement;
+using Microsoft.Kinect.Toolkit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,15 @@ namespace LettersGame
             this.FirstLevelLettersCount = 8;
             this.LettersFontSize = 100;
         }
+
+        private Player player;
+
+        public Player Player
+        {
+            get { return player; }
+            set { player = value; }
+        }
+
 
         private string playerName;
 
@@ -72,5 +82,14 @@ namespace LettersGame
             get { return lettersFontSize; }
             set { lettersFontSize = value; }
         }
+
+        private int lettersCount;
+
+        public int LettersCount
+        {
+            get { return lettersCount; }
+            set { lettersCount = value; }
+        }
+
     }
 }
