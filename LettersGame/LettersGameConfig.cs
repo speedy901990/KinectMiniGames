@@ -15,6 +15,7 @@ namespace LettersGame
         public LettersGameConfig()
         {
             this.FirstLevelLettersCount = 8;
+            this.LettersCount = 4;
             this.LettersFontSize = 100;
         }
 

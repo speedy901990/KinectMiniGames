@@ -31,23 +31,50 @@ namespace LettersGame
         {
             this.config = config;
             int numOfLetters = config.LettersCount;
-            using (ResourceSet resourceSet = Resources.Letters.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
+            if (config.CurrentLevel == 1)
             {
-                List<Letter> allLetters = new List<Letter>();
-                foreach (DictionaryEntry item in resourceSet)
+                using (ResourceSet resourceSet = Resources.Letters.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
                 {
-                    allLetters.Add(new Letter((string)item.Value));
+                    List<Letter> allLetters = new List<Letter>();
+                    foreach (DictionaryEntry item in resourceSet)
+                    {
+                        allLetters.Add(new Letter((string)item.Value));
+                    }
+                    Random rand = new Random();
+                    this.smallLetters = new List<Letter>();
+                    this.bigLetters = new List<Letter>();
+                    for (int i = 0; i < numOfLetters; i++)
+                    {
+                        int index = rand.Next(allLetters.Count);
+                        var letter = allLetters[index];
+                        this.SmallLetters.Add(letter);
+                        this.BigLetters.Add(letter);
+                        allLetters.RemoveAt(index);
+                    }
+                    Resources.Letters.ResourceManager.ReleaseAllResources();
                 }
-                Random rand = new Random();
-                this.smallLetters = new List<Letter>();
-                this.bigLetters = new List<Letter>();
-                for (int i = 0; i < numOfLetters; i++)
+            }
+            if (config.CurrentLevel == 2)
+            {
+                using (ResourceSet resourceSet = Resources.LettersAndNames.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
                 {
-                    int index = rand.Next(allLetters.Count);
-                    var letter = allLetters[index];
-                    this.SmallLetters.Add(letter);
-                    this.BigLetters.Add(letter);
-                    allLetters.RemoveAt(index);
+                    List<Letter> allLetters = new List<Letter>();
+                    foreach (DictionaryEntry item in resourceSet)
+                    {
+                        allLetters.Add(new Letter((string)item.Key, (string)item.Value));
+                    }
+                    Random rand = new Random();
+                    this.smallLetters = new List<Letter>();
+                    this.bigLetters = new List<Letter>();
+                    for (int i = 0; i < numOfLetters; i++)
+                    {
+                        int index = rand.Next(allLetters.Count);
+                        var letter = allLetters[index];
+                        this.SmallLetters.Add(letter);
+                        this.BigLetters.Add(letter);
+                        allLetters.RemoveAt(index);
+                    }
+                    Resources.LettersAndNames.ResourceManager.ReleaseAllResources();
                 }
             }
             this.CorrectTrials = 0;

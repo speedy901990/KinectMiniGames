@@ -161,12 +161,12 @@ namespace LettersGame
                     case 1:
                         this.clearMainGrid();
                         var content = new FirstLevelView(this.config);
-                        //content.Tag = this;
-                        //Frame frame = new Frame { Content = content };
                         this.mainGrid.Children.Add(content);
                         break;
                     case 2:
                         this.clearMainGrid();
+                        this.clearMainGrid();
+                        this.mainGrid.Children.Add(new SecondLevelView(this.config));
                         break;
                     case 3:
                         this.clearMainGrid();
