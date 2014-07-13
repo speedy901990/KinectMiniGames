@@ -54,7 +54,7 @@ namespace LettersGame
                     Resources.Letters.ResourceManager.ReleaseAllResources();
                 }
             }
-            if (config.CurrentLevel == 2)
+            if (config.CurrentLevel == 3)
             {
                 using (ResourceSet resourceSet = Resources.LettersAndNames.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
                 {

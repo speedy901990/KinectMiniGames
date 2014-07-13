@@ -165,11 +165,11 @@ namespace LettersGame
                         break;
                     case 2:
                         this.clearMainGrid();
-                        this.clearMainGrid();
                         this.mainGrid.Children.Add(new SecondLevelView(this.config));
                         break;
                     case 3:
                         this.clearMainGrid();
+                        this.mainGrid.Children.Add(new ThirdLevelView(this.config));
                         break;
                     default:
                         break;

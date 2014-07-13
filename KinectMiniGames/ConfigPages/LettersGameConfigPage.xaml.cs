@@ -79,7 +79,11 @@ namespace KinectMiniGames.ConfigPages
 
         private void kcbLevel3_Click(object sender, RoutedEventArgs e)
         {
+            this.sensorChooser.Stop();
+            Config.LettersCount = 4;
+            Config.CurrentLevel = 3;
 
+            this.ShowGameWindow();
         }
 
         private void btnSelectPlayer_Click(object sender, RoutedEventArgs e)
