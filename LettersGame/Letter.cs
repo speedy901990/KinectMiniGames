@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
 
 namespace LettersGame
 {
@@ -29,6 +30,14 @@ namespace LettersGame
         {
             get { return word; }
             set { word = value; }
+        }
+
+        private ImageBrush image;
+
+        public ImageBrush Image
+        {
+            get { return image; }
+            set { image = value; }
         }
 
         public Letter(string letter)

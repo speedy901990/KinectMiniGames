@@ -8,16 +8,18 @@
              Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" 
              Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
              Background="{DynamicResource PurpleBrush}">
-    <Grid>
+    <Grid x:Name="rootGrid">
         <k:KinectRegion>
-            <Grid x:Name="buttonsGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
+            <Grid x:Name="mainGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="0.9*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Canvas x:Name="mainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0" MouseMove="letter_MouseMove" MouseUp="letter_MouseUp"></Canvas>
+                <WrapPanel x:Name="lettersPanel" Grid.Row="0"></WrapPanel>
+                <Canvas x:Name="mainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0"></Canvas>
                 <WrapPanel x:Name="popupPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
+                <Grid x:Name="trolleyGrid" Grid.Row="2"></Grid>
             </Grid>
         </k:KinectRegion>
     </Grid>

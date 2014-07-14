@@ -71,7 +71,8 @@ namespace KinectMiniGames.ConfigPages
         private void kcbLevel2_Click(object sender, RoutedEventArgs e)
         {
             this.sensorChooser.Stop();
-            Config.LettersCount = 4;
+            Config.LettersCount = 16;
+            Config.TrolleysCount = 3;
             Config.CurrentLevel = 2;
 
             this.ShowGameWindow();

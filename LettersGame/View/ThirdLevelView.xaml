@@ -13,7 +13,7 @@
             <Grid x:Name="buttonsGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Canvas x:Name="mainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0" MouseMove="letter_MouseMove" MouseUp="letter_MouseUp"></Canvas>

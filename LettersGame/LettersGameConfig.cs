@@ -92,5 +92,12 @@ namespace LettersGame
             set { lettersCount = value; }
         }
 
+        private int trolleysCount;
+
+        public int TrolleysCount
+        {
+            get { return trolleysCount; }
+            set { trolleysCount = value; }
+        }
     }
 }
