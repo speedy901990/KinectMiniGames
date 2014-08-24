@@ -20,8 +20,8 @@ namespace LettersGame.View
     /// </summary>
     public partial class GameOverPopup : UserControl
     {
-        private Timer timer;
-        private Window window;
+        private Timer _timer;
+        private readonly Window _window;
 
         public GameOverPopup()
         {
@@ -31,26 +31,22 @@ namespace LettersGame.View
         public GameOverPopup(Window window)
         {
             InitializeComponent();
-            this.window = window;
+            _window = window;
         }
 
         private void UserControl_Loaded_1(object sender, RoutedEventArgs e)
         {
-            if (window != null)
+            if (_window != null)
             {
-                this.timer = new Timer();
-                timer.Interval = 3000;
-                timer.Elapsed += timer_Elapsed;
-                timer.Start();
+                _timer = new Timer {Interval = 3000};
+                _timer.Elapsed += timer_Elapsed;
+                _timer.Start();
             }
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            this.Dispatcher.Invoke(new Action(() =>
-            {
-                this.window.Close();
-            }), null);
+            Dispatcher.Invoke(new Action(() => _window.Close()), null);
         }
     }
 }

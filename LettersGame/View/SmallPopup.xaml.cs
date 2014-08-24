@@ -20,7 +20,7 @@ namespace LettersGame.View
     /// </summary>
     public partial class SmallPopup : UserControl
     {
-        private Timer timer;
+        private Timer _timer;
 
         public SmallPopup()
         {
@@ -29,44 +29,37 @@ namespace LettersGame.View
 
         public void Update()
         {
-            lbContent.Content = this.Message;
-            lbContent.Foreground = this.PopupColor;
+            LbContent.Content = Message;
+            LbContent.Foreground = PopupColor;
+            if (Size != 0)
+            {
+                LbContent.FontSize = Size;
+            }
         }
 
-        private Brush popupColor;
+        public Brush PopupColor { get; set; }
 
-        public Brush PopupColor
-        {
-            get { return popupColor; }
-            set { popupColor = value; }
-        }
+        public string Message { get; set; }
 
-        private string message;
-
-        public string Message
-        {
-            get { return message; }
-            set { message = value; }
-        }
+        public int Size { get; set; }
 
         private void UserControl_Loaded_1(object sender, RoutedEventArgs e)
         {
-            timer = new Timer();
-            timer.Interval = 1500;
-            timer.Elapsed += timer_Elapsed;
-            timer.Start();
+            _timer = new Timer {Interval = 1500};
+            _timer.Elapsed += timer_Elapsed;
+            _timer.Start();
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            this.Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(new Action(() =>
             {
-                var parent = this.Parent as Panel;
+                var parent = Parent as Panel;
                 if (parent != null)
                 {
                     parent.Children.Remove(this);
                 }
-                this.timer.Stop();
+                _timer.Stop();
             }), null);
         }
     }

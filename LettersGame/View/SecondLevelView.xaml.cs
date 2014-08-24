@@ -1,4 +1,6 @@
-﻿using Microsoft.Kinect.Toolkit.Controls;
+﻿using Microsoft.Kinect;
+using Microsoft.Kinect.Toolkit;
+using Microsoft.Kinect.Toolkit.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +23,17 @@ namespace LettersGame.View
     /// </summary>
     public partial class SecondLevelView : UserControl
     {
-        private LettersGameConfig config;
-        private Game game;
-        private int letterWidth;
-        private int letterHeight;
+        private readonly LettersGameConfig _config;
+        private readonly Game _game;
+        private readonly int _letterWidth;
+        private readonly int _letterHeight;
         private int trolleyWidth;
         private int trolleyHeight;
-        private Letter selectedLetter;
-        private KinectTileButton selectedLetterButton;
-        private Timer endGamePopupTimer;
+        private Letter _selectedLetter;
+        private KinectTileButton _selectedLetterButton;
+        private Timer _endGamePopupTimer;
+        private bool _isInGripInteraction;
+        private KinectSensorChooser _sensorChooser;
 
         public SecondLevelView()
         {
@@ -39,25 +43,63 @@ namespace LettersGame.View
         public SecondLevelView(LettersGameConfig config)
         {
             InitializeComponent();
-            this.config = config;
-            this.game = new Game(config);
+            _config = config;
+            _game = new Game(config);
             //do sprawdzenia
-            this.letterHeight = (int)(this.config.WindowHeight / 6);
-            this.letterWidth = (int)(this.config.WindowWidth / (this.config.LettersCount/2));
-            this.SetGameField();
+            _letterHeight = (int)(_config.WindowHeight / 6);
+            _letterWidth = (int)(_config.WindowWidth / (_config.LettersCount / 2));
+            _isInGripInteraction = false;
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            _sensorChooser = new KinectSensorChooser();
+            _sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
+            KinectSensorChooserUi.KinectSensorChooser = _sensorChooser;
+            _sensorChooser.Start();
+            SetGameField();
         }
 
         private void SetGameField()
         {
-            for (int i = 0; i < game.Trolleys.Count; i++)
+            KinectRegion.AddQueryInteractionStatusHandler(MyKinectRegion, OnQuery);
+            KinectRegion.AddQueryInteractionStatusHandler(MainCanvas, OnQuery);
+            KinectRegion.AddQueryInteractionStatusHandler(PopupPanel, OnQuery);
+            KinectRegion.AddHandPointerGripHandler(MainCanvas, OnHandPointerGrip);
+            KinectRegion.AddHandPointerGripReleaseHandler(MainCanvas, OnHandPointerGripRelease);
+            //KinectRegion.AddHandPointerGripReleaseHandler(MainCanvas, OnHandPointerGripRelease);
+            for (var i = 0; i < _game.SmallLetters.Count; i++)
             {
-                Random rand = new Random(Guid.NewGuid().GetHashCode());
-                var column = new ColumnDefinition
+                if (i % 2 == 0)
                 {
-                    Width = new GridLength(1, GridUnitType.Star)
+                    var column = new ColumnDefinition() { Width = new GridLength(1.0, GridUnitType.Star) };
+                    MainGrid.ColumnDefinitions.Add(column);
+                }
+                var smallLetter = new KinectTileButton
+                {
+                    Content = _game.SmallLetters[i].SmallLetter,
+                    Tag = _game.SmallLetters[i],
+                    Foreground = new SolidColorBrush(Colors.Purple),
+                    Background = new SolidColorBrush(Colors.White),
+                    Width = _letterWidth,
+                    Height = _letterHeight,
+                    FontSize = _config.LettersFontSize,
+                    FontWeight = FontWeights.ExtraBold
                 };
-                trolleyGrid.ColumnDefinitions.Add(column);
+                smallLetter.PreviewMouseLeftButtonDown += smallLetter_MouseLeftButtonDown;
+                KinectRegion.AddQueryInteractionStatusHandler(smallLetter, OnQuery);
+                KinectRegion.AddHandPointerGripHandler(smallLetter, OnHandPointerGrip);
+                KinectRegion.AddHandPointerGripReleaseHandler(smallLetter, OnHandPointerGripRelease);
+                MainGrid.Children.Add(smallLetter);
+                Grid.SetRow(smallLetter, i % 2);
+                Grid.SetColumn(smallLetter, i / 2);
+            }
 
+            for (var i = 0; i < _game.Trolleys.Count; i++)
+            {
+                var rand = new Random(Guid.NewGuid().GetHashCode());
+                
                 //var trolley = new Rectangle
                 //{
                 //    Tag = game.Trolleys[i],
@@ -66,56 +108,106 @@ namespace LettersGame.View
                 //    HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
                 //    Fill = Brushes.Red // podstawic odpowiednia bitmape z game.Trolleys[i].Image
                 //};
-                var trolley = new Label 
-                { 
-                    Content = game.Trolleys[i].BigLetter,
-                    Tag = game.Trolleys[i],
-                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-                    Width = this.config.WindowWidth / (game.Trolleys.Count + 1),
+                var trolley = new Label
+                {
+                    Content = _game.Trolleys[i].BigLetter,
+                    Tag = _game.Trolleys[i],
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Width = _config.WindowWidth / (_game.Trolleys.Count + 1),
                     FontSize = 200,
                     FontWeight = FontWeights.ExtraBold,
                     Foreground = Brushes.White
                 };
                 trolley.MouseEnter += trolley_MouseEnter;
-                trolleyGrid.Children.Add(trolley);
-                Grid.SetColumn(trolley, i);
+                KinectRegion.AddQueryInteractionStatusHandler(trolley, OnQuery);
+                KinectRegion.AddHandPointerEnterHandler(trolley, OnHandPointerEnter);
+                KinectRegion.AddHandPointerGripReleaseHandler(trolley, OnHandPointerGripRelease);
+                MainGrid.Children.Add(trolley);
+                Grid.SetRow(trolley,3);
+                var columnNumber = (i /(double)_game.Trolleys.Count) * ((double)_game.SmallLetters.Count / 2);
+                Grid.SetColumn(trolley, (int)columnNumber);
+                Grid.SetColumnSpan(trolley, 2);
             }
-            foreach (var item in game.SmallLetters)
-            {
-                var smallLetter = new KinectTileButton
-                {
-                    Content = item.SmallLetter,
-                    Tag = item,
-                    Foreground = new SolidColorBrush(Colors.Purple),
-                    Background = new SolidColorBrush(Colors.White),
-                    Width = letterWidth,
-                    Height = letterHeight,
-                    FontSize = this.config.LettersFontSize,
-                    FontWeight = FontWeights.ExtraBold
-                };
-                smallLetter.PreviewMouseLeftButtonDown += smallLetter_MouseLeftButtonDown;
-                lettersPanel.Children.Add(smallLetter);
-            }
+            Grid.SetColumnSpan(PopupPanel, _game.SmallLetters.Count / 2);
         }
 
+        #region kinect changed
+        private void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs e)
+        {
+            if (e.OldSensor != null)
+            {
+                try
+                {
+                    e.OldSensor.DepthStream.Range = DepthRange.Default;
+                    e.OldSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    e.OldSensor.DepthStream.Disable();
+                    e.OldSensor.SkeletonStream.Disable();
+                }
+                catch (InvalidOperationException)
+                {
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+            }
+
+            if (e.NewSensor != null)
+            {
+                try
+                {
+                    e.NewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
+                    e.NewSensor.SkeletonStream.Enable();
+
+                    try
+                    {
+                        e.NewSensor.DepthStream.Range = DepthRange.Near;
+                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = true;
+                        e.NewSensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // Non Kinect for Windows devices do not support Near mode, so reset back to default mode.
+                        e.NewSensor.DepthStream.Range = DepthRange.Default;
+                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    MessageBox.Show("dupa");
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+                if (e.NewSensor.Status == KinectStatus.Connected)
+                {
+                    KinectUserViewer.KinectSensor = e.NewSensor;
+                    MyKinectRegion.KinectSensor = e.NewSensor;
+                }
+            }
+        }
+        #endregion
+
+        #region mouse events
         void trolley_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (this.selectedLetterButton != null)
+            if (_selectedLetterButton != null)
             {
                 var trolley = sender as Label;
-                var trolleysLetter = trolley.Tag as Letter;
-                if (trolleysLetter.SmallLetter == this.selectedLetter.SmallLetter)
+                if (trolley != null)
                 {
-                    this.NotifySuccess();
-                    this.selectedLetter = null;
-                    this.selectedLetterButton = null;
-                }
-                else
-                {
-                    this.NotifyFail();
-                    this.selectedLetter = null;
-                    this.selectedLetterButton = null;
+                    var trolleysLetter = trolley.Tag as Letter;
+                    if (trolleysLetter != null && trolleysLetter.SmallLetter == _selectedLetter.SmallLetter)
+                    {
+                        _selectedLetterButton.IsEnabled = false;
+                        NotifySuccess();
+                        _selectedLetter = null;
+                        _selectedLetterButton = null;
+                    }
+                    else
+                    {
+                        NotifyFail();
+                        _selectedLetter = null;
+                        _selectedLetterButton = null;
+                    }
                 }
             }
         }
@@ -123,52 +215,130 @@ namespace LettersGame.View
         void smallLetter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var button = sender as KinectTileButton;
-            this.selectedLetterButton = button;
-            this.selectedLetter = (Letter)button.Tag;
+            _selectedLetterButton = button;
+            _selectedLetter = (Letter)button.Tag;
+        }
+        #endregion
+
+        #region kinect events
+        private void OnHandPointerEnter(object sender, HandPointerEventArgs e)
+        {
+            if (_selectedLetterButton != null)
+            {
+                var trolley = sender as Label;
+                if (trolley != null)
+                {
+                    var trolleysLetter = trolley.Tag as Letter;
+                    if (trolleysLetter != null && trolleysLetter.SmallLetter == _selectedLetter.SmallLetter)
+                    {
+                        _selectedLetterButton.IsEnabled = false;
+                        NotifySuccess();
+                        _selectedLetter = null;
+                        _selectedLetterButton = null;
+                        e.Handled = true;
+                    }
+                    else
+                    {
+                        NotifyFail();
+                        _selectedLetter = null;
+                        _selectedLetterButton = null;
+                        e.Handled = true;
+                    }
+                }
+            }
         }
 
+        private void OnHandPointerGrip(object sender, HandPointerEventArgs e)
+        {
+            var button = sender as KinectTileButton;
+            if (button != null)
+            {
+                e.HandPointer.Capture(MainCanvas);
+                _selectedLetterButton = button;
+                _selectedLetter = (Letter)button.Tag;
+                e.Handled = true;
+            }
+        }
+
+        private void OnHandPointerGripRelease(object sender, HandPointerEventArgs e)
+        {
+            e.HandPointer.Captured = null;
+            e.Handled = true;
+        }
+
+        private void OnQuery(object sender, QueryInteractionStatusEventArgs handPointerEventArgs)
+        {
+
+            //If a grip detected change the cursor image to grip
+            if (handPointerEventArgs.HandPointer.HandEventType == HandEventType.Grip)
+            {
+                _isInGripInteraction = true;
+                handPointerEventArgs.IsInGripInteraction = true;
+            }
+
+           //If Grip Release detected change the cursor image to open
+            else if (handPointerEventArgs.HandPointer.HandEventType == HandEventType.GripRelease)
+            {
+                _isInGripInteraction = false;
+                handPointerEventArgs.IsInGripInteraction = false;
+            }
+
+            //If no change in state do not change the cursor
+            else if (handPointerEventArgs.HandPointer.HandEventType == HandEventType.None)
+            {
+                handPointerEventArgs.IsInGripInteraction = _isInGripInteraction;
+            }
+
+            handPointerEventArgs.Handled = true;
+        }
+        #endregion
+
+        #region notifications
         private void NotifySuccess()
         {
-            this.game.CorrectTrials++;
-            this.game.LettersLeft--;
-            if (this.game.LettersLeft == 0)
+            _game.CorrectTrials++;
+            _game.LettersLeft--;
+            if (_game.LettersLeft == 0)
             {
-                this.EndGame();
+                EndGame();
             }
             else
             {
-                this.QuickSuccesPopup();
+                QuickSuccesPopup();
             }
         }
 
         private void NotifyFail()
         {
-            this.game.Fails++;
-            this.QuickFailurePopup();
+            _game.Fails++;
+            QuickFailurePopup();
         }
 
         private void EndGame()
         {
-            this.game.CalculateTime(DateTime.Now);
-            this.game.SaveResults();
+            _game.CalculateTime(DateTime.Now);
+            _game.SaveResults();
             var popup = new GameOverPopup
             {
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-                VerticalAlignment = System.Windows.VerticalAlignment.Center
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
             };
-            rootGrid.Children.Add(popup);
-            this.endGamePopupTimer = new Timer();
-            endGamePopupTimer.Interval = 3000;
-            endGamePopupTimer.Elapsed += endGamePopupTimer_Elapsed;
-            endGamePopupTimer.Start();
+            MainGrid.Children.Add(popup);
+            Grid.SetColumnSpan(popup, MainGrid.ColumnDefinitions.Count);
+            Grid.SetRowSpan(popup, MainGrid.RowDefinitions.Count);
+            _endGamePopupTimer = new Timer {Interval = 3000};
+            _endGamePopupTimer.Elapsed += endGamePopupTimer_Elapsed;
+            _endGamePopupTimer.Start();
         }
 
         void endGamePopupTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            this.Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(new Action(() =>
             {
-                this.game.SaveResultsThread.Join();
-                var parentGrid = (Grid)this.Parent;
+                _sensorChooser.Kinect.Stop();
+                _sensorChooser.Stop();
+                _game.SaveResultsThread.Join();
+                var parentGrid = (Grid)Parent;
                 var parent = (MainWindow)parentGrid.Parent;
                 parent.Close();
             }), null);
@@ -179,10 +349,11 @@ namespace LettersGame.View
             var popup = new SmallPopup
             {
                 Message = "DOBRZE!",
-                PopupColor = Brushes.WhiteSmoke
+                PopupColor = Brushes.WhiteSmoke,
+                Size = 150
             };
             popup.Update();
-            popupPanel.Children.Add(popup);
+            PopupPanel.Children.Add(popup);
         }
 
         private void QuickFailurePopup()
@@ -190,10 +361,12 @@ namespace LettersGame.View
             var popup = new SmallPopup
             {
                 Message = "ŹLE!",
-                PopupColor = Brushes.Red
+                PopupColor = Brushes.Red,
+                Size = 150
             };
             popup.Update();
-            popupPanel.Children.Add(popup);
+            PopupPanel.Children.Add(popup);
         }
+        #endregion
     }
 }

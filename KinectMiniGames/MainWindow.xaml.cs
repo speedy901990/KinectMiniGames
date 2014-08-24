@@ -219,9 +219,9 @@ namespace KinectMiniGames
             kinectViewBorder.Visibility = System.Windows.Visibility.Visible;
             sensorChooserUi.Visibility = System.Windows.Visibility.Visible;
 
-            if (this.sensorChooser.Status == ChooserStatus.None)
+            if (sensorChooser.Status == ChooserStatus.None)
             {
-                this.sensorChooser.Start();
+                sensorChooser.Start();
             }
         }
 

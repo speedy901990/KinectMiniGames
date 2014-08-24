@@ -10,94 +10,33 @@ using System.Windows;
 
 namespace LettersGame
 {
-    public class LettersGameConfig : DependencyObject
+    public class LettersGameConfig
     {
         public LettersGameConfig()
         {
-            this.FirstLevelLettersCount = 8;
-            this.LettersCount = 4;
-            this.LettersFontSize = 100;
+            FirstLevelLettersCount = 8;
+            LettersCount = 4;
+            LettersFontSize = 100;
         }
 
-        private Player player;
+        public Player Player { get; set; }
 
-        public Player Player
-        {
-            get { return player; }
-            set { player = value; }
-        }
+        public string PlayerName { get; set; }
 
+        public KinectSensorChooser PassedSensorChooser { get; set; }
 
-        private string playerName;
+        public int CurrentLevel { get; set; }
 
-        public string PlayerName
-        {
-            get { return playerName; }
-            set { playerName = value; }
-        }
+        public double WindowHeight { get; set; }
 
-        private KinectSensorChooser passedSensorChooser;
+        public double WindowWidth { get; set; }
 
-        public KinectSensorChooser PassedSensorChooser
-        {
-            get { return passedSensorChooser; }
-            set { passedSensorChooser = value; }
-        }
+        public int FirstLevelLettersCount { get; set; }
 
-        private int currentLevel;
+        public int LettersFontSize { get; set; }
 
-        public int CurrentLevel
-        {
-            get { return currentLevel; }
-            set { currentLevel = value;}
-        }        
+        public int LettersCount { get; set; }
 
-        private double windowHeight;
-
-        public double WindowHeight
-        {
-            get { return windowHeight; }
-            set { windowHeight = value; }
-        }
-
-        private double windowWidth;
-
-        public double WindowWidth
-        {
-            get { return windowWidth; }
-            set { windowWidth = value; }
-        }
-
-        private int firstLevelLettersCount;
-
-        public int FirstLevelLettersCount
-        {
-            get { return firstLevelLettersCount; }
-            set { firstLevelLettersCount = value; }
-        }
-
-        private int lettersFontSize;
-
-        public int LettersFontSize
-        {
-            get { return lettersFontSize; }
-            set { lettersFontSize = value; }
-        }
-
-        private int lettersCount;
-
-        public int LettersCount
-        {
-            get { return lettersCount; }
-            set { lettersCount = value; }
-        }
-
-        private int trolleysCount;
-
-        public int TrolleysCount
-        {
-            get { return trolleysCount; }
-            set { trolleysCount = value; }
-        }
+        public int TrolleysCount { get; set; }
     }
 }

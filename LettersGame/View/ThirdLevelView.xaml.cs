@@ -1,8 +1,8 @@
-﻿using Microsoft.Kinect.Toolkit.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LettersGame.Resources;
+using Microsoft.Kinect;
+using Microsoft.Kinect.Toolkit;
+using Microsoft.Kinect.Toolkit.Controls;
 
 namespace LettersGame.View
 {
@@ -21,137 +25,328 @@ namespace LettersGame.View
     /// </summary>
     public partial class ThirdLevelView : UserControl
     {
-        private LettersGameConfig config;
-        private Game game;
-        private int letterWidth;
-        private int letterHeight;
-        private Letter selectedLetter;
-        private KinectTileButton selectedLetterButton;
-        private Line linkingLine;
-        private bool drawingEnabled;
-        private Timer endGamePopupTimer;
-
-        public ThirdLevelView()
-        {
-            InitializeComponent();
-        }
+        private readonly LettersGameConfig _config;
+        private readonly Game _game;
+        private readonly int _letterWidth;
+        private readonly int _letterHeight;
+        private Letter _selectedLetter;
+        private KinectTileButton _selectedLetterButton;
+        private Line _linkingLine;
+        private bool _drawingEnabled;
+        private Timer _endGamePopupTimer;
+        private KinectSensorChooser _sensorChooser;
+        private bool _isInGripInteraction;
 
         public ThirdLevelView(LettersGameConfig config)
         {
+            _config = config;
             InitializeComponent();
-            this.config = config;
-            this.game = new Game(config);
+            _game = new Game(config);
             //do sprawdzenia
-            this.letterHeight = (int)(this.config.WindowHeight / buttonsGrid.RowDefinitions.Count);
-            this.letterWidth = (int)(this.config.WindowWidth / this.config.LettersCount);
-            this.SetGameField();
+            Loaded += OnLoaded;
+            _isInGripInteraction = false;
+            _letterHeight = (int)(_config.WindowHeight / ButtonsGrid.RowDefinitions.Count);
+            _letterWidth = (int)(_config.WindowWidth / _config.LettersCount);
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            _sensorChooser = new KinectSensorChooser();
+            _sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
+            KinectSensorChooserUi.KinectSensorChooser = _sensorChooser;
+            _sensorChooser.Start();
+            SetGameField();
         }
 
         private void SetGameField()
         {
-            for (int i = 0; i < config.LettersCount; i++)
+            MainCanvas.MouseMove += OnMouseMove;
+            MainCanvas.MouseUp += OnMouseUp;
+            KinectRegion.AddQueryInteractionStatusHandler(MainCanvas, OnQuery);
+            KinectRegion.AddHandPointerMoveHandler(MainCanvas, OnHandPointerMove);
+            KinectRegion.AddHandPointerGripHandler(MainCanvas, OnHandPointerGrip);
+            KinectRegion.AddHandPointerGripReleaseHandler(MainCanvas, OnHandPointerGripRelease);
+            for (var i = 0; i < _config.LettersCount; i++)
             {
-                Random rand = new Random(Guid.NewGuid().GetHashCode());
+                var rand = new Random(Guid.NewGuid().GetHashCode());
                 var columnDefinition = new ColumnDefinition
                 {
                     Width = new GridLength(1, GridUnitType.Star)
                 };
-                buttonsGrid.ColumnDefinitions.Add(columnDefinition);
-                int index = rand.Next(game.BigLetters.Count);
+                ButtonsGrid.ColumnDefinitions.Add(columnDefinition);
+                var index = rand.Next(_game.BigLetters.Count);
                 var bigLetter = new KinectTileButton
                 {
-                    Tag = this.game.BigLetters[index],
-                    Content = this.game.BigLetters[index].BigLetter,
+                    Tag = _game.BigLetters[index],
+                    Content = _game.BigLetters[index].BigLetter,
                     Foreground = new SolidColorBrush(Colors.Purple),
                     Background = new SolidColorBrush(Colors.White),
-                    Width = letterWidth,
-                    Height = letterHeight,
-                    FontSize = this.config.LettersFontSize,
+                    Width = _letterWidth,
+                    Height = _letterHeight,
+                    FontSize = _config.LettersFontSize,
                     FontWeight = FontWeights.ExtraBold
                 };
-                bigLetter.PreviewMouseLeftButtonDown += letter_MouseDown;
-                bigLetter.PreviewMouseLeftButtonUp += letter_MouseUp;
-                bigLetter.MouseEnter += letter_MouseEnter;
-                buttonsGrid.Children.Add(bigLetter);
+                bigLetter.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
+                bigLetter.PreviewMouseLeftButtonUp += OnMouseUp;
+                bigLetter.MouseEnter += OnMouseEnter;
+                KinectRegion.AddHandPointerGripHandler(bigLetter, OnHandPointerGrip);
+                KinectRegion.AddHandPointerGripReleaseHandler(bigLetter, OnHandPointerGripRelease);
+                KinectRegion.AddHandPointerMoveHandler(bigLetter, OnHandPointerMove);
+                KinectRegion.AddQueryInteractionStatusHandler(bigLetter, OnQuery);
+                KinectRegion.AddHandPointerEnterHandler(bigLetter, OnHandPointerEnter);
+                ButtonsGrid.Children.Add(bigLetter);
                 Grid.SetColumn(bigLetter, i);
                 Grid.SetRow(bigLetter, 2);
-                this.game.BigLetters.RemoveAt(index);
+                _game.BigLetters.RemoveAt(index);
 
-                index = rand.Next(game.SmallLetters.Count);
+                index = rand.Next(_game.SmallLetters.Count);
                 var word = new KinectTileButton
                 {
-                    Tag = this.game.SmallLetters[index],
-                    Content = this.game.SmallLetters[index].Word,
+                    Tag = _game.SmallLetters[index],
+                    Content = _game.SmallLetters[index].Word,
                     Foreground = new SolidColorBrush(Colors.Purple),
                     Background = new SolidColorBrush(Colors.White),
-                    Width = letterWidth,
-                    Height = letterHeight,
-                    FontSize = this.config.LettersFontSize,
+                    Width = _letterWidth,
+                    Height = _letterHeight,
+                    FontSize = _config.LettersFontSize,
                     FontWeight = FontWeights.Light
                 };
-                word.PreviewMouseLeftButtonDown += letter_MouseDown;
-                word.MouseEnter += letter_MouseEnter;
-                word.PreviewMouseLeftButtonUp += letter_MouseUp;
-                buttonsGrid.Children.Add(word);
+                word.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;
+                word.MouseEnter += OnMouseEnter;
+                word.PreviewMouseLeftButtonUp += OnMouseUp;
+                KinectRegion.AddHandPointerGripHandler(word, OnHandPointerGrip);
+                KinectRegion.AddHandPointerGripReleaseHandler(word, OnHandPointerGripRelease);
+                KinectRegion.AddHandPointerMoveHandler(word, OnHandPointerMove);
+                KinectRegion.AddQueryInteractionStatusHandler(word, OnQuery);
+                KinectRegion.AddHandPointerEnterHandler(word, OnHandPointerEnter);
+                ButtonsGrid.Children.Add(word);
                 Grid.SetColumn(word, i);
                 Grid.SetRow(word, 0);
-                this.game.SmallLetters.RemoveAt(index);
+                _game.SmallLetters.RemoveAt(index);
             }
-            Grid.SetColumnSpan(mainCanvas, config.FirstLevelLettersCount);
+            Grid.SetColumnSpan(MainCanvas, _config.FirstLevelLettersCount);
         }
 
-        void letter_MouseUp(object sender, MouseButtonEventArgs e)
+        #region kinect events
+        private void OnHandPointerMove(object sender, HandPointerEventArgs e)
         {
-            mainCanvas.ReleaseMouseCapture();
-            if (this.drawingEnabled)
+            if (e.HandPointer.IsInGripInteraction)
             {
-                mainCanvas.Children.Remove(this.linkingLine);
-                this.drawingEnabled = false;
+                if (_linkingLine != null)
+                {
+                    var point = e.HandPointer.GetPosition(MainCanvas);
+                    _linkingLine.X2 = point.X;
+                    _linkingLine.Y2 = point.Y;
+                }
+                e.Handled = true;
             }
-
         }
 
-        void letter_MouseEnter(object sender, MouseEventArgs e)
+        private void OnHandPointerEnter(object sender, HandPointerEventArgs e)
         {
-            if (selectedLetter != null && this.drawingEnabled)
+            if (_selectedLetter != null)
             {
                 var letterButton = sender as KinectTileButton;
-                var letter = letterButton.Tag as Letter;
-                var position = e.GetPosition(mainCanvas);
+                if (letterButton != null)
+                {
+                    var letter = letterButton.Tag as Letter;
+                    var position = e.HandPointer.GetPosition(MainCanvas);
 
-                if (this.selectedLetterButton != letterButton && this.selectedLetter == letter)
-                {
-                    this.selectedLetter = null;
-                    this.linkingLine.X2 = position.X;
-                    this.linkingLine.Y2 = position.Y;
-                    this.linkingLine.Stroke = new SolidColorBrush(Colors.Green);
-                    this.drawingEnabled = false;
-                    this.linkingLine = null;
-                    letterButton.IsEnabled = false;
-                    this.selectedLetterButton.IsEnabled = false;
-                    this.NotifySuccess();
-                }
-                else
-                {
-                    this.selectedLetter = null;
-                    mainCanvas.Children.Remove(this.linkingLine);
-                    this.linkingLine = null;
-                    this.drawingEnabled = false;
-                    this.NotifyFail();
+                    if (letter != null && (!Equals(_selectedLetterButton, letterButton) && _selectedLetter.SmallLetter == letter.SmallLetter))
+                    {
+                        _selectedLetter = null;
+                        _linkingLine.X2 = position.X;
+                        _linkingLine.Y2 = position.Y;
+                        _linkingLine.Stroke = new SolidColorBrush(Colors.Green);
+
+                        _selectedLetterButton.IsEnabled = false;
+                        letterButton.IsEnabled = false;
+                        _selectedLetterButton.Foreground = new SolidColorBrush(Colors.Green);
+                        letterButton.Foreground = new SolidColorBrush(Colors.Green);
+                        NotifySuccess();
+                    }
+                    else
+                    {
+                        _selectedLetter = null;
+                        MainCanvas.Children.Remove(_linkingLine);
+                        NotifyFail();
+                    }
+                    _linkingLine = null;
+                    e.Handled = true;
                 }
             }
         }
 
-        void letter_MouseDown(object sender, MouseButtonEventArgs e)
+        private void OnHandPointerGrip(object sender, HandPointerEventArgs e)
         {
-            this.selectedLetterButton = sender as KinectTileButton;
-            this.selectedLetter = selectedLetterButton.Tag as Letter;
-            if (mainCanvas.CaptureMouse())
+            PopupPanel.Children.Clear();
+            _selectedLetterButton = sender as KinectTileButton;
+            if (_selectedLetterButton != null)
             {
-                var mousePosition = e.GetPosition(mainCanvas);
-                this.drawingEnabled = true;
-                var point = e.GetPosition(mainCanvas);
-                this.linkingLine = new Line
+                _selectedLetter = _selectedLetterButton.Tag as Letter;
+                if (e.HandPointer.IsInGripInteraction && e.HandPointer.Capture(MainCanvas))
+                {
+                    var point = e.HandPointer.GetPosition(MainCanvas);
+                    _linkingLine = new Line
+                    {
+                        X1 = point.X,
+                        X2 = point.X,
+                        Y1 = point.Y,
+                        Y2 = point.Y,
+                        Stroke = new SolidColorBrush(Colors.Red),
+                        StrokeThickness = 10
+                    };
+                    MainCanvas.Children.Add(_linkingLine);
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void OnHandPointerGripRelease(object sender, HandPointerEventArgs e)
+        {
+            e.HandPointer.Captured = null;
+            if (_drawingEnabled)
+            {
+                MainCanvas.Children.Remove(_linkingLine);
+                e.Handled = true;
+            }
+        }
+
+        private void OnQuery(object sender, QueryInteractionStatusEventArgs handPointerEventArgs)
+        {
+
+            //If a grip detected change the cursor image to grip
+            if (handPointerEventArgs.HandPointer.HandEventType == HandEventType.Grip)
+            {
+                _isInGripInteraction = true;
+                handPointerEventArgs.IsInGripInteraction = true;
+            }
+
+           //If Grip Release detected change the cursor image to open
+            else if (handPointerEventArgs.HandPointer.HandEventType == HandEventType.GripRelease)
+            {
+                _isInGripInteraction = false;
+                handPointerEventArgs.IsInGripInteraction = false;
+            }
+
+            //If no change in state do not change the cursor
+            else if (handPointerEventArgs.HandPointer.HandEventType == HandEventType.None)
+            {
+                handPointerEventArgs.IsInGripInteraction = _isInGripInteraction;
+            }
+
+            handPointerEventArgs.Handled = true;
+        }
+
+        private void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs e)
+        {
+            if (e.OldSensor != null)
+            {
+                try
+                {
+                    e.OldSensor.DepthStream.Range = DepthRange.Default;
+                    e.OldSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    e.OldSensor.DepthStream.Disable();
+                    e.OldSensor.SkeletonStream.Disable();
+                }
+                catch (InvalidOperationException)
+                {
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+            }
+
+            if (e.NewSensor != null)
+            {
+                try
+                {
+                    e.NewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
+                    e.NewSensor.SkeletonStream.Enable();
+
+                    try
+                    {
+                        e.NewSensor.DepthStream.Range = DepthRange.Near;
+                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = true;
+                        e.NewSensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // Non Kinect for Windows devices do not support Near mode, so reset back to default mode.
+                        e.NewSensor.DepthStream.Range = DepthRange.Default;
+                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    MessageBox.Show("Kinect Setup Error");
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+                if (e.NewSensor.Status == KinectStatus.Connected)
+                {
+                    KinectUserViewer.KinectSensor = e.NewSensor;
+                    MyKinectRegion.KinectSensor = e.NewSensor;
+                }
+            }
+        }
+
+        #endregion
+
+        #region mouse events
+        void OnMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MainCanvas.ReleaseMouseCapture();
+            if (_drawingEnabled)
+            {
+                MainCanvas.Children.Remove(_linkingLine);
+                _drawingEnabled = false;
+            }
+
+        }
+
+        void OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (_selectedLetter != null && _drawingEnabled)
+            {
+                var letterButton = sender as KinectTileButton;
+                if (letterButton != null)
+                {
+                    var letter = letterButton.Tag as Letter;
+                    var position = e.GetPosition(MainCanvas);
+
+                    if (_selectedLetterButton != letterButton && this._selectedLetter == letter)
+                    {
+                        _selectedLetter = null;
+                        _linkingLine.X2 = position.X;
+                        _linkingLine.Y2 = position.Y;
+                        _linkingLine.Stroke = new SolidColorBrush(Colors.Green);
+                        _drawingEnabled = false;
+                        _linkingLine = null;
+                        letterButton.IsEnabled = false;
+                        _selectedLetterButton.IsEnabled = false;
+                        NotifySuccess();
+                    }
+                    else
+                    {
+                        _selectedLetter = null;
+                        MainCanvas.Children.Remove(this._linkingLine);
+                        _linkingLine = null;
+                        _drawingEnabled = false;
+                        NotifyFail();
+                    }
+                }
+            }
+        }
+
+        void OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _selectedLetterButton = sender as KinectTileButton;
+            if (_selectedLetterButton != null) _selectedLetter = _selectedLetterButton.Tag as Letter;
+            if (MainCanvas.CaptureMouse())
+            {
+                _drawingEnabled = true;
+                var point = e.GetPosition(MainCanvas);
+                _linkingLine = new Line
                 {
                     X1 = point.X,
                     X2 = point.X,
@@ -160,68 +355,71 @@ namespace LettersGame.View
                     Stroke = new SolidColorBrush(Colors.Red),
                     StrokeThickness = 10
                 };
-                mainCanvas.Children.Add(this.linkingLine);
+                MainCanvas.Children.Add(_linkingLine);
             }
         }
 
-        private void letter_MouseMove(object sender, MouseEventArgs e)
+        private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (mainCanvas.IsMouseCaptured && e.LeftButton == MouseButtonState.Pressed)
+            if (MainCanvas.IsMouseCaptured && e.LeftButton == MouseButtonState.Pressed)
             {
-                if (this.linkingLine != null && this.drawingEnabled)
+                if (_linkingLine != null && _drawingEnabled)
                 {
-                    var point = e.GetPosition(mainCanvas);
-                    this.linkingLine.X2 = point.X;
-                    this.linkingLine.Y2 = point.Y;
+                    var point = e.GetPosition(MainCanvas);
+                    _linkingLine.X2 = point.X;
+                    _linkingLine.Y2 = point.Y;
                 }
             }
         }
+        #endregion
 
+        #region notifications
         private void NotifySuccess()
         {
-            this.game.CorrectTrials++;
-            this.game.LettersLeft--;
-            if (this.game.LettersLeft == 0)
+            _game.CorrectTrials++;
+            _game.LettersLeft--;
+            if (_game.LettersLeft == 0)
             {
-                this.EndGame();
+                EndGame();
             }
             else
             {
-                this.QuickSuccesPopup();
+                QuickSuccesPopup();
             }
         }
 
         private void NotifyFail()
         {
-            this.game.Fails++;
-            this.QuickFailurePopup();
+            _game.Fails++;
+            QuickFailurePopup();
         }
 
         private void EndGame()
         {
-            this.game.CalculateTime(DateTime.Now);
-            this.game.SaveResults();
+            _game.CalculateTime(DateTime.Now);
+            _game.SaveResults();
             var popup = new GameOverPopup
             {
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-                VerticalAlignment = System.Windows.VerticalAlignment.Center
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
             };
-            buttonsGrid.Children.Add(popup);
+            ButtonsGrid.Children.Add(popup);
             Grid.SetColumn(popup, 0);
             Grid.SetRow(popup, 1);
-            Grid.SetColumnSpan(popup, buttonsGrid.ColumnDefinitions.Count);
-            this.endGamePopupTimer = new Timer();
-            endGamePopupTimer.Interval = 3000;
-            endGamePopupTimer.Elapsed += endGamePopupTimer_Elapsed;
-            endGamePopupTimer.Start();
+            Grid.SetColumnSpan(popup, ButtonsGrid.ColumnDefinitions.Count);
+            _endGamePopupTimer = new Timer {Interval = 3000};
+            _endGamePopupTimer.Elapsed += endGamePopupTimer_Elapsed;
+            _endGamePopupTimer.Start();
         }
 
         void endGamePopupTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            this.Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(new Action(() =>
             {
-                this.game.SaveResultsThread.Join();
-                var parentGrid = (Grid)this.Parent;
+                _sensorChooser.Kinect.Stop();
+                _sensorChooser.Stop();
+                _game.SaveResultsThread.Join();
+                var parentGrid = (Grid)Parent;
                 var parent = (MainWindow)parentGrid.Parent;
                 parent.Close();
             }), null);
@@ -229,26 +427,27 @@ namespace LettersGame.View
 
         private void QuickSuccesPopup()
         {
-            Grid.SetColumnSpan(popupPanel, buttonsGrid.ColumnDefinitions.Count);
+            Grid.SetColumnSpan(PopupPanel, ButtonsGrid.ColumnDefinitions.Count);
             var popup = new SmallPopup
             {
                 Message = "DOBRZE!",
                 PopupColor = Brushes.WhiteSmoke
             };
             popup.Update();
-            popupPanel.Children.Add(popup);
+            PopupPanel.Children.Add(popup);
         }
 
         private void QuickFailurePopup()
         {
-            Grid.SetColumnSpan(popupPanel, buttonsGrid.ColumnDefinitions.Count);
+            Grid.SetColumnSpan(PopupPanel, ButtonsGrid.ColumnDefinitions.Count);
             var popup = new SmallPopup
             {
                 Message = "ŹLE!",
                 PopupColor = Brushes.Red
             };
             popup.Update();
-            popupPanel.Children.Add(popup);
+            PopupPanel.Children.Add(popup);
         }
+        #endregion
     }
 }

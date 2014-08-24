@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300"
              HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="UserControl_Loaded_1">
     <Grid>
-        <Label x:Name="lbContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="200">
+        <Label x:Name="LbContent" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="200">
             <Label.Style>
                 <Style TargetType="Label">
                     <Style.Triggers>

@@ -7,19 +7,26 @@
              mc:Ignorable="d" 
              Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" 
              Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}"
-             Background="{DynamicResource PurpleBrush}">
-    <Grid x:Name="rootGrid">
-        <k:KinectRegion>
-            <Grid x:Name="mainGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
+             Background="BlueViolet">
+    <Grid x:Name="RootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0">
+            <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="KinectSensorChooserUi" />
+            <k:KinectUserViewer HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="KinectUserViewer" />
+        </WrapPanel>
+        <k:KinectRegion x:Name="MyKinectRegion" Grid.Row="1">
+            <Grid x:Name="MainGrid">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.7*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="0.9*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1.5*"/>
                 </Grid.RowDefinitions>
-                <WrapPanel x:Name="lettersPanel" Grid.Row="0"></WrapPanel>
-                <Canvas x:Name="mainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0"></Canvas>
-                <WrapPanel x:Name="popupPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
-                <Grid x:Name="trolleyGrid" Grid.Row="2"></Grid>
+                <Canvas x:Name="MainCanvas" Grid.RowSpan="4" Grid.Column="0" Grid.Row="0"></Canvas>
+                <WrapPanel x:Name="PopupPanel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
             </Grid>
         </k:KinectRegion>
     </Grid>
