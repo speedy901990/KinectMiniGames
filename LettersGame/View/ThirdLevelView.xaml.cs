@@ -278,7 +278,7 @@ namespace LettersGame.View
                 }
                 catch (InvalidOperationException)
                 {
-                    MessageBox.Show("Kinect Setup Error");
+                    //MessageBox.Show("Kinect Setup Error");
                     // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
                     // E.g.: sensor might be abruptly unplugged.
                 }

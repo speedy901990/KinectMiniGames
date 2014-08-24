@@ -173,7 +173,7 @@ namespace LettersGame.View
                 }
                 catch (InvalidOperationException)
                 {
-                    MessageBox.Show("dupa");
+                    //MessageBox.Show("Kinect Error");
                     // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
                     // E.g.: sensor might be abruptly unplugged.
                 }
