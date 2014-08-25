@@ -1,4 +1,5 @@
-﻿using Microsoft.Kinect.Toolkit;
+﻿using DatabaseManagement;
+using Microsoft.Kinect.Toolkit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,59 +10,33 @@ using System.Windows;
 
 namespace LettersGame
 {
-    public class LettersGameConfig : DependencyObject
+    public class LettersGameConfig
     {
         public LettersGameConfig()
         {
-            this.firstLevelLettersCount = 8;
+            FirstLevelLettersCount = 8;
+            LettersCount = 4;
+            LettersFontSize = 100;
         }
 
-        private string playerName;
+        public Player Player { get; set; }
 
-        public string PlayerName
-        {
-            get { return playerName; }
-            set { playerName = value; }
-        }
+        public string PlayerName { get; set; }
 
-        private KinectSensorChooser passedSensorChooser;
+        public KinectSensorChooser PassedSensorChooser { get; set; }
 
-        public KinectSensorChooser PassedSensorChooser
-        {
-            get { return passedSensorChooser; }
-            set { passedSensorChooser = value; }
-        }
+        public int CurrentLevel { get; set; }
 
-        private int currentLevel;
+        public double WindowHeight { get; set; }
 
-        public int CurrentLevel
-        {
-            get { return currentLevel; }
-            set { currentLevel = value;}
-        }        
+        public double WindowWidth { get; set; }
 
-        private double windowHeight;
+        public int FirstLevelLettersCount { get; set; }
 
-        public double WindowHeight
-        {
-            get { return windowHeight; }
-            set { windowHeight = value; }
-        }
+        public int LettersFontSize { get; set; }
 
-        private double windowWidth;
+        public int LettersCount { get; set; }
 
-        public double WindowWidth
-        {
-            get { return windowWidth; }
-            set { windowWidth = value; }
-        }
-
-        private int firstLevelLettersCount;
-
-        public int FirstLevelLettersCount
-        {
-            get { return firstLevelLettersCount; }
-            set { firstLevelLettersCount = value; }
-        }
+        public int TrolleysCount { get; set; }
     }
 }

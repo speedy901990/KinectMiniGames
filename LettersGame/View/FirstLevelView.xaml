@@ -2,17 +2,30 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:k="http://schemas.microsoft.com/kinect/2013"
              mc:Ignorable="d" 
-             Loaded="UserControl_Loaded_1" 
-             Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" 
-             Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}">
+             d:DesignHeight="300" d:DesignWidth="300"
+             Background="BlueViolet">
     <Grid>
-        <k:KinectRegion>
-            <Canvas Name="firstLevelMainCanvas" Background="{DynamicResource PurpleBrush}">
-                <k:KinectTileButton />
-            </Canvas>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0">
+            <k:KinectSensorChooserUI HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="KinectSensorChooserUi" />
+            <k:KinectUserViewer HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="KinectUserViewer" />
+        </WrapPanel>
+        <k:KinectRegion Grid.Row="1"  x:Name="MyKinectRegion">
+            <Grid x:Name="ButtonsGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Canvas x:Name="MainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0" MouseMove="OnLetterMouseMove" MouseUp="LetterOnPreviewMouseLeftButtonUp"></Canvas>
+                <WrapPanel x:Name="PopupPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
+            </Grid>
         </k:KinectRegion>
     </Grid>
 </UserControl>

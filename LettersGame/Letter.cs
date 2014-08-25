@@ -1,32 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
+using System.Diagnostics.Eventing.Reader;
+using System.Windows.Media;
 
 namespace LettersGame
 {
-    class Letter
+    public class Letter : IComparable
     {
-        private string smallLetter;
-
-        public string SmallLetter
+        protected bool Equals(Letter other)
         {
-            get { return smallLetter; }
-            set { smallLetter = value; }
+            return string.Equals(SmallLetter, other.SmallLetter);
         }
 
-        private string bigLetter;
-
-        public string BigLetter
+        public override int GetHashCode()
         {
-            get { return bigLetter; }
-            set { bigLetter = value; }
+            return (SmallLetter != null ? SmallLetter.GetHashCode() : 0);
         }
+
+        public int CompareTo(object obj)
+        {
+            var other = obj as Letter;
+            if (other != null) return String.Compare(other.SmallLetter, SmallLetter, StringComparison.Ordinal);
+            return obj.GetHashCode() - GetHashCode();
+        }
+
+        public string SmallLetter { get; set; }
+
+        public string BigLetter { get; set; }
+
+        public string Word { get; set; }
+
+        public ImageBrush Image { get; set; }
 
         public Letter(string letter)
         {
-            this.smallLetter = letter.ToLower();
-            this.bigLetter = this.smallLetter.ToUpper();
+            SmallLetter = letter.ToLower();
+            BigLetter = SmallLetter.ToUpper();
+        }
+
+        public Letter(string letter, string word)
+        {
+            SmallLetter = letter.ToLower();
+            BigLetter = letter.ToUpper();
+            Word = word;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((Letter) obj);
         }
     }
 }

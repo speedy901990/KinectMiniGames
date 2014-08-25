@@ -67,6 +67,7 @@
           <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="id_game" Type="integer" Nullable="false" />
           <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="value" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="GameResults">
           <Key>
@@ -297,6 +298,7 @@
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Game" Relationship="GameModel.FK_GameParams_0_0" FromRole="GameParams" ToRole="Games" />
           <NavigationProperty Name="HistoryParams" Relationship="GameModel.FK_HistoryParams_0_0" FromRole="GameParams" ToRole="HistoryParams" />
+          <Property Type="String" Name="value" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="GameResult">
           <Key>
@@ -492,6 +494,7 @@
           <EntitySetMapping Name="GameParams">
             <EntityTypeMapping TypeName="GameModel.GameParam">
               <MappingFragment StoreEntitySet="GameParams">
+                <ScalarProperty Name="value" ColumnName="value" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="id_game" ColumnName="id_game" />
                 <ScalarProperty Name="name" ColumnName="name" />

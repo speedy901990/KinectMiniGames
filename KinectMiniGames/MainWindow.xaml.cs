@@ -105,7 +105,7 @@ namespace KinectMiniGames
             this.wrapPanel.Children.Clear();
             this.wrapPanel.Children.Add(this.createSingleButton("Apples Game"));
             this.wrapPanel.Children.Add(this.createSingleButton("Bubbles Game"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Letters Game"));
+            this.wrapPanel.Children.Add(this.createSingleButton("Letters Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Painting Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Dancing Steps"));
@@ -219,9 +219,9 @@ namespace KinectMiniGames
             kinectViewBorder.Visibility = System.Windows.Visibility.Visible;
             sensorChooserUi.Visibility = System.Windows.Visibility.Visible;
 
-            if (this.sensorChooser.Status == ChooserStatus.None)
+            if (sensorChooser.Status == ChooserStatus.None)
             {
-                this.sensorChooser.Start();
+                sensorChooser.Start();
             }
         }
 
