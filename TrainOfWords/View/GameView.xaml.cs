@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using TrainOfWords.Model;
@@ -46,13 +47,63 @@ namespace TrainOfWords.View
             SetFirstStep();
         }
 
-        private void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs kinectChangedEventArgs)
+        private void SensorChooserOnKinectChanged(object sender, KinectChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.OldSensor != null)
+            {
+                try
+                {
+                    e.OldSensor.DepthStream.Range = DepthRange.Default;
+                    e.OldSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    e.OldSensor.DepthStream.Disable();
+                    e.OldSensor.SkeletonStream.Disable();
+                }
+                catch (InvalidOperationException)
+                {
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+            }
+
+            if (e.NewSensor != null)
+            {
+                try
+                {
+                    e.NewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
+                    e.NewSensor.SkeletonStream.Enable();
+
+                    try
+                    {
+                        e.NewSensor.DepthStream.Range = DepthRange.Near;
+                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = true;
+                        e.NewSensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // Non Kinect for Windows devices do not support Near mode, so reset back to default mode.
+                        e.NewSensor.DepthStream.Range = DepthRange.Default;
+                        e.NewSensor.SkeletonStream.EnableTrackingInNearRange = false;
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    //MessageBox.Show("Kinect Setup Error");
+                    // KinectSensor might enter an invalid state while enabling/disabling streams or stream features.
+                    // E.g.: sensor might be abruptly unplugged.
+                }
+                if (e.NewSensor.Status != KinectStatus.Connected) return;
+                KinectUserViewer.KinectSensor = e.NewSensor;
+                MyKinectRegion.KinectSensor = e.NewSensor;
+            }
         }
 
         private void SetFirstStep()
         {
+            KinectRegion.AddQueryInteractionStatusHandler(MyKinectRegion, OnQuery);
+            KinectRegion.AddQueryInteractionStatusHandler(MainCanvas, OnQuery);
+            KinectRegion.AddQueryInteractionStatusHandler(PopupPanel, OnQuery);
+            KinectRegion.AddHandPointerGripHandler(MainCanvas, OnGrip);
+            KinectRegion.AddHandPointerGripReleaseHandler(MainCanvas, OnGripRelease);
             var word = _game.Words[0];
             for (var i = 0; i < _game.Letters.Count/2 ; i++)
             {
@@ -74,6 +125,9 @@ namespace TrainOfWords.View
                 };
                 letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
                 //kinectowe eventy
+                KinectRegion.AddQueryInteractionStatusHandler(letterButton, OnQuery);
+                KinectRegion.AddHandPointerGripHandler(letterButton, OnGrip);
+                KinectRegion.AddHandPointerGripReleaseHandler(letterButton, OnGripRelease);
                 LettersPanel.Children.Add(letterButton);
                 Grid.SetRow(letterButton, j % 2);
                 Grid.SetColumn(letterButton, j / 2);
@@ -89,9 +143,71 @@ namespace TrainOfWords.View
             };
             train.MouseEnter += TrainOnMouseEnter;
             //kinectowe eventy
+            KinectRegion.AddQueryInteractionStatusHandler(train, OnQuery);
+            KinectRegion.AddHandPointerEnterHandler(train, OnHandPointerEnter);
+            KinectRegion.AddHandPointerGripReleaseHandler(train, OnGripRelease);
             ButtonsGrid.Children.Add(train);
             Grid.SetRow(train,2);
             Grid.SetColumnSpan(train, _game.Letters.Count / 2);
+        }
+
+        private void OnGripRelease(object sender, HandPointerEventArgs e)
+        {
+            e.HandPointer.Captured = null;
+            e.Handled = true;
+        }
+
+        private void OnGrip(object sender, HandPointerEventArgs e)
+        {
+            e.HandPointer.Capture(MainCanvas);
+            var button = sender as KinectTileButton;
+            if (button == null) return;
+            var letter = button.Tag as string;
+            if (letter == null) return;
+            _selectedLetter = letter;
+            _selectedLetterButton = button;
+            e.Handled = true;
+        }
+
+        private void OnHandPointerEnter(object sender, HandPointerEventArgs e)
+        {
+            if (_selectedLetterButton == null) return;
+            var train = sender as KinectTileButton;
+            if (train == null) return;
+            var word = train.Tag as Word;
+            if (word == null) return;
+            if (word.Letters.Contains(_selectedLetter))
+            {
+                word.Letters.Remove(_selectedLetter);
+                _selectedLetterButton.IsEnabled = false;
+                _selectedLetterButton.Foreground = new SolidColorBrush(Colors.Green);
+                NotifySuccess();
+                _selectedLetter = null;
+                _selectedLetterButton = null;
+                return;
+            }
+            NotifyFail();
+            _selectedLetter = null;
+            _selectedLetterButton = null;
+        }
+
+        private void OnQuery(object sender, QueryInteractionStatusEventArgs e)
+        {
+            switch (e.HandPointer.HandEventType)
+            {
+                case HandEventType.Grip:
+                    _isInGripInteraction = true;
+                    e.IsInGripInteraction = true;
+                    break;
+                case HandEventType.GripRelease:
+                    _isInGripInteraction = false;
+                    e.IsInGripInteraction = false;
+                    break;
+                case HandEventType.None:
+                    e.IsInGripInteraction = _isInGripInteraction;
+                    break;
+            }
+            e.Handled = true;
         }
 
         private void LetterButtonOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -166,7 +282,7 @@ namespace TrainOfWords.View
             Grid.SetRow(popup, 0);
             Grid.SetColumnSpan(popup, ButtonsGrid.ColumnDefinitions.Count);
             Grid.SetRowSpan(popup, ButtonsGrid.RowDefinitions.Count);
-            var endGamePopupTimer = new System.Timers.Timer { Interval = 3000 };
+            var endGamePopupTimer = new Timer { Interval = 3000 };
             endGamePopupTimer.Elapsed += EndGamePopupTimerOnElapsed;
             endGamePopupTimer.Start();
         }
