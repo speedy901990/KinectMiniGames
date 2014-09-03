@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Width="300" Height="300"
-             BorderBrush="#FF4E3876" BorderThickness="5" Loaded="UserControl_Loaded_1">
+             BorderBrush="#FF4E3876" BorderThickness="5">
     <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

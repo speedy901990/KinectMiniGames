@@ -2,33 +2,23 @@
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LettersGame.View
 {
     /// <summary>
     /// Interaction logic for SecondLevelView.xaml
     /// </summary>
-    public partial class SecondLevelView : UserControl
+    public partial class SecondLevelView
     {
         private readonly LettersGameConfig _config;
         private readonly Game _game;
         private readonly int _letterWidth;
         private readonly int _letterHeight;
-        private int trolleyWidth;
-        private int trolleyHeight;
         private Letter _selectedLetter;
         private KinectTileButton _selectedLetterButton;
         private Timer _endGamePopupTimer;
@@ -73,7 +63,7 @@ namespace LettersGame.View
             {
                 if (i % 2 == 0)
                 {
-                    var column = new ColumnDefinition() { Width = new GridLength(1.0, GridUnitType.Star) };
+                    var column = new ColumnDefinition { Width = new GridLength(1.0, GridUnitType.Star) };
                     MainGrid.ColumnDefinitions.Add(column);
                 }
                 var smallLetter = new KinectTileButton
@@ -98,8 +88,6 @@ namespace LettersGame.View
 
             for (var i = 0; i < _game.Trolleys.Count; i++)
             {
-                var rand = new Random(Guid.NewGuid().GetHashCode());
-                
                 //var trolley = new Rectangle
                 //{
                 //    Tag = game.Trolleys[i],
@@ -216,7 +204,7 @@ namespace LettersGame.View
         {
             var button = sender as KinectTileButton;
             _selectedLetterButton = button;
-            _selectedLetter = (Letter)button.Tag;
+            if (button != null) _selectedLetter = (Letter)button.Tag;
         }
         #endregion
 
@@ -335,7 +323,6 @@ namespace LettersGame.View
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                _sensorChooser.Kinect.Stop();
                 _sensorChooser.Stop();
                 _game.SaveResultsThread.Join();
                 var parentGrid = (Grid)Parent;

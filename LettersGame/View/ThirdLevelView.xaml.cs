@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LettersGame.Resources;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
@@ -23,7 +14,7 @@ namespace LettersGame.View
     /// <summary>
     /// Interaction logic for ThirdLevelView.xaml
     /// </summary>
-    public partial class ThirdLevelView : UserControl
+    public partial class ThirdLevelView
     {
         private readonly LettersGameConfig _config;
         private readonly Game _game;
@@ -144,7 +135,7 @@ namespace LettersGame.View
 
         private void OnHandPointerEnter(object sender, HandPointerEventArgs e)
         {
-            if (_selectedLetter != null)
+            if (_selectedLetter != null && _selectedLetterButton != null)
             {
                 var letterButton = sender as KinectTileButton;
                 if (letterButton != null)
@@ -168,6 +159,7 @@ namespace LettersGame.View
                     else
                     {
                         _selectedLetter = null;
+                        _selectedLetterButton = null;
                         MainCanvas.Children.Remove(_linkingLine);
                         NotifyFail();
                     }
@@ -314,7 +306,7 @@ namespace LettersGame.View
                     var letter = letterButton.Tag as Letter;
                     var position = e.GetPosition(MainCanvas);
 
-                    if (_selectedLetterButton != letterButton && this._selectedLetter == letter)
+                    if (!Equals(_selectedLetterButton, letterButton) && Equals(_selectedLetter, letter))
                     {
                         _selectedLetter = null;
                         _linkingLine.X2 = position.X;
@@ -329,7 +321,7 @@ namespace LettersGame.View
                     else
                     {
                         _selectedLetter = null;
-                        MainCanvas.Children.Remove(this._linkingLine);
+                        MainCanvas.Children.Remove(_linkingLine);
                         _linkingLine = null;
                         _drawingEnabled = false;
                         NotifyFail();
@@ -416,7 +408,6 @@ namespace LettersGame.View
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                _sensorChooser.Kinect.Stop();
                 _sensorChooser.Stop();
                 _game.SaveResultsThread.Join();
                 var parentGrid = (Grid)Parent;
