@@ -80,6 +80,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Words3Chars.resx</DependentUpon>
     </Compile>
+    <Compile Include="View\GameOverPopup.xaml.cs">
+      <DependentUpon>GameOverPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
@@ -90,7 +93,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="View\SmallPopup.xaml.cs">
+      <DependentUpon>SmallPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TrainOfWordsGameConfig.cs" />
+    <Page Include="View\GameOverPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\GameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -98,6 +108,10 @@
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SmallPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

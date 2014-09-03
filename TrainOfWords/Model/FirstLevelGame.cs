@@ -13,6 +13,7 @@ namespace TrainOfWords.Model
         {
             var random = new Random();
             var alphabet = new List<string>();
+            Config.AllLettersCount = 0;
             using (var resourceSet = Resources.Alphabet.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
             {
                 var letters = resourceSet.Cast<DictionaryEntry>().Select(entry => entry.Value.ToString());
@@ -49,7 +50,8 @@ namespace TrainOfWords.Model
             foreach (var word in Words)
             {
                 Letters.Add(word.Name, new List<string>(word.Letters));
-                while (Letters[word.Name].Count < Config.NuberOfLetters)
+                Config.AllLettersCount += word.Letters.Count;
+                while (Letters[word.Name].Count < Config.NuberOfLettersOnScreen)
                 {
                     var index = random.Next(alphabet.Count);
                     Letters[word.Name].Add(alphabet[index]);

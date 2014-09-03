@@ -8,12 +8,14 @@ namespace TrainOfWords.View
 {
     public class TrainOfWordsGameConfig
     {
-        private const int NumberOfLetters = 12;
+        private const int LettersOnScreen = 12;
 
         //public Player Player { get; set; }
 
-        public int NuberOfLetters { get { return NumberOfLetters; } }
+        public int NuberOfLettersOnScreen { get { return LettersOnScreen; } }
 
         public int Level { get; set; }
+
+        public int AllLettersCount { get; set; }
     }
 }

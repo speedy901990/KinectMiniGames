@@ -417,7 +417,7 @@ namespace LettersGame.View
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                _sensorChooser.Kinect.Stop();
+                //_sensorChooser.Kinect.Stop();
                 _sensorChooser.Stop();
                 _game.SaveResultsThread.Join();
                 var parentGrid = (Grid)Parent;

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,9 +22,9 @@ namespace TrainOfWords.View
 
         private bool _isInGripInteraction;
 
-        private string selectedLetter;
+        private string _selectedLetter;
 
-        private KinectTileButton selectedLetterButton;
+        private KinectTileButton _selectedLetterButton;
 
         public GameView() : this(new FirstLevelGame(new TrainOfWordsGameConfig{Level = 1}))
         {}
@@ -92,30 +94,118 @@ namespace TrainOfWords.View
             Grid.SetColumnSpan(train, _game.Letters.Count / 2);
         }
 
-        private void TrainOnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
-        {
-            if (selectedLetterButton == null) return;
-            var train = sender as KinectTileButton;
-            if (train == null) return;
-            var word = train.Tag as Word;
-            
-            if (word == null) return;
-            if (word.Letters.Contains(selectedLetter))
-            {
-                word.Letters.Remove(selectedLetter);
-                selectedLetterButton.IsEnabled = false;
-                //notify success
-            }
-        }
-
         private void LetterButtonOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var button = sender as KinectTileButton;
             if (button == null) return;
             var letter = button.Tag as string;
             if (letter == null) return;
-            selectedLetter = letter;
-            selectedLetterButton = button;
+            _selectedLetter = letter;
+            _selectedLetterButton = button;
+        }
+
+        private void TrainOnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
+        {
+            if (_selectedLetterButton == null) return;
+            var train = sender as KinectTileButton;
+            if (train == null) return;
+            var word = train.Tag as Word;
+            if (word == null) return;
+            if (word.Letters.Contains(_selectedLetter))
+            {
+                word.Letters.Remove(_selectedLetter);
+                _selectedLetterButton.IsEnabled = false;
+                NotifySuccess();
+                return;
+            }
+            NotifyFail();
+        }
+
+        private void NotifySuccess()
+        {
+            _game.Score.CorrectTrials++;
+            _game.Config.AllLettersCount--;
+            if (!_game.Words[0].Letters.Any() && !_game.FirstStepFinished)
+            {
+                _game.FirstStepFinished = true;
+                EndGame();
+                return;
+                //przejdz do drugiego
+            }
+            if (!_game.Words[1].Letters.Any() && !_game.SecondStepFinished)
+            {
+                _game.SecondStepFinished = true;
+                return;
+                //przejdz do trzeciego
+            }
+            if (!_game.Words[2].Letters.Any() && !_game.ThirdStepFinished)
+            {
+                _game.ThirdStepFinished = true;
+                EndGame();
+                //zakoncz
+            }
+            QuickSuccessPopup();
+        }
+
+        private void NotifyFail()
+        {
+            _game.Score.Failures++;
+            QuickFailurePopup();
+        }
+
+        private void EndGame()
+        {
+            _game.SaveResult();
+            var popup = new GameOverPopup
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            ButtonsGrid.Children.Add(popup);
+            Grid.SetColumn(popup, 0);
+            Grid.SetRow(popup, 0);
+            Grid.SetColumnSpan(popup, ButtonsGrid.ColumnDefinitions.Count);
+            Grid.SetRowSpan(popup, ButtonsGrid.RowDefinitions.Count);
+            var endGamePopupTimer = new System.Timers.Timer { Interval = 3000 };
+            endGamePopupTimer.Elapsed += EndGamePopupTimerOnElapsed;
+            endGamePopupTimer.Start();
+        }
+
+        private void EndGamePopupTimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                //_sensorChooser.Kinect.Stop();
+                _sensorChooser.Stop();
+                //_game.SaveResultsThread.Join();
+                var parentGrid = (Grid)Parent;
+                var parent = (MainWindow)parentGrid.Parent;
+                parent.Close();
+            }), null);
+        }
+
+        private void QuickSuccessPopup()
+        {
+            Grid.SetColumnSpan(PopupPanel, ButtonsGrid.ColumnDefinitions.Count);
+            var popup = new SmallPopup
+            {
+                Message = "DOBRZE!",
+                PopupColor = Brushes.Green
+            };
+            popup.Update();
+            PopupPanel.Children.Add(popup);
+        }
+
+        private void QuickFailurePopup()
+        {
+            Grid.SetColumnSpan(PopupPanel, ButtonsGrid.ColumnDefinitions.Count);
+            var popup = new SmallPopup
+            {
+                Message = "ŹLE!",
+                PopupColor = Brushes.Red
+            };
+            popup.Update();
+            PopupPanel.Children.Add(popup);
         }
     }
 }
