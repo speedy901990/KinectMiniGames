@@ -1,25 +1,15 @@
 ﻿using LettersGame;
 using Microsoft.Kinect.Toolkit;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KinectMiniGames.ConfigPages
 {
     /// <summary>
     /// Interaction logic for LettersGameConfigPage.xaml
     /// </summary>
-    public partial class LettersGameConfigPage : UserControl
+    public partial class LettersGameConfigPage
     {
         public LettersGameConfig Config { get; set; }
 
@@ -51,7 +41,7 @@ namespace KinectMiniGames.ConfigPages
         private void kcbLevel1_Click(object sender, RoutedEventArgs e)
         {
             SensorChooser.Stop();
-            Config.FirstLevelLettersCount = 8;
+            Config.FirstLevelLettersCount = 5;
             Config.CurrentLevel = 1;
 
             ShowGameWindow();
@@ -60,7 +50,7 @@ namespace KinectMiniGames.ConfigPages
         private void kcbLevel2_Click(object sender, RoutedEventArgs e)
         {
             SensorChooser.Stop();
-            Config.LettersCount = 16;
+            Config.LettersCount = 12;
             Config.TrolleysCount = 4;
             Config.CurrentLevel = 2;
 

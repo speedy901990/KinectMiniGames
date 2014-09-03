@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
@@ -22,7 +14,7 @@ namespace LettersGame.View
     /// <summary>
     /// Interaction logic for FirstLevelView.xaml
     /// </summary>
-    public partial class FirstLevelView : UserControl
+    public partial class FirstLevelView
     {
         private readonly LettersGameConfig _config;
 
@@ -187,31 +179,34 @@ namespace LettersGame.View
         #region mouse events
         private void LetterOnMouseEnter(object sender, MouseEventArgs e)
         {
-            if (_selectedLetter != null && this._drawingEnabled)
+            if (_selectedLetter != null && _drawingEnabled)
             {
                 var letterButton = sender as KinectTileButton;
-                var letter = letterButton.Tag as Letter;
-                var position = e.GetPosition(MainCanvas);
+                if (letterButton != null)
+                {
+                    var letter = letterButton.Tag as Letter;
+                    var position = e.GetPosition(MainCanvas);
 
-                if (_selectedLetterButton != letterButton && _selectedLetter == letter)
-                {
-                    _selectedLetter = null;
-                    _linkingLine.X2 = position.X;
-                    _linkingLine.Y2 = position.Y;
-                    _linkingLine.Stroke = new SolidColorBrush(Colors.Green);
-                    _drawingEnabled = false;
-                    _linkingLine = null;
-                    letterButton.IsEnabled = false;
-                    _selectedLetterButton.IsEnabled = false;
-                    //this.NotifySuccess();
-                }
-                else
-                {
-                    _selectedLetter = null;
-                    MainCanvas.Children.Remove(_linkingLine);
-                    _linkingLine = null;
-                    _drawingEnabled = false;
-                    //this.NotifyFail();
+                    if (!Equals(_selectedLetterButton, letterButton) && Equals(_selectedLetter, letter))
+                    {
+                        _selectedLetter = null;
+                        _linkingLine.X2 = position.X;
+                        _linkingLine.Y2 = position.Y;
+                        _linkingLine.Stroke = new SolidColorBrush(Colors.Green);
+                        _drawingEnabled = false;
+                        _linkingLine = null;
+                        letterButton.IsEnabled = false;
+                        _selectedLetterButton.IsEnabled = false;
+                        //this.NotifySuccess();
+                    }
+                    else
+                    {
+                        _selectedLetter = null;
+                        MainCanvas.Children.Remove(_linkingLine);
+                        _linkingLine = null;
+                        _drawingEnabled = false;
+                        //this.NotifyFail();
+                    }
                 }
             }
         }
@@ -220,22 +215,19 @@ namespace LettersGame.View
         {
             _selectedLetterButton = sender as KinectTileButton;
             if (_selectedLetterButton != null) _selectedLetter = _selectedLetterButton.Tag as Letter;
-            if (MainCanvas.CaptureMouse())
+            if (!MainCanvas.CaptureMouse()) return;
+            _drawingEnabled = true;
+            var point = e.GetPosition(MainCanvas);
+            _linkingLine = new Line
             {
-                var mousePosition = e.GetPosition(MainCanvas);
-                _drawingEnabled = true;
-                var point = e.GetPosition(MainCanvas);
-                _linkingLine = new Line
-                {
-                    X1 = point.X,
-                    X2 = point.X,
-                    Y1 = point.Y,
-                    Y2 = point.Y,
-                    Stroke = new SolidColorBrush(Colors.Red),
-                    StrokeThickness = 10
-                };
-                MainCanvas.Children.Add(_linkingLine);
-            }
+                X1 = point.X,
+                X2 = point.X,
+                Y1 = point.Y,
+                Y2 = point.Y,
+                Stroke = new SolidColorBrush(Colors.Red),
+                StrokeThickness = 10
+            };
+            MainCanvas.Children.Add(_linkingLine);
         }
 
         private void OnLetterMouseMove(object sender, MouseEventArgs e)
@@ -401,14 +393,14 @@ namespace LettersGame.View
             _game.SaveResults();
             var popup = new GameOverPopup
             {
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-                VerticalAlignment = System.Windows.VerticalAlignment.Center
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
             };
             ButtonsGrid.Children.Add(popup);
             Grid.SetColumn(popup, 0);
             Grid.SetRow(popup, 1);
             Grid.SetColumnSpan(popup, ButtonsGrid.ColumnDefinitions.Count);
-            var endGamePopupTimer = new System.Timers.Timer {Interval = 3000};
+            var endGamePopupTimer = new Timer {Interval = 3000};
             endGamePopupTimer.Elapsed += endGamePopupTimer_Elapsed;
             endGamePopupTimer.Start();
         }
@@ -417,7 +409,6 @@ namespace LettersGame.View
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                _sensorChooser.Kinect.Stop();
                 _sensorChooser.Stop();
                 _game.SaveResultsThread.Join();
                 var parentGrid = (Grid)Parent;
