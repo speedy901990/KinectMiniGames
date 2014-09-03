@@ -158,6 +158,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DatabaseManagement\DatabaseManagement.csproj">
+      <Project>{32F1CD97-43E8-4C97-8248-B7612ED9CD4E}</Project>
+      <Name>DatabaseManagement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Microsoft.Kinect.Toolkit.Controls\Microsoft.Kinect.Toolkit.Controls.csproj">
       <Project>{4508C4D1-85BB-4F3F-9E3B-CC93D231C65D}</Project>
       <Name>Microsoft.Kinect.Toolkit.Controls</Name>

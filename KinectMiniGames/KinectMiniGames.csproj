@@ -112,6 +112,9 @@
     <Compile Include="ConfigPages\PlayerSelection.xaml.cs">
       <DependentUpon>PlayerSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfigPages\TrainOfWordsConfigPage.xaml.cs">
+      <DependentUpon>TrainOfWordsConfigPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="KinectHoverButton.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ConfigPages\PlayerSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfigPages\TrainOfWordsConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,6 +212,10 @@
     <ProjectReference Include="..\Microsoft.Kinect.Toolkit\Microsoft.Kinect.Toolkit.csproj">
       <Project>{c6f9c31b-6130-4443-a5cc-ef0664552ecd}</Project>
       <Name>Microsoft.Kinect.Toolkit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrainOfWords\TrainOfWords.csproj">
+      <Project>{4a5d0765-eff4-4887-80c8-10e048f49d31}</Project>
+      <Name>TrainOfWords</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

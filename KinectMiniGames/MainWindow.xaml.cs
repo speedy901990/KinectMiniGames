@@ -6,8 +6,6 @@ using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Resources;
-using System.Resources;
 using System.Threading;
 using KinectMiniGames.ConfigPages;
 using DatabaseManagement;
@@ -71,8 +69,8 @@ namespace KinectMiniGames
             //setMenuBackground();
             setupKinectSensor();
             createMenuButtons();
-            MainWindow.playersThread = new Thread(GetPlayersFromDatabase);
-            MainWindow.playersThread.Start();
+            playersThread = new Thread(GetPlayersFromDatabase);
+            playersThread.Start();
         }
 
         private void setMenuBackground()
@@ -102,16 +100,16 @@ namespace KinectMiniGames
 
         private void createMenuButtons()
         {
-            this.wrapPanel.Children.Clear();
-            this.wrapPanel.Children.Add(this.createSingleButton("Apples Game"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Bubbles Game"));
-            this.wrapPanel.Children.Add(this.createSingleButton("Letters Game"));
+            wrapPanel.Children.Clear();
+            wrapPanel.Children.Add(createSingleButton("Apples Game"));
+            wrapPanel.Children.Add(createSingleButton("Bubbles Game"));
+            wrapPanel.Children.Add(createSingleButton("Letters Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Painting Game"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Dancing Steps"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Song Movements"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Simple Excersises"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Train of Words"));
+            wrapPanel.Children.Add(createSingleButton("Train of Words"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Steps of Activity"));
             //this.wrapPanel.Children.Add(this.createSingleButton("Educational Kinesiology"));
         }
@@ -124,8 +122,8 @@ namespace KinectMiniGames
 
         private void GetPlayersFromDatabase()
         {
-            PlayersManager manager = new PlayersManager();
-            MainWindow.playerList = manager.PlayerList;
+            var manager = new PlayersManager();
+            playerList = manager.PlayerList;
         }
         #endregion
 
@@ -181,22 +179,24 @@ namespace KinectMiniGames
             switch ((String)button.Label)
             {
                 case "Apples Game":
-                    var applesConfigPage = new ApplesGameConfigPage(button.Label as string, this.sensorChooser);
-                    this.kinectRegionGrid.Children.Add(applesConfigPage);
+                    var applesConfigPage = new ApplesGameConfigPage(button.Label as string, sensorChooser);
+                    kinectRegionGrid.Children.Add(applesConfigPage);
                     e.Handled = true;
                     break;
                 case "Bubbles Game":
-                    var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, this.sensorChooser);
-                    this.kinectRegionGrid.Children.Add(bubblesConfigPage);
+                    var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, sensorChooser);
+                    kinectRegionGrid.Children.Add(bubblesConfigPage);
                     e.Handled = true;
                     break;
                 case "Letters Game":
-                    var lettersConfigPage = new LettersGameConfigPage(button.Label as string, this.sensorChooser);
-                    this.kinectRegionGrid.Children.Add(lettersConfigPage);
+                    var lettersConfigPage = new LettersGameConfigPage(button.Label as string, sensorChooser);
+                    kinectRegionGrid.Children.Add(lettersConfigPage);
                     e.Handled = true;
                     break;
-
-                default:
+                case "Train of Words":
+                    var trainConfigPage = new TrainOfWordsConfigPage(button.Label as string, sensorChooser);
+                    kinectRegionGrid.Children.Add(trainConfigPage);
+                    e.Handled = true;
                     break;
             }
         }
