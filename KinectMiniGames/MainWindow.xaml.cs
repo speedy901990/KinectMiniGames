@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Data;
 using Microsoft.Kinect;
@@ -11,6 +16,8 @@ using KinectMiniGames.ConfigPages;
 using DatabaseManagement;
 using DatabaseManagement.Managers;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace KinectMiniGames
 {
@@ -80,10 +87,30 @@ namespace KinectMiniGames
             {
                 if (!context.Database.Exists())
                 {
-                    context.Database.Create();  
+                    context.Database.Create();
+                    var games = GetGamesFromResource();
+                    context.Games.AddRange(games);
+
+                    context.SaveChanges();
                 }
                 context.SaveChanges();
             }
+        }
+
+        private IEnumerable<Game> GetGamesFromResource()
+        {
+            var games = new List<Game>();
+            using (var resourceSet = Configs.GameList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
+            {
+                foreach (DictionaryEntry item in resourceSet)
+                {
+                    var game = new Game {Name = item.Key as string, Id = int.Parse(item.Value.ToString())};
+                    games.Add(game);
+                }
+                resourceSet.Close();
+            }
+
+            return games;
         }
 
         private void setMenuBackground()

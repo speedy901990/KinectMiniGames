@@ -118,7 +118,7 @@
                     <WrapPanel VerticalAlignment="Center" x:Name="wrapPanel" Orientation="Vertical" k:KinectTileButton.Click="KinectTileButtonClick" HorizontalAlignment="Center">
                         <!-- items for design layout.  They will be replaced at runtime. -->
                         <k:KinectTileButton Label="1" Background="{DynamicResource PurpleBrush}"/>
-                        <k:KinectTileButton Label="2"/>
+                        <k:KinectTileButton Label="2" x:Name="gowno"/>
                         <k:KinectTileButton Label="3"/>
                         <k:KinectTileButton Label="4"/>
                     </WrapPanel>
