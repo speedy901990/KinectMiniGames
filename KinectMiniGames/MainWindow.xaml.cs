@@ -65,12 +65,25 @@ namespace KinectMiniGames
         #region Ctor + Config
         public MainWindow()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            InitializeDatabase();
             //setMenuBackground();
             setupKinectSensor();
             createMenuButtons();
             playersThread = new Thread(GetPlayersFromDatabase);
             playersThread.Start();
+        }
+
+        private void InitializeDatabase()
+        {
+            using (var context = new GameModelContainer())
+            {
+                if (!context.Database.Exists())
+                {
+                    context.Database.Create();  
+                }
+                context.SaveChanges();
+            }
         }
 
         private void setMenuBackground()

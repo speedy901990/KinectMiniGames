@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/23/2014 00:23:11
+-- Date Created: 09/23/2014 18:38:17
 -- Generated from EDMX file: C:\Projects\KinectMiniGames\DatabaseManagement\GameModel.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,56 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_GameGameParams]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[GameParams1] DROP CONSTRAINT [FK_GameGameParams];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GameGameResults]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[GameResults] DROP CONSTRAINT [FK_GameGameResults];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PlayerHistory]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Histories] DROP CONSTRAINT [FK_PlayerHistory];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GameHistory]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Histories] DROP CONSTRAINT [FK_GameHistory];
+GO
+IF OBJECT_ID(N'[dbo].[FK_HistoryHistoryResult]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HistoryResults] DROP CONSTRAINT [FK_HistoryHistoryResult];
+GO
+IF OBJECT_ID(N'[dbo].[FK_HistoryHistoryParams]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HistoryParams] DROP CONSTRAINT [FK_HistoryHistoryParams];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GameParamsHistoryParams]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HistoryParams] DROP CONSTRAINT [FK_GameParamsHistoryParams];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GameResultsHistoryResult]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[HistoryResults] DROP CONSTRAINT [FK_GameResultsHistoryResult];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Players]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Players];
+GO
+IF OBJECT_ID(N'[dbo].[Games]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Games];
+GO
+IF OBJECT_ID(N'[dbo].[GameParams1]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[GameParams1];
+GO
+IF OBJECT_ID(N'[dbo].[GameResults]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[GameResults];
+GO
+IF OBJECT_ID(N'[dbo].[Histories]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Histories];
+GO
+IF OBJECT_ID(N'[dbo].[HistoryResults]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HistoryResults];
+GO
+IF OBJECT_ID(N'[dbo].[HistoryParams]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[HistoryParams];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -72,7 +117,7 @@ GO
 -- Creating table 'HistoryResults'
 CREATE TABLE [dbo].[HistoryResults] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Value] nvarchar(max)  NOT NULL,
+    [Value] int  NOT NULL,
     [History_Id] int  NOT NULL,
     [GameResult_Id] int  NOT NULL
 );

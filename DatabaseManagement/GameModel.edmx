@@ -93,7 +93,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
     <Property Name="History_Id" Type="int" Nullable="false" />
     <Property Name="GameResult_Id" Type="int" Nullable="false" />
   </EntityType>
