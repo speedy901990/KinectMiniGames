@@ -76,7 +76,7 @@ namespace KinectMiniGames.ConfigPages
         {
             if (IsInitialized && MainWindow.SelectedPlayer != null)
             {
-                lbPlayer.Content = MainWindow.SelectedPlayer.name + " " + MainWindow.SelectedPlayer.surname;
+                lbPlayer.Content = MainWindow.SelectedPlayer.Name + " " + MainWindow.SelectedPlayer.Surname;
             }
         }
     }

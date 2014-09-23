@@ -24,30 +24,24 @@ namespace KinectMiniGames.ConfigPages
     /// </summary>
     public partial class PlayerSelection : UserControl
     {
-        private Player selectedPlayer;
-
-        public Player SelectedPlayer
-        {
-            get { return selectedPlayer; }
-            private set { selectedPlayer = value; }
-        }
+        public Player SelectedPlayer { get; private set; }
 
         public PlayerSelection()
         {
             InitializeComponent();
-            this.GenerateButtons();
+            GenerateButtons();
         }
 
         private void GenerateButtons()
         {
             MainWindow.PlayersThread.Join();
             mainStackPanel.Children.Clear();
-            for (int i = 0; i < MainWindow.PlayerList.Count; i++)
+            for (var i = 0; i < MainWindow.PlayerList.Count; i++)
 			{
                 var item = MainWindow.PlayerList[i];
                 var button = new KinectTileButton 
                 { 
-                    Content = item.name + "\n" + item.surname,
+                    Content = item.Name + "\n" + item.Surname,
                     Tag = i,
                     Foreground = new SolidColorBrush(Colors.White),
                     Width = 300,
@@ -61,11 +55,14 @@ namespace KinectMiniGames.ConfigPages
         void button_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as KinectTileButton;
-            int id = (int)button.Tag;
-            this.selectedPlayer = MainWindow.PlayerList[id];
-            MainWindow.SelectedPlayer = this.selectedPlayer;
+            if (button != null)
+            {
+                var id = (int)button.Tag;
+                SelectedPlayer = MainWindow.PlayerList[id];
+            }
+            MainWindow.SelectedPlayer = SelectedPlayer;
 
-            var parent = (Panel)this.Parent;
+            var parent = (Panel)Parent;
             parent.Children.Remove(this);
         }
     }

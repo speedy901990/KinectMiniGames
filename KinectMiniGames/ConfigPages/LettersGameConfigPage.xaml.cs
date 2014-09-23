@@ -25,12 +25,11 @@ namespace KinectMiniGames.ConfigPages
 
         private void ShowGameWindow()
         {
-            if (MainWindow.SelectedPlayer != null)
-            {
-                Config.Player = MainWindow.SelectedPlayer;
-                var window = new LettersGame.MainWindow(Config);
-                window.Show();
-            }
+            if (MainWindow.SelectedPlayer == null) 
+                return;
+            Config.Player = MainWindow.SelectedPlayer;
+            var window = new LettersGame.MainWindow(Config);
+            window.Show();
         }
 
         private void ktbBackToMenu_Click(object sender, RoutedEventArgs e)
@@ -76,7 +75,7 @@ namespace KinectMiniGames.ConfigPages
         {
             if (IsInitialized && MainWindow.SelectedPlayer != null)
             {
-                lbPlayer.Content = MainWindow.SelectedPlayer.name + " " + MainWindow.SelectedPlayer.surname;
+                lbPlayer.Content = MainWindow.SelectedPlayer.Name + " " + MainWindow.SelectedPlayer.Surname;
             }
         }
     }

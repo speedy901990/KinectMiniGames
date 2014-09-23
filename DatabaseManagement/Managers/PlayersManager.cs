@@ -8,30 +8,20 @@ namespace DatabaseManagement.Managers
 {
     public class PlayersManager
     {
-        private List<Player> playerList;
-
-        public List<Player> PlayerList
-        {
-            get { return playerList; }
-            set { playerList = value; }
-        }
+        public List<Player> PlayerList { get; set; }
 
         public PlayersManager()
         {
-            this.GetPlayers();
+            GetPlayers();
         }
 
         private void GetPlayers()
         {
-            using (var context = new GameModelContext())
+            using (var context = new GameModelContainer())
             {
                 var players = context.Players;
 
-                playerList = new List<Player>();
-                foreach (Player item in players)
-                {
-                    playerList.Add(item);
-                }
+                PlayerList = new List<Player>(players);
             }
         }
     }
