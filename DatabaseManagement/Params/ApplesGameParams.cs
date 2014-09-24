@@ -8,57 +8,16 @@ namespace DatabaseManagement.Params
 {
     public class ApplesGameParams
     {
-        private int failures;
+        public int Failures { get; set; }
 
-        public int Failures
-        {
-            get { return failures; }
-            set { failures = value; }
-        }
+        public int Time { get; set; }
 
-        private int time;
+        public int CorrectTrials { get; set; }
 
-        public int Time
-        {
-            get { return time; }
-            set { time = value; }
-        }
+        public int Apples { get; set; }
 
-        private int correctTrials;
+        public int Colors { get; set; }
 
-        public int CorrectTrials
-        {
-            get { return correctTrials; }
-            set { correctTrials = value; }
-        }
-
-        private int apples;
-
-        public int Apples
-        {
-            get { return apples; }
-            set { apples = value; }
-        }
-
-        private int colors;
-
-        public int Colors
-        {
-            get { return colors; }
-            set { colors = value; }
-        }
-
-        private int baskets;
-
-        public int Baskets
-        {
-            get { return baskets; }
-            set { baskets = value; }
-        }
-        
-        public ApplesGameParams()
-        {
-
-        }
+        public int Baskets { get; set; }
     }
 }

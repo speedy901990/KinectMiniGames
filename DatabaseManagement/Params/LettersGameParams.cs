@@ -8,56 +8,14 @@ namespace DatabaseManagement.Params
 {
     public class LettersGameParams
     {
-        public LettersGameParams()
-        {
+        public int Level { get; set; }
 
-        }
-        #region params
-        private int level;
+        public int LettersCount { get; set; }
 
-        public int Level
-        {
-            get { return level; }
-            set { level = value; }
-        }
+        public int Failures { get; set; }
 
-        private int lettersCount;
+        public int Time { get; set; }
 
-        public int LettersCount
-        {
-            get { return lettersCount; }
-            set { lettersCount = value; }
-        }
-        #endregion
-
-        #region history results
-        private int failures;
-
-        public int Failures
-        {
-            get { return failures; }
-            set { failures = value; }
-        }
-
-        private int time;
-
-        public int Time
-        {
-            get { return time; }
-            set { time = value; }
-        }
-
-        private int correctTrials;
-
-        public int CorrectTrials
-        {
-            get { return correctTrials; }
-            set { correctTrials = value; }
-        }
-
-        #endregion
-
-
-
+        public int CorrectTrials { get; set; }
     }
 }

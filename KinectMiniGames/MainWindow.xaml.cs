@@ -1,30 +1,26 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Configuration;
 using System.Globalization;
-using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using KinectMiniGames.Models;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Threading;
 using KinectMiniGames.ConfigPages;
 using DatabaseManagement;
 using DatabaseManagement.Managers;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace KinectMiniGames
 {
     public partial class MainWindow
     {
         #region Public State
-        public int gamesCount = 3;
+        public int GamesCount = 3;
 
         public static readonly DependencyProperty PageLeftEnabledProperty = DependencyProperty.Register(
             "PageLeftEnabled", typeof(bool), typeof(MainWindow), new PropertyMetadata(false));
@@ -34,39 +30,26 @@ namespace KinectMiniGames
         public bool PageLeftEnabled
         {
             get { return (bool)GetValue(PageLeftEnabledProperty); }
-            set { this.SetValue(PageLeftEnabledProperty, value); }
+            set { SetValue(PageLeftEnabledProperty, value); }
         }
         public bool PageRightEnabled
         {
             get { return (bool)GetValue(PageRightEnabledProperty); }
-            set { this.SetValue(PageRightEnabledProperty, value); }
+            set { SetValue(PageRightEnabledProperty, value); }
         }
 
-        public static Thread PlayersThread
-        {
-            get { return playersThread; }
-        }
+        public static Thread PlayersThread { get; private set; }
 
-        public static List<Player> PlayerList
-        {
-            get { return MainWindow.playerList; }
-            set { MainWindow.playerList = value; }
-        }
+        public static List<Player> PlayerList { get; set; }
 
-        public static Player SelectedPlayer
-        {
-            get { return MainWindow.selectedPlayer; }
-            set { MainWindow.selectedPlayer = value; }
-        }
+        public static Player SelectedPlayer { get; set; }
+
         #endregion
 
         #region Private State
-        private const double ScrollErrorMargin = 0.001;
-        private const int PixelScrollByAmount = 10;
-        private KinectSensorChooser sensorChooser;
-        private static Thread playersThread;
-        private static List<Player> playerList;
-        private static Player selectedPlayer;
+
+        private KinectSensorChooser _sensorChooser;
+
         #endregion
 
         #region Ctor + Config
@@ -75,10 +58,10 @@ namespace KinectMiniGames
             InitializeComponent();
             InitializeDatabase();
             //setMenuBackground();
-            setupKinectSensor();
-            createMenuButtons();
-            playersThread = new Thread(GetPlayersFromDatabase);
-            playersThread.Start();
+            SetupKinectSensor();
+            CreateMenuButtons();
+            PlayersThread = new Thread(GetPlayersFromDatabase);
+            PlayersThread.Start();
         }
 
         private void InitializeDatabase()
@@ -100,45 +83,50 @@ namespace KinectMiniGames
         private IEnumerable<Game> GetGamesFromResource()
         {
             var games = new List<Game>();
-            using (var resourceSet = Configs.GameList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
+            var gameResourceSet = Configs.GameList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+            foreach (DictionaryEntry item in gameResourceSet)
             {
-                foreach (DictionaryEntry item in resourceSet)
-                {
-                    var game = new Game {Name = item.Key as string, Id = int.Parse(item.Value.ToString())};
-                    games.Add(game);
-                }
-                resourceSet.Close();
+                var game = new Game { Name = item.Key as string, Id = int.Parse(item.Value.ToString()) };
+                games.Add(game);
             }
+            gameResourceSet.Close();
+
+            var gameParamsResourceSet = Configs.GameParamsList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+            foreach (DictionaryEntry item in gameParamsResourceSet)
+            {
+                var gameNameModel = JsonConvert.DeserializeObject<GameNameModel>(item.Value.ToString());
+                var param = new GameParams {Name = item.Key.ToString(), Values = item.Value.ToString()};
+                var game = games.FirstOrDefault(game1 => game1.Name == gameNameModel.Game);
+                if (game != null) 
+                    game.GameParams.Add(param);
+            }
+            gameParamsResourceSet.Close();
+
+            var gameResultsResourceSet = Configs.GameList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+            foreach (DictionaryEntry item in gameResultsResourceSet)
+            {
+                var gameNameModel = JsonConvert.DeserializeObject<GameResultModel>(item.Value.ToString());
+                var result = new GameResults { Name = gameNameModel.Name };
+                var game = games.FirstOrDefault(game1 => game1.Name == gameNameModel.Game);
+                if (game != null)
+                    game.GameResults.Add(result);
+            }
+            gameResultsResourceSet.Close();
 
             return games;
         }
 
-        private void setMenuBackground()
+        private void SetupKinectSensor()
         {
-            ImageBrush sky = new ImageBrush(convertBitmapToBitmapSource(Properties.Resources.sky));
-            sky.Stretch = Stretch.UniformToFill;
-            mainGrid.Background = sky;
+            _sensorChooser = new KinectSensorChooser();
+            _sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
+            sensorChooserUi.KinectSensorChooser = _sensorChooser;
+            _sensorChooser.Start();
+            var regionSensorBinding = new Binding("Kinect") { Source = _sensorChooser };
+            BindingOperations.SetBinding(kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
         }
 
-        private BitmapSource convertBitmapToBitmapSource(System.Drawing.Bitmap bm)
-        {
-            var bitmap = bm;
-            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            bitmap.Dispose();
-            return bitmapSource;
-        }
-
-        private void setupKinectSensor()
-        {
-            this.sensorChooser = new KinectSensorChooser();
-            this.sensorChooser.KinectChanged += SensorChooserOnKinectChanged;
-            this.sensorChooserUi.KinectSensorChooser = this.sensorChooser;
-            this.sensorChooser.Start();
-            var regionSensorBinding = new Binding("Kinect") { Source = this.sensorChooser };
-            BindingOperations.SetBinding(this.kinectRegion, KinectRegion.KinectSensorProperty, regionSensorBinding);
-        }
-
-        private void createMenuButtons()
+        private void CreateMenuButtons()
         {
             wrapPanel.Children.Clear();
             wrapPanel.Children.Add(createSingleButton("Apples Game"));
@@ -163,7 +151,7 @@ namespace KinectMiniGames
         private void GetPlayersFromDatabase()
         {
             var manager = new PlayersManager();
-            playerList = manager.PlayerList;
+            PlayerList = manager.PlayerList;
         }
         #endregion
 
@@ -219,22 +207,22 @@ namespace KinectMiniGames
             switch ((String)button.Label)
             {
                 case "Apples Game":
-                    var applesConfigPage = new ApplesGameConfigPage(button.Label as string, sensorChooser);
+                    var applesConfigPage = new ApplesGameConfigPage(button.Label as string, _sensorChooser);
                     kinectRegionGrid.Children.Add(applesConfigPage);
                     e.Handled = true;
                     break;
                 case "Bubbles Game":
-                    var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, sensorChooser);
+                    var bubblesConfigPage = new BubblesGameConfigPage(button.Label as string, _sensorChooser);
                     kinectRegionGrid.Children.Add(bubblesConfigPage);
                     e.Handled = true;
                     break;
                 case "Letters Game":
-                    var lettersConfigPage = new LettersGameConfigPage(button.Label as string, sensorChooser);
+                    var lettersConfigPage = new LettersGameConfigPage(button.Label as string, _sensorChooser);
                     kinectRegionGrid.Children.Add(lettersConfigPage);
                     e.Handled = true;
                     break;
                 case "Train of Words":
-                    var trainConfigPage = new TrainOfWordsConfigPage(button.Label as string, sensorChooser);
+                    var trainConfigPage = new TrainOfWordsConfigPage(button.Label as string, _sensorChooser);
                     kinectRegionGrid.Children.Add(trainConfigPage);
                     e.Handled = true;
                     break;
@@ -245,31 +233,31 @@ namespace KinectMiniGames
         #region Window events
         private void WindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.sensorChooser.Stop();
+            _sensorChooser.Stop();
         }
 
         private void key_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Escape)
-                this.Close();
+                Close();
         }
 
         private void KinectMiniGames_Activated(object sender, EventArgs e)
         {
-            kinectViewBorder.Visibility = System.Windows.Visibility.Visible;
-            sensorChooserUi.Visibility = System.Windows.Visibility.Visible;
+            kinectViewBorder.Visibility = Visibility.Visible;
+            sensorChooserUi.Visibility = Visibility.Visible;
 
-            if (sensorChooser.Status == ChooserStatus.None)
+            if (_sensorChooser.Status == ChooserStatus.None)
             {
-                sensorChooser.Start();
+                _sensorChooser.Start();
             }
         }
 
         private void KinectMiniGames_Deactivated(object sender, EventArgs e)
         {
             //this.WindowState = WindowState.Minimized;
-            kinectViewBorder.Visibility = System.Windows.Visibility.Hidden;
-            sensorChooserUi.Visibility = System.Windows.Visibility.Hidden;
+            kinectViewBorder.Visibility = Visibility.Hidden;
+            sensorChooserUi.Visibility = Visibility.Hidden;
         }
 
         #endregion
