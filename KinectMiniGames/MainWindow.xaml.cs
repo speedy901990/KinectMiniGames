@@ -89,7 +89,7 @@ namespace KinectMiniGames
                 var game = new Game { Name = item.Key as string, Id = int.Parse(item.Value.ToString()) };
                 games.Add(game);
             }
-            gameResourceSet.Close();
+            Configs.GameList.ResourceManager.ReleaseAllResources();
 
             var gameParamsResourceSet = Configs.GameParamsList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
             foreach (DictionaryEntry item in gameParamsResourceSet)
@@ -100,9 +100,9 @@ namespace KinectMiniGames
                 if (game != null) 
                     game.GameParams.Add(param);
             }
-            gameParamsResourceSet.Close();
+            Configs.GameParamsList.ResourceManager.ReleaseAllResources();
 
-            var gameResultsResourceSet = Configs.GameList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+            var gameResultsResourceSet = Configs.GameResultsList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
             foreach (DictionaryEntry item in gameResultsResourceSet)
             {
                 var gameNameModel = JsonConvert.DeserializeObject<GameResultModel>(item.Value.ToString());
@@ -111,7 +111,7 @@ namespace KinectMiniGames
                 if (game != null)
                     game.GameResults.Add(result);
             }
-            gameResultsResourceSet.Close();
+            Configs.GameList.ResourceManager.ReleaseAllResources();
 
             return games;
         }
