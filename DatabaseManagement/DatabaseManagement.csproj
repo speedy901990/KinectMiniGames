@@ -39,25 +39,21 @@
     </EntityDeploy>
     <None Include="GameModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GameModel.edmx</DependentUpon>
       <LastGenOutput>GameModel.Context.cs</LastGenOutput>
+      <DependentUpon>GameModel.edmx</DependentUpon>
     </None>
     <None Include="GameModel.edmx.diagram">
       <DependentUpon>GameModel.edmx</DependentUpon>
     </None>
     <None Include="GameModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GameModel.edmx</DependentUpon>
       <LastGenOutput>GameModel.cs</LastGenOutput>
+      <DependentUpon>GameModel.edmx</DependentUpon>
     </None>
     <None Include="KinectMiniGamesDB.s3db" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Managers\ApplesGameManager.cs" />
-    <Compile Include="Author.cs">
-      <DependentUpon>GameModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Game.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
@@ -76,21 +72,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="GameParam.cs">
+    <Compile Include="GameParams.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="GameResult.cs">
+    <Compile Include="GameResults.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
     <Compile Include="History.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="HistoryParam.cs">
+    <Compile Include="HistoryParams.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HistoryResult.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Managers\ApplesGameManager.cs" />
     <Compile Include="Managers\BubblesGameManager.cs" />
     <Compile Include="Managers\LettersGameManager.cs" />
     <Compile Include="Managers\PlayersManager.cs" />
@@ -103,20 +100,24 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GameModel.edmx.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,6 +13,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
+using DatabaseManagement.Managers;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Samples.Kinect.WpfViewers;

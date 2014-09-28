@@ -4,24 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2e11c4bd5b944358965b696ab03695df" Name="Diagram1">
-        <EntityTypeShape EntityType="GameModel.Author" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameModel.GameParam" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameModel.GameResult" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameModel.Game" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameModel.History" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameModel.HistoryParam" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameModel.HistoryResult" Width="1.5" PointX="7.5" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GameModel.Player" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
-        <AssociationConnector Association="GameModel.FK_Games_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="GameModel.FK_GameParams_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="GameModel.FK_HistoryParams_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="GameModel.FK_GameResults_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="GameModel.FK_HistoryResults_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="GameModel.FK_History_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="GameModel.FK_History_0_0" ManuallyRouted="false" />
-        <AssociationConnector Association="GameModel.FK_HistoryParams_1_0" ManuallyRouted="false" />
-        <AssociationConnector Association="GameModel.FK_HistoryResults_1_0" ManuallyRouted="false" />
+      <Diagram DiagramId="05eecf20a9184a8ca19cf243aeb2e43d" Name="Diagram1" >
+        <EntityTypeShape EntityType="GameModel.Player" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="GameModel.Game" Width="1.5" PointX="0.5" PointY="3.125" />
+        <EntityTypeShape EntityType="GameModel.GameParams" Width="1.5" PointX="3.875" PointY="6" />
+        <EntityTypeShape EntityType="GameModel.GameResults" Width="1.5" PointX="3.875" PointY="4.125" />
+        <AssociationConnector Association="GameModel.GameGameParams" />
+        <AssociationConnector Association="GameModel.GameGameResults" />
+        <EntityTypeShape EntityType="GameModel.History" Width="1.5" PointX="3.875" PointY="1.625" />
+        <EntityTypeShape EntityType="GameModel.HistoryResult" Width="1.5" PointX="7.375" PointY="4.125" />
+        <EntityTypeShape EntityType="GameModel.HistoryParams" Width="1.5" PointX="6.375" PointY="6.125" />
+        <AssociationConnector Association="GameModel.PlayerHistory" />
+        <AssociationConnector Association="GameModel.GameHistory" />
+        <AssociationConnector Association="GameModel.HistoryHistoryResult" />
+        <AssociationConnector Association="GameModel.HistoryHistoryParams" />
+        <AssociationConnector Association="GameModel.GameParamsHistoryParams" />
+        <AssociationConnector Association="GameModel.GameResultsHistoryResult" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

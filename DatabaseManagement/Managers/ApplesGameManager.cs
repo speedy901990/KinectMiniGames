@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DatabaseManagement.Params;
 
-namespace DatabaseManagement
+namespace DatabaseManagement.Managers
 {
     public class ApplesGameManager
     {
-        private Game game;
-        private Player player;
-        private Dictionary<String,GameParam> gameParams = new Dictionary<string,GameParam>();
-        private Dictionary<String,GameResult> gameResults = new Dictionary<string,GameResult>();
+        private Game _game;
+        private Player _player;
+        private readonly Dictionary<String,GameParams> _gameParams = new Dictionary<string,GameParams>();
+        private readonly Dictionary<String,GameResults> _gameResults = new Dictionary<string,GameResults>();
 
         public ApplesGameManager()
         {
@@ -21,67 +20,71 @@ namespace DatabaseManagement
 
         public ApplesGameManager(String playerName)
         {
-            this.GetGame();
-            this.GetPlayer(playerName);
+            GetGame();
+            GetPlayer(playerName);
         }
 
         public ApplesGameManager(Player player)
         {
-            this.GetGame();
-            this.GetPlayer(player);
+            GetGame();
+            GetPlayer(player);
         }
 
         public void SaveGameResult(ApplesGameParams apg)
         {
-            using (var context = new GameModelContext())
+            using (var context = new GameModelContainer())
             {
-                DateTime date = DateTime.Now;
+                var date = DateTime.Now;
 
                 var history = new History
                 {
-                    id_game = this.game.id,
-                    id_player = this.player.id,
-                    date = date
+                    Game = _game,
+                    Player = _player,
+                    Date = date
                 };
 
-                List<HistoryParam> historyParams = new List<HistoryParam>();
-                historyParams.Add(new HistoryParam
+                var historyParams = new List<HistoryParams>
                 {
-                    id_game_params = this.gameParams["apples"].id,
-                    value = apg.Apples
-                });
-                historyParams.Add(new HistoryParam
-                {
-                    id_game_params = this.gameParams["colors"].id,
-                    value = apg.Colors
-                });
-                historyParams.Add(new HistoryParam
-                {
-                    id_game_params = this.gameParams["baskets"].id,
-                    value = apg.Baskets
-                });
-                foreach (HistoryParam item in historyParams)
+                    new HistoryParams
+                    {
+                        GameParam = _gameParams["apples"],
+                        Value = apg.Apples.ToString(CultureInfo.InvariantCulture)
+                    },
+                    new HistoryParams
+                    {
+                        GameParam = _gameParams["colors"],
+                        Value = apg.Colors.ToString(CultureInfo.InvariantCulture)
+                    },
+                    new HistoryParams
+                    {
+                        GameParam = _gameParams["baskets"],
+                        Value = apg.Baskets.ToString(CultureInfo.InvariantCulture)
+                    }
+                };
+                foreach (var item in historyParams)
                 {
                     history.HistoryParams.Add(item);
                 }
 
-                List<HistoryResult> historyResults = new List<HistoryResult>();
-                historyResults.Add(new HistoryResult
+                var historyResults = new List<HistoryResult>
                 {
-                    id_game_results = this.gameResults["correctTrials"].id,
-                    value = apg.CorrectTrials
-                });
-                historyResults.Add(new HistoryResult
-                {
-                    id_game_results = this.gameResults["failures"].id,
-                    value = apg.Failures
-                });
-                historyResults.Add(new HistoryResult
-                {
-                    id_game_results = this.gameResults["time"].id,
-                    value = apg.Time
-                });
-                foreach (HistoryResult item in historyResults)
+                    new HistoryResult
+                    {
+                        GameResult = _gameResults["correctTrials"],
+                        Value = apg.CorrectTrials
+                    },
+                    new HistoryResult
+                    {
+                        GameResult = _gameResults["failures"],
+                        Value = apg.Failures
+                    },
+                    new HistoryResult
+                    {
+                        GameResult = _gameResults["time"],
+                        Value = apg.Time
+                    }
+                };
+                foreach (var item in historyResults)
                 {
                     history.HistoryResults.Add(item);
                 }
@@ -93,36 +96,36 @@ namespace DatabaseManagement
 
         private void GetGame()
         {
-            using (var context = new GameModelContext())
+            using (var context = new GameModelContainer())
             {
-                var game = context.Games
-                    .Where(b => b.name == "ApplesGame").FirstOrDefault();
-                this.game = game as Game;
+                var game = context.Games.FirstOrDefault(b => b.Name == "ApplesGame");
+                _game = game;
 
-                foreach (GameParam item in game.GameParams)
+                if (_game == null) 
+                    return;
+                foreach (var item in _game.GameParams)
                 {
-                    this.gameParams.Add(item.name, item);
+                    _gameParams.Add(item.Name, item);
                 }
-                foreach (GameResult item in game.GameResults)
+                foreach (var item in _game.GameResults)
                 {
-                    this.gameResults.Add(item.name, item);
+                    _gameResults.Add(item.Name, item);
                 }
             }
         }
 
         private void GetPlayer(String playerName)
         {
-            using (var context = new GameModelContext())
+            using (var context = new GameModelContainer())
             {
-                var user = context.Players
-                    .Where(b => b.name == playerName).FirstOrDefault();
-                this.player = user as Player;
+                var user = context.Players.FirstOrDefault(b => b.Name == playerName);
+                _player = user;
             }
         }
 
         private void GetPlayer(Player player)
         {
-            this.player = player;
+            _player = player;
         }
     }
 }

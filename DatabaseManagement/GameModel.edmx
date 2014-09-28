@@ -4,581 +4,498 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="GameModel.Store" Alias="Self" Provider="System.Data.SQLite" ProviderManifestToken="ISO8601" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="GameModelStoreContainer">
-          <EntitySet Name="Authors" EntityType="GameModel.Store.Authors" store:Type="Tables" />
-          <EntitySet Name="GameParams" EntityType="GameModel.Store.GameParams" store:Type="Tables" />
-          <EntitySet Name="GameResults" EntityType="GameModel.Store.GameResults" store:Type="Tables" />
-          <EntitySet Name="Games" EntityType="GameModel.Store.Games" store:Type="Tables" />
-          <EntitySet Name="History" EntityType="GameModel.Store.History" store:Type="Tables" />
-          <EntitySet Name="HistoryParams" EntityType="GameModel.Store.HistoryParams" store:Type="Tables" />
-          <EntitySet Name="HistoryResults" EntityType="GameModel.Store.HistoryResults" store:Type="Tables" />
-          <EntitySet Name="Players" EntityType="GameModel.Store.Players" store:Type="Tables" />
-          <AssociationSet Name="FK_GameParams_0_0" Association="GameModel.Store.FK_GameParams_0_0">
-            <End Role="Games" EntitySet="Games" />
-            <End Role="GameParams" EntitySet="GameParams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GameResults_0_0" Association="GameModel.Store.FK_GameResults_0_0">
-            <End Role="Games" EntitySet="Games" />
-            <End Role="GameResults" EntitySet="GameResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Games_0_0" Association="GameModel.Store.FK_Games_0_0">
-            <End Role="Authors" EntitySet="Authors" />
-            <End Role="Games" EntitySet="Games" />
-          </AssociationSet>
-          <AssociationSet Name="FK_History_0_0" Association="GameModel.Store.FK_History_0_0">
-            <End Role="Players" EntitySet="Players" />
-            <End Role="History" EntitySet="History" />
-          </AssociationSet>
-          <AssociationSet Name="FK_History_1_0" Association="GameModel.Store.FK_History_1_0">
-            <End Role="Games" EntitySet="Games" />
-            <End Role="History" EntitySet="History" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoryParams_0_0" Association="GameModel.Store.FK_HistoryParams_0_0">
-            <End Role="GameParams" EntitySet="GameParams" />
-            <End Role="HistoryParams" EntitySet="HistoryParams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoryParams_1_0" Association="GameModel.Store.FK_HistoryParams_1_0">
-            <End Role="History" EntitySet="History" />
-            <End Role="HistoryParams" EntitySet="HistoryParams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoryResults_0_0" Association="GameModel.Store.FK_HistoryResults_0_0">
-            <End Role="GameResults" EntitySet="GameResults" />
-            <End Role="HistoryResults" EntitySet="HistoryResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoryResults_1_0" Association="GameModel.Store.FK_HistoryResults_1_0">
-            <End Role="History" EntitySet="History" />
-            <End Role="HistoryResults" EntitySet="HistoryResults" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Authors">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="surname" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="email" Type="varchar" MaxLength="100" />
-        </EntityType>
-        <EntityType Name="GameParams">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="id_game" Type="integer" Nullable="false" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="value" Type="varchar" MaxLength="200" />
-        </EntityType>
-        <EntityType Name="GameResults">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="id_game" Type="integer" Nullable="false" />
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Games">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="author_id" Type="integer" />
-        </EntityType>
-        <EntityType Name="History">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="id_game" Type="integer" Nullable="false" />
-          <Property Name="id_player" Type="integer" Nullable="false" />
-          <Property Name="date" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="HistoryParams">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="id_history" Type="integer" Nullable="false" />
-          <Property Name="id_game_params" Type="integer" Nullable="false" />
-          <Property Name="value" Type="decimal" Nullable="false" Precision="53" />
-        </EntityType>
-        <EntityType Name="HistoryResults">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="id_history" Type="integer" />
-          <Property Name="id_game_results" Type="integer" />
-          <Property Name="value" Type="decimal" Nullable="false" Precision="53" />
-        </EntityType>
-        <EntityType Name="Players">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="integer" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="surname" Type="varchar" MaxLength="50" />
-          <Property Name="age" Type="integer" />
-        </EntityType>
-        <Association Name="FK_GameParams_0_0">
-          <End Role="Games" Type="GameModel.Store.Games" Multiplicity="1" />
-          <End Role="GameParams" Type="GameModel.Store.GameParams" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Games">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="GameParams">
-              <PropertyRef Name="id_game" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GameResults_0_0">
-          <End Role="Games" Type="GameModel.Store.Games" Multiplicity="1" />
-          <End Role="GameResults" Type="GameModel.Store.GameResults" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Games">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="GameResults">
-              <PropertyRef Name="id_game" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Games_0_0">
-          <End Role="Authors" Type="GameModel.Store.Authors" Multiplicity="0..1" />
-          <End Role="Games" Type="GameModel.Store.Games" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Authors">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Games">
-              <PropertyRef Name="author_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_History_0_0">
-          <End Role="Players" Type="GameModel.Store.Players" Multiplicity="1" />
-          <End Role="History" Type="GameModel.Store.History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Players">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="History">
-              <PropertyRef Name="id_player" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_History_1_0">
-          <End Role="Games" Type="GameModel.Store.Games" Multiplicity="1" />
-          <End Role="History" Type="GameModel.Store.History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Games">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="History">
-              <PropertyRef Name="id_game" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HistoryParams_0_0">
-          <End Role="GameParams" Type="GameModel.Store.GameParams" Multiplicity="1" />
-          <End Role="HistoryParams" Type="GameModel.Store.HistoryParams" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GameParams">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryParams">
-              <PropertyRef Name="id_game_params" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HistoryParams_1_0">
-          <End Role="History" Type="GameModel.Store.History" Multiplicity="1" />
-          <End Role="HistoryParams" Type="GameModel.Store.HistoryParams" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="History">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryParams">
-              <PropertyRef Name="id_history" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HistoryResults_0_0">
-          <End Role="GameResults" Type="GameModel.Store.GameResults" Multiplicity="0..1" />
-          <End Role="HistoryResults" Type="GameModel.Store.HistoryResults" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GameResults">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryResults">
-              <PropertyRef Name="id_game_results" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HistoryResults_1_0">
-          <End Role="History" Type="GameModel.Store.History" Multiplicity="0..1" />
-          <End Role="HistoryResults" Type="GameModel.Store.HistoryResults" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="History">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryResults">
-              <PropertyRef Name="id_history" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="GameModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GameModelStoreContainer">
+    <EntitySet Name="Players" EntityType="GameModel.Store.Players" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Games" EntityType="GameModel.Store.Games" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GameParams1" EntityType="GameModel.Store.GameParams1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GameResults" EntityType="GameModel.Store.GameResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Histories" EntityType="GameModel.Store.Histories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistoryResults" EntityType="GameModel.Store.HistoryResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistoryParams" EntityType="GameModel.Store.HistoryParams" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="GameGameParams" Association="GameModel.Store.GameGameParams">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="GameParams" EntitySet="GameParams1" />
+    </AssociationSet>
+    <AssociationSet Name="GameGameResults" Association="GameModel.Store.GameGameResults">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="GameResults" EntitySet="GameResults" />
+    </AssociationSet>
+    <AssociationSet Name="PlayerHistory" Association="GameModel.Store.PlayerHistory">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="History" EntitySet="Histories" />
+    </AssociationSet>
+    <AssociationSet Name="GameHistory" Association="GameModel.Store.GameHistory">
+      <End Role="Game" EntitySet="Games" />
+      <End Role="History" EntitySet="Histories" />
+    </AssociationSet>
+    <AssociationSet Name="HistoryHistoryResult" Association="GameModel.Store.HistoryHistoryResult">
+      <End Role="History" EntitySet="Histories" />
+      <End Role="HistoryResult" EntitySet="HistoryResults" />
+    </AssociationSet>
+    <AssociationSet Name="HistoryHistoryParams" Association="GameModel.Store.HistoryHistoryParams">
+      <End Role="History" EntitySet="Histories" />
+      <End Role="HistoryParams" EntitySet="HistoryParams" />
+    </AssociationSet>
+    <AssociationSet Name="GameParamsHistoryParams" Association="GameModel.Store.GameParamsHistoryParams">
+      <End Role="GameParams" EntitySet="GameParams1" />
+      <End Role="HistoryParams" EntitySet="HistoryParams" />
+    </AssociationSet>
+    <AssociationSet Name="GameResultsHistoryResult" Association="GameModel.Store.GameResultsHistoryResult">
+      <End Role="GameResults" EntitySet="GameResults" />
+      <End Role="HistoryResult" EntitySet="HistoryResults" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Players">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Games">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GameParams1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Values" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Game_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GameResults">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Game_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Histories">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Player_Id" Type="int" Nullable="false" />
+    <Property Name="Game_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistoryResults">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="int" Nullable="false" />
+    <Property Name="History_Id" Type="int" Nullable="false" />
+    <Property Name="GameResult_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistoryParams">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="History_Id" Type="int" Nullable="false" />
+    <Property Name="GameParam_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="GameGameParams">
+    <End Role="Game" Type="GameModel.Store.Games" Multiplicity="1" />
+    <End Role="GameParams" Type="GameModel.Store.GameParams1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GameParams">
+        <PropertyRef Name="Game_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GameGameResults">
+    <End Role="Game" Type="GameModel.Store.Games" Multiplicity="1" />
+    <End Role="GameResults" Type="GameModel.Store.GameResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GameResults">
+        <PropertyRef Name="Game_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlayerHistory">
+    <End Role="Player" Type="GameModel.Store.Players" Multiplicity="1" />
+    <End Role="History" Type="GameModel.Store.Histories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="History">
+        <PropertyRef Name="Player_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GameHistory">
+    <End Role="Game" Type="GameModel.Store.Games" Multiplicity="1" />
+    <End Role="History" Type="GameModel.Store.Histories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="History">
+        <PropertyRef Name="Game_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HistoryHistoryResult">
+    <End Role="History" Type="GameModel.Store.Histories" Multiplicity="1" />
+    <End Role="HistoryResult" Type="GameModel.Store.HistoryResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="History">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistoryResult">
+        <PropertyRef Name="History_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HistoryHistoryParams">
+    <End Role="History" Type="GameModel.Store.Histories" Multiplicity="1" />
+    <End Role="HistoryParams" Type="GameModel.Store.HistoryParams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="History">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistoryParams">
+        <PropertyRef Name="History_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GameParamsHistoryParams">
+    <End Role="GameParams" Type="GameModel.Store.GameParams1" Multiplicity="1" />
+    <End Role="HistoryParams" Type="GameModel.Store.HistoryParams" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GameParams">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistoryParams">
+        <PropertyRef Name="GameParam_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GameResultsHistoryResult">
+    <End Role="GameResults" Type="GameModel.Store.GameResults" Multiplicity="1" />
+    <End Role="HistoryResult" Type="GameModel.Store.HistoryResults" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GameResults">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistoryResult">
+        <PropertyRef Name="GameResult_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GameModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="GameModelContext" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Authors" EntityType="GameModel.Author" />
-          <EntitySet Name="GameParams" EntityType="GameModel.GameParam" />
-          <EntitySet Name="GameResults" EntityType="GameModel.GameResult" />
-          <EntitySet Name="Games" EntityType="GameModel.Game" />
-          <EntitySet Name="Histories" EntityType="GameModel.History" />
-          <EntitySet Name="HistoryParams" EntityType="GameModel.HistoryParam" />
-          <EntitySet Name="HistoryResults" EntityType="GameModel.HistoryResult" />
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="GameModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="GameModelContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Players" EntityType="GameModel.Player" />
-          <AssociationSet Name="FK_Games_0_0" Association="GameModel.FK_Games_0_0">
-            <End Role="Authors" EntitySet="Authors" />
-            <End Role="Games" EntitySet="Games" />
+          <EntitySet Name="Games" EntityType="GameModel.Game" />
+          <EntitySet Name="GameParams1" EntityType="GameModel.GameParams" />
+          <EntitySet Name="GameResults" EntityType="GameModel.GameResults" />
+          <AssociationSet Name="GameGameParams" Association="GameModel.GameGameParams">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="GameParams" EntitySet="GameParams1" />
           </AssociationSet>
-          <AssociationSet Name="FK_GameParams_0_0" Association="GameModel.FK_GameParams_0_0">
-            <End Role="Games" EntitySet="Games" />
-            <End Role="GameParams" EntitySet="GameParams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoryParams_0_0" Association="GameModel.FK_HistoryParams_0_0">
-            <End Role="GameParams" EntitySet="GameParams" />
-            <End Role="HistoryParams" EntitySet="HistoryParams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GameResults_0_0" Association="GameModel.FK_GameResults_0_0">
-            <End Role="Games" EntitySet="Games" />
+          <AssociationSet Name="GameGameResults" Association="GameModel.GameGameResults">
+            <End Role="Game" EntitySet="Games" />
             <End Role="GameResults" EntitySet="GameResults" />
           </AssociationSet>
-          <AssociationSet Name="FK_HistoryResults_0_0" Association="GameModel.FK_HistoryResults_0_0">
-            <End Role="GameResults" EntitySet="GameResults" />
-            <End Role="HistoryResults" EntitySet="HistoryResults" />
-          </AssociationSet>
-          <AssociationSet Name="FK_History_1_0" Association="GameModel.FK_History_1_0">
-            <End Role="Games" EntitySet="Games" />
+          <EntitySet Name="Histories" EntityType="GameModel.History" />
+          <EntitySet Name="HistoryResults" EntityType="GameModel.HistoryResult" />
+          <EntitySet Name="HistoryParams" EntityType="GameModel.HistoryParams" />
+          <AssociationSet Name="PlayerHistory" Association="GameModel.PlayerHistory">
+            <End Role="Player" EntitySet="Players" />
             <End Role="History" EntitySet="Histories" />
           </AssociationSet>
-          <AssociationSet Name="FK_History_0_0" Association="GameModel.FK_History_0_0">
-            <End Role="Players" EntitySet="Players" />
+          <AssociationSet Name="GameHistory" Association="GameModel.GameHistory">
+            <End Role="Game" EntitySet="Games" />
             <End Role="History" EntitySet="Histories" />
           </AssociationSet>
-          <AssociationSet Name="FK_HistoryParams_1_0" Association="GameModel.FK_HistoryParams_1_0">
+          <AssociationSet Name="HistoryHistoryResult" Association="GameModel.HistoryHistoryResult">
+            <End Role="History" EntitySet="Histories" />
+            <End Role="HistoryResult" EntitySet="HistoryResults" />
+          </AssociationSet>
+          <AssociationSet Name="HistoryHistoryParams" Association="GameModel.HistoryHistoryParams">
             <End Role="History" EntitySet="Histories" />
             <End Role="HistoryParams" EntitySet="HistoryParams" />
           </AssociationSet>
-          <AssociationSet Name="FK_HistoryResults_1_0" Association="GameModel.FK_HistoryResults_1_0">
-            <End Role="History" EntitySet="Histories" />
-            <End Role="HistoryResults" EntitySet="HistoryResults" />
+          <AssociationSet Name="GameParamsHistoryParams" Association="GameModel.GameParamsHistoryParams">
+            <End Role="GameParams" EntitySet="GameParams1" />
+            <End Role="HistoryParams" EntitySet="HistoryParams" />
+          </AssociationSet>
+          <AssociationSet Name="GameResultsHistoryResult" Association="GameModel.GameResultsHistoryResult">
+            <End Role="GameResults" EntitySet="GameResults" />
+            <End Role="HistoryResult" EntitySet="HistoryResults" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Author">
+        <EntityType Name="Player">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="surname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="email" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Games" Relationship="GameModel.FK_Games_0_0" FromRole="Authors" ToRole="Games" />
-        </EntityType>
-        <EntityType Name="GameParam">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="id_game" Type="Int64" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Game" Relationship="GameModel.FK_GameParams_0_0" FromRole="GameParams" ToRole="Games" />
-          <NavigationProperty Name="HistoryParams" Relationship="GameModel.FK_HistoryParams_0_0" FromRole="GameParams" ToRole="HistoryParams" />
-          <Property Type="String" Name="value" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="GameResult">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="id_game" Type="Int64" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Game" Relationship="GameModel.FK_GameResults_0_0" FromRole="GameResults" ToRole="Games" />
-          <NavigationProperty Name="HistoryResults" Relationship="GameModel.FK_HistoryResults_0_0" FromRole="GameResults" ToRole="HistoryResults" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Histories" Relationship="GameModel.PlayerHistory" FromRole="Player" ToRole="History" />
         </EntityType>
         <EntityType Name="Game">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="author_id" Type="Int64" />
-          <NavigationProperty Name="Author" Relationship="GameModel.FK_Games_0_0" FromRole="Games" ToRole="Authors" />
-          <NavigationProperty Name="GameParams" Relationship="GameModel.FK_GameParams_0_0" FromRole="Games" ToRole="GameParams" />
-          <NavigationProperty Name="GameResults" Relationship="GameModel.FK_GameResults_0_0" FromRole="Games" ToRole="GameResults" />
-          <NavigationProperty Name="Histories" Relationship="GameModel.FK_History_1_0" FromRole="Games" ToRole="History" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="GameParams" Relationship="GameModel.GameGameParams" FromRole="Game" ToRole="GameParams" />
+          <NavigationProperty Name="GameResults" Relationship="GameModel.GameGameResults" FromRole="Game" ToRole="GameResults" />
+          <NavigationProperty Name="Histories" Relationship="GameModel.GameHistory" FromRole="Game" ToRole="History" />
         </EntityType>
+        <EntityType Name="GameParams">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Values" Type="String" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="GameModel.GameGameParams" FromRole="GameParams" ToRole="Game" />
+          <NavigationProperty Name="HistoryParams" Relationship="GameModel.GameParamsHistoryParams" FromRole="GameParams" ToRole="HistoryParams" />
+        </EntityType>
+        <EntityType Name="GameResults">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="GameModel.GameGameResults" FromRole="GameResults" ToRole="Game" />
+          <NavigationProperty Name="HistoryResults" Relationship="GameModel.GameResultsHistoryResult" FromRole="GameResults" ToRole="HistoryResult" />
+        </EntityType>
+        <Association Name="GameGameParams">
+          <End Type="GameModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="GameModel.GameParams" Role="GameParams" Multiplicity="*" />
+        </Association>
+        <Association Name="GameGameResults">
+          <End Type="GameModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="GameModel.GameResults" Role="GameResults" Multiplicity="*" />
+        </Association>
         <EntityType Name="History">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="id_game" Type="Int64" Nullable="false" />
-          <Property Name="id_player" Type="Int64" Nullable="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Game" Relationship="GameModel.FK_History_1_0" FromRole="History" ToRole="Games" />
-          <NavigationProperty Name="Player" Relationship="GameModel.FK_History_0_0" FromRole="History" ToRole="Players" />
-          <NavigationProperty Name="HistoryParams" Relationship="GameModel.FK_HistoryParams_1_0" FromRole="History" ToRole="HistoryParams" />
-          <NavigationProperty Name="HistoryResults" Relationship="GameModel.FK_HistoryResults_1_0" FromRole="History" ToRole="HistoryResults" />
-        </EntityType>
-        <EntityType Name="HistoryParam">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="id_history" Type="Int64" Nullable="false" />
-          <Property Name="id_game_params" Type="Int64" Nullable="false" />
-          <Property Name="value" Type="Decimal" Nullable="false" Precision="53" Scale="0" />
-          <NavigationProperty Name="GameParam" Relationship="GameModel.FK_HistoryParams_0_0" FromRole="HistoryParams" ToRole="GameParams" />
-          <NavigationProperty Name="History" Relationship="GameModel.FK_HistoryParams_1_0" FromRole="HistoryParams" ToRole="History" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="GameModel.PlayerHistory" FromRole="History" ToRole="Player" />
+          <NavigationProperty Name="Game" Relationship="GameModel.GameHistory" FromRole="History" ToRole="Game" />
+          <NavigationProperty Name="HistoryResults" Relationship="GameModel.HistoryHistoryResult" FromRole="History" ToRole="HistoryResult" />
+          <NavigationProperty Name="HistoryParams" Relationship="GameModel.HistoryHistoryParams" FromRole="History" ToRole="HistoryParams" />
         </EntityType>
         <EntityType Name="HistoryResult">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="id_history" Type="Int64" />
-          <Property Name="id_game_results" Type="Int64" />
-          <NavigationProperty Name="GameResult" Relationship="GameModel.FK_HistoryResults_0_0" FromRole="HistoryResults" ToRole="GameResults" />
-          <NavigationProperty Name="History" Relationship="GameModel.FK_HistoryResults_1_0" FromRole="HistoryResults" ToRole="History" />
-          <Property Type="Decimal" Name="value" Nullable="false" Precision="53" Scale="0" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="History" Relationship="GameModel.HistoryHistoryResult" FromRole="HistoryResult" ToRole="History" />
+          <NavigationProperty Name="GameResult" Relationship="GameModel.GameResultsHistoryResult" FromRole="HistoryResult" ToRole="GameResults" />
         </EntityType>
-        <EntityType Name="Player">
+        <EntityType Name="HistoryParams">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="surname" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="age" Type="Int64" />
-          <NavigationProperty Name="Histories" Relationship="GameModel.FK_History_0_0" FromRole="Players" ToRole="History" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" Nullable="false" />
+          <NavigationProperty Name="History" Relationship="GameModel.HistoryHistoryParams" FromRole="HistoryParams" ToRole="History" />
+          <NavigationProperty Name="GameParam" Relationship="GameModel.GameParamsHistoryParams" FromRole="HistoryParams" ToRole="GameParams" />
         </EntityType>
-        <Association Name="FK_Games_0_0">
-          <End Role="Authors" Type="GameModel.Author" Multiplicity="0..1" />
-          <End Role="Games" Type="GameModel.Game" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Authors">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Games">
-              <PropertyRef Name="author_id" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="PlayerHistory">
+          <End Type="GameModel.Player" Role="Player" Multiplicity="1" />
+          <End Type="GameModel.History" Role="History" Multiplicity="*" />
         </Association>
-        <Association Name="FK_GameParams_0_0">
-          <End Role="Games" Type="GameModel.Game" Multiplicity="1" />
-          <End Role="GameParams" Type="GameModel.GameParam" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Games">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="GameParams">
-              <PropertyRef Name="id_game" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="GameHistory">
+          <End Type="GameModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="GameModel.History" Role="History" Multiplicity="*" />
         </Association>
-        <Association Name="FK_HistoryParams_0_0">
-          <End Role="GameParams" Type="GameModel.GameParam" Multiplicity="1" />
-          <End Role="HistoryParams" Type="GameModel.HistoryParam" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GameParams">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryParams">
-              <PropertyRef Name="id_game_params" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="HistoryHistoryResult">
+          <End Type="GameModel.History" Role="History" Multiplicity="1" />
+          <End Type="GameModel.HistoryResult" Role="HistoryResult" Multiplicity="*" />
         </Association>
-        <Association Name="FK_GameResults_0_0">
-          <End Role="Games" Type="GameModel.Game" Multiplicity="1" />
-          <End Role="GameResults" Type="GameModel.GameResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Games">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="GameResults">
-              <PropertyRef Name="id_game" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="HistoryHistoryParams">
+          <End Type="GameModel.History" Role="History" Multiplicity="1" />
+          <End Type="GameModel.HistoryParams" Role="HistoryParams" Multiplicity="*" />
         </Association>
-        <Association Name="FK_HistoryResults_0_0">
-          <End Role="GameResults" Type="GameModel.GameResult" Multiplicity="0..1" />
-          <End Role="HistoryResults" Type="GameModel.HistoryResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GameResults">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryResults">
-              <PropertyRef Name="id_game_results" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="GameParamsHistoryParams">
+          <End Type="GameModel.GameParams" Role="GameParams" Multiplicity="1" />
+          <End Type="GameModel.HistoryParams" Role="HistoryParams" Multiplicity="*" />
         </Association>
-        <Association Name="FK_History_1_0">
-          <End Role="Games" Type="GameModel.Game" Multiplicity="1" />
-          <End Role="History" Type="GameModel.History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Games">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="History">
-              <PropertyRef Name="id_game" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_History_0_0">
-          <End Role="Players" Type="GameModel.Player" Multiplicity="1" />
-          <End Role="History" Type="GameModel.History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Players">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="History">
-              <PropertyRef Name="id_player" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HistoryParams_1_0">
-          <End Role="History" Type="GameModel.History" Multiplicity="1" />
-          <End Role="HistoryParams" Type="GameModel.HistoryParam" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="History">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryParams">
-              <PropertyRef Name="id_history" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HistoryResults_1_0">
-          <End Role="History" Type="GameModel.History" Multiplicity="0..1" />
-          <End Role="HistoryResults" Type="GameModel.HistoryResult" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="History">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="HistoryResults">
-              <PropertyRef Name="id_history" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="GameResultsHistoryResult">
+          <End Type="GameModel.GameResults" Role="GameResults" Multiplicity="1" />
+          <End Type="GameModel.HistoryResult" Role="HistoryResult" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GameModelStoreContainer" CdmEntityContainer="GameModelContext">
-          <EntitySetMapping Name="Authors">
-            <EntityTypeMapping TypeName="GameModel.Author">
-              <MappingFragment StoreEntitySet="Authors">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="surname" ColumnName="surname" />
-                <ScalarProperty Name="email" ColumnName="email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GameParams">
-            <EntityTypeMapping TypeName="GameModel.GameParam">
-              <MappingFragment StoreEntitySet="GameParams">
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_game" ColumnName="id_game" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GameResults">
-            <EntityTypeMapping TypeName="GameModel.GameResult">
-              <MappingFragment StoreEntitySet="GameResults">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_game" ColumnName="id_game" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Games">
-            <EntityTypeMapping TypeName="GameModel.Game">
-              <MappingFragment StoreEntitySet="Games">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="author_id" ColumnName="author_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Histories">
-            <EntityTypeMapping TypeName="GameModel.History">
-              <MappingFragment StoreEntitySet="History">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_game" ColumnName="id_game" />
-                <ScalarProperty Name="id_player" ColumnName="id_player" />
-                <ScalarProperty Name="date" ColumnName="date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HistoryParams">
-            <EntityTypeMapping TypeName="GameModel.HistoryParam">
-              <MappingFragment StoreEntitySet="HistoryParams">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_history" ColumnName="id_history" />
-                <ScalarProperty Name="id_game_params" ColumnName="id_game_params" />
-                <ScalarProperty Name="value" ColumnName="value" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HistoryResults">
-            <EntityTypeMapping TypeName="GameModel.HistoryResult">
-              <MappingFragment StoreEntitySet="HistoryResults">
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="id_history" ColumnName="id_history" />
-                <ScalarProperty Name="id_game_results" ColumnName="id_game_results" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Players">
-            <EntityTypeMapping TypeName="GameModel.Player">
-              <MappingFragment StoreEntitySet="Players">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="surname" ColumnName="surname" />
-                <ScalarProperty Name="age" ColumnName="age" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GameModelStoreContainer" CdmEntityContainer="GameModelContainer">
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.Player)">
+        <MappingFragment StoreEntitySet="Players">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Games">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.Game)">
+        <MappingFragment StoreEntitySet="Games">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GameParams1">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.GameParams)">
+        <MappingFragment StoreEntitySet="GameParams1">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Values" ColumnName="Values" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GameResults">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.GameResults)">
+        <MappingFragment StoreEntitySet="GameResults">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Histories">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.History)">
+        <MappingFragment StoreEntitySet="Histories">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistoryResults">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.HistoryResult)">
+        <MappingFragment StoreEntitySet="HistoryResults">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistoryParams">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.HistoryParams)">
+        <MappingFragment StoreEntitySet="HistoryParams">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="GameGameParams" TypeName="GameModel.GameGameParams" StoreEntitySet="GameParams1">
+      <EndProperty Name="Game">
+        <ScalarProperty Name="Id" ColumnName="Game_Id" />
+      </EndProperty>
+      <EndProperty Name="GameParams">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GameGameResults" TypeName="GameModel.GameGameResults" StoreEntitySet="GameResults">
+      <EndProperty Name="Game">
+        <ScalarProperty Name="Id" ColumnName="Game_Id" />
+      </EndProperty>
+      <EndProperty Name="GameResults">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PlayerHistory" TypeName="GameModel.PlayerHistory" StoreEntitySet="Histories">
+      <EndProperty Name="Player">
+        <ScalarProperty Name="Id" ColumnName="Player_Id" />
+      </EndProperty>
+      <EndProperty Name="History">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GameHistory" TypeName="GameModel.GameHistory" StoreEntitySet="Histories">
+      <EndProperty Name="Game">
+        <ScalarProperty Name="Id" ColumnName="Game_Id" />
+      </EndProperty>
+      <EndProperty Name="History">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HistoryHistoryResult" TypeName="GameModel.HistoryHistoryResult" StoreEntitySet="HistoryResults">
+      <EndProperty Name="History">
+        <ScalarProperty Name="Id" ColumnName="History_Id" />
+      </EndProperty>
+      <EndProperty Name="HistoryResult">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HistoryHistoryParams" TypeName="GameModel.HistoryHistoryParams" StoreEntitySet="HistoryParams">
+      <EndProperty Name="History">
+        <ScalarProperty Name="Id" ColumnName="History_Id" />
+      </EndProperty>
+      <EndProperty Name="HistoryParams">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GameParamsHistoryParams" TypeName="GameModel.GameParamsHistoryParams" StoreEntitySet="HistoryParams">
+      <EndProperty Name="GameParams">
+        <ScalarProperty Name="Id" ColumnName="GameParam_Id" />
+      </EndProperty>
+      <EndProperty Name="HistoryParams">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GameResultsHistoryResult" TypeName="GameModel.GameResultsHistoryResult" StoreEntitySet="HistoryResults">
+      <EndProperty Name="GameResults">
+        <ScalarProperty Name="Id" ColumnName="GameResult_Id" />
+      </EndProperty>
+      <EndProperty Name="HistoryResult">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
-    <Connection>
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
-    </Connection>
-    <Options>
+    </edmx:Connection>
+    <edmx:Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
-    </Options>
+    </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
-  </Designer>
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
 </edmx:Edmx>

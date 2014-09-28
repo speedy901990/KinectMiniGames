@@ -8,35 +8,10 @@ namespace DatabaseManagement.Params
 {
     public class BubblesGameParams
     {
-        public BubblesGameParams()
-        {
+        public int Time { get; set; }
 
-        }
+        public int Success { get; set; }
 
-        private int time;
-
-        public int Time
-        {
-            get { return time; }
-            set { time = value; }
-        }
-
-        private int success;
-
-        public int Success
-        {
-            get { return success; }
-            set { success = value; }
-        }
-
-        private int level;
-
-        public int Level
-        {
-            get { return level; }
-            set { level = value; }
-        }
-        
-        
+        public int Level { get; set; }
     }
 }
