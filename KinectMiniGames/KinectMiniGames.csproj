@@ -118,6 +118,9 @@
     <Compile Include="ConfigPages\BubblesGameConfigPage.xaml.cs">
       <DependentUpon>BubblesGameConfigPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConfigPages\DrawingGameConfigPage.xaml.cs">
+      <DependentUpon>DrawingGameConfigPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ConfigPages\LettersGameConfigPage.xaml.cs">
       <DependentUpon>LettersGameConfigPage.xaml</DependentUpon>
     </Compile>
@@ -155,6 +158,10 @@
     <Page Include="ConfigPages\BubblesGameConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConfigPages\DrawingGameConfigPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ConfigPages\LettersGameConfigPage.xaml">
       <SubType>Designer</SubType>
@@ -237,6 +244,10 @@
     <ProjectReference Include="..\DatabaseManagement\DatabaseManagement.csproj">
       <Project>{32f1cd97-43e8-4c97-8248-b7612ed9cd4e}</Project>
       <Name>DatabaseManagement</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DrawingGame\DrawingGame.csproj">
+      <Project>{1845804c-2831-4906-9080-d30cdde6792f}</Project>
+      <Name>DrawingGame</Name>
     </ProjectReference>
     <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
       <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>

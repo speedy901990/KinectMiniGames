@@ -89,10 +89,12 @@
     </Compile>
     <Compile Include="Managers\ApplesGameManager.cs" />
     <Compile Include="Managers\BubblesGameManager.cs" />
+    <Compile Include="Managers\DrawingGameManager.cs" />
     <Compile Include="Managers\LettersGameManager.cs" />
     <Compile Include="Managers\PlayersManager.cs" />
     <Compile Include="Params\ApplesGameParams.cs" />
     <Compile Include="Params\BubblesGameParams.cs" />
+    <Compile Include="Params\DrawingGameParams.cs" />
     <Compile Include="Params\LettersGameParams.cs" />
     <Compile Include="Player.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
