@@ -470,14 +470,14 @@ namespace DrawingGame
 
 
             this._ListPuzzleL.Add(FirstLeftHand);
-            //this._ListPuzzleL.Add(SecondLeftHand);
-            //this._ListPuzzleL.Add(ThirdLeftHand);
-            //this._ListPuzzleL.Add(FourthLeftHand);
-            //this._ListPuzzleL.Add(FifthLeftHand);
-            //this._ListPuzzleL.Add(SixthLeftHand);
-            //this._ListPuzzleL.Add(SeventhLeftHand);
-            //this._ListPuzzleL.Add(EignthLeftHand);
-            //this._ListPuzzleL.Add(NinthLeftHand);
+            this._ListPuzzleL.Add(SecondLeftHand);
+            this._ListPuzzleL.Add(ThirdLeftHand);
+            this._ListPuzzleL.Add(FourthLeftHand);
+            this._ListPuzzleL.Add(FifthLeftHand);
+            this._ListPuzzleL.Add(SixthLeftHand);
+            this._ListPuzzleL.Add(SeventhLeftHand);
+            this._ListPuzzleL.Add(EignthLeftHand);
+            this._ListPuzzleL.Add(NinthLeftHand);
             this._ListPuzzleL.Add(TenthLeftHand);
 
             {
@@ -785,77 +785,77 @@ namespace DrawingGame
 
 
                 this._ListPuzzleR.Add(FirstRightHand);
-                //this._ListPuzzleR.Add(SecondRightHand);
-                //this._ListPuzzleR.Add(ThirdRightHand);
-                //this._ListPuzzleR.Add(FourthRightHand);
-                //this._ListPuzzleR.Add(FifthRightHand);
-                //this._ListPuzzleR.Add(SixthRightHand);
-                //this._ListPuzzleR.Add(SeventhRightHand);
-                //this._ListPuzzleR.Add(EignthRightHand);
-                //this._ListPuzzleR.Add(NinthRightHand);
+                this._ListPuzzleR.Add(SecondRightHand);
+                this._ListPuzzleR.Add(ThirdRightHand);
+                this._ListPuzzleR.Add(FourthRightHand);
+                this._ListPuzzleR.Add(FifthRightHand);
+                this._ListPuzzleR.Add(SixthRightHand);
+                this._ListPuzzleR.Add(SeventhRightHand);
+                this._ListPuzzleR.Add(EignthRightHand);
+                this._ListPuzzleR.Add(NinthRightHand);
                 this._ListPuzzleR.Add(TenthRightHand);
 
 
             }
         }
 
-        private void DrawPuzzle(DotPuzzle puzzle, Canvas ColorPointCanvas, Polyline FigurePolyline)
-        {
+        //private void DrawPuzzle(DotPuzzle puzzle, Canvas ColorPointCanvas, Polyline FigurePolyline)
+        //{
 
-            try
-            {
-                if (puzzle != null)
-                {
-                    ColorPointCanvas.Children.Clear();
-                    FigurePolyline.Points.Clear();
-                    for (int i = 0; i < puzzle.Dots.Count; i++)
-                    {
-                        Grid dotContainer = new Grid();
-                        dotContainer.Width = 80;
-                        dotContainer.Height = 80;
-                        if (i == 0 || i == puzzle.Dots.Count - 1)
-                        {
-                            dotContainer.Children.Add(new Ellipse() { Fill = Brushes.DarkViolet }); // do punktu startowego i koncowego potrzebna grafika, najlepiej jakas animacja
-
-
-                            TextBlock dotLabel = new TextBlock();
-                            //dotLabel.Text = (i + 1).ToString();
-                            dotLabel.Foreground = Brushes.White;
-                            dotLabel.FontSize = 35;
-                            dotLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                            dotLabel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-                            dotContainer.Children.Add(dotLabel);
-
-                            Canvas.SetTop(dotContainer, puzzle.Dots[i].Y - (dotContainer.Height / 2));
-                            Canvas.SetLeft(dotContainer, puzzle.Dots[i].X - (dotContainer.Width / 2));
-                            ColorPointCanvas.Children.Add(dotContainer);
-
-                        }
-                        else
-                            dotContainer.Children.Add(new Ellipse() { Fill = FigurePolyline.Stroke });
-
-                        //TextBlock dotLabel = new TextBlock();
-                        ////dotLabel.Text = (i + 1).ToString();
-                        //dotLabel.Foreground = Brushes.White;
-                        //dotLabel.FontSize = 35;
-                        //dotLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
-                        //dotLabel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-                        //dotContainer.Children.Add(dotLabel);
-
-                        //Canvas.SetTop(dotContainer, puzzle.Dots[i].Y - (dotContainer.Height / 2));
-                        //Canvas.SetLeft(dotContainer, puzzle.Dots[i].X - (dotContainer.Width / 2));
-                        //ColorPointCanvas.Children.Add(dotContainer);
-                        FigurePolyline.Points.Add(new Point(puzzle.Dots[i].X, puzzle.Dots[i].Y));
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+        //    try
+        //    {
+        //        if (puzzle != null)
+        //        {
+        //            ColorPointCanvas.Children.Clear();
+        //            FigurePolyline.Points.Clear();
+        //            for (int i = 0; i < puzzle.Dots.Count; i++)
+        //            {
+        //                Grid dotContainer = new Grid();
+        //                dotContainer.Width = 80;
+        //                dotContainer.Height = 80;
+        //                if (i == 0 || i == puzzle.Dots.Count - 1)
+        //                {
+        //                    dotContainer.Children.Add(new Ellipse() { Fill = Brushes.DarkViolet }); // do punktu startowego i koncowego potrzebna grafika, najlepiej jakas animacja
 
 
-            }
-        }
+        //                    TextBlock dotLabel = new TextBlock();
+        //                    //dotLabel.Text = (i + 1).ToString();
+        //                    dotLabel.Foreground = Brushes.White;
+        //                    dotLabel.FontSize = 35;
+        //                    dotLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+        //                    dotLabel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+        //                    dotContainer.Children.Add(dotLabel);
+
+        //                    Canvas.SetTop(dotContainer, puzzle.Dots[i].Y - (dotContainer.Height / 2));
+        //                    Canvas.SetLeft(dotContainer, puzzle.Dots[i].X - (dotContainer.Width / 2));
+        //                    ColorPointCanvas.Children.Add(dotContainer);
+
+        //                }
+        //                else
+        //                    dotContainer.Children.Add(new Ellipse() { Fill = FigurePolyline.Stroke });
+
+        //                //TextBlock dotLabel = new TextBlock();
+        //                ////dotLabel.Text = (i + 1).ToString();
+        //                //dotLabel.Foreground = Brushes.White;
+        //                //dotLabel.FontSize = 35;
+        //                //dotLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Center;
+        //                //dotLabel.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+        //                //dotContainer.Children.Add(dotLabel);
+
+        //                //Canvas.SetTop(dotContainer, puzzle.Dots[i].Y - (dotContainer.Height / 2));
+        //                //Canvas.SetLeft(dotContainer, puzzle.Dots[i].X - (dotContainer.Width / 2));
+        //                //ColorPointCanvas.Children.Add(dotContainer);
+        //                FigurePolyline.Points.Add(new Point(puzzle.Dots[i].X, puzzle.Dots[i].Y));
+
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+
+        //    }
+        //}
         private void ClearFigureBoards(bool side)
         {
             if (side)
