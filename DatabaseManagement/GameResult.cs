@@ -12,9 +12,9 @@ namespace DatabaseManagement
     using System;
     using System.Collections.Generic;
     
-    public partial class GameResults
+    public partial class GameResult
     {
-        public GameResults()
+        public GameResult()
         {
             this.HistoryResults = new HashSet<HistoryResult>();
         }

@@ -177,46 +177,63 @@ namespace LettersGame.View
         }
 
         #region mouse events
+        private void OnLetterMouseMove(object sender, MouseEventArgs e)
+        {
+            if (!MainCanvas.IsMouseCaptured || e.LeftButton != MouseButtonState.Pressed)
+                return;
+            if (_linkingLine == null || !_drawingEnabled)
+                return;
+
+            var point = e.GetPosition(MainCanvas);
+            _linkingLine.X2 = point.X;
+            _linkingLine.Y2 = point.Y;
+        }
+
         private void LetterOnMouseEnter(object sender, MouseEventArgs e)
         {
-            if (_selectedLetter != null && _drawingEnabled)
-            {
-                var letterButton = sender as KinectTileButton;
-                if (letterButton != null)
-                {
-                    var letter = letterButton.Tag as Letter;
-                    var position = e.GetPosition(MainCanvas);
+            if (_selectedLetterButton == null || _selectedLetter == null) 
+                return;
+            var letterButton = sender as KinectTileButton;
 
-                    if (!Equals(_selectedLetterButton, letterButton) && Equals(_selectedLetter, letter))
-                    {
-                        _selectedLetter = null;
-                        _linkingLine.X2 = position.X;
-                        _linkingLine.Y2 = position.Y;
-                        _linkingLine.Stroke = new SolidColorBrush(Colors.Green);
-                        _drawingEnabled = false;
-                        _linkingLine = null;
-                        letterButton.IsEnabled = false;
-                        _selectedLetterButton.IsEnabled = false;
-                        //this.NotifySuccess();
-                    }
-                    else
-                    {
-                        _selectedLetter = null;
-                        MainCanvas.Children.Remove(_linkingLine);
-                        _linkingLine = null;
-                        _drawingEnabled = false;
-                        //this.NotifyFail();
-                    }
-                }
+            if (letterButton == null || _linkingLine == null) 
+                return;
+
+            var letter = letterButton.Tag as Letter;
+            var position = e.GetPosition(MainCanvas);
+
+            if (letter != null && (!Equals(_selectedLetterButton, letterButton) && _selectedLetter.SmallLetter == letter.SmallLetter))
+            {
+                _selectedLetter = null;
+                _linkingLine.X2 = position.X;
+                _linkingLine.Y2 = position.Y;
+                _linkingLine.Stroke = new SolidColorBrush(Colors.Green);
+
+                _selectedLetterButton.IsEnabled = false;
+                letterButton.IsEnabled = false;
+                _selectedLetterButton.Foreground = new SolidColorBrush(Colors.Green);
+                letterButton.Foreground = new SolidColorBrush(Colors.Green);
+                NotifySuccess();
             }
+            else
+            {
+                _selectedLetter = null;
+                MainCanvas.Children.Remove(_linkingLine);
+                NotifyFail();
+            }
+            _linkingLine = null;
         }
 
         private void LetterOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            PopupPanel.Children.Clear();
             _selectedLetterButton = sender as KinectTileButton;
-            if (_selectedLetterButton != null) _selectedLetter = _selectedLetterButton.Tag as Letter;
-            if (!MainCanvas.CaptureMouse()) return;
-            _drawingEnabled = true;
+            if (_selectedLetterButton == null) 
+                return;
+
+            _selectedLetter = _selectedLetterButton.Tag as Letter;
+            if (!MainCanvas.CaptureMouse()) 
+                return;
+
             var point = e.GetPosition(MainCanvas);
             _linkingLine = new Line
             {
@@ -230,27 +247,14 @@ namespace LettersGame.View
             MainCanvas.Children.Add(_linkingLine);
         }
 
-        private void OnLetterMouseMove(object sender, MouseEventArgs e)
-        {
-            if (MainCanvas.IsMouseCaptured && e.LeftButton == MouseButtonState.Pressed)
-            {
-                if (_linkingLine != null && _drawingEnabled)
-                {
-                    var point = e.GetPosition(MainCanvas);
-                    _linkingLine.X2 = point.X;
-                    _linkingLine.Y2 = point.Y;
-                }
-            }
-        }
-
         private void LetterOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             MainCanvas.ReleaseMouseCapture();
-            if (_drawingEnabled)
-            {
-                MainCanvas.Children.Remove(_linkingLine);
-                _drawingEnabled = false;
-            }
+            if (!_drawingEnabled) 
+                return;
+            
+            MainCanvas.Children.Remove(_linkingLine);
+            e.Handled = true;
         }
         #endregion
 
@@ -271,72 +275,68 @@ namespace LettersGame.View
 
         private void OnHandPointerEnter(object sender, HandPointerEventArgs e)
         {
-            if (_selectedLetterButton != null && _selectedLetter != null)
-            {
-                var letterButton = sender as KinectTileButton;
-                if (letterButton != null)
-                {
-                    var letter = letterButton.Tag as Letter;
-                    var position = e.HandPointer.GetPosition(MainCanvas);
+            if (_selectedLetterButton == null || _selectedLetter == null) 
+                return;
+            var letterButton = sender as KinectTileButton;
+            if (letterButton == null) 
+                return;
 
-                    if (letter != null && (!Equals(_selectedLetterButton, letterButton) && _selectedLetter.SmallLetter == letter.SmallLetter))
-                    {
-                        _selectedLetter = null;
-                        _linkingLine.X2 = position.X;
-                        _linkingLine.Y2 = position.Y;
-                        _linkingLine.Stroke = new SolidColorBrush(Colors.Green);
+            var letter = letterButton.Tag as Letter;
+            var position = e.HandPointer.GetPosition(MainCanvas);
+
+            if (letter != null && (!Equals(_selectedLetterButton, letterButton) && _selectedLetter.SmallLetter == letter.SmallLetter))
+            {
+                _selectedLetter = null;
+                _linkingLine.X2 = position.X;
+                _linkingLine.Y2 = position.Y;
+                _linkingLine.Stroke = new SolidColorBrush(Colors.Green);
                         
-                        _selectedLetterButton.IsEnabled = false;
-                        letterButton.IsEnabled = false;
-                        _selectedLetterButton.Foreground = new SolidColorBrush(Colors.Green);
-                        letterButton.Foreground = new SolidColorBrush(Colors.Green);
-                        NotifySuccess();
-                    }
-                    else
-                    {
-                        _selectedLetter = null;
-                        MainCanvas.Children.Remove(_linkingLine);
-                        NotifyFail();
-                    }
-                    _linkingLine = null;
-                    e.Handled = true;
-                }
+                _selectedLetterButton.IsEnabled = false;
+                letterButton.IsEnabled = false;
+                _selectedLetterButton.Foreground = new SolidColorBrush(Colors.Green);
+                letterButton.Foreground = new SolidColorBrush(Colors.Green);
+                NotifySuccess();
             }
+            else
+            {
+                _selectedLetter = null;
+                MainCanvas.Children.Remove(_linkingLine);
+                NotifyFail();
+            }
+            _linkingLine = null;
+            e.Handled = true;
         }
 
         private void OnGrip(object sender, HandPointerEventArgs e)
         {
             PopupPanel.Children.Clear();
             _selectedLetterButton = sender as KinectTileButton;
-            if (_selectedLetterButton != null)
+            if (_selectedLetterButton == null) 
+                return;
+            _selectedLetter = _selectedLetterButton.Tag as Letter;
+            if (!e.HandPointer.IsInGripInteraction || !e.HandPointer.Capture(MainCanvas)) 
+                return;
+            var point = e.HandPointer.GetPosition(MainCanvas);
+            _linkingLine = new Line
             {
-                _selectedLetter = _selectedLetterButton.Tag as Letter;
-                if (e.HandPointer.IsInGripInteraction && e.HandPointer.Capture(MainCanvas))
-                {
-                    var point = e.HandPointer.GetPosition(MainCanvas);
-                    _linkingLine = new Line
-                    {
-                        X1 = point.X,
-                        X2 = point.X,
-                        Y1 = point.Y,
-                        Y2 = point.Y,
-                        Stroke = new SolidColorBrush(Colors.Red),
-                        StrokeThickness = 10
-                    };
-                    MainCanvas.Children.Add(_linkingLine);
-                    e.Handled = true;
-                }
-            }
+                X1 = point.X,
+                X2 = point.X,
+                Y1 = point.Y,
+                Y2 = point.Y,
+                Stroke = new SolidColorBrush(Colors.Red),
+                StrokeThickness = 10
+            };
+            MainCanvas.Children.Add(_linkingLine);
+            e.Handled = true;
         }
 
         private void OnGripRelease(object sender, HandPointerEventArgs e)
         {
             e.HandPointer.Captured = null;
-            if (_drawingEnabled)
-            {
-                MainCanvas.Children.Remove(_linkingLine);
-                e.Handled = true;
-            }
+            if (!_drawingEnabled) 
+                return;
+            MainCanvas.Children.Remove(_linkingLine);
+            e.Handled = true;
         }
 
         private void OnQuery(object sender, QueryInteractionStatusEventArgs handPointerEventArgs)

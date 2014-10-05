@@ -10,8 +10,8 @@ namespace DatabaseManagement.Managers
     {
         private Game _game;
         private Player _player;
-        private readonly Dictionary<String,GameParams> _gameParams = new Dictionary<string,GameParams>();
-        private readonly Dictionary<String,GameResults> _gameResults = new Dictionary<string,GameResults>();
+        private readonly Dictionary<String,GameParam> _gameParams = new Dictionary<string,GameParam>();
+        private readonly Dictionary<String,GameResult> _gameResults = new Dictionary<string,GameResult>();
 
         public ApplesGameManager()
         {
@@ -36,60 +36,54 @@ namespace DatabaseManagement.Managers
             {
                 var date = DateTime.Now;
 
-                var history = new History
+                var historyParams = new List<HistoryParam>
                 {
-                    Game = _game,
-                    Player = _player,
-                    Date = date
-                };
-
-                var historyParams = new List<HistoryParams>
-                {
-                    new HistoryParams
+                    new HistoryParam
                     {
-                        GameParam = _gameParams["apples"],
+                        GameParam = _gameParams["Apples"],
                         Value = apg.Apples.ToString(CultureInfo.InvariantCulture)
                     },
-                    new HistoryParams
+                    new HistoryParam
                     {
-                        GameParam = _gameParams["colors"],
+                        GameParam = _gameParams["Colors"],
                         Value = apg.Colors.ToString(CultureInfo.InvariantCulture)
                     },
-                    new HistoryParams
+                    new HistoryParam
                     {
-                        GameParam = _gameParams["baskets"],
+                        GameParam = _gameParams["Baskets"],
                         Value = apg.Baskets.ToString(CultureInfo.InvariantCulture)
                     }
                 };
-                foreach (var item in historyParams)
-                {
-                    history.HistoryParams.Add(item);
-                }
 
                 var historyResults = new List<HistoryResult>
                 {
                     new HistoryResult
                     {
-                        GameResult = _gameResults["correctTrials"],
+                        GameResult = _gameResults["Correct Trials"],
                         Value = apg.CorrectTrials
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["failures"],
+                        GameResult = _gameResults["Failures"],
                         Value = apg.Failures
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["time"],
+                        GameResult = _gameResults["Time"],
                         Value = apg.Time
                     }
                 };
-                foreach (var item in historyResults)
-                {
-                    history.HistoryResults.Add(item);
-                }
 
-                context.Histories.Add(history);
+                var history = new History
+                {
+                    Game = _game,
+                    Date = date,
+                    HistoryParams = historyParams,
+                    HistoryResults = historyResults
+                };
+                var player = context.Players.FirstOrDefault(player1 => player1.Id == _player.Id);
+                if (player != null)
+                    player.Histories.Add(history);
                 context.SaveChanges();
             }
         }

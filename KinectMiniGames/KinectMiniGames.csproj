@@ -142,9 +142,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameResultsList.resx</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="KinectHoverButton.cs" />
-    <Compile Include="Models\GameNameModel.cs" />
+    <Compile Include="Models\GameParamModel.cs" />
     <Compile Include="Models\GameResultModel.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
     </Compile>
@@ -209,6 +211,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Configs\GameResultsList.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameResultsList1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

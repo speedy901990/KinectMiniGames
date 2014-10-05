@@ -12,18 +12,12 @@ namespace DatabaseManagement
     using System;
     using System.Collections.Generic;
     
-    public partial class GameParams
+    public partial class HistoryParam
     {
-        public GameParams()
-        {
-            this.HistoryParams = new HashSet<HistoryParams>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Values { get; set; }
+        public string Value { get; set; }
     
-        public virtual Game Game { get; set; }
-        public virtual ICollection<HistoryParams> HistoryParams { get; set; }
+        public virtual History History { get; set; }
+        public virtual GameParam GameParam { get; set; }
     }
 }

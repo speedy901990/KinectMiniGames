@@ -18,6 +18,6 @@ namespace DatabaseManagement
         public int Value { get; set; }
     
         public virtual History History { get; set; }
-        public virtual GameResults GameResult { get; set; }
+        public virtual GameResult GameResult { get; set; }
     }
 }

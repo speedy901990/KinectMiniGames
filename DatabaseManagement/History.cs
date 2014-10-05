@@ -17,7 +17,7 @@ namespace DatabaseManagement
         public History()
         {
             this.HistoryResults = new HashSet<HistoryResult>();
-            this.HistoryParams = new HashSet<HistoryParams>();
+            this.HistoryParams = new HashSet<HistoryParam>();
         }
     
         public int Id { get; set; }
@@ -26,6 +26,6 @@ namespace DatabaseManagement
         public virtual Player Player { get; set; }
         public virtual Game Game { get; set; }
         public virtual ICollection<HistoryResult> HistoryResults { get; set; }
-        public virtual ICollection<HistoryParams> HistoryParams { get; set; }
+        public virtual ICollection<HistoryParam> HistoryParams { get; set; }
     }
 }

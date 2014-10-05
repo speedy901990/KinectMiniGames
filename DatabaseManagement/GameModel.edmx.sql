@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/23/2014 18:38:17
+-- Date Created: 10/05/2014 21:50:05
 -- Generated from EDMX file: C:\Projects\KinectMiniGames\DatabaseManagement\GameModel.edmx
 -- --------------------------------------------------
 
@@ -88,17 +88,16 @@ CREATE TABLE [dbo].[Games] (
 );
 GO
 
--- Creating table 'GameParams1'
-CREATE TABLE [dbo].[GameParams1] (
+-- Creating table 'GameParams'
+CREATE TABLE [dbo].[GameParams] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Values] nvarchar(max)  NOT NULL,
     [Game_Id] int  NOT NULL
 );
 GO
 
--- Creating table 'GameResults'
-CREATE TABLE [dbo].[GameResults] (
+-- Creating table 'GameResults1'
+CREATE TABLE [dbo].[GameResults1] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Game_Id] int  NOT NULL
@@ -123,8 +122,8 @@ CREATE TABLE [dbo].[HistoryResults] (
 );
 GO
 
--- Creating table 'HistoryParams'
-CREATE TABLE [dbo].[HistoryParams] (
+-- Creating table 'HistoryParams1'
+CREATE TABLE [dbo].[HistoryParams1] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Value] nvarchar(max)  NOT NULL,
     [History_Id] int  NOT NULL,
@@ -148,15 +147,15 @@ ADD CONSTRAINT [PK_Games]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'GameParams1'
-ALTER TABLE [dbo].[GameParams1]
-ADD CONSTRAINT [PK_GameParams1]
+-- Creating primary key on [Id] in table 'GameParams'
+ALTER TABLE [dbo].[GameParams]
+ADD CONSTRAINT [PK_GameParams]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'GameResults'
-ALTER TABLE [dbo].[GameResults]
-ADD CONSTRAINT [PK_GameResults]
+-- Creating primary key on [Id] in table 'GameResults1'
+ALTER TABLE [dbo].[GameResults1]
+ADD CONSTRAINT [PK_GameResults1]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -172,9 +171,9 @@ ADD CONSTRAINT [PK_HistoryResults]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'HistoryParams'
-ALTER TABLE [dbo].[HistoryParams]
-ADD CONSTRAINT [PK_HistoryParams]
+-- Creating primary key on [Id] in table 'HistoryParams1'
+ALTER TABLE [dbo].[HistoryParams1]
+ADD CONSTRAINT [PK_HistoryParams1]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -182,8 +181,8 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [Game_Id] in table 'GameParams1'
-ALTER TABLE [dbo].[GameParams1]
+-- Creating foreign key on [Game_Id] in table 'GameParams'
+ALTER TABLE [dbo].[GameParams]
 ADD CONSTRAINT [FK_GameGameParams]
     FOREIGN KEY ([Game_Id])
     REFERENCES [dbo].[Games]
@@ -193,12 +192,12 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GameGameParams'
 CREATE INDEX [IX_FK_GameGameParams]
-ON [dbo].[GameParams1]
+ON [dbo].[GameParams]
     ([Game_Id]);
 GO
 
--- Creating foreign key on [Game_Id] in table 'GameResults'
-ALTER TABLE [dbo].[GameResults]
+-- Creating foreign key on [Game_Id] in table 'GameResults1'
+ALTER TABLE [dbo].[GameResults1]
 ADD CONSTRAINT [FK_GameGameResults]
     FOREIGN KEY ([Game_Id])
     REFERENCES [dbo].[Games]
@@ -208,7 +207,7 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GameGameResults'
 CREATE INDEX [IX_FK_GameGameResults]
-ON [dbo].[GameResults]
+ON [dbo].[GameResults1]
     ([Game_Id]);
 GO
 
@@ -257,8 +256,8 @@ ON [dbo].[HistoryResults]
     ([History_Id]);
 GO
 
--- Creating foreign key on [History_Id] in table 'HistoryParams'
-ALTER TABLE [dbo].[HistoryParams]
+-- Creating foreign key on [History_Id] in table 'HistoryParams1'
+ALTER TABLE [dbo].[HistoryParams1]
 ADD CONSTRAINT [FK_HistoryHistoryParams]
     FOREIGN KEY ([History_Id])
     REFERENCES [dbo].[Histories]
@@ -268,22 +267,22 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_HistoryHistoryParams'
 CREATE INDEX [IX_FK_HistoryHistoryParams]
-ON [dbo].[HistoryParams]
+ON [dbo].[HistoryParams1]
     ([History_Id]);
 GO
 
--- Creating foreign key on [GameParam_Id] in table 'HistoryParams'
-ALTER TABLE [dbo].[HistoryParams]
+-- Creating foreign key on [GameParam_Id] in table 'HistoryParams1'
+ALTER TABLE [dbo].[HistoryParams1]
 ADD CONSTRAINT [FK_GameParamsHistoryParams]
     FOREIGN KEY ([GameParam_Id])
-    REFERENCES [dbo].[GameParams1]
+    REFERENCES [dbo].[GameParams]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GameParamsHistoryParams'
 CREATE INDEX [IX_FK_GameParamsHistoryParams]
-ON [dbo].[HistoryParams]
+ON [dbo].[HistoryParams1]
     ([GameParam_Id]);
 GO
 
@@ -291,7 +290,7 @@ GO
 ALTER TABLE [dbo].[HistoryResults]
 ADD CONSTRAINT [FK_GameResultsHistoryResult]
     FOREIGN KEY ([GameResult_Id])
-    REFERENCES [dbo].[GameResults]
+    REFERENCES [dbo].[GameResults1]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO

@@ -117,43 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApplesGameLevel1" xml:space="preserve">
-    <value>{"Game":"ApplesGame"}</value>
+  <data name="ApplesGameApples" xml:space="preserve">
+    <value>{"Game":"ApplesGame", "Name":"Apples"}</value>
   </data>
-  <data name="ApplesGameLevel2" xml:space="preserve">
-    <value>{"Game":"ApplesGame"}</value>
+  <data name="ApplesGameBaskets" xml:space="preserve">
+    <value>{"Game":"ApplesGame", "Name":"Baskets"}</value>
   </data>
-  <data name="ApplesGameLevel3" xml:space="preserve">
-    <value>{"Game":"ApplesGame"}</value>
+  <data name="ApplesGameColors" xml:space="preserve">
+    <value>{"Game":"ApplesGame", "Name":"Colors"}</value>
   </data>
-  <data name="BubblesGameLevel1" xml:space="preserve">
-    <value>{"Game":"BubblesGame"}</value>
+  <data name="ApplesGameTrees" xml:space="preserve">
+    <value>{"Game":"ApplesGame", "Name":"Trees"}</value>
   </data>
-  <data name="BubblesGameLevel2" xml:space="preserve">
-    <value>{"Game":"BubblesGame"}</value>
+  <data name="BubblesGameAppearanceFrequency" xml:space="preserve">
+    <value>{"Game":"BubblesGame", "Name":"Appearance Frequency"}</value>
   </data>
-  <data name="BubblesGameLevel3" xml:space="preserve">
-    <value>{"Game":"BubblesGame"}</value>
+  <data name="BubblesGameBubbles" xml:space="preserve">
+    <value>{"Game":"BubblesGame", "Name":"Bubbles"}</value>
   </data>
-  <data name="BubblesGameLevel4" xml:space="preserve">
-    <value>{"Game":"BubblesGame"}</value>
+  <data name="BubblesGameBubblesSize" xml:space="preserve">
+    <value>{"Game":"BubblesGame", "Name":"Bubbles Size"}</value>
   </data>
-  <data name="LettersGameLevel1" xml:space="preserve">
-    <value>{"Game":"LettersGame"}</value>
+  <data name="BubblesGameFallSpeed" xml:space="preserve">
+    <value>{"Game":"BubblesGame", "Name":"Fall Speed"}</value>
   </data>
-  <data name="LettersGameLevel2" xml:space="preserve">
-    <value>{"Game":"LettersGame"}</value>
+  <data name="LettersGameLevel" xml:space="preserve">
+    <value>{"Game":"LettersGame", "Name":"Level"}</value>
   </data>
-  <data name="LettersGameLevel3" xml:space="preserve">
-    <value>{"Game":"LettersGame"}</value>
-  </data>
-  <data name="TrainOfWordsLevel1" xml:space="preserve">
-    <value>{"Game":"TrainOfWords"}</value>
-  </data>
-  <data name="TrainOfWordsLevel2" xml:space="preserve">
-    <value>{"Game":"TrainOfWords"}</value>
-  </data>
-  <data name="TrainOfWordsLevel3" xml:space="preserve">
-    <value>{"Game":"TrainOfWords"}</value>
+  <data name="TrainOfWordsLevel" xml:space="preserve">
+    <value>{"Game":"TrainOfWords", "Name":"Level"}</value>
   </data>
 </root>

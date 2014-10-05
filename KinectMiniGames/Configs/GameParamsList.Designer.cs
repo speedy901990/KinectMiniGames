@@ -61,119 +61,92 @@ namespace KinectMiniGames.Configs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;ApplesGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;ApplesGame&quot;, &quot;Name&quot;:&quot;Apples&quot;}.
         /// </summary>
-        internal static string ApplesGameLevel1 {
+        internal static string ApplesGameApples {
             get {
-                return ResourceManager.GetString("ApplesGameLevel1", resourceCulture);
+                return ResourceManager.GetString("ApplesGameApples", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;ApplesGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;ApplesGame&quot;, &quot;Name&quot;:&quot;Baskets&quot;}.
         /// </summary>
-        internal static string ApplesGameLevel2 {
+        internal static string ApplesGameBaskets {
             get {
-                return ResourceManager.GetString("ApplesGameLevel2", resourceCulture);
+                return ResourceManager.GetString("ApplesGameBaskets", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;ApplesGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;ApplesGame&quot;, &quot;Name&quot;:&quot;Colors&quot;}.
         /// </summary>
-        internal static string ApplesGameLevel3 {
+        internal static string ApplesGameColors {
             get {
-                return ResourceManager.GetString("ApplesGameLevel3", resourceCulture);
+                return ResourceManager.GetString("ApplesGameColors", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;BubblesGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;ApplesGame&quot;, &quot;Name&quot;:&quot;Trees&quot;}.
         /// </summary>
-        internal static string BubblesGameLevel1 {
+        internal static string ApplesGameTrees {
             get {
-                return ResourceManager.GetString("BubblesGameLevel1", resourceCulture);
+                return ResourceManager.GetString("ApplesGameTrees", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;BubblesGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;BubblesGame&quot;, &quot;Name&quot;:&quot;Appearance Frequency&quot;}.
         /// </summary>
-        internal static string BubblesGameLevel2 {
+        internal static string BubblesGameAppearanceFrequency {
             get {
-                return ResourceManager.GetString("BubblesGameLevel2", resourceCulture);
+                return ResourceManager.GetString("BubblesGameAppearanceFrequency", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;BubblesGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;BubblesGame&quot;, &quot;Name&quot;:&quot;Bubbles&quot;}.
         /// </summary>
-        internal static string BubblesGameLevel3 {
+        internal static string BubblesGameBubbles {
             get {
-                return ResourceManager.GetString("BubblesGameLevel3", resourceCulture);
+                return ResourceManager.GetString("BubblesGameBubbles", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;BubblesGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;BubblesGame&quot;, &quot;Name&quot;:&quot;Bubbles Size&quot;}.
         /// </summary>
-        internal static string BubblesGameLevel4 {
+        internal static string BubblesGameBubblesSize {
             get {
-                return ResourceManager.GetString("BubblesGameLevel4", resourceCulture);
+                return ResourceManager.GetString("BubblesGameBubblesSize", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;LettersGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;BubblesGame&quot;, &quot;Name&quot;:&quot;Fall Speed&quot;}.
         /// </summary>
-        internal static string LettersGameLevel1 {
+        internal static string BubblesGameFallSpeed {
             get {
-                return ResourceManager.GetString("LettersGameLevel1", resourceCulture);
+                return ResourceManager.GetString("BubblesGameFallSpeed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;LettersGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;LettersGame&quot;, &quot;Name&quot;:&quot;Level&quot;}.
         /// </summary>
-        internal static string LettersGameLevel2 {
+        internal static string LettersGameLevel {
             get {
-                return ResourceManager.GetString("LettersGameLevel2", resourceCulture);
+                return ResourceManager.GetString("LettersGameLevel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;LettersGame&quot;}.
+        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;TrainOfWords&quot;, &quot;Name&quot;:&quot;Level&quot;}.
         /// </summary>
-        internal static string LettersGameLevel3 {
+        internal static string TrainOfWordsLevel {
             get {
-                return ResourceManager.GetString("LettersGameLevel3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;TrainOfWords&quot;}.
-        /// </summary>
-        internal static string TrainOfWordsLevel1 {
-            get {
-                return ResourceManager.GetString("TrainOfWordsLevel1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;TrainOfWords&quot;}.
-        /// </summary>
-        internal static string TrainOfWordsLevel2 {
-            get {
-                return ResourceManager.GetString("TrainOfWordsLevel2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {&quot;Game&quot;:&quot;TrainOfWords&quot;}.
-        /// </summary>
-        internal static string TrainOfWordsLevel3 {
-            get {
-                return ResourceManager.GetString("TrainOfWordsLevel3", resourceCulture);
+                return ResourceManager.GetString("TrainOfWordsLevel", resourceCulture);
             }
         }
     }

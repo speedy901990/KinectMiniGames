@@ -50,70 +50,19 @@ namespace KinectMiniGames
 
         private KinectSensorChooser _sensorChooser;
 
+        private DatabaseInitializer _databaseInitializer;
+
         #endregion
 
         #region Ctor + Config
         public MainWindow()
         {
             InitializeComponent();
-            InitializeDatabase();
-            //setMenuBackground();
+            _databaseInitializer = new DatabaseInitializer();
             SetupKinectSensor();
             CreateMenuButtons();
             PlayersThread = new Thread(GetPlayersFromDatabase);
             PlayersThread.Start();
-        }
-
-        private void InitializeDatabase()
-        {
-            using (var context = new GameModelContainer())
-            {
-                if (!context.Database.Exists())
-                {
-                    context.Database.Create();
-                    var games = GetGamesFromResource();
-                    context.Games.AddRange(games);
-
-                    context.SaveChanges();
-                }
-                context.SaveChanges();
-            }
-        }
-
-        private IEnumerable<Game> GetGamesFromResource()
-        {
-            var games = new List<Game>();
-            var gameResourceSet = Configs.GameList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-            foreach (DictionaryEntry item in gameResourceSet)
-            {
-                var game = new Game { Name = item.Key as string, Id = int.Parse(item.Value.ToString()) };
-                games.Add(game);
-            }
-            Configs.GameList.ResourceManager.ReleaseAllResources();
-
-            var gameParamsResourceSet = Configs.GameParamsList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-            foreach (DictionaryEntry item in gameParamsResourceSet)
-            {
-                var gameNameModel = JsonConvert.DeserializeObject<GameNameModel>(item.Value.ToString());
-                var param = new GameParams {Name = item.Key.ToString(), Values = item.Value.ToString()};
-                var game = games.FirstOrDefault(game1 => game1.Name == gameNameModel.Game);
-                if (game != null) 
-                    game.GameParams.Add(param);
-            }
-            Configs.GameParamsList.ResourceManager.ReleaseAllResources();
-
-            var gameResultsResourceSet = Configs.GameResultsList.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-            foreach (DictionaryEntry item in gameResultsResourceSet)
-            {
-                var gameNameModel = JsonConvert.DeserializeObject<GameResultModel>(item.Value.ToString());
-                var result = new GameResults { Name = gameNameModel.Name };
-                var game = games.FirstOrDefault(game1 => game1.Name == gameNameModel.Game);
-                if (game != null)
-                    game.GameResults.Add(result);
-            }
-            Configs.GameList.ResourceManager.ReleaseAllResources();
-
-            return games;
         }
 
         private void SetupKinectSensor()
@@ -129,20 +78,20 @@ namespace KinectMiniGames
         private void CreateMenuButtons()
         {
             wrapPanel.Children.Clear();
-            wrapPanel.Children.Add(createSingleButton("Apples Game"));
-            wrapPanel.Children.Add(createSingleButton("Bubbles Game"));
-            wrapPanel.Children.Add(createSingleButton("Letters Game"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Painting Game"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Dancing Steps"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Song Movements"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Simple Excersises"));
-            wrapPanel.Children.Add(createSingleButton("Train of Words"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Steps of Activity"));
-            //this.wrapPanel.Children.Add(this.createSingleButton("Educational Kinesiology"));
+            wrapPanel.Children.Add(CreateSingleButton("Apples Game"));
+            wrapPanel.Children.Add(CreateSingleButton("Bubbles Game"));
+            wrapPanel.Children.Add(CreateSingleButton("Letters Game"));
+            //this.wrapPanel.Children.Add(this.CreateSingleButton("Labyrinth Game"));
+            //this.wrapPanel.Children.Add(this.CreateSingleButton("Painting Game"));
+            //this.wrapPanel.Children.Add(this.CreateSingleButton("Dancing Steps"));
+            //this.wrapPanel.Children.Add(this.CreateSingleButton("Song Movements"));
+            //this.wrapPanel.Children.Add(this.CreateSingleButton("Simple Excersises"));
+            wrapPanel.Children.Add(CreateSingleButton("Train of Words"));
+            //this.wrapPanel.Children.Add(this.CreateSingleButton("Steps of Activity"));
+            //this.wrapPanel.Children.Add(this.CreateSingleButton("Educational Kinesiology"));
         }
 
-        private KinectTileButton createSingleButton(String buttonLabel)
+        private KinectTileButton CreateSingleButton(String buttonLabel)
         {
             var newButton = new KinectTileButton { Label = buttonLabel, Width = 450, Height = 450 };
             return newButton;

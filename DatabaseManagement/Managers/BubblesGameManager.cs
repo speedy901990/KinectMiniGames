@@ -9,21 +9,10 @@ namespace DatabaseManagement.Managers
     public class BubblesGameManager
     {
         private Game _game;
-        private Player _player;
-        private readonly Dictionary<String,GameParams> _gameParams = new Dictionary<string,GameParams>();
-        private readonly Dictionary<String,GameResults> _gameResults = new Dictionary<string,GameResults>();
-
-        public BubblesGameManager()
-        {
-
-        }
-
-        public BubblesGameManager(String playerName)
-        {
-            GetGame();
-            GetPlayer(playerName);
-        }
-
+        private readonly Player _player;
+        private readonly Dictionary<String,GameParam> _gameParams = new Dictionary<string,GameParam>();
+        private readonly Dictionary<String,GameResult> _gameResults = new Dictionary<string,GameResult>();
+        
         public BubblesGameManager(Player player)
         {
             GetGame();
@@ -36,38 +25,57 @@ namespace DatabaseManagement.Managers
             {
                 var date = DateTime.Now;
 
-                var history = new History
+                
+                //TODO poprawic bgp i value w kazdym z history params
+                var historyParams = new List<HistoryParam>
                 {
-                    Game = _game,
-                    Player = _player,
-                    Date = date
+                    new HistoryParam
+                    {
+                        GameParam = _gameParams["Appearance Frequency"],
+                        Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
+                    },
+                    new HistoryParam
+                    {
+                        GameParam = _gameParams["Bubbles"],
+                        Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
+                    },
+                    new HistoryParam
+                    {
+                        GameParam = _gameParams["Bubbles Size"],
+                        Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
+                    },
+                    new HistoryParam
+                    {
+                        GameParam = _gameParams["Fall Speed"],
+                        Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
+                    }
                 };
-
-                history.HistoryParams.Add(new HistoryParams{
-                    GameParam = _gameParams["level"],
-                    Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
-                });
-
 
                 var historyResults = new List<HistoryResult>
                 {
                     new HistoryResult
                     {
-                        GameResult = _gameResults["success"],
+                        GameResult = _gameResults["Success"],
                         Value = bgp.Success
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["time"],
+                        GameResult = _gameResults["Time"],
                         Value = bgp.Time
                     }
                 };
-                foreach (var item in historyResults)
-                {
-                    history.HistoryResults.Add(item);
-                }
 
-                context.Histories.Add(history);
+                var history = new History
+                {
+                    Game = _game,
+                    Date = date,
+                    HistoryParams = historyParams,
+                    HistoryResults = historyResults
+                };
+
+                var player = context.Players.FirstOrDefault(player1 => player1.Id == _player.Id);
+                if (player != null) 
+                    player.Histories.Add(history);
                 context.SaveChanges();
             }
         }
@@ -89,15 +97,6 @@ namespace DatabaseManagement.Managers
                 {
                     _gameResults.Add(item.Name, item);
                 }
-            }
-        }
-
-        private void GetPlayer(String playerName)
-        {
-            using (var context = new GameModelContainer())
-            {
-                var user = context.Players.FirstOrDefault(b => b.Name == playerName);
-                _player = user;
             }
         }
     }

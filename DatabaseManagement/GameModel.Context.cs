@@ -27,10 +27,10 @@ namespace DatabaseManagement
     
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<Game> Games { get; set; }
-        public virtual DbSet<GameParams> GameParams1 { get; set; }
-        public virtual DbSet<GameResults> GameResults { get; set; }
+        public virtual DbSet<GameParam> GameParams { get; set; }
+        public virtual DbSet<GameResult> GameResults1 { get; set; }
         public virtual DbSet<History> Histories { get; set; }
         public virtual DbSet<HistoryResult> HistoryResults { get; set; }
-        public virtual DbSet<HistoryParams> HistoryParams { get; set; }
+        public virtual DbSet<HistoryParam> HistoryParams1 { get; set; }
     }
 }
