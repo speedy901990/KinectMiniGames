@@ -8,18 +8,18 @@
   <EntityContainer Name="GameModelStoreContainer">
     <EntitySet Name="Players" EntityType="GameModel.Store.Players" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Games" EntityType="GameModel.Store.Games" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GameParams1" EntityType="GameModel.Store.GameParams1" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GameResults" EntityType="GameModel.Store.GameResults" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GameParams" EntityType="GameModel.Store.GameParams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GameResults1" EntityType="GameModel.Store.GameResults1" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Histories" EntityType="GameModel.Store.Histories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HistoryResults" EntityType="GameModel.Store.HistoryResults" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="HistoryParams" EntityType="GameModel.Store.HistoryParams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistoryParams1" EntityType="GameModel.Store.HistoryParams1" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="GameGameParams" Association="GameModel.Store.GameGameParams">
       <End Role="Game" EntitySet="Games" />
-      <End Role="GameParams" EntitySet="GameParams1" />
+      <End Role="GameParams" EntitySet="GameParams" />
     </AssociationSet>
     <AssociationSet Name="GameGameResults" Association="GameModel.Store.GameGameResults">
       <End Role="Game" EntitySet="Games" />
-      <End Role="GameResults" EntitySet="GameResults" />
+      <End Role="GameResults" EntitySet="GameResults1" />
     </AssociationSet>
     <AssociationSet Name="PlayerHistory" Association="GameModel.Store.PlayerHistory">
       <End Role="Player" EntitySet="Players" />
@@ -35,14 +35,14 @@
     </AssociationSet>
     <AssociationSet Name="HistoryHistoryParams" Association="GameModel.Store.HistoryHistoryParams">
       <End Role="History" EntitySet="Histories" />
-      <End Role="HistoryParams" EntitySet="HistoryParams" />
+      <End Role="HistoryParams" EntitySet="HistoryParams1" />
     </AssociationSet>
     <AssociationSet Name="GameParamsHistoryParams" Association="GameModel.Store.GameParamsHistoryParams">
-      <End Role="GameParams" EntitySet="GameParams1" />
-      <End Role="HistoryParams" EntitySet="HistoryParams" />
+      <End Role="GameParams" EntitySet="GameParams" />
+      <End Role="HistoryParams" EntitySet="HistoryParams1" />
     </AssociationSet>
     <AssociationSet Name="GameResultsHistoryResult" Association="GameModel.Store.GameResultsHistoryResult">
-      <End Role="GameResults" EntitySet="GameResults" />
+      <End Role="GameResults" EntitySet="GameResults1" />
       <End Role="HistoryResult" EntitySet="HistoryResults" />
     </AssociationSet>
   </EntityContainer>
@@ -62,16 +62,15 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <EntityType Name="GameParams1">
+  <EntityType Name="GameParams">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Values" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Game_Id" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="GameResults">
+  <EntityType Name="GameResults1">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -97,7 +96,7 @@
     <Property Name="History_Id" Type="int" Nullable="false" />
     <Property Name="GameResult_Id" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="HistoryParams">
+  <EntityType Name="HistoryParams1">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -108,7 +107,7 @@
   </EntityType>
   <Association Name="GameGameParams">
     <End Role="Game" Type="GameModel.Store.Games" Multiplicity="1" />
-    <End Role="GameParams" Type="GameModel.Store.GameParams1" Multiplicity="*" />
+    <End Role="GameParams" Type="GameModel.Store.GameParams" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Game">
         <PropertyRef Name="Id" />
@@ -120,7 +119,7 @@
   </Association>
   <Association Name="GameGameResults">
     <End Role="Game" Type="GameModel.Store.Games" Multiplicity="1" />
-    <End Role="GameResults" Type="GameModel.Store.GameResults" Multiplicity="*" />
+    <End Role="GameResults" Type="GameModel.Store.GameResults1" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Game">
         <PropertyRef Name="Id" />
@@ -168,7 +167,7 @@
   </Association>
   <Association Name="HistoryHistoryParams">
     <End Role="History" Type="GameModel.Store.Histories" Multiplicity="1" />
-    <End Role="HistoryParams" Type="GameModel.Store.HistoryParams" Multiplicity="*" />
+    <End Role="HistoryParams" Type="GameModel.Store.HistoryParams1" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="History">
         <PropertyRef Name="Id" />
@@ -179,8 +178,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="GameParamsHistoryParams">
-    <End Role="GameParams" Type="GameModel.Store.GameParams1" Multiplicity="1" />
-    <End Role="HistoryParams" Type="GameModel.Store.HistoryParams" Multiplicity="*" />
+    <End Role="GameParams" Type="GameModel.Store.GameParams" Multiplicity="1" />
+    <End Role="HistoryParams" Type="GameModel.Store.HistoryParams1" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GameParams">
         <PropertyRef Name="Id" />
@@ -191,7 +190,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="GameResultsHistoryResult">
-    <End Role="GameResults" Type="GameModel.Store.GameResults" Multiplicity="1" />
+    <End Role="GameResults" Type="GameModel.Store.GameResults1" Multiplicity="1" />
     <End Role="HistoryResult" Type="GameModel.Store.HistoryResults" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GameResults">
@@ -209,19 +208,19 @@
         <EntityContainer Name="GameModelContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Players" EntityType="GameModel.Player" />
           <EntitySet Name="Games" EntityType="GameModel.Game" />
-          <EntitySet Name="GameParams1" EntityType="GameModel.GameParams" />
-          <EntitySet Name="GameResults" EntityType="GameModel.GameResults" />
+          <EntitySet Name="GameParams" EntityType="GameModel.GameParam" />
+          <EntitySet Name="GameResults1" EntityType="GameModel.GameResult" />
           <AssociationSet Name="GameGameParams" Association="GameModel.GameGameParams">
             <End Role="Game" EntitySet="Games" />
-            <End Role="GameParams" EntitySet="GameParams1" />
+            <End Role="GameParams" EntitySet="GameParams" />
           </AssociationSet>
           <AssociationSet Name="GameGameResults" Association="GameModel.GameGameResults">
             <End Role="Game" EntitySet="Games" />
-            <End Role="GameResults" EntitySet="GameResults" />
+            <End Role="GameResults" EntitySet="GameResults1" />
           </AssociationSet>
           <EntitySet Name="Histories" EntityType="GameModel.History" />
           <EntitySet Name="HistoryResults" EntityType="GameModel.HistoryResult" />
-          <EntitySet Name="HistoryParams" EntityType="GameModel.HistoryParams" />
+          <EntitySet Name="HistoryParams1" EntityType="GameModel.HistoryParam" />
           <AssociationSet Name="PlayerHistory" Association="GameModel.PlayerHistory">
             <End Role="Player" EntitySet="Players" />
             <End Role="History" EntitySet="Histories" />
@@ -236,14 +235,14 @@
           </AssociationSet>
           <AssociationSet Name="HistoryHistoryParams" Association="GameModel.HistoryHistoryParams">
             <End Role="History" EntitySet="Histories" />
-            <End Role="HistoryParams" EntitySet="HistoryParams" />
+            <End Role="HistoryParams" EntitySet="HistoryParams1" />
           </AssociationSet>
           <AssociationSet Name="GameParamsHistoryParams" Association="GameModel.GameParamsHistoryParams">
-            <End Role="GameParams" EntitySet="GameParams1" />
-            <End Role="HistoryParams" EntitySet="HistoryParams" />
+            <End Role="GameParams" EntitySet="GameParams" />
+            <End Role="HistoryParams" EntitySet="HistoryParams1" />
           </AssociationSet>
           <AssociationSet Name="GameResultsHistoryResult" Association="GameModel.GameResultsHistoryResult">
-            <End Role="GameResults" EntitySet="GameResults" />
+            <End Role="GameResults" EntitySet="GameResults1" />
             <End Role="HistoryResult" EntitySet="HistoryResults" />
           </AssociationSet>
         </EntityContainer>
@@ -267,17 +266,16 @@
           <NavigationProperty Name="GameResults" Relationship="GameModel.GameGameResults" FromRole="Game" ToRole="GameResults" />
           <NavigationProperty Name="Histories" Relationship="GameModel.GameHistory" FromRole="Game" ToRole="History" />
         </EntityType>
-        <EntityType Name="GameParams">
+        <EntityType Name="GameParam">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Values" Type="String" Nullable="false" />
           <NavigationProperty Name="Game" Relationship="GameModel.GameGameParams" FromRole="GameParams" ToRole="Game" />
           <NavigationProperty Name="HistoryParams" Relationship="GameModel.GameParamsHistoryParams" FromRole="GameParams" ToRole="HistoryParams" />
         </EntityType>
-        <EntityType Name="GameResults">
+        <EntityType Name="GameResult">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -288,11 +286,11 @@
         </EntityType>
         <Association Name="GameGameParams">
           <End Type="GameModel.Game" Role="Game" Multiplicity="1" />
-          <End Type="GameModel.GameParams" Role="GameParams" Multiplicity="*" />
+          <End Type="GameModel.GameParam" Role="GameParams" Multiplicity="*" />
         </Association>
         <Association Name="GameGameResults">
           <End Type="GameModel.Game" Role="Game" Multiplicity="1" />
-          <End Type="GameModel.GameResults" Role="GameResults" Multiplicity="*" />
+          <End Type="GameModel.GameResult" Role="GameResults" Multiplicity="*" />
         </Association>
         <EntityType Name="History">
           <Key>
@@ -314,7 +312,7 @@
           <NavigationProperty Name="History" Relationship="GameModel.HistoryHistoryResult" FromRole="HistoryResult" ToRole="History" />
           <NavigationProperty Name="GameResult" Relationship="GameModel.GameResultsHistoryResult" FromRole="HistoryResult" ToRole="GameResults" />
         </EntityType>
-        <EntityType Name="HistoryParams">
+        <EntityType Name="HistoryParam">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -337,14 +335,14 @@
         </Association>
         <Association Name="HistoryHistoryParams">
           <End Type="GameModel.History" Role="History" Multiplicity="1" />
-          <End Type="GameModel.HistoryParams" Role="HistoryParams" Multiplicity="*" />
+          <End Type="GameModel.HistoryParam" Role="HistoryParams" Multiplicity="*" />
         </Association>
         <Association Name="GameParamsHistoryParams">
-          <End Type="GameModel.GameParams" Role="GameParams" Multiplicity="1" />
-          <End Type="GameModel.HistoryParams" Role="HistoryParams" Multiplicity="*" />
+          <End Type="GameModel.GameParam" Role="GameParams" Multiplicity="1" />
+          <End Type="GameModel.HistoryParam" Role="HistoryParams" Multiplicity="*" />
         </Association>
         <Association Name="GameResultsHistoryResult">
-          <End Type="GameModel.GameResults" Role="GameResults" Multiplicity="1" />
+          <End Type="GameModel.GameResult" Role="GameResults" Multiplicity="1" />
           <End Type="GameModel.HistoryResult" Role="HistoryResult" Multiplicity="*" />
         </Association>
       </Schema>
@@ -371,18 +369,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GameParams1">
-      <EntityTypeMapping TypeName="IsTypeOf(GameModel.GameParams)">
-        <MappingFragment StoreEntitySet="GameParams1">
+    <EntitySetMapping Name="GameParams">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.GameParam)">
+        <MappingFragment StoreEntitySet="GameParams">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Values" ColumnName="Values" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GameResults">
-      <EntityTypeMapping TypeName="IsTypeOf(GameModel.GameResults)">
-        <MappingFragment StoreEntitySet="GameResults">
+    <EntitySetMapping Name="GameResults1">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.GameResult)">
+        <MappingFragment StoreEntitySet="GameResults1">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
@@ -404,15 +401,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="HistoryParams">
-      <EntityTypeMapping TypeName="IsTypeOf(GameModel.HistoryParams)">
-        <MappingFragment StoreEntitySet="HistoryParams">
+    <EntitySetMapping Name="HistoryParams1">
+      <EntityTypeMapping TypeName="IsTypeOf(GameModel.HistoryParam)">
+        <MappingFragment StoreEntitySet="HistoryParams1">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Value" ColumnName="Value" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="GameGameParams" TypeName="GameModel.GameGameParams" StoreEntitySet="GameParams1">
+    <AssociationSetMapping Name="GameGameParams" TypeName="GameModel.GameGameParams" StoreEntitySet="GameParams">
       <EndProperty Name="Game">
         <ScalarProperty Name="Id" ColumnName="Game_Id" />
       </EndProperty>
@@ -420,7 +417,7 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="GameGameResults" TypeName="GameModel.GameGameResults" StoreEntitySet="GameResults">
+    <AssociationSetMapping Name="GameGameResults" TypeName="GameModel.GameGameResults" StoreEntitySet="GameResults1">
       <EndProperty Name="Game">
         <ScalarProperty Name="Id" ColumnName="Game_Id" />
       </EndProperty>
@@ -452,7 +449,7 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="HistoryHistoryParams" TypeName="GameModel.HistoryHistoryParams" StoreEntitySet="HistoryParams">
+    <AssociationSetMapping Name="HistoryHistoryParams" TypeName="GameModel.HistoryHistoryParams" StoreEntitySet="HistoryParams1">
       <EndProperty Name="History">
         <ScalarProperty Name="Id" ColumnName="History_Id" />
       </EndProperty>
@@ -460,7 +457,7 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="GameParamsHistoryParams" TypeName="GameModel.GameParamsHistoryParams" StoreEntitySet="HistoryParams">
+    <AssociationSetMapping Name="GameParamsHistoryParams" TypeName="GameModel.GameParamsHistoryParams" StoreEntitySet="HistoryParams1">
       <EndProperty Name="GameParams">
         <ScalarProperty Name="Id" ColumnName="GameParam_Id" />
       </EndProperty>

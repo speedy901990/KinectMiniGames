@@ -7,13 +7,13 @@
       <Diagram DiagramId="05eecf20a9184a8ca19cf243aeb2e43d" Name="Diagram1" >
         <EntityTypeShape EntityType="GameModel.Player" Width="1.5" PointX="0.5" PointY="0.5" />
         <EntityTypeShape EntityType="GameModel.Game" Width="1.5" PointX="0.5" PointY="3.125" />
-        <EntityTypeShape EntityType="GameModel.GameParams" Width="1.5" PointX="3.875" PointY="6" />
-        <EntityTypeShape EntityType="GameModel.GameResults" Width="1.5" PointX="3.875" PointY="4.125" />
+        <EntityTypeShape EntityType="GameModel.GameParam" Width="1.5" PointX="3.875" PointY="6" />
+        <EntityTypeShape EntityType="GameModel.GameResult" Width="1.5" PointX="3.875" PointY="4.125" />
         <AssociationConnector Association="GameModel.GameGameParams" />
         <AssociationConnector Association="GameModel.GameGameResults" />
         <EntityTypeShape EntityType="GameModel.History" Width="1.5" PointX="3.875" PointY="1.625" />
         <EntityTypeShape EntityType="GameModel.HistoryResult" Width="1.5" PointX="7.375" PointY="4.125" />
-        <EntityTypeShape EntityType="GameModel.HistoryParams" Width="1.5" PointX="6.375" PointY="6.125" />
+        <EntityTypeShape EntityType="GameModel.HistoryParam" Width="1.5" PointX="6.375" PointY="6.125" />
         <AssociationConnector Association="GameModel.PlayerHistory" />
         <AssociationConnector Association="GameModel.GameHistory" />
         <AssociationConnector Association="GameModel.HistoryHistoryResult" />

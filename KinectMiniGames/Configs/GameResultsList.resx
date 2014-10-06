@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ApplesGameCorrectTrials" xml:space="preserve">
-    <value>{"game":"ApplesGame", "name":"CorrectTrials"}</value>
+    <value>{"game":"ApplesGame", "name":"Correct Trials"}</value>
   </data>
   <data name="ApplesGameFailures" xml:space="preserve">
     <value>{"game":"ApplesGame","name":"Failures"}</value>
@@ -133,7 +133,7 @@
     <value>{"game":"BubblesGame", "name":"Time"}</value>
   </data>
   <data name="LettersGameCorrectTrials" xml:space="preserve">
-    <value>{"game":"LettersGame", "name":"CorrectTrials"}</value>
+    <value>{"game":"LettersGame", "name":"Correct Trials"}</value>
   </data>
   <data name="LettersGameFailures" xml:space="preserve">
     <value>{"game":"LettersGame","name":"Failures"}</value>

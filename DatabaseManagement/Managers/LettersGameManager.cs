@@ -10,8 +10,8 @@ namespace DatabaseManagement.Managers
     {
         private Game _game;
         private readonly Player _player;
-        private readonly Dictionary<String, GameParams> _gameParams = new Dictionary<string, GameParams>();
-        private readonly Dictionary<String, GameResults> _gameResults = new Dictionary<string, GameResults>();
+        private readonly Dictionary<String, GameParam> _gameParams = new Dictionary<string, GameParam>();
+        private readonly Dictionary<String, GameResult> _gameResults = new Dictionary<string, GameResult>();
 
 
         public LettersGameManager()
@@ -30,57 +30,44 @@ namespace DatabaseManagement.Managers
             using (var context = new GameModelContainer())
             {
                 var date = DateTime.Now;
-
-                var history = new History
+                var historyParams = new List<HistoryParam>
                 {
-                    Game = _game,
-                    Player = _player,
-                    Date = date
-                };
-
-                var historyParams = new List<HistoryParams>
-                {
-                    new HistoryParams
+                    new HistoryParam
                     {
-                        GameParam = _gameParams["lettersCount"],
-                        Value = lgp.LettersCount.ToString(CultureInfo.InvariantCulture)
-                    },
-                    new HistoryParams
-                    {
-                        GameParam = _gameParams["level"],
+                        GameParam = _gameParams["Level"],
                         Value = lgp.Level.ToString(CultureInfo.InvariantCulture)
                     }
                 };
-
-                foreach (var item in historyParams)
-                {
-                    history.HistoryParams.Add(item);
-                }
 
                 var historyResults = new List<HistoryResult>
                 {
                     new HistoryResult
                     {
-                        GameResult = _gameResults["correctTrials"],
+                        GameResult = _gameResults["Correct Trials"],
                         Value = lgp.CorrectTrials
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["failures"],
+                        GameResult = _gameResults["Failures"],
                         Value = lgp.Failures
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["time"],
+                        GameResult = _gameResults["Time"],
                         Value = lgp.Time
                     }
                 };
-                foreach (var item in historyResults)
-                {
-                    history.HistoryResults.Add(item);
-                }
 
-                context.Histories.Add(history);
+                var history = new History
+                {
+                    Game = _game,
+                    Date = date,
+                    HistoryParams = historyParams,
+                    HistoryResults = historyResults
+                };
+                var player = context.Players.FirstOrDefault(player1 => player1.Id == _player.Id);
+                if (player != null) 
+                    player.Histories.Add(history);
                 context.SaveChanges();
             }
         }
@@ -94,6 +81,7 @@ namespace DatabaseManagement.Managers
 
                 if (_game == null) 
                     return;
+
                 foreach (var item in _game.GameParams)
                 {
                     _gameParams.Add(item.Name, item);

@@ -72,16 +72,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="GameParams.cs">
+    <Compile Include="GameParam.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="GameResults.cs">
+    <Compile Include="GameResult.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
     <Compile Include="History.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="HistoryParams.cs">
+    <Compile Include="HistoryParam.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HistoryResult.cs">

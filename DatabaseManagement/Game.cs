@@ -16,16 +16,16 @@ namespace DatabaseManagement
     {
         public Game()
         {
-            this.GameParams = new HashSet<GameParams>();
-            this.GameResults = new HashSet<GameResults>();
+            this.GameParams = new HashSet<GameParam>();
+            this.GameResults = new HashSet<GameResult>();
             this.Histories = new HashSet<History>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
-        public virtual ICollection<GameParams> GameParams { get; set; }
-        public virtual ICollection<GameResults> GameResults { get; set; }
+        public virtual ICollection<GameParam> GameParams { get; set; }
+        public virtual ICollection<GameResult> GameResults { get; set; }
         public virtual ICollection<History> Histories { get; set; }
     }
 }
