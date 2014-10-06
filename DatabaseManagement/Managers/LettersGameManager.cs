@@ -35,7 +35,7 @@ namespace DatabaseManagement.Managers
                     new HistoryParam
                     {
                         GameParam = _gameParams["Level"],
-                        Value = lgp.LettersCount.ToString(CultureInfo.InvariantCulture)
+                        Value = lgp.Level.ToString(CultureInfo.InvariantCulture)
                     }
                 };
 

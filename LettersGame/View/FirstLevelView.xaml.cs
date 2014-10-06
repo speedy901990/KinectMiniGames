@@ -193,6 +193,9 @@ namespace LettersGame.View
         {
             if (_selectedLetterButton == null || _selectedLetter == null) 
                 return;
+
+            _selectedLetterButton.Visibility = Visibility.Visible;
+
             var letterButton = sender as KinectTileButton;
 
             if (letterButton == null || _linkingLine == null) 
@@ -230,6 +233,7 @@ namespace LettersGame.View
             if (_selectedLetterButton == null) 
                 return;
 
+            _selectedLetterButton.Visibility = Visibility.Hidden;
             _selectedLetter = _selectedLetterButton.Tag as Letter;
             if (!MainCanvas.CaptureMouse()) 
                 return;
@@ -252,7 +256,10 @@ namespace LettersGame.View
             MainCanvas.ReleaseMouseCapture();
             if (!_drawingEnabled) 
                 return;
-            
+
+            if (_selectedLetterButton != null)
+                _selectedLetterButton.Visibility = Visibility.Visible;
+
             MainCanvas.Children.Remove(_linkingLine);
             e.Handled = true;
         }
