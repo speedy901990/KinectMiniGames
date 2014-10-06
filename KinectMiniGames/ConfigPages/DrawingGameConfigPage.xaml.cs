@@ -32,18 +32,16 @@ namespace KinectMiniGames.ConfigPages
 
         private void RunGame()                          
         {
-            //if (MainWindow.SelectedPlayer != null)
-            //{
-                //Config.Player = MainWindow.SelectedPlayer;
-                //t
-            //this.kinectSensor.Stop();
-            
+            if (MainWindow.SelectedPlayer != null)
+            {
+                Config.Player = MainWindow.SelectedPlayer;
 
-           
+                //this.kinectSensor.Stop();
+
                 DrawingGame.MainWindow window = new DrawingGame.MainWindow(Config);
                 window.Show();
-        
-            //} 
+            }
+            
         }
 
         private void kcbLevel1_Click(object sender, System.Windows.RoutedEventArgs e)
