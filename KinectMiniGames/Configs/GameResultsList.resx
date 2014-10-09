@@ -132,6 +132,12 @@
   <data name="BubblesGameTime" xml:space="preserve">
     <value>{"game":"BubblesGame", "name":"Time"}</value>
   </data>
+  <data name="DrawingGameTime" xml:space="preserve">
+    <value>{"game":"DrawingGame","name":"Time"}</value>
+  </data>
+  <data name="DrawingGameTimeOut" xml:space="preserve">
+    <value>{"game":"DrawingGame","name":"Time Out"}</value>
+  </data>
   <data name="LettersGameCorrectTrials" xml:space="preserve">
     <value>{"game":"LettersGame", "name":"Correct Trials"}</value>
   </data>

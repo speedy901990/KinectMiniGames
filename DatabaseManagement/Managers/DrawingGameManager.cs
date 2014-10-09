@@ -10,68 +10,63 @@ namespace DatabaseManagement.Managers
     {
         private Game _game;
         private Player _player;
-        private readonly Dictionary<String, GameParams> _gameParams = new Dictionary<string, GameParams>();
-        private readonly Dictionary<String, GameResults> _gameResults = new Dictionary<string, GameResults>();
+        private readonly Dictionary<String, GameParam> _gameParams = new Dictionary<string, GameParam>();
+        private readonly Dictionary<String, GameResult> _gameResults = new Dictionary<string, GameResult>();
 
         public DrawingGameManager()
         {
 
         }
 
-        public DrawingGameManager(String playerName)
-        {
-            GetGame();
-            GetPlayer(playerName);
-        }
 
         public DrawingGameManager(Player player)
         {
             GetGame();
             _player = player;
         }
-
         public void SaveGameResult(DrawingGameParams bgp)
         {
             using (var context = new GameModelContainer())
             {
                 var date = DateTime.Now;
-
-                var history = new History
+                var historyParams = new List<HistoryParam>
                 {
-                    Game = _game,
-                    Player = _player,
-                    Date = date
+                    new HistoryParam
+                    {
+                        GameParam = context.GameParams.Find(_gameParams["Level"].Id),
+                        Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
+                    }
                 };
-
-                history.HistoryParams.Add(new HistoryParams
-                {
-                    GameParam = _gameParams["level"],
-                    Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
-                });
-
 
                 var historyResults = new List<HistoryResult>
                 {
-                    new HistoryResult
+                   
+                   new HistoryResult
                     {
-                        GameResult = _gameResults["Time of Game"],
+                        GameResult = context.GameResults1.Find(_gameResults["Time"].Id),
                         Value = bgp.TimeOfGame
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["Time out of field"],
+                        GameResult = context.GameResults1.Find(_gameResults["Time Out"].Id),
                         Value = bgp.TimeOutOfField
                     }
                 };
-                foreach (var item in historyResults)
-                {
-                    history.HistoryResults.Add(item);
-                }
 
-                context.Histories.Add(history);
+                var history = new History
+                {
+                    Game = _game,
+                    Date = date,
+                    HistoryParams = historyParams,
+                    HistoryResults = historyResults
+                };
+                var player = context.Players.FirstOrDefault(player1 => player1.Id == _player.Id);
+                if (player != null)
+                    player.Histories.Add(history);
                 context.SaveChanges();
             }
         }
+       
 
         private void GetGame()
         {
@@ -93,13 +88,5 @@ namespace DatabaseManagement.Managers
             }
         }
 
-        private void GetPlayer(String playerName)
-        {
-            using (var context = new GameModelContainer())
-            {
-                var user = context.Players.FirstOrDefault(b => b.Name == playerName);
-                _player = user;
-            }
-        }
     }
 }
