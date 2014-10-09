@@ -61,6 +61,9 @@ namespace KinectMiniGames
         #region Ctor + Config
         public MainWindow()
         {
+            var executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var path = (System.IO.Path.GetDirectoryName(executable));
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
             InitializeComponent();
             _databaseInitializer = new DatabaseInitializer();
             SetupKinectSensor();
