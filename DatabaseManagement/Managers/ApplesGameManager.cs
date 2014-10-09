@@ -8,26 +8,16 @@ namespace DatabaseManagement.Managers
 {
     public class ApplesGameManager
     {
-        private Game _game;
-        private Player _player;
-        private readonly Dictionary<String,GameParam> _gameParams = new Dictionary<string,GameParam>();
-        private readonly Dictionary<String,GameResult> _gameResults = new Dictionary<string,GameResult>();
+        private readonly Player _player;
 
         public ApplesGameManager()
         {
 
         }
 
-        public ApplesGameManager(String playerName)
-        {
-            GetGame();
-            GetPlayer(playerName);
-        }
-
         public ApplesGameManager(Player player)
         {
-            GetGame();
-            GetPlayer(player);
+            _player = player;
         }
 
         public void SaveGameResult(ApplesGameParams apg)
@@ -36,21 +26,26 @@ namespace DatabaseManagement.Managers
             {
                 var date = DateTime.Now;
 
+                var game = context.Games.FirstOrDefault(b => b.Name == "ApplesGame");
+
+                if (game == null)
+                    return;
+
                 var historyParams = new List<HistoryParam>
                 {
                     new HistoryParam
                     {
-                        GameParam = _gameParams["Apples"],
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Apples"),
                         Value = apg.Apples.ToString(CultureInfo.InvariantCulture)
                     },
                     new HistoryParam
                     {
-                        GameParam = _gameParams["Colors"],
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Colors"),
                         Value = apg.Colors.ToString(CultureInfo.InvariantCulture)
                     },
                     new HistoryParam
                     {
-                        GameParam = _gameParams["Baskets"],
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Baskets"),
                         Value = apg.Baskets.ToString(CultureInfo.InvariantCulture)
                     }
                 };
@@ -59,24 +54,24 @@ namespace DatabaseManagement.Managers
                 {
                     new HistoryResult
                     {
-                        GameResult = _gameResults["Correct Trials"],
+                        GameResult = game.GameResults.FirstOrDefault(result => result.Name == "Correct Trials"),
                         Value = apg.CorrectTrials
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["Failures"],
+                        GameResult = game.GameResults.FirstOrDefault(result => result.Name == "Failures"),
                         Value = apg.Failures
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["Time"],
+                        GameResult = game.GameResults.FirstOrDefault(result => result.Name == "Time"),
                         Value = apg.Time
                     }
                 };
 
                 var history = new History
                 {
-                    Game = _game,
+                    Game = game,
                     Date = date,
                     HistoryParams = historyParams,
                     HistoryResults = historyResults
@@ -86,40 +81,6 @@ namespace DatabaseManagement.Managers
                     player.Histories.Add(history);
                 context.SaveChanges();
             }
-        }
-
-        private void GetGame()
-        {
-            using (var context = new GameModelContainer())
-            {
-                var game = context.Games.FirstOrDefault(b => b.Name == "ApplesGame");
-                _game = game;
-
-                if (_game == null) 
-                    return;
-                foreach (var item in _game.GameParams)
-                {
-                    _gameParams.Add(item.Name, item);
-                }
-                foreach (var item in _game.GameResults)
-                {
-                    _gameResults.Add(item.Name, item);
-                }
-            }
-        }
-
-        private void GetPlayer(String playerName)
-        {
-            using (var context = new GameModelContainer())
-            {
-                var user = context.Players.FirstOrDefault(b => b.Name == playerName);
-                _player = user;
-            }
-        }
-
-        private void GetPlayer(Player player)
-        {
-            _player = player;
         }
     }
 }

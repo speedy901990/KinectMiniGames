@@ -8,14 +8,10 @@ namespace DatabaseManagement.Managers
 {
     public class BubblesGameManager
     {
-        private Game _game;
         private readonly Player _player;
-        private readonly Dictionary<String,GameParam> _gameParams = new Dictionary<string,GameParam>();
-        private readonly Dictionary<String,GameResult> _gameResults = new Dictionary<string,GameResult>();
-        
+
         public BubblesGameManager(Player player)
         {
-            GetGame();
             _player = player;
         }
 
@@ -25,28 +21,32 @@ namespace DatabaseManagement.Managers
             {
                 var date = DateTime.Now;
 
+                var game = context.Games.FirstOrDefault(b => b.Name == "BubblesGame");
+
+                if (game == null)
+                    return;
                 
                 //TODO poprawic bgp i value w kazdym z history params
                 var historyParams = new List<HistoryParam>
                 {
                     new HistoryParam
                     {
-                        GameParam = _gameParams["Appearance Frequency"],
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Appearance Frequency"),
                         Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
                     },
                     new HistoryParam
                     {
-                        GameParam = _gameParams["Bubbles"],
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Bubbles"),
                         Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
                     },
                     new HistoryParam
                     {
-                        GameParam = _gameParams["Bubbles Size"],
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Bubbles Size"),
                         Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
                     },
                     new HistoryParam
                     {
-                        GameParam = _gameParams["Fall Speed"],
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Fall Speed"),
                         Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
                     }
                 };
@@ -55,19 +55,19 @@ namespace DatabaseManagement.Managers
                 {
                     new HistoryResult
                     {
-                        GameResult = _gameResults["Success"],
+                        GameResult = game.GameResults.FirstOrDefault(result => result.Name == "Success"),
                         Value = bgp.Success
                     },
                     new HistoryResult
                     {
-                        GameResult = _gameResults["Time"],
+                        GameResult = game.GameResults.FirstOrDefault(result => result.Name == "Time"),
                         Value = bgp.Time
                     }
                 };
 
                 var history = new History
                 {
-                    Game = _game,
+                    Game = game,
                     Date = date,
                     HistoryParams = historyParams,
                     HistoryResults = historyResults
@@ -77,26 +77,6 @@ namespace DatabaseManagement.Managers
                 if (player != null) 
                     player.Histories.Add(history);
                 context.SaveChanges();
-            }
-        }
-
-        private void GetGame()
-        {
-            using (var context = new GameModelContainer())
-            {
-                var game = context.Games.FirstOrDefault(b => b.Name == "BubblesGame");
-                _game = game;
-
-                if (_game == null) 
-                    return;
-                foreach (var item in _game.GameParams)
-                {
-                    _gameParams.Add(item.Name, item);
-                }
-                foreach (var item in _game.GameResults)
-                {
-                    _gameResults.Add(item.Name, item);
-                }
             }
         }
     }
