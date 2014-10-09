@@ -24,14 +24,18 @@ namespace KinectMiniGames.ConfigPages
         {
             InitializeComponent();
             SensorChooser = sensorChooser;
-            Config = new TrainOfWordsGameConfig();
+            Config = new TrainOfWordsGameConfig
+            {
+                WindowWidth = (int) Application.Current.MainWindow.Width
+            };
             DataContext = Config;
             LayoutUpdated += OnLayoutUpdated;
         }
 
         private void ShowGameWindow()
         {
-            if (MainWindow.SelectedPlayer == null) return;
+            if (MainWindow.SelectedPlayer == null) 
+                return;
             Config.Player = MainWindow.SelectedPlayer;
             var window = new TrainOfWords.View.MainWindow(Config);
             window.Show();
@@ -76,7 +80,7 @@ namespace KinectMiniGames.ConfigPages
         {
             if (IsInitialized && MainWindow.SelectedPlayer != null)
             {
-                lbPlayer.Content = MainWindow.SelectedPlayer.Name + " " + MainWindow.SelectedPlayer.Surname;
+                lbPlayer.Content = String.Format("{0} {1}", MainWindow.SelectedPlayer.Name, MainWindow.SelectedPlayer.Surname);
             }
         }
     }

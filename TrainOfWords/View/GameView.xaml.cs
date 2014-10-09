@@ -121,7 +121,8 @@ namespace TrainOfWords.View
                     Background = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.ExtraBold,
                     FontSize = 100,
-                    Height = 150
+                    Width = 250,
+                    Height = 200
                 };
                 letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
                 //kinectowe eventy
@@ -146,14 +147,115 @@ namespace TrainOfWords.View
             KinectRegion.AddQueryInteractionStatusHandler(train, OnQuery);
             KinectRegion.AddHandPointerEnterHandler(train, OnHandPointerEnter);
             KinectRegion.AddHandPointerGripReleaseHandler(train, OnGripRelease);
-            ButtonsGrid.Children.Add(train);
-            Grid.SetRow(train,2);
-            Grid.SetColumnSpan(train, _game.Letters.Count / 2);
+            TrainPanel.Children.Add(train);
+            Grid.SetColumnSpan(TrainPanel, _game.Letters.Count / 2);
+        }
+
+        private void SetSecondStep()
+        {
+            LettersPanel.Children.Clear();
+            TrainPanel.Children.Clear();
+            KinectRegion.AddQueryInteractionStatusHandler(MyKinectRegion, OnQuery);
+            KinectRegion.AddQueryInteractionStatusHandler(MainCanvas, OnQuery);
+            KinectRegion.AddQueryInteractionStatusHandler(PopupPanel, OnQuery);
+            KinectRegion.AddHandPointerGripHandler(MainCanvas, OnGrip);
+            KinectRegion.AddHandPointerGripReleaseHandler(MainCanvas, OnGripRelease);
+            var word = _game.Words[1];
+            var j = 0;
+            foreach (var letter in _game.Letters[word.Name])
+            {
+                var letterButton = new KinectTileButton
+                {
+                    Tag = letter,
+                    Content = letter,
+                    Foreground = new SolidColorBrush(Colors.BlueViolet),
+                    Background = new SolidColorBrush(Colors.White),
+                    FontWeight = FontWeights.ExtraBold,
+                    FontSize = 100,
+                    Width = 250,
+                    Height = 200
+                };
+                letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
+                //kinectowe eventy
+                KinectRegion.AddQueryInteractionStatusHandler(letterButton, OnQuery);
+                KinectRegion.AddHandPointerGripHandler(letterButton, OnGrip);
+                KinectRegion.AddHandPointerGripReleaseHandler(letterButton, OnGripRelease);
+                LettersPanel.Children.Add(letterButton);
+                Grid.SetRow(letterButton, j % 2);
+                Grid.SetColumn(letterButton, j / 2);
+                j++;
+            }
+
+            var train = new KinectTileButton
+            {
+                Tag = word,
+                Label = word.Name,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            train.MouseEnter += TrainOnMouseEnter;
+            //kinectowe eventy
+            KinectRegion.AddQueryInteractionStatusHandler(train, OnQuery);
+            KinectRegion.AddHandPointerEnterHandler(train, OnHandPointerEnter);
+            KinectRegion.AddHandPointerGripReleaseHandler(train, OnGripRelease);
+            TrainPanel.Children.Add(train);
+        }
+
+        private void SetThirdStep()
+        {
+            LettersPanel.Children.Clear();
+            TrainPanel.Children.Clear();
+            KinectRegion.AddQueryInteractionStatusHandler(MyKinectRegion, OnQuery);
+            KinectRegion.AddQueryInteractionStatusHandler(MainCanvas, OnQuery);
+            KinectRegion.AddQueryInteractionStatusHandler(PopupPanel, OnQuery);
+            KinectRegion.AddHandPointerGripHandler(MainCanvas, OnGrip);
+            KinectRegion.AddHandPointerGripReleaseHandler(MainCanvas, OnGripRelease);
+            var word = _game.Words[2];
+            var j = 0;
+            foreach (var letter in _game.Letters[word.Name])
+            {
+                var letterButton = new KinectTileButton
+                {
+                    Tag = letter,
+                    Content = letter,
+                    Foreground = new SolidColorBrush(Colors.BlueViolet),
+                    Background = new SolidColorBrush(Colors.White),
+                    FontWeight = FontWeights.ExtraBold,
+                    FontSize = 100,
+                    Width = 250,
+                    Height = 200
+                };
+                letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
+                //kinectowe eventy
+                KinectRegion.AddQueryInteractionStatusHandler(letterButton, OnQuery);
+                KinectRegion.AddHandPointerGripHandler(letterButton, OnGrip);
+                KinectRegion.AddHandPointerGripReleaseHandler(letterButton, OnGripRelease);
+                LettersPanel.Children.Add(letterButton);
+                Grid.SetRow(letterButton, j % 2);
+                Grid.SetColumn(letterButton, j / 2);
+                j++;
+            }
+
+            var train = new KinectTileButton
+            {
+                Tag = word,
+                Label = word.Name,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+            train.MouseEnter += TrainOnMouseEnter;
+            //kinectowe eventy
+            KinectRegion.AddQueryInteractionStatusHandler(train, OnQuery);
+            KinectRegion.AddHandPointerEnterHandler(train, OnHandPointerEnter);
+            KinectRegion.AddHandPointerGripReleaseHandler(train, OnGripRelease);
+            TrainPanel.Children.Add(train);
         }
 
         private void OnGripRelease(object sender, HandPointerEventArgs e)
         {
             e.HandPointer.Captured = null;
+            if (_selectedLetterButton != null)
+                _selectedLetterButton.Visibility = Visibility.Visible;
             e.Handled = true;
         }
 
@@ -161,21 +263,28 @@ namespace TrainOfWords.View
         {
             e.HandPointer.Capture(MainCanvas);
             var button = sender as KinectTileButton;
-            if (button == null) return;
+            if (button == null) 
+                return;
             var letter = button.Tag as string;
-            if (letter == null) return;
+            if (letter == null) 
+                return;
             _selectedLetter = letter;
             _selectedLetterButton = button;
+            _selectedLetterButton.Visibility = Visibility.Hidden;
             e.Handled = true;
         }
 
         private void OnHandPointerEnter(object sender, HandPointerEventArgs e)
         {
-            if (_selectedLetterButton == null) return;
+            if (_selectedLetterButton == null) 
+                return;
+            _selectedLetterButton.Visibility = Visibility.Visible;
             var train = sender as KinectTileButton;
-            if (train == null) return;
+            if (train == null) 
+                return;
             var word = train.Tag as Word;
-            if (word == null) return;
+            if (word == null) 
+                return;
             if (word.Letters.Contains(_selectedLetter))
             {
                 word.Letters.Remove(_selectedLetter);
@@ -213,20 +322,27 @@ namespace TrainOfWords.View
         private void LetterButtonOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var button = sender as KinectTileButton;
-            if (button == null) return;
+            if (button == null) 
+                return;
             var letter = button.Tag as string;
-            if (letter == null) return;
+            if (letter == null) 
+                return;
             _selectedLetter = letter;
             _selectedLetterButton = button;
+            _selectedLetterButton.Visibility = Visibility.Hidden;
         }
 
         private void TrainOnMouseEnter(object sender, MouseEventArgs mouseEventArgs)
         {
-            if (_selectedLetterButton == null) return;
+            if (_selectedLetterButton == null) 
+                return;
+            _selectedLetterButton.Visibility = Visibility.Visible;
             var train = sender as KinectTileButton;
-            if (train == null) return;
+            if (train == null) 
+                return;
             var word = train.Tag as Word;
-            if (word == null) return;
+            if (word == null) 
+                return;
             if (word.Letters.Contains(_selectedLetter))
             {
                 word.Letters.Remove(_selectedLetter);
@@ -244,13 +360,14 @@ namespace TrainOfWords.View
             if (!_game.Words[0].Letters.Any() && !_game.FirstStepFinished)
             {
                 _game.FirstStepFinished = true;
-                EndGame();
+                SetSecondStep();
                 return;
                 //przejdz do drugiego
             }
             if (!_game.Words[1].Letters.Any() && !_game.SecondStepFinished)
             {
                 _game.SecondStepFinished = true;
+                SetThirdStep();
                 return;
                 //przejdz do trzeciego
             }

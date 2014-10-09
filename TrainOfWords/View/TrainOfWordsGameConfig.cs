@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseManagement;
+﻿using DatabaseManagement;
 
 namespace TrainOfWords.View
 {
     public class TrainOfWordsGameConfig
     {
-        private const int LettersOnScreen = 12;
+        public const int LetterWidth = 250;
 
         public Player Player { get; set; }
 
-        public int NuberOfLettersOnScreen { get { return LettersOnScreen; } }
+        public int NuberOfLettersOnScreen
+        {
+            get { return 2 * WindowWidth/LetterWidth; }
+        }
+
+        public int WindowWidth { get; set; }
 
         public int Level { get; set; }
 
