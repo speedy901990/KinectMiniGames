@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using KinectMiniGames.Models;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
@@ -78,8 +82,8 @@ namespace KinectMiniGames
         private void CreateMenuButtons()
         {
             wrapPanel.Children.Clear();
-            wrapPanel.Children.Add(CreateSingleButton("Apples Game"));
-            wrapPanel.Children.Add(CreateSingleButton("Bubbles Game"));
+            wrapPanel.Children.Add(new KinectTileButton { Label = "Apples Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.jablka))});
+            wrapPanel.Children.Add(new KinectTileButton { Label = "Bubbles Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.babelki)) });
             wrapPanel.Children.Add(CreateSingleButton("Letters Game"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Labyrinth Game"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Painting Game"));
@@ -101,6 +105,14 @@ namespace KinectMiniGames
         {
             var manager = new PlayersManager();
             PlayerList = manager.PlayerList;
+        }
+
+        private BitmapSource ConvertBitmapToBitmapSource(Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
         }
         #endregion
 

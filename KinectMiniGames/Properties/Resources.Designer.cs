@@ -61,6 +61,26 @@ namespace KinectMiniGames.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap babelki {
+            get {
+                object obj = ResourceManager.GetObject("babelki", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap jablka {
+            get {
+                object obj = ResourceManager.GetObject("jablka", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You selected item #{0}.
         /// </summary>
         internal static string SelectedMessage {

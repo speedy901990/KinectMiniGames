@@ -50,7 +50,6 @@
       <LastGenOutput>GameModel.cs</LastGenOutput>
       <DependentUpon>GameModel.edmx</DependentUpon>
     </None>
-    <None Include="KinectMiniGamesDB.s3db" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
