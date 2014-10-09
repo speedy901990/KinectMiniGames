@@ -37,11 +37,12 @@ namespace LettersGame
             BigLetter = SmallLetter.ToUpper();
         }
 
-        public Letter(string letter, string word)
+        public Letter(string letter, string word, ImageBrush image = null)
         {
             SmallLetter = letter.ToLower();
             BigLetter = letter.ToUpper();
             Word = word;
+            Image = image;
         }
 
         public override bool Equals(object obj)

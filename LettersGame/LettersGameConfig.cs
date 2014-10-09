@@ -17,6 +17,7 @@ namespace LettersGame
             FirstLevelLettersCount = 8;
             LettersCount = 4;
             LettersFontSize = 100;
+            LabelFontSize = 50;
         }
 
         public Player Player { get; set; }
@@ -34,6 +35,8 @@ namespace LettersGame
         public int FirstLevelLettersCount { get; set; }
 
         public int LettersFontSize { get; set; }
+
+        public int LabelFontSize { get; set; }
 
         public int LettersCount { get; set; }
 

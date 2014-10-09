@@ -1,9 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Resources;
 using System.Threading;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using DatabaseManagement.Managers;
 using DatabaseManagement.Params;
 
@@ -82,31 +87,66 @@ namespace LettersGame
             }
             if (config.CurrentLevel == 3)
             {
-                using (ResourceSet resourceSet = Resources.LettersAndNames.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
+                var allLetters = new List<Letter>();
+                var imagesBoys = new List<ImageBrush>
                 {
-                    var allLetters = new List<Letter>();
+                    new ImageBrush(ConvertBitmapToBitmapSource(Resources.ImagesBoys.ch1)),
+                    new ImageBrush(ConvertBitmapToBitmapSource(Resources.ImagesBoys.ch2)),
+                    new ImageBrush(ConvertBitmapToBitmapSource(Resources.ImagesBoys.ch3)),
+                    new ImageBrush(ConvertBitmapToBitmapSource(Resources.ImagesBoys.ch4))
+                };
+                var imagesGirls = new List<ImageBrush>
+                {
+                    new ImageBrush(ConvertBitmapToBitmapSource(Resources.ImagesGirls.dz1)),
+                    new ImageBrush(ConvertBitmapToBitmapSource(Resources.ImagesGirls.dz2)),
+                    new ImageBrush(ConvertBitmapToBitmapSource(Resources.ImagesGirls.dz3)),
+                    new ImageBrush(ConvertBitmapToBitmapSource(Resources.ImagesGirls.dz4))
+                };
+                using (ResourceSet resourceSet = Resources.LettersAndNamesBoys.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
+                {
+                    var i = 0;
                     foreach (DictionaryEntry item in resourceSet)
                     {
-                        allLetters.Add(new Letter((string)item.Key, (string)item.Value));
+                        allLetters.Add(new Letter((string) item.Key, (string) item.Value, imagesBoys[i%4]));
+                        i++;
                     }
-                    var rand = new Random();
-                    SmallLetters = new List<Letter>();
-                    BigLetters = new List<Letter>();
-                    for (var i = 0; i < numOfLetters; i++)
-                    {
-                        var index = rand.Next(allLetters.Count);
-                        var letter = allLetters[index];
-                        SmallLetters.Add(letter);
-                        BigLetters.Add(letter);
-                        allLetters.RemoveAt(index);
-                    }
-                    Resources.LettersAndNames.ResourceManager.ReleaseAllResources();
-                    LettersLeft = numOfLetters;
+                    Resources.LettersAndNamesBoys.ResourceManager.ReleaseAllResources();
                 }
+                using (ResourceSet resourceSet = Resources.LettersAndNamesGirls.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
+                {
+                    var i = 0;
+                    foreach (DictionaryEntry item in resourceSet)
+                    {
+                        allLetters.Add(new Letter((string) item.Key, (string) item.Value, imagesGirls[i%4]));
+                        i++;
+                    }
+                    Resources.LettersAndNamesGirls.ResourceManager.ReleaseAllResources();
+                }
+
+                var rand = new Random();
+                SmallLetters = new List<Letter>();
+                BigLetters = new List<Letter>();
+                for (var i = 0; i < numOfLetters; i++)
+                {
+                    var index = rand.Next(allLetters.Count);
+                    var letter = allLetters[index];
+                    SmallLetters.Add(letter);
+                    BigLetters.Add(letter);
+                    allLetters.RemoveAt(index);
+                }
+                LettersLeft = numOfLetters;
             }
             CorrectTrials = 0;
             Fails = 0;
             _startTime = DateTime.Now;
+        }
+
+        private BitmapSource ConvertBitmapToBitmapSource(Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
         }
         #endregion
 

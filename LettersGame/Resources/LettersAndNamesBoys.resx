@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="a" xml:space="preserve">
-    <value>Agnieszka</value>
-  </data>
   <data name="b" xml:space="preserve">
     <value>Bartek</value>
   </data>
@@ -128,9 +125,6 @@
   </data>
   <data name="d" xml:space="preserve">
     <value>Darek</value>
-  </data>
-  <data name="e" xml:space="preserve">
-    <value>Ela</value>
   </data>
   <data name="f" xml:space="preserve">
     <value>Franek</value>
@@ -141,26 +135,8 @@
   <data name="h" xml:space="preserve">
     <value>Henryk</value>
   </data>
-  <data name="i" xml:space="preserve">
-    <value>Iwona</value>
-  </data>
   <data name="j" xml:space="preserve">
     <value>Jan</value>
-  </data>
-  <data name="k" xml:space="preserve">
-    <value>Karolina</value>
-  </data>
-  <data name="l" xml:space="preserve">
-    <value>Lucyna</value>
-  </data>
-  <data name="m" xml:space="preserve">
-    <value>Marysia</value>
-  </data>
-  <data name="n" xml:space="preserve">
-    <value>Natalia</value>
-  </data>
-  <data name="o" xml:space="preserve">
-    <value>Ola</value>
   </data>
   <data name="p" xml:space="preserve">
     <value>Paweł</value>
@@ -173,14 +149,5 @@
   </data>
   <data name="t" xml:space="preserve">
     <value>Tadek</value>
-  </data>
-  <data name="u" xml:space="preserve">
-    <value>Ula</value>
-  </data>
-  <data name="w" xml:space="preserve">
-    <value>Wanda</value>
-  </data>
-  <data name="z" xml:space="preserve">
-    <value>Zosia</value>
   </data>
 </root>

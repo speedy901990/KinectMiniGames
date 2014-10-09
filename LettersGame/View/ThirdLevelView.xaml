@@ -19,8 +19,8 @@
         <k:KinectRegion Grid.Row="1"  x:Name="MyKinectRegion">
             <Grid x:Name="ButtonsGrid">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
                     <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
                     <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
                 <Canvas x:Name="MainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0"></Canvas>

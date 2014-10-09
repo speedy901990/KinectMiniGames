@@ -94,12 +94,12 @@ namespace LettersGame.View
                 var word = new KinectTileButton
                 {
                     Tag = _game.SmallLetters[index],
-                    Content = _game.SmallLetters[index].Word,
+                    Label = _game.SmallLetters[index].Word,
                     Foreground = new SolidColorBrush(Colors.Purple),
-                    Background = new SolidColorBrush(Colors.White),
+                    Background = _game.SmallLetters[index].Image,
                     Width = _letterWidth,
                     Height = _letterHeight,
-                    FontSize = _config.LettersFontSize,
+                    FontSize = _config.LabelFontSize,
                     FontWeight = FontWeights.Light
                 };
                 word.PreviewMouseLeftButtonDown += OnPreviewMouseLeftButtonDown;

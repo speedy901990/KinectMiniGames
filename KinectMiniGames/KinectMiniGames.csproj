@@ -310,9 +310,6 @@
     <None Include="Resources\sky.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\apples.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\jablka.png" />
   </ItemGroup>
   <ItemGroup>

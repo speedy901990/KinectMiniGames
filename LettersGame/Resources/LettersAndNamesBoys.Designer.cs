@@ -22,14 +22,14 @@ namespace LettersGame.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LettersAndNames {
+    internal class LettersAndNamesBoys {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LettersAndNames() {
+        internal LettersAndNamesBoys() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace LettersGame.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LettersGame.Resources.LettersAndNames", typeof(LettersAndNames).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LettersGame.Resources.LettersAndNamesBoys", typeof(LettersAndNamesBoys).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,15 +57,6 @@ namespace LettersGame.Resources {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Agnieszka.
-        /// </summary>
-        internal static string a {
-            get {
-                return ResourceManager.GetString("a", resourceCulture);
             }
         }
         
@@ -97,15 +88,6 @@ namespace LettersGame.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ela.
-        /// </summary>
-        internal static string e {
-            get {
-                return ResourceManager.GetString("e", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Franek.
         /// </summary>
         internal static string f {
@@ -133,65 +115,11 @@ namespace LettersGame.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Iwona.
-        /// </summary>
-        internal static string i {
-            get {
-                return ResourceManager.GetString("i", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Jan.
         /// </summary>
         internal static string j {
             get {
                 return ResourceManager.GetString("j", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Karolina.
-        /// </summary>
-        internal static string k {
-            get {
-                return ResourceManager.GetString("k", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lucyna.
-        /// </summary>
-        internal static string l {
-            get {
-                return ResourceManager.GetString("l", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Marysia.
-        /// </summary>
-        internal static string m {
-            get {
-                return ResourceManager.GetString("m", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Natalia.
-        /// </summary>
-        internal static string n {
-            get {
-                return ResourceManager.GetString("n", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ola.
-        /// </summary>
-        internal static string o {
-            get {
-                return ResourceManager.GetString("o", resourceCulture);
             }
         }
         
@@ -228,33 +156,6 @@ namespace LettersGame.Resources {
         internal static string t {
             get {
                 return ResourceManager.GetString("t", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ula.
-        /// </summary>
-        internal static string u {
-            get {
-                return ResourceManager.GetString("u", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wanda.
-        /// </summary>
-        internal static string w {
-            get {
-                return ResourceManager.GetString("w", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Zosia.
-        /// </summary>
-        internal static string z {
-            get {
-                return ResourceManager.GetString("z", resourceCulture);
             }
         }
     }

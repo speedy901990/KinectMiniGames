@@ -194,7 +194,7 @@ namespace LettersGame.View
             if (_selectedLetterButton == null || _selectedLetter == null) 
                 return;
 
-            _selectedLetterButton.Visibility = Visibility.Visible;
+            //_selectedLetterButton.Visibility = Visibility.Visible;
 
             var letterButton = sender as KinectTileButton;
 
@@ -233,7 +233,7 @@ namespace LettersGame.View
             if (_selectedLetterButton == null) 
                 return;
 
-            _selectedLetterButton.Visibility = Visibility.Hidden;
+            //_selectedLetterButton.Visibility = Visibility.Hidden;
             _selectedLetter = _selectedLetterButton.Tag as Letter;
             if (!MainCanvas.CaptureMouse()) 
                 return;

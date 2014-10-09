@@ -58,7 +58,6 @@ namespace LettersGame.View
             KinectRegion.AddQueryInteractionStatusHandler(PopupPanel, OnQuery);
             KinectRegion.AddHandPointerGripHandler(MainCanvas, OnHandPointerGrip);
             KinectRegion.AddHandPointerGripReleaseHandler(MainCanvas, OnHandPointerGripRelease);
-            //KinectRegion.AddHandPointerGripReleaseHandler(MainCanvas, OnHandPointerGripRelease);
             for (var i = 0; i < _game.SmallLetters.Count; i++)
             {
                 if (i % 2 == 0)
@@ -88,22 +87,17 @@ namespace LettersGame.View
 
             for (var i = 0; i < _game.Trolleys.Count; i++)
             {
-                //var trolley = new Rectangle
-                //{
-                //    Tag = game.Trolleys[i],
-                //    Width = this.config.WindowWidth / (game.Trolleys.Count + 1),
-                //    VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                //    HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-                //    Fill = Brushes.Red // podstawic odpowiednia bitmape z game.Trolleys[i].Image
-                //};
                 var trolley = new Label
                 {
                     Content = _game.Trolleys[i].BigLetter,
                     Tag = _game.Trolleys[i],
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    Height = 200,
                     Width = _config.WindowWidth / (_game.Trolleys.Count + 1),
-                    FontSize = 200,
+                    Margin = new Thickness{Left = 20, Right = 20},
+                    FontSize = 150,
                     FontWeight = FontWeights.ExtraBold,
                     Foreground = Brushes.White
                 };
@@ -111,11 +105,9 @@ namespace LettersGame.View
                 KinectRegion.AddQueryInteractionStatusHandler(trolley, OnQuery);
                 KinectRegion.AddHandPointerEnterHandler(trolley, OnHandPointerEnter);
                 KinectRegion.AddHandPointerGripReleaseHandler(trolley, OnHandPointerGripRelease);
-                MainGrid.Children.Add(trolley);
-                Grid.SetRow(trolley,3);
-                var columnNumber = (i /(double)_game.Trolleys.Count) * ((double)_game.SmallLetters.Count / 2);
-                Grid.SetColumn(trolley, (int)columnNumber);
-                Grid.SetColumnSpan(trolley, 2);
+                TrolleyPanel.Children.Add(trolley);
+                var columnsCount = MainGrid.ColumnDefinitions.Count;
+                Grid.SetColumnSpan(TrolleyPanel, columnsCount);
             }
             Grid.SetColumnSpan(PopupPanel, _game.SmallLetters.Count / 2);
         }
@@ -177,75 +169,77 @@ namespace LettersGame.View
         #region mouse events
         void trolley_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (_selectedLetterButton != null)
+            if (_selectedLetterButton == null) 
+                return;
+            _selectedLetterButton.Visibility = Visibility.Visible;
+            var trolley = sender as Label;
+            if (trolley == null) 
+                return;
+            var trolleysLetter = trolley.Tag as Letter;
+            if (trolleysLetter != null && trolleysLetter.SmallLetter == _selectedLetter.SmallLetter)
             {
-                var trolley = sender as Label;
-                if (trolley != null)
-                {
-                    var trolleysLetter = trolley.Tag as Letter;
-                    if (trolleysLetter != null && trolleysLetter.SmallLetter == _selectedLetter.SmallLetter)
-                    {
-                        _selectedLetterButton.IsEnabled = false;
-                        NotifySuccess();
-                        _selectedLetter = null;
-                        _selectedLetterButton = null;
-                    }
-                    else
-                    {
-                        NotifyFail();
-                        _selectedLetter = null;
-                        _selectedLetterButton = null;
-                    }
-                }
+                _selectedLetterButton.IsEnabled = false;
+                NotifySuccess();
+                _selectedLetter = null;
+                _selectedLetterButton = null;
+            }
+            else
+            {
+                NotifyFail();
+                _selectedLetter = null;
+                _selectedLetterButton = null;
             }
         }
 
         void smallLetter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var button = sender as KinectTileButton;
+
+            if (button == null) 
+                return;
             _selectedLetterButton = button;
-            if (button != null) _selectedLetter = (Letter)button.Tag;
+            _selectedLetterButton.Visibility = Visibility.Hidden;
+            _selectedLetter = (Letter)button.Tag;
         }
         #endregion
 
         #region kinect events
         private void OnHandPointerEnter(object sender, HandPointerEventArgs e)
         {
-            if (_selectedLetterButton != null)
+            if (_selectedLetterButton == null) 
+                return;
+            _selectedLetterButton.Visibility = Visibility.Visible;
+            var trolley = sender as Label;
+            if (trolley == null) 
+                return;
+            var trolleysLetter = trolley.Tag as Letter;
+            if (trolleysLetter != null && trolleysLetter.SmallLetter == _selectedLetter.SmallLetter)
             {
-                var trolley = sender as Label;
-                if (trolley != null)
-                {
-                    var trolleysLetter = trolley.Tag as Letter;
-                    if (trolleysLetter != null && trolleysLetter.SmallLetter == _selectedLetter.SmallLetter)
-                    {
-                        _selectedLetterButton.IsEnabled = false;
-                        NotifySuccess();
-                        _selectedLetter = null;
-                        _selectedLetterButton = null;
-                        e.Handled = true;
-                    }
-                    else
-                    {
-                        NotifyFail();
-                        _selectedLetter = null;
-                        _selectedLetterButton = null;
-                        e.Handled = true;
-                    }
-                }
+                _selectedLetterButton.IsEnabled = false;
+                NotifySuccess();
+                _selectedLetter = null;
+                _selectedLetterButton = null;
+                e.Handled = true;
+            }
+            else
+            {
+                NotifyFail();
+                _selectedLetter = null;
+                _selectedLetterButton = null;
+                e.Handled = true;
             }
         }
 
         private void OnHandPointerGrip(object sender, HandPointerEventArgs e)
         {
             var button = sender as KinectTileButton;
-            if (button != null)
-            {
-                e.HandPointer.Capture(MainCanvas);
-                _selectedLetterButton = button;
-                _selectedLetter = (Letter)button.Tag;
-                e.Handled = true;
-            }
+            if (button == null) 
+                return;
+            e.HandPointer.Capture(MainCanvas);
+            _selectedLetterButton = button;
+            _selectedLetterButton.Visibility = Visibility.Hidden;
+            _selectedLetter = (Letter)button.Tag;
+            e.Handled = true;
         }
 
         private void OnHandPointerGripRelease(object sender, HandPointerEventArgs e)

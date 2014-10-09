@@ -27,6 +27,7 @@
                 </Grid.RowDefinitions>
                 <Canvas x:Name="MainCanvas" Grid.RowSpan="4" Grid.Column="0" Grid.Row="0"></Canvas>
                 <WrapPanel x:Name="PopupPanel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
+                <WrapPanel x:Name="TrolleyPanel" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal"></WrapPanel>
             </Grid>
         </k:KinectRegion>
     </Grid>

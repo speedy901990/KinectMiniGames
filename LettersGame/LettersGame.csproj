@@ -40,6 +40,7 @@
     <Reference Include="Microsoft.Kinect, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -59,15 +60,30 @@
     </ApplicationDefinition>
     <Compile Include="Game.cs" />
     <Compile Include="Letter.cs" />
+    <Compile Include="Resources\ImagesBoys.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImagesBoys.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ImagesGirls.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImagesGirls.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Letters.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Letters.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\LettersAndNames.Designer.cs">
+    <Compile Include="Resources\LettersAndNamesBoys.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LettersAndNames.resx</DependentUpon>
+      <DependentUpon>LettersAndNamesBoys.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LettersAndNamesGirls.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LettersAndNamesGirls.resx</DependentUpon>
     </Compile>
     <Compile Include="View\FirstLevelView.xaml.cs">
       <DependentUpon>FirstLevelView.xaml</DependentUpon>
@@ -136,13 +152,25 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ImagesBoys.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImagesBoys.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ImagesGirls.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImagesGirls.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Letters.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Letters.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\LettersAndNames.resx">
+    <EmbeddedResource Include="Resources\LettersAndNamesBoys.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LettersAndNames.Designer.cs</LastGenOutput>
+      <LastGenOutput>LettersAndNamesBoys.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LettersAndNamesGirls.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LettersAndNamesGirls.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -170,6 +198,30 @@
       <Project>{c6f9c31b-6130-4443-a5cc-ef0664552ecd}</Project>
       <Name>Microsoft.Kinect.Toolkit</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ch1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ch2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ch3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ch4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dz1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dz2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dz3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dz4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
