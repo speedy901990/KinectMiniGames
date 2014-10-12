@@ -523,11 +523,11 @@ namespace BubblesGame
                 //var result = MessageBox.Show("Gratulacje! Twój wynik to: " + FallingThings.BubblesPopped, "", MessageBoxButton.OK);
                 //if (result == MessageBoxResult.OK)
                 //{
-                //    this.exitGame();
+                //    this.ExitGame();
                 //}
                 if (popup.Ok)
                 {
-                    this.exitGame();
+                    this.ExitGame();
                 }
             }
 
@@ -543,37 +543,33 @@ namespace BubblesGame
         {
             if (e.Key == Key.Escape)
             {
-                this.exitGame();
+                ExitGame();
             }
         }
-        public void exitGame()
+        public void ExitGame()
         {
-            TimeSpan time = endTime - startTime;
-            BubblesGameParams gameParams = new BubblesGameParams
+            var time = endTime - startTime;
+            var gameParams = new BubblesGameParams
             {
-                Success = GameWindow.bubblesPopped,
+                Success = bubblesPopped,
                 Time = (int)time.TotalMilliseconds,
-                Level = this.config.Level
+                Level = config.Level,
+                AppearanceFrequency = config.BubblesApperanceFrequency,
+                Bubbles = config.BubblesCount,
+                BubblesSize = config.BubblesSize,
+                FallSpeed = config.BubblesFallSpeed
             };
-            BubblesGameManager manager = new BubblesGameManager(this.config.Player);
+            var manager = new BubblesGameManager(config.Player);
             manager.SaveGameResult(gameParams);
 
             FallingThings.BubblesFallen = 0;
             FallingThings.BubblesPopped = 0;
-            this.stopKinect();
-            this.Close();
+            StopKinect();
+            Close();
         }
-        private void stopKinect()
+        private void StopKinect()
         {
-            try
-            {
-                this.KinectSensorManager.KinectSensor.Stop();
-                this.KinectSensorManager.KinectSensor.AudioSource.Stop();
-            }
-            catch (NullReferenceException)
-            {
-                
-            }
+            KinectSensorManager.KinectSensor.Stop();
         }
         #endregion
     }

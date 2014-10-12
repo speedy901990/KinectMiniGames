@@ -6,7 +6,7 @@
              xmlns:k="http://schemas.microsoft.com/kinect/2013"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid x:Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
@@ -18,9 +18,9 @@
         <k:KinectRegion Grid.Row="1"  x:Name="MyKinectRegion">
             <Grid x:Name="ButtonsGrid">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="0.5*"/>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="4*"/>
                 </Grid.RowDefinitions>
                 <WrapPanel x:Name="LettersPanel" Grid.Row="0"></WrapPanel>
                 <Canvas x:Name="MainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0"></Canvas>

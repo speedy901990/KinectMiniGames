@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Drawing;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace LettersGame.View
 {
@@ -32,6 +35,7 @@ namespace LettersGame.View
         {
             _config = config;
             InitializeComponent();
+            Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.ApplesGameBackground));
             _game = new Game(config);
             //do sprawdzenia
             Loaded += OnLoaded;
@@ -47,6 +51,14 @@ namespace LettersGame.View
             KinectSensorChooserUi.KinectSensorChooser = _sensorChooser;
             _sensorChooser.Start();
             SetGameField();
+        }
+
+        private BitmapSource ConvertBitmapToBitmapSource(Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
         }
 
         private void SetGameField()
@@ -197,6 +209,8 @@ namespace LettersGame.View
         private void OnHandPointerGripRelease(object sender, HandPointerEventArgs e)
         {
             e.HandPointer.Captured = null;
+            if (_selectedLetterButton != null)
+                _selectedLetterButton.Visibility = Visibility.Visible;
             if (_drawingEnabled)
             {
                 MainCanvas.Children.Remove(_linkingLine);

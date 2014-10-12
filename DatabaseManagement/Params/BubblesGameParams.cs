@@ -13,5 +13,13 @@ namespace DatabaseManagement.Params
         public int Success { get; set; }
 
         public int Level { get; set; }
+
+        public int AppearanceFrequency { get; set; }
+
+        public int Bubbles { get; set; }
+
+        public int BubblesSize { get; set; }
+
+        public int FallSpeed { get; set; }
     }
 }

@@ -26,27 +26,31 @@ namespace DatabaseManagement.Managers
                 if (game == null)
                     return;
                 
-                //TODO poprawic bgp i value w kazdym z history params
                 var historyParams = new List<HistoryParam>
                 {
                     new HistoryParam
                     {
                         GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Appearance Frequency"),
-                        Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
+                        Value = bgp.AppearanceFrequency.ToString(CultureInfo.InvariantCulture)
                     },
                     new HistoryParam
                     {
                         GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Bubbles"),
-                        Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
+                        Value = bgp.Bubbles.ToString(CultureInfo.InvariantCulture)
                     },
                     new HistoryParam
                     {
                         GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Bubbles Size"),
-                        Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
+                        Value = bgp.BubblesSize.ToString(CultureInfo.InvariantCulture)
                     },
                     new HistoryParam
                     {
                         GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Fall Speed"),
+                        Value = bgp.FallSpeed.ToString(CultureInfo.InvariantCulture)
+                    },
+                    new HistoryParam
+                    {
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Level"),
                         Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
                     }
                 };

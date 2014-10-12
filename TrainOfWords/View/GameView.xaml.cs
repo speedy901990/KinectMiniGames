@@ -117,12 +117,12 @@ namespace TrainOfWords.View
                 {
                     Tag = letter,
                     Content = letter,
-                    Foreground = new SolidColorBrush(Colors.BlueViolet),
+                    Foreground = new SolidColorBrush(Colors.DarkSlateBlue),
                     Background = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.ExtraBold,
                     FontSize = 100,
                     Width = 250,
-                    Height = 200
+                    Height = _game.Config.LetterHeight
                 };
                 letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
                 //kinectowe eventy
@@ -168,12 +168,12 @@ namespace TrainOfWords.View
                 {
                     Tag = letter,
                     Content = letter,
-                    Foreground = new SolidColorBrush(Colors.BlueViolet),
+                    Foreground = new SolidColorBrush(Colors.DarkSlateBlue),
                     Background = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.ExtraBold,
                     FontSize = 100,
                     Width = 250,
-                    Height = 200
+                    Height = _game.Config.LetterHeight
                 };
                 letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
                 //kinectowe eventy
@@ -218,12 +218,12 @@ namespace TrainOfWords.View
                 {
                     Tag = letter,
                     Content = letter,
-                    Foreground = new SolidColorBrush(Colors.BlueViolet),
+                    Foreground = new SolidColorBrush(Colors.DarkSlateBlue),
                     Background = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.ExtraBold,
                     FontSize = 100,
                     Width = 250,
-                    Height = 200
+                    Height = _game.Config.LetterHeight
                 };
                 letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
                 //kinectowe eventy
@@ -394,11 +394,14 @@ namespace TrainOfWords.View
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            ButtonsGrid.Children.Add(popup);
-            Grid.SetColumn(popup, 0);
-            Grid.SetRow(popup, 0);
-            Grid.SetColumnSpan(popup, ButtonsGrid.ColumnDefinitions.Count);
-            Grid.SetRowSpan(popup, ButtonsGrid.RowDefinitions.Count);
+            
+            //Grid.SetColumn(popup, 0);
+            //Grid.SetRow(popup, 0);
+            //Grid.SetColumnSpan(popup, ButtonsGrid.ColumnDefinitions.Count);
+            //Grid.SetRowSpan(popup, ButtonsGrid.RowDefinitions.Count);
+            //ButtonsGrid.Children.Add(popup);
+            Grid.SetRow(popup, 1);
+            RootGrid.Children.Add(popup);
             var endGamePopupTimer = new Timer { Interval = 3000 };
             endGamePopupTimer.Elapsed += EndGamePopupTimerOnElapsed;
             endGamePopupTimer.Start();

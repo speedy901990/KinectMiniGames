@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Drawing;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LettersGame.Properties;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace LettersGame.View
 {
@@ -39,6 +43,7 @@ namespace LettersGame.View
         public FirstLevelView(LettersGameConfig config)
         {
             InitializeComponent();
+            Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.ApplesGameBackground));
             Loaded += OnLoaded;
             _config = config;
             _config.LettersCount = config.FirstLevelLettersCount;
@@ -46,6 +51,14 @@ namespace LettersGame.View
             _letterHeight = (int)_config.WindowHeight / 5;
             _letterWidth = (int)_config.WindowWidth / _config.FirstLevelLettersCount;
             _isInGripInteraction = false;
+        }
+
+        private BitmapSource ConvertBitmapToBitmapSource(Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -342,6 +355,8 @@ namespace LettersGame.View
             e.HandPointer.Captured = null;
             if (!_drawingEnabled) 
                 return;
+            if (_selectedLetterButton != null)
+                _selectedLetterButton.Visibility = Visibility.Visible;
             MainCanvas.Children.Remove(_linkingLine);
             e.Handled = true;
         }

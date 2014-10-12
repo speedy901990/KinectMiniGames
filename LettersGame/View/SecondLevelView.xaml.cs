@@ -1,4 +1,6 @@
-﻿using Microsoft.Kinect;
+﻿using System.Drawing;
+using System.Windows.Media.Imaging;
+using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
 using System;
@@ -7,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace LettersGame.View
 {
@@ -33,6 +36,7 @@ namespace LettersGame.View
         public SecondLevelView(LettersGameConfig config)
         {
             InitializeComponent();
+            Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.ApplesGameBackground));
             _config = config;
             _game = new Game(config);
             //do sprawdzenia
@@ -41,7 +45,13 @@ namespace LettersGame.View
             _isInGripInteraction = false;
             Loaded += OnLoaded;
         }
-
+        private BitmapSource ConvertBitmapToBitmapSource(Bitmap bm)
+        {
+            var bitmap = bm;
+            var bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            bitmap.Dispose();
+            return bitmapSource;
+        }
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             _sensorChooser = new KinectSensorChooser();
@@ -245,6 +255,8 @@ namespace LettersGame.View
         private void OnHandPointerGripRelease(object sender, HandPointerEventArgs e)
         {
             e.HandPointer.Captured = null;
+            if (_selectedLetterButton != null)
+                _selectedLetterButton.Visibility = Visibility.Visible;
             e.Handled = true;
         }
 

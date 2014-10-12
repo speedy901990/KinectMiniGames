@@ -15,7 +15,12 @@ namespace BubblesGame
         private int bubblesCount = 20;
         private int bubbleFallSpeed = 3;
         private int bubblesApperanceFrequency = 2;
-        private int level = 0;
+
+        public BubblesGameConfig()
+        {
+            Level = 0;
+        }
+
         #endregion
 
         #region Public State
@@ -87,11 +92,8 @@ namespace BubblesGame
             set { kinectSensor = value; }
         }
 
-        public int Level
-        {
-            get { return level; }
-            set { level = value; }
-        }
+        public int Level { get; set; }
+
         #endregion
 
         #region INotifyPropertyChanged Members
