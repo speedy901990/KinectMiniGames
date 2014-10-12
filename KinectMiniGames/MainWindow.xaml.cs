@@ -206,6 +206,9 @@ namespace KinectMiniGames
             {
                 _sensorChooser.Start();
             }
+
+            GetPlayersFromDatabase();
+
         }
 
         private void KinectMiniGames_Deactivated(object sender, EventArgs e)
@@ -217,5 +220,12 @@ namespace KinectMiniGames
         }
 
         #endregion
+
+        private void MenagementButton_Click(object sender, RoutedEventArgs e)
+        {
+            GameManagement.MainWindow window = new GameManagement.MainWindow();
+            window.Show();
+
+        }
     }
 }

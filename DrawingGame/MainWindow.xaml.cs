@@ -96,9 +96,9 @@ namespace DrawingGame
 
             if (_Configuration.HandsState == 1 && _Configuration.Difficulty == 1)
                 level = 1;
-            if (_Configuration.HandsState == 1 && _Configuration.Difficulty == 2)
-                level = 2;
             if (_Configuration.HandsState == 2 && _Configuration.Difficulty == 1)
+                level = 2;
+            if (_Configuration.HandsState == 1 && _Configuration.Difficulty == 2)
                 level = 3;
             if (_Configuration.HandsState == 2 && _Configuration.Difficulty == 2)
                 level = 4;
@@ -467,15 +467,15 @@ namespace DrawingGame
 
 
             this._ListPuzzleL.Add(FirstLeftHand);
-            this._ListPuzzleL.Add(SecondLeftHand);
-            this._ListPuzzleL.Add(ThirdLeftHand);
-            this._ListPuzzleL.Add(FourthLeftHand);
-            this._ListPuzzleL.Add(FifthLeftHand);
-            this._ListPuzzleL.Add(SixthLeftHand);
-            this._ListPuzzleL.Add(SeventhLeftHand);
-            this._ListPuzzleL.Add(EignthLeftHand);
-            this._ListPuzzleL.Add(NinthLeftHand);
-            this._ListPuzzleL.Add(TenthLeftHand);
+            //this._ListPuzzleL.Add(SecondLeftHand);
+            //this._ListPuzzleL.Add(ThirdLeftHand);
+            //this._ListPuzzleL.Add(FourthLeftHand);
+            //this._ListPuzzleL.Add(FifthLeftHand);
+            //this._ListPuzzleL.Add(SixthLeftHand);
+            //this._ListPuzzleL.Add(SeventhLeftHand);
+            //this._ListPuzzleL.Add(EignthLeftHand);
+            //this._ListPuzzleL.Add(NinthLeftHand);
+            //this._ListPuzzleL.Add(TenthLeftHand);
 
             {
                 DotPuzzle FirstRightHand = new DotPuzzle();
@@ -782,15 +782,15 @@ namespace DrawingGame
 
 
                 this._ListPuzzleR.Add(FirstRightHand);
-                this._ListPuzzleR.Add(SecondRightHand);
-                this._ListPuzzleR.Add(ThirdRightHand);
-                this._ListPuzzleR.Add(FourthRightHand);
-                this._ListPuzzleR.Add(FifthRightHand);
-                this._ListPuzzleR.Add(SixthRightHand);
-                this._ListPuzzleR.Add(SeventhRightHand);
-                this._ListPuzzleR.Add(EignthRightHand);
-                this._ListPuzzleR.Add(NinthRightHand);
-                this._ListPuzzleR.Add(TenthRightHand);
+                //this._ListPuzzleR.Add(SecondRightHand);
+                //this._ListPuzzleR.Add(ThirdRightHand);
+                //this._ListPuzzleR.Add(FourthRightHand);
+                //this._ListPuzzleR.Add(FifthRightHand);
+                //this._ListPuzzleR.Add(SixthRightHand);
+                //this._ListPuzzleR.Add(SeventhRightHand);
+                //this._ListPuzzleR.Add(EignthRightHand);
+                //this._ListPuzzleR.Add(NinthRightHand);
+                //this._ListPuzzleR.Add(TenthRightHand);
 
 
             }
@@ -1183,7 +1183,7 @@ namespace DrawingGame
 
                     if (length < precision)
                     {
-
+                        stopwatchOfOutOfField.Stop();
                         if (lastPoint > 0)
                         {
 
@@ -1205,7 +1205,7 @@ namespace DrawingGame
 
                         if (lastPoint > 0)
                         {
-
+                            stopwatchOfOutOfField.Start();
                             Point lineEndpoint = crayonElement.Points[lastPoint];
                             crayonElement.Points.RemoveAt(lastPoint);
                             lineEndpoint.X = handPoint.X;

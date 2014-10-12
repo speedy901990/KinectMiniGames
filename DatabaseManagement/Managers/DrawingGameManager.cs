@@ -8,7 +8,7 @@ namespace DatabaseManagement.Managers
 {
     public class DrawingGameManager
     {
-        private Game _game;
+        
         private Player _player;
         private readonly Dictionary<String, GameParam> _gameParams = new Dictionary<string, GameParam>();
         private readonly Dictionary<String, GameResult> _gameResults = new Dictionary<string, GameResult>();
@@ -21,7 +21,7 @@ namespace DatabaseManagement.Managers
 
         public DrawingGameManager(Player player)
         {
-            GetGame();
+           
             _player = player;
         }
         public void SaveGameResult(DrawingGameParams bgp)
@@ -29,11 +29,18 @@ namespace DatabaseManagement.Managers
             using (var context = new GameModelContainer())
             {
                 var date = DateTime.Now;
+
+                var game = context.Games.FirstOrDefault(b => b.Name == "DrawingGame");
+
+
+                if (game == null)
+                    return;
+
                 var historyParams = new List<HistoryParam>
                 {
                     new HistoryParam
                     {
-                        GameParam = context.GameParams.Find(_gameParams["Level"].Id),
+                        GameParam = game.GameParams.FirstOrDefault(param => param.Name == "Level"),
                         Value = bgp.Level.ToString(CultureInfo.InvariantCulture)
                     }
                 };
@@ -43,19 +50,19 @@ namespace DatabaseManagement.Managers
                    
                    new HistoryResult
                     {
-                        GameResult = context.GameResults1.Find(_gameResults["Time"].Id),
+                        GameResult = game.GameResults.FirstOrDefault(result => result.Name == "Time"),
                         Value = bgp.TimeOfGame
                     },
                     new HistoryResult
                     {
-                        GameResult = context.GameResults1.Find(_gameResults["Time Out"].Id),
+                        GameResult = game.GameResults.FirstOrDefault(result => result.Name == "Time Out"),
                         Value = bgp.TimeOutOfField
                     }
                 };
 
                 var history = new History
                 {
-                    Game = _game,
+                    Game = game,
                     Date = date,
                     HistoryParams = historyParams,
                     HistoryResults = historyResults
@@ -68,25 +75,7 @@ namespace DatabaseManagement.Managers
         }
        
 
-        private void GetGame()
-        {
-            using (var context = new GameModelContainer())
-            {
-                var game = context.Games.FirstOrDefault(b => b.Name == "DrawingGame");
-                _game = game;
-
-                if (_game == null)
-                    return;
-                foreach (var item in _game.GameParams)
-                {
-                    _gameParams.Add(item.Name, item);
-                }
-                foreach (var item in _game.GameResults)
-                {
-                    _gameResults.Add(item.Name, item);
-                }
-            }
-        }
+       
 
     }
 }
