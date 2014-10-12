@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KinectMiniGames.Configs {
+namespace DrawingGame.Properties {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace KinectMiniGames.Configs {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class GameList {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal GameList() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace KinectMiniGames.Configs {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KinectMiniGames.Configs.GameList", typeof(GameList).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DrawingGame.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,32 @@ namespace KinectMiniGames.Configs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static string ApplesGame {
+        internal static System.Drawing.Bitmap greenBall {
             get {
-                return ResourceManager.GetString("ApplesGame", resourceCulture);
+                object obj = ResourceManager.GetObject("greenBall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static string BubblesGame {
+        internal static System.Drawing.Bitmap redBall {
             get {
-                return ResourceManager.GetString("BubblesGame", resourceCulture);
+                object obj = ResourceManager.GetObject("redBall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 5.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static string DrawingGame {
+        internal static System.Drawing.Bitmap yellowBall {
             get {
-                return ResourceManager.GetString("DrawingGame", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 3.
-        /// </summary>
-        internal static string LettersGame {
-            get {
-                return ResourceManager.GetString("LettersGame", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 4.
-        /// </summary>
-        internal static string TrainOfWords {
-            get {
-                return ResourceManager.GetString("TrainOfWords", resourceCulture);
+                object obj = ResourceManager.GetObject("yellowBall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

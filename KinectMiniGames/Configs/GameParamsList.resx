@@ -141,6 +141,9 @@
   <data name="BubblesGameFallSpeed" xml:space="preserve">
     <value>{"Game":"BubblesGame", "Name":"Fall Speed"}</value>
   </data>
+  <data name="DrawingGameLevel" xml:space="preserve">
+    <value>{"Game":"DrawingGame", "Name":"Level"}</value>
+  </data>
   <data name="LettersGameLevel" xml:space="preserve">
     <value>{"Game":"LettersGame", "Name":"Level"}</value>
   </data>

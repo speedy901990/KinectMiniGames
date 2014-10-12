@@ -117,34 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApplesGameCorrectTrials" xml:space="preserve">
-    <value>{"game":"ApplesGame", "name":"Correct Trials"}</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="greenBall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\greenBall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ApplesGameFailures" xml:space="preserve">
-    <value>{"game":"ApplesGame","name":"Failures"}</value>
+  <data name="redBall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\redBall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ApplesGameTime" xml:space="preserve">
-    <value>{"game":"ApplesGame", "name":"Time"}</value>
-  </data>
-  <data name="BubblesGameSuccess" xml:space="preserve">
-    <value>{"game":"BubblesGame", "name":"Success"}</value>
-  </data>
-  <data name="BubblesGameTime" xml:space="preserve">
-    <value>{"game":"BubblesGame", "name":"Time"}</value>
-  </data>
-  <data name="DrawingGameTime" xml:space="preserve">
-    <value>{"game":"DrawingGame","name":"Time"}</value>
-  </data>
-  <data name="DrawingGameTimeOut" xml:space="preserve">
-    <value>{"game":"DrawingGame","name":"Time Out"}</value>
-  </data>
-  <data name="LettersGameCorrectTrials" xml:space="preserve">
-    <value>{"game":"LettersGame", "name":"Correct Trials"}</value>
-  </data>
-  <data name="LettersGameFailures" xml:space="preserve">
-    <value>{"game":"LettersGame","name":"Failures"}</value>
-  </data>
-  <data name="LettersGameTime" xml:space="preserve">
-    <value>{"game":"LettersGame", "name":"Time"}</value>
+  <data name="yellowBall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\yellowBall.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

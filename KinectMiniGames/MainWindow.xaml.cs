@@ -88,7 +88,8 @@ namespace KinectMiniGames
             wrapPanel.Children.Add(new KinectTileButton { Label = "Apples Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.jablka))});
             wrapPanel.Children.Add(new KinectTileButton { Label = "Bubbles Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.babelki)) });
             wrapPanel.Children.Add(CreateSingleButton("Letters Game"));
-            //this.wrapPanel.Children.Add(this.CreateSingleButton("Labyrinth Game"));
+            wrapPanel.Children.Add(CreateSingleButton("Drawing Game"));
+            //this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Painting Game"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Dancing Steps"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Song Movements"));
@@ -185,6 +186,11 @@ namespace KinectMiniGames
                     kinectRegionGrid.Children.Add(lettersConfigPage);
                     e.Handled = true;
                     break;
+                case "Drawing Game":
+                    var drawingConfigPage = new DrawingGameConfigPage(button.Label as string, _sensorChooser);
+                    kinectRegionGrid.Children.Add(drawingConfigPage);
+                    e.Handled = true;
+                    break;
                 case "Train of Words":
                     var trainConfigPage = new TrainOfWordsConfigPage(button.Label as string, _sensorChooser);
                     kinectRegionGrid.Children.Add(trainConfigPage);
@@ -210,7 +216,7 @@ namespace KinectMiniGames
         {
             kinectViewBorder.Visibility = Visibility.Visible;
             sensorChooserUi.Visibility = Visibility.Visible;
-
+            kinectRegion.KinectSensor = _sensorChooser.Kinect;
             if (_sensorChooser.Status == ChooserStatus.None)
             {
                 _sensorChooser.Start();
@@ -222,6 +228,7 @@ namespace KinectMiniGames
             //this.WindowState = WindowState.Minimized;
             kinectViewBorder.Visibility = Visibility.Hidden;
             sensorChooserUi.Visibility = Visibility.Hidden;
+            kinectRegion.KinectSensor = null;
         }
 
         #endregion

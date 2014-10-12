@@ -123,6 +123,9 @@
   <data name="BubblesGame" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="DrawingGame" xml:space="preserve">
+    <value>5</value>
+  </data>
   <data name="LettersGame" xml:space="preserve">
     <value>3</value>
   </data>
