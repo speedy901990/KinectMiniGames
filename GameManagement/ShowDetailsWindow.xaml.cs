@@ -17,6 +17,8 @@ using System.Data.Entity;
 using System.Data.Linq;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 
 
@@ -30,6 +32,25 @@ namespace GameManagement
         public ObservableCollection<HistoryViewModel> historyList = new ObservableCollection<HistoryViewModel>();
         public ObservableCollection<GameHistoryResultViewModel> historyResultList = new ObservableCollection<GameHistoryResultViewModel>();
         public ObservableCollection<GameHistroyParamViewModel> historyParamList = new ObservableCollection<GameHistroyParamViewModel>();
+
+
+    //    private ObservableCollection<GameHistoryResultViewModel> _historyResultList;
+
+    //    public ObservableCollection<GameHistoryResultViewModel> HistoryResultList
+    //    {
+    //        get{ return _historyResultList;}
+    //        set { _historyResultList = value; OnPropertyChanged("HistoryResultList"); }
+    //    }
+
+        
+    //        public event PropertyChangedEventHandler PropertyChanged;
+    //protected virtual void OnPropertyChanged(string propertyName)
+    //{
+    //    PropertyChangedEventHandler handler = PropertyChanged;
+    //    if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+   // }
+         
+
 
         public ShowDetailsWindow()
         {
@@ -63,11 +84,69 @@ namespace GameManagement
             this.Close();
         }
 
+        private void ShowPlayerDetailsButton_Click(object sender, RoutedEventArgs e)
+        {   
+           
+            int index = -1;
+            if (HistoryGrid.SelectedCells.Count != 0)
+            {
+                try
+                {
+                    var cellInfo = HistoryGrid.SelectedCells[0];
+
+                    var content = cellInfo.Column.GetCellContent(cellInfo.Item);
+                    HistoryViewModel row = (HistoryViewModel)content.DataContext;
+                    index = row.Id;
+                }
+                catch (Exception ex)
+                {
+                    //zaznaczono pusty rekord
+                }
+                
+            }
+            if (index>-1)
+            {
+                using (var context = new GameModelContainer())
+                {
+                    
+                    historyResultList = new ObservableCollection<GameHistoryResultViewModel>(context.HistoryResults.Where(x => x.History.Id == index).ToList().ConvertAll(new Converter<HistoryResult, GameHistoryResultViewModel>(x =>
+                    {
+                        return new GameHistoryResultViewModel()
+                        {
+                            Value = x.Value,
+                            Name = x.GameResult.Name
+
+                        };
+                    })));
+
+                    historyParamList = new ObservableCollection<GameHistroyParamViewModel>(context.HistoryParams1.Where(x => x.History.Id == index).ToList().ConvertAll(new Converter<HistoryParam, GameHistroyParamViewModel>(x =>
+                    {
+                        return new GameHistroyParamViewModel()
+                        {
+                            Value = x.Value,
+                            Name = x.GameParam.Name
+                            
+
+                        };
+                    })));
+
+                }
+
+                HistoryResultGrid.DataContext = historyParamList;
+                GameResultGrid.DataContext = historyResultList;
+            }
+
+        }
+
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            //historyList.CollectionChanged +=ObservableCollection_CollectionChanged;
             HistoryGrid.DataContext = historyList;
+            //historyResultList.CollectionChanged += ObservableCollection_CollectionChanged;
             HistoryResultGrid.DataContext = historyResultList;
-            HistoryGrid.DataContext = historyList;
+            //historyList.CollectionChanged += ObservableCollection_CollectionChanged;
+            GameResultGrid.DataContext = historyResultList;
+            
         }
 
         private void GameResultGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,7 +164,7 @@ namespace GameManagement
                     };
                 })));
             }
-
+            
 
         }
 
@@ -105,8 +184,32 @@ namespace GameManagement
                     };
                 })));
             }
-
+            
 
         }
+        //private void ObservableCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //    if (e.NewItems != null)
+        //    {
+        //        foreach (var item in e.NewItems)
+        //        {
+        //            item.PropertyChanged += this.Item_PropertyChanged;
+        //        }
+        //    }
+
+        //    if (e.OldItems != null)
+        //    {
+        //        foreach (var item in e.OldItems)
+        //        {
+        //            item.PropertyChanged -= this.Item_PropertyChanged;
+        //        }
+        //    }
+        //}
+        //private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    
+        //}
+
+       
     }
 }

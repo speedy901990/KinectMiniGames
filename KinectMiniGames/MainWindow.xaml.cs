@@ -201,12 +201,14 @@ namespace KinectMiniGames
         {
             kinectViewBorder.Visibility = Visibility.Visible;
             sensorChooserUi.Visibility = Visibility.Visible;
-            kinectRegion.KinectSensor = _sensorChooser.Kinect;
+
+            
+
             if (_sensorChooser.Status == ChooserStatus.None)
             {
                 _sensorChooser.Start();
             }
-
+            kinectRegion.KinectSensor = _sensorChooser.Kinect;
             GetPlayersFromDatabase();
 
         }

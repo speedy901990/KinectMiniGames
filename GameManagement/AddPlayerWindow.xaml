@@ -28,5 +28,6 @@
             MinWidth="80" Margin="0,3,3,0" Content="Add" Height="20" VerticalAlignment="Top" Click="AddButton_Click"  />
         <Button Content="Back" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" Width="150" Height="75" Click="BackButton_Click"/>
         <Label x:Name="_lPlayerAdded" Grid.Row="5" Grid.Column="2" Content="Player added!" Visibility="Hidden"/>
+        <Label Content="Specify player data, and push button." FontSize="22" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

@@ -293,17 +293,17 @@ namespace DrawingGame
                 SecondLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80 / 100.0)));
                 SecondLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (60.0 / 100.0)));
 
-                ThirdLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (70.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (50.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (70.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (70.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (90.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (90.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (110.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (110.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (130.0 / 100.0)));
-                ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (130.0 / 100.0)));
+
+                //ThirdLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (50.0 / 100.0)));
+                //ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (50.0 / 100.0)));
+                //ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (70.0 / 100.0)));
+                //ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (70.0 / 100.0)));
+                //ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (90.0 / 100.0)));
+                //ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (90.0 / 100.0)));
+                //ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (110.0 / 100.0)));
+                //ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (110.0 / 100.0)));
+               
+                
 
 
                 FourthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (50.0 / 100.0)));
@@ -582,7 +582,7 @@ namespace DrawingGame
                 else if (_Configuration.Difficulty == 2)
                 {
                     #region Medium Levels Data For Right Hand
-                    FirstRightHand.Dots.Add(new Point(centerX * (139.0 / 100.0), centerY * (50.0 / 100.0)));
+                    FirstRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (50.0 / 100.0)));
                     FirstRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (50.0 / 100.0)));
                     FirstRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (70.0 / 100.0)));
                     FirstRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (70.0 / 100.0)));
@@ -610,17 +610,7 @@ namespace DrawingGame
                     SecondRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (80 / 100.0)));
                     SecondRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (60.0 / 100.0)));
 
-                    ThirdRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (70.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (50.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (70.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (70.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (90.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (90.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (110.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (110.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (130.0 / 100.0)));
-                    ThirdRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (130.0 / 100.0)));
+                    
 
 
                     FourthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (50.0 / 100.0)));
