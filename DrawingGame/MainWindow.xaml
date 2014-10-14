@@ -6,9 +6,9 @@
     WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
 
     <Viewbox Loaded="Viewbox_Loaded">
-        <Grid x:Name="LayoutRoot" Width="1920" Height="1200">
-            <Polyline x:Name="CrayonElementRforPuzzleLine" Stroke="Red" StrokeThickness="60" Grid.ColumnSpan="3" />
-            <Polyline x:Name="CrayonElementLforPuzzleLine" Stroke="CornflowerBlue" StrokeThickness="60" Grid.ColumnSpan="3"/>
+        <Grid x:Name="LayoutRoot" Width="{Binding Path=Width}"  Height="{Binding Path=Height}" Loaded="LayoutRoot_Loaded">
+            <Polyline x:Name="CrayonElementRforPuzzleLine" Stroke="Red" StrokeThickness="45" Grid.ColumnSpan="3" />
+            <Polyline x:Name="CrayonElementLforPuzzleLine" Stroke="CornflowerBlue" StrokeThickness="45" Grid.ColumnSpan="3"/>
             <Canvas x:Name="PuzzleBoardElementR" Grid.ColumnSpan="3"/>
             <Canvas x:Name="PuzzleBoardElementL" Grid.ColumnSpan="3"/>
             <Polyline x:Name="CrayonElementR" Stroke="Green" StrokeThickness="10" Grid.ColumnSpan="3"/>

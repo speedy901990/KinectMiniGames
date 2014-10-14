@@ -31,7 +31,7 @@ namespace DrawingGame
     {
 
         #region Member Variables
-
+        WindowSize windowSize;
         Stopwatch stopwatchOfGame;
         Stopwatch stopwatchOfOutOfField; 
         uint time = 0;
@@ -57,6 +57,10 @@ namespace DrawingGame
         #region Constructor
         public MainWindow(DrawingGameConfig config)
         {
+            windowSize = new WindowSize();
+            windowSize.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
+            windowSize.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+
             stopwatchOfGame = new Stopwatch();
             stopwatchOfOutOfField = new Stopwatch(); 
 
@@ -281,97 +285,100 @@ namespace DrawingGame
                 FirstLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (60.0 / 100.0)));
 
 
-                SecondLeftHand.Dots.Add(new Point(centerX * (65.0 / 100.0), centerY * (50.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (55.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (70.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (70.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (90.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (90.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (110.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (110.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (100.0 / 100.0)));
-                SecondLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80 / 100.0)));
+                
+                SecondLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (60.0 / 100.0)));
                 SecondLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (60.0 / 100.0)));
+                SecondLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (80.0 / 100.0)));
+                SecondLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (80.0 / 100.0)));
+                SecondLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (100.0 / 100.0)));
+                SecondLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (100.0 / 100.0)));
+                SecondLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (120.0 / 100.0)));
+                SecondLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (120.0 / 100.0)));
+                //SecondLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (50.0 / 100.0)));
+                //SecondLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (150.0 / 100.0)));
+                //SecondLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (70.0 / 100.0)));
+                //FirstLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80 / 100.0)));
+                //FirstLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (60.0 / 100.0)));
 
 
-                //ThirdLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (50.0 / 100.0)));
-                //ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (50.0 / 100.0)));
-                //ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (70.0 / 100.0)));
-                //ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (70.0 / 100.0)));
-                //ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (90.0 / 100.0)));
-                //ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (90.0 / 100.0)));
-                //ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (110.0 / 100.0)));
-                //ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (110.0 / 100.0)));
-               
+                ThirdLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (120.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (100.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (100.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (80.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (80.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (60.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (60.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (80.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (100.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (100.0 / 100.0)));
+                ThirdLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (120.0 / 100.0)));
                 
 
 
-                FourthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (50.0 / 100.0)));
-                FourthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (50.0 / 100.0)));
-                FourthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
-                FourthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (70.0 / 100.0)));
-                FourthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (90.0 / 100.0)));
-                FourthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (110.0 / 100.0)));
-                FourthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (120.0 / 100.0)));
                 FourthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (120.0 / 100.0)));
                 FourthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (100.0 / 100.0)));
-                FourthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (100.0 / 100.0)));
-                FourthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (70.0 / 100.0)));
+                FourthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (100.0 / 100.0)));
+                FourthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (80.0 / 100.0)));
+                FourthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (80.0 / 100.0)));
+                FourthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (60.0 / 100.0)));
+                FourthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (60.0 / 100.0)));
+                FourthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (80.0 / 100.0)));
+                FourthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80.0 / 100.0)));
+                FourthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (100.0 / 100.0)));
+                
 
 
-                FifthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (60.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (65.0 / 100.0), centerY * (70.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (65.0 / 100.0), centerY * (80.0 / 100.0)));
+                FifthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (60.0 / 100.0)));
+                FifthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80.0 / 100.0)));
+                FifthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (60.0 / 100.0)));
                 FifthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (90.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (75.0 / 100.0), centerY * (100.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (75.0 / 100.0), centerY * (110.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (120.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (85.0 / 100.0), centerY * (110.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (100.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (75.0 / 100.0), centerY * (90.0 / 100.0)));
-                FifthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (80.0 / 100.0)));
+                FifthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (110.0 / 100.0)));
+                FifthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (110.0 / 100.0)));
+                FifthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (120.0 / 100.0)));
+                
+                
 
-                SixthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
-                SixthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
-                SixthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (90.0 / 100.0)));
-                SixthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (90.0 / 100.0)));
-                SixthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (100.0 / 100.0)));
-                SixthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (120.0 / 100.0)));
-                SixthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (130.0 / 100.0)));
+                //SixthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
+                //SixthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
+                //SixthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (90.0 / 100.0)));
+                //SixthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (90.0 / 100.0)));
+                //SixthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (100.0 / 100.0)));
+                //SixthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (120.0 / 100.0)));
+                //SixthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (130.0 / 100.0)));
 
-                SeventhLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
-                SeventhLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (60.0 / 100.0)));
-                SeventhLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (70.0 / 100.0)));
-                SeventhLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80.0 / 100.0)));
-                SeventhLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (90.0 / 100.0)));
-                SeventhLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (110.0 / 100.0)));
-                SeventhLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (120.0 / 100.0)));
+                //SeventhLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
+                //SeventhLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (60.0 / 100.0)));
+                //SeventhLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (70.0 / 100.0)));
+                //SeventhLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80.0 / 100.0)));
+                //SeventhLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (90.0 / 100.0)));
+                //SeventhLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (110.0 / 100.0)));
+                //SeventhLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (120.0 / 100.0)));
 
-                EignthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
-                EignthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (60.0 / 100.0)));
-                EignthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (70.0 / 100.0)));
-                EignthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (80.0 / 100.0)));
-                EignthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (90.0 / 100.0)));
-                EignthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (110.0 / 100.0)));
-                EignthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (120.0 / 100.0)));
+                //EignthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
+                //EignthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (60.0 / 100.0)));
+                //EignthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (70.0 / 100.0)));
+                //EignthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (80.0 / 100.0)));
+                //EignthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (90.0 / 100.0)));
+                //EignthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (110.0 / 100.0)));
+                //EignthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (120.0 / 100.0)));
 
-                NinthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (50.0 / 100.0)));
-                NinthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (60.0 / 100.0)));
-                NinthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (70.0 / 100.0)));
-                NinthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (80.0 / 100.0)));
-                NinthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (90.0 / 100.0)));
-                NinthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (110.0 / 100.0)));
-                NinthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (120.0 / 100.0)));
+                //NinthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (50.0 / 100.0)));
+                //NinthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (60.0 / 100.0)));
+                //NinthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (70.0 / 100.0)));
+                //NinthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (80.0 / 100.0)));
+                //NinthLeftHand.Dots.Add(new Point(centerX * (70.0 / 100.0), centerY * (90.0 / 100.0)));
+                //NinthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (110.0 / 100.0)));
+                //NinthLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (120.0 / 100.0)));
 
 
-                TenthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
-                TenthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (70.0 / 100.0)));
-                TenthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (90.0 / 100.0)));
-                TenthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (110.0 / 100.0)));
-                TenthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (120.0 / 100.0)));
-                TenthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (140.0 / 100.0)));
-                TenthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (150.0 / 100.0)));
+                //TenthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (50.0 / 100.0)));
+                //TenthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (70.0 / 100.0)));
+                //TenthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (90.0 / 100.0)));
+                //TenthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (110.0 / 100.0)));
+                //TenthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (120.0 / 100.0)));
+                //TenthLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (140.0 / 100.0)));
+                //TenthLeftHand.Dots.Add(new Point(centerX * (60.0 / 100.0), centerY * (150.0 / 100.0)));
                 #endregion
 
             }
@@ -582,7 +589,7 @@ namespace DrawingGame
                 else if (_Configuration.Difficulty == 2)
                 {
                     #region Medium Levels Data For Right Hand
-                    FirstRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (50.0 / 100.0)));
+                   
                     FirstRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (50.0 / 100.0)));
                     FirstRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (70.0 / 100.0)));
                     FirstRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (70.0 / 100.0)));
@@ -597,88 +604,99 @@ namespace DrawingGame
                     FirstRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (80 / 100.0)));
                     FirstRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (60.0 / 100.0)));
 
-
-                    SecondRightHand.Dots.Add(new Point(centerX * (135.0 / 100.0), centerY * (50.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (55.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (70.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (70.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (90.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (90.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (110.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (110.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (100.0 / 100.0)));
-                    SecondRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (80 / 100.0)));
+                    //SecondRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (70.0 / 100.0)));
+                    SecondRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (60.0 / 100.0)));
                     SecondRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (60.0 / 100.0)));
+                    SecondRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (80.0 / 100.0)));
+                    SecondRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (80.0 / 100.0)));
+                    SecondRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (100.0 / 100.0)));
+                    SecondRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (100.0 / 100.0)));
+                    SecondRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (120.0 / 100.0)));
+                    SecondRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (120.0 / 100.0)));
+                    //SecondLeftHand.Dots.Add(new Point(centerX * (80.0 / 100.0), centerY * (50.0 / 100.0)));
+                    //SecondLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (150.0 / 100.0)));
+                    //SecondLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (70.0 / 100.0)));
+                    //FirstLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (80 / 100.0)));
+                    //FirstLeftHand.Dots.Add(new Point(centerX * (90.0 / 100.0), centerY * (60.0 / 100.0)));
 
-                    
+
+                    ThirdRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (120.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (100.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (100.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (80.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (80.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (60.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (60.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (80.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (80.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (100.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (100.0 / 100.0)));
+                    ThirdRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (120.0 / 100.0)));
 
 
-                    FourthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (50.0 / 100.0)));
-                    FourthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (50.0 / 100.0)));
-                    FourthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
-                    FourthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (70.0 / 100.0)));
-                    FourthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (90.0 / 100.0)));
-                    FourthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (110.0 / 100.0)));
-                    FourthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (120.0 / 100.0)));
+
                     FourthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (120.0 / 100.0)));
                     FourthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (100.0 / 100.0)));
-                    FourthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (100.0 / 100.0)));
-                    FourthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (70.0 / 100.0)));
+                    FourthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (100.0 / 100.0)));
+                    FourthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (80.0 / 100.0)));
+                    FourthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (80.0 / 100.0)));
+                    FourthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (60.0 / 100.0)));
+                    FourthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (60.0 / 100.0)));
+                    FourthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (80.0 / 100.0)));
+                    FourthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (80.0 / 100.0)));
+                    FourthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (100.0 / 100.0)));
 
 
-                    FifthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (60.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (135.0 / 100.0), centerY * (70.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (135.0 / 100.0), centerY * (80.0 / 100.0)));
+
+                    FifthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (60.0 / 100.0)));
+                    FifthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (80.0 / 100.0)));
+                    FifthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (60.0 / 100.0)));
                     FifthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (90.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (125.0 / 100.0), centerY * (100.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (125.0 / 100.0), centerY * (110.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (120.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (115.0 / 100.0), centerY * (110.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (100.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (125.0 / 100.0), centerY * (90.0 / 100.0)));
-                    FifthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (80.0 / 100.0)));
+                    FifthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (110.0 / 100.0)));
+                    FifthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (110.0 / 100.0)));
+                    FifthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (120.0 / 100.0)));
+                    
 
-                    SixthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
-                    SixthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
-                    SixthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (90.0 / 100.0)));
-                    SixthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (90.0 / 100.0)));
-                    SixthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (100.0 / 100.0)));
-                    SixthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (120.0 / 100.0)));
-                    SixthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (130.0 / 100.0)));
+                    //SixthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
+                    //SixthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
+                    //SixthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (90.0 / 100.0)));
+                    //SixthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (90.0 / 100.0)));
+                    //SixthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (100.0 / 100.0)));
+                    //SixthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (120.0 / 100.0)));
+                    //SixthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (130.0 / 100.0)));
 
-                    SeventhRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
-                    SeventhRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (60.0 / 100.0)));
-                    SeventhRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (70.0 / 100.0)));
-                    SeventhRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (80.0 / 100.0)));
-                    SeventhRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (90.0 / 100.0)));
-                    SeventhRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (110.0 / 100.0)));
-                    SeventhRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (120.0 / 100.0)));
+                    //SeventhRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
+                    //SeventhRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (60.0 / 100.0)));
+                    //SeventhRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (70.0 / 100.0)));
+                    //SeventhRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (80.0 / 100.0)));
+                    //SeventhRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (90.0 / 100.0)));
+                    //SeventhRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (110.0 / 100.0)));
+                    //SeventhRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (120.0 / 100.0)));
 
-                    EignthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
-                    EignthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (60.0 / 100.0)));
-                    EignthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (70.0 / 100.0)));
-                    EignthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (80.0 / 100.0)));
-                    EignthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (90.0 / 100.0)));
-                    EignthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (110.0 / 100.0)));
-                    EignthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (120.0 / 100.0)));
+                    //EignthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
+                    //EignthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (60.0 / 100.0)));
+                    //EignthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (70.0 / 100.0)));
+                    //EignthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (80.0 / 100.0)));
+                    //EignthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (90.0 / 100.0)));
+                    //EignthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (110.0 / 100.0)));
+                    //EignthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (120.0 / 100.0)));
 
-                    NinthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (50.0 / 100.0)));
-                    NinthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (60.0 / 100.0)));
-                    NinthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (70.0 / 100.0)));
-                    NinthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (80.0 / 100.0)));
-                    NinthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (90.0 / 100.0)));
-                    NinthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (110.0 / 100.0)));
-                    NinthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (120.0 / 100.0)));
+                    //NinthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (50.0 / 100.0)));
+                    //NinthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (60.0 / 100.0)));
+                    //NinthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (70.0 / 100.0)));
+                    //NinthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (80.0 / 100.0)));
+                    //NinthRightHand.Dots.Add(new Point(centerX * (130.0 / 100.0), centerY * (90.0 / 100.0)));
+                    //NinthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (110.0 / 100.0)));
+                    //NinthRightHand.Dots.Add(new Point(centerX * (110.0 / 100.0), centerY * (120.0 / 100.0)));
 
 
-                    TenthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
-                    TenthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (70.0 / 100.0)));
-                    TenthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (90.0 / 100.0)));
-                    TenthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (110.0 / 100.0)));
-                    TenthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (120.0 / 100.0)));
-                    TenthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (140.0 / 100.0)));
-                    TenthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (150.0 / 100.0)));
+                    //TenthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (50.0 / 100.0)));
+                    //TenthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (70.0 / 100.0)));
+                    //TenthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (90.0 / 100.0)));
+                    //TenthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (110.0 / 100.0)));
+                    //TenthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (120.0 / 100.0)));
+                    //TenthRightHand.Dots.Add(new Point(centerX * (120.0 / 100.0), centerY * (140.0 / 100.0)));
+                    //TenthRightHand.Dots.Add(new Point(centerX * (140.0 / 100.0), centerY * (150.0 / 100.0)));
                     #endregion
                 }
                 //else if (_Configuration.Difficulty == 3)//hard
@@ -1445,6 +1463,11 @@ namespace DrawingGame
             PrepareGame();
             this.KinectDevice = KinectSensor.KinectSensors.FirstOrDefault(x => x.Status == KinectStatus.Connected);
 
+        }
+
+        private void LayoutRoot_Loaded(object sender, RoutedEventArgs e)
+        {
+            LayoutRoot.DataContext = windowSize;
         }
     }
 
