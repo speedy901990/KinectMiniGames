@@ -18,16 +18,16 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="1" Grid.Column="1" Content="Name:"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="Surname:"/>
-        <Label Grid.Row="3" Grid.Column="1" Content="Age:"/>
-        <TextBox  Grid.Column="2" Grid.Row="1" Margin="3" Text="{Binding Path=Name}"/>
-        <TextBox Grid.Column="2" Grid.Row="2" Margin="3" Text="{Binding Path=Surname}"/>
-        <TextBox Grid.Column="2" Grid.Row="3" Margin="3" Text="{Binding Path=Age}"/>
+        <Label Grid.Row="1" Grid.Column="1" Content="Name:" FontSize="25"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Surname:" FontSize="25"/>
+        <Label Grid.Row="3" Grid.Column="1" Content="Age:" FontSize="25"/>
+        <TextBox  Grid.Column="2" Grid.Row="1" Margin="3" FontSize="20" MinWidth="100" Text="{Binding Path=Name}"/>
+        <TextBox Grid.Column="2" Grid.Row="2" Margin="3" FontSize="20" MinWidth="100" Text="{Binding Path=Surname}"/>
+        <TextBox Grid.Column="2" Grid.Row="3" Margin="3" FontSize="20" MinWidth="100" Text="{Binding Path=Age}"/>
         <Button Grid.Column="2" Grid.Row="4" HorizontalAlignment="Right" 
-            MinWidth="80" Margin="0,3,3,0" Content="Add" Height="20" VerticalAlignment="Top" Click="AddButton_Click"  />
-        <Button Content="Back" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" Width="150" Height="75" Click="BackButton_Click"/>
+            MinWidth="80" Margin="0,3,3,0" Content="Add" FontSize="25" Height="50" VerticalAlignment="Top" Click="AddButton_Click"  />
+        <Button Content="Back" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" FontSize="25" Width="150" Height="75" Click="BackButton_Click"/>
         <Label x:Name="_lPlayerAdded" Grid.Row="5" Grid.Column="2" Content="Player added!" Visibility="Hidden"/>
-        <Label Content="Specify player data, and push button." FontSize="22" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="Specify player data, and push button." FontSize="30" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

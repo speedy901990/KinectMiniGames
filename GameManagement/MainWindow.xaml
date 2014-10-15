@@ -14,8 +14,8 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
-        <Button Content="Add Player" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Width="200" Height="75" Click="AddPlayerButton_Click"/>
-        <Button Content="Show Players" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Width="200" Height="75" Click="ShowDetailsButton_Click"/>
-        <Button Content="Back" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Width="200" Height="75" Click="BackButton_Click"/>
+        <Button Content="Add Player" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" FontSize="20" Width="200" Height="75" Click="AddPlayerButton_Click"/>
+        <Button Content="Show Players" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="20" Width="200" Height="75" Click="ShowDetailsButton_Click"/>
+        <Button Content="Back" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" FontSize="20" Width="200" Height="75" Click="BackButton_Click"/>
     </Grid>
 </Window>
