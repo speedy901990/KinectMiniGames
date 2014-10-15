@@ -79,7 +79,7 @@ namespace LettersGame.View
                 {
                     Content = _game.SmallLetters[i].SmallLetter,
                     Tag = _game.SmallLetters[i],
-                    Foreground = new SolidColorBrush(Colors.Purple),
+                    Foreground = new SolidColorBrush(Colors.Green),
                     Background = new SolidColorBrush(Colors.White),
                     Width = _letterWidth,
                     Height = _letterHeight,
@@ -104,12 +104,14 @@ namespace LettersGame.View
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
                     Height = 200,
                     Width = _config.WindowWidth / (_game.Trolleys.Count + 1),
                     Margin = new Thickness{Left = 20, Right = 20},
-                    FontSize = 150,
+                    FontSize = 90,
                     FontWeight = FontWeights.ExtraBold,
-                    Foreground = Brushes.White
+                    Foreground = Brushes.White,
+                    Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.basket))
                 };
                 trolley.MouseEnter += trolley_MouseEnter;
                 KinectRegion.AddQueryInteractionStatusHandler(trolley, OnQuery);

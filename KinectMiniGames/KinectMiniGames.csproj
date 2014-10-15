@@ -357,6 +357,15 @@
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kinezjologia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kroki.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\litery.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -87,14 +87,14 @@ namespace KinectMiniGames
             wrapPanel.Children.Clear();
             wrapPanel.Children.Add(new KinectTileButton { Label = "Apples Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.jablka))});
             wrapPanel.Children.Add(new KinectTileButton { Label = "Bubbles Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.babelki)) });
-            wrapPanel.Children.Add(CreateSingleButton("Letters Game"));
-            wrapPanel.Children.Add(CreateSingleButton("Drawing Game"));
+            wrapPanel.Children.Add(new KinectTileButton { Label = "Letters Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.litery)) });
+            wrapPanel.Children.Add(new KinectTileButton { Label = "Drawing Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.kinezjologia)) });
+            wrapPanel.Children.Add(new KinectTileButton { Label = "Train of Words", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.litery)) });
             //this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Painting Game"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Dancing Steps"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Song Movements"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Simple Excersises"));
-            wrapPanel.Children.Add(CreateSingleButton("Train of Words"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Steps of Activity"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Educational Kinesiology"));
         }
