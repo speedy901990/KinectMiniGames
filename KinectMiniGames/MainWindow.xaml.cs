@@ -89,7 +89,7 @@ namespace KinectMiniGames
             wrapPanel.Children.Add(new KinectTileButton { Label = "Bubbles Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.babelki)) });
             wrapPanel.Children.Add(new KinectTileButton { Label = "Letters Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.litery)) });
             wrapPanel.Children.Add(new KinectTileButton { Label = "Drawing Game", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.kinezjologia)) });
-            wrapPanel.Children.Add(new KinectTileButton { Label = "Train of Words", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.litery)) });
+            wrapPanel.Children.Add(new KinectTileButton { Label = "Train of Words", Width = 450, Height = 450, Background = new ImageBrush(ConvertBitmapToBitmapSource(Properties.Resources.wagon1)) });
             //this.wrapPanel.Children.Add(this.createSingleButton("Labyrinth Game"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Painting Game"));
             //this.wrapPanel.Children.Add(this.CreateSingleButton("Dancing Steps"));

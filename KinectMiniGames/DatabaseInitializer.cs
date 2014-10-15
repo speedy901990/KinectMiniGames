@@ -72,7 +72,7 @@ namespace KinectMiniGames
             {
                 var gameResultModel = JsonConvert.DeserializeObject<GameResultModel>(item.Value.ToString());
                 var game = _games.FirstOrDefault(game1 => game1.Name == gameResultModel.Game);
-                if (game != null)
+               if (game != null)
                     _gameResults.Add(new GameResult { Name = gameResultModel.Name, Game = game});
             }
             Configs.GameList.ResourceManager.ReleaseAllResources();

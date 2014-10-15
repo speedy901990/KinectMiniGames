@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using DatabaseManagement.Managers;
+using DatabaseManagement.Params;
 using TrainOfWords.View;
 
 namespace TrainOfWords.Model
@@ -36,7 +38,26 @@ namespace TrainOfWords.Model
 
         public abstract void Run();
 
-        public virtual void SaveResult(){}
+        public virtual void SaveResult()
+        {
+            SaveResultsThread = new Thread(SaveToDatabase);
+            SaveResultsThread.Start();
+        }
+
+        protected virtual void SaveToDatabase()
+        {
+            Score.Time = DateTime.Now - StartTime;
+            var results = new TrainOfWordsParams
+            {
+                Level = Config.Level,
+                CorrectTrials = Score.CorrectTrials,
+                Failures = Score.Failures,
+                Time = (int)Score.Time.TotalMilliseconds
+            };
+
+            var manager = new TrainOfWordsManager(Config.Player);
+            manager.SaveGameResult(results);
+        }
 
         protected DateTime StartTime;
     }

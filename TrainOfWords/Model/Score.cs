@@ -10,6 +10,6 @@ namespace TrainOfWords.Model
 
         public int LettersLeft { get; set; }
 
-        public DateTime Time { get; set; }
+        public TimeSpan Time { get; set; }
     }
 }

@@ -147,4 +147,13 @@
   <data name="LettersGameTime" xml:space="preserve">
     <value>{"game":"LettersGame", "name":"Time"}</value>
   </data>
+  <data name="TrainCorrectTrials" xml:space="preserve">
+    <value>{"game":"TrainOfWords","name":"Correct Trials"}</value>
+  </data>
+  <data name="TrainFailures" xml:space="preserve">
+    <value>{"game":"TrainOfWords","name":"Failures"}</value>
+  </data>
+  <data name="TrainTime" xml:space="preserve">
+    <value>{"game":"TrainOfWords","name":"Time"}</value>
+  </data>
 </root>

@@ -59,6 +59,8 @@ namespace TrainOfWords.Model
             }
             foreach (var letter in Letters)
                 letter.Value.Sort();
+
+            StartTime = DateTime.Now;
         }
 
         public override void Run()

@@ -423,12 +423,6 @@ namespace TrainOfWords.View
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            
-            //Grid.SetColumn(popup, 0);
-            //Grid.SetRow(popup, 0);
-            //Grid.SetColumnSpan(popup, ButtonsGrid.ColumnDefinitions.Count);
-            //Grid.SetRowSpan(popup, ButtonsGrid.RowDefinitions.Count);
-            //ButtonsGrid.Children.Add(popup);
             Grid.SetRow(popup, 1);
             RootGrid.Children.Add(popup);
             var endGamePopupTimer = new Timer { Interval = 3000 };
@@ -440,9 +434,8 @@ namespace TrainOfWords.View
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                //_sensorChooser.Kinect.Stop();
                 _sensorChooser.Stop();
-                //_game.SaveResultsThread.Join();
+                _game.SaveResultsThread.Join();
                 var parentGrid = (Grid)Parent;
                 var parent = (MainWindow)parentGrid.Parent;
                 parent.Close();

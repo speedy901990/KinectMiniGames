@@ -16,13 +16,9 @@ namespace LettersGame
 {
     public class Game
     {
-        #region private state
         private readonly LettersGameConfig _config;
         private readonly DateTime _startTime;
 
-        #endregion
-
-        #region constructor
         public Game(LettersGameConfig config)
         {
             _config = config;
@@ -148,9 +144,6 @@ namespace LettersGame
             bitmap.Dispose();
             return bitmapSource;
         }
-        #endregion
-
-        #region public state
 
         internal List<Letter> BigLetters { get; set; }
 
@@ -173,9 +166,7 @@ namespace LettersGame
             Time = endTime - _startTime;
         }
 
-        #endregion
 
-        #region saving results
         public void SaveResults()
         {
             SaveResultsThread = new Thread(SaveToDatabase);
@@ -195,6 +186,5 @@ namespace LettersGame
             };
             manager.SaveGameResult(gameParams);
         }
-        #endregion
     }
 }

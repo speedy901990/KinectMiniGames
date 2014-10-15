@@ -222,7 +222,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Configs\GameResultsList.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GameResultsList1.Designer.cs</LastGenOutput>
+      <LastGenOutput>GameResultsList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

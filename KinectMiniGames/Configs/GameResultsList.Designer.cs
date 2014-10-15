@@ -61,7 +61,7 @@ namespace KinectMiniGames.Configs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;ApplesGame&quot;, &quot;name&quot;:&quot;CorrectTrials&quot;}.
+        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;ApplesGame&quot;, &quot;name&quot;:&quot;Correct Trials&quot;}.
         /// </summary>
         internal static string ApplesGameCorrectTrials {
             get {
@@ -106,20 +106,38 @@ namespace KinectMiniGames.Configs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;LettersGame&quot;,&quot;name&quot;:&quot;Failures&quot;}.
+        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;DrawingGame&quot;,&quot;name&quot;:&quot;Time&quot;}.
         /// </summary>
-        internal static string LettersGameFailures {
+        internal static string DrawingGameTime {
             get {
-                return ResourceManager.GetString("String1", resourceCulture);
+                return ResourceManager.GetString("DrawingGameTime", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;LettersGame&quot;, &quot;name&quot;:&quot;CorrectTrials&quot;}.
+        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;DrawingGame&quot;,&quot;name&quot;:&quot;Time Out&quot;}.
+        /// </summary>
+        internal static string DrawingGameTimeOut {
+            get {
+                return ResourceManager.GetString("DrawingGameTimeOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;LettersGame&quot;, &quot;name&quot;:&quot;Correct Trials&quot;}.
         /// </summary>
         internal static string LettersGameCorrectTrials {
             get {
-                return ResourceManager.GetString("String2", resourceCulture);
+                return ResourceManager.GetString("LettersGameCorrectTrials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;LettersGame&quot;,&quot;name&quot;:&quot;Failures&quot;}.
+        /// </summary>
+        internal static string LettersGameFailures {
+            get {
+                return ResourceManager.GetString("LettersGameFailures", resourceCulture);
             }
         }
         
@@ -128,7 +146,34 @@ namespace KinectMiniGames.Configs {
         /// </summary>
         internal static string LettersGameTime {
             get {
-                return ResourceManager.GetString("String3", resourceCulture);
+                return ResourceManager.GetString("LettersGameTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;TrainOfWords&quot;,&quot;name&quot;:&quot;Correct Trials&quot;}.
+        /// </summary>
+        internal static string TrainCorrectTrials {
+            get {
+                return ResourceManager.GetString("TrainCorrectTrials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;TrainOfWords&quot;,&quot;name&quot;:&quot;Failures&quot;}.
+        /// </summary>
+        internal static string TrainFailures {
+            get {
+                return ResourceManager.GetString("TrainFailures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;game&quot;:&quot;TrainOfWords&quot;,&quot;name&quot;:&quot;Time&quot;}.
+        /// </summary>
+        internal static string TrainTime {
+            get {
+                return ResourceManager.GetString("TrainTime", resourceCulture);
             }
         }
     }
