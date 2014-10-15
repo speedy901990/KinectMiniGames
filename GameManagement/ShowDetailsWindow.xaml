@@ -1,0 +1,29 @@
+﻿<Window x:Class="GameManagement.ShowDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ShowDetailsWindow" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+    <Grid Loaded="Grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="330" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Button Content="Show Player Details" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Width="150" Height="75" Click="ShowPlayerDetailsButton_Click" />
+        <Button Content="Back" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Width="150" Height="75" Click="BackButton_Click"/>
+        <DataGrid x:Name="HistoryGrid" Grid.Column="0"  Grid.RowSpan="2" HorizontalAlignment="Stretch"  Grid.Row="1" VerticalAlignment="Stretch" ItemsSource="{Binding}" SelectionMode="Single" >
+
+        </DataGrid>
+        <DataGrid x:Name="HistoryResultGrid" Grid.Column="1"  Grid.RowSpan="2" HorizontalAlignment="Stretch"  Grid.Row="1" VerticalAlignment="Stretch"  ItemsSource="{Binding }"  IsSynchronizedWithCurrentItem="True"/>
+        <DataGrid x:Name="GameResultGrid"  Grid.Column="2"  Grid.RowSpan="2" HorizontalAlignment="Stretch"  Grid.Row="1" VerticalAlignment="Stretch"  ItemsSource="{Binding}"  />
+        <Label Content="Select player record and push button." FontSize="22" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+    </Grid>
+
+</Window>

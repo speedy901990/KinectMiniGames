@@ -1,7 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectMiniGames", "KinectMiniGames\KinectMiniGames.csproj", "{5587CB0F-49EA-40E9-A567-1C4738554519}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -30,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainOfWords", "TrainOfWords\TrainOfWords.csproj", "{4A5D0765-EFF4-4887-80C8-10E048F49D31}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawingGame", "DrawingGame\DrawingGame.csproj", "{1845804C-2831-4906-9080-D30CDDE6792F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameManagement", "GameManagement\GameManagement.csproj", "{DE276811-26F2-455B-A670-485BA14E8D83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -300,6 +301,31 @@ Global
 		{1845804C-2831-4906-9080-D30CDDE6792F}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{1845804C-2831-4906-9080-D30CDDE6792F}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
 		{1845804C-2831-4906-9080-D30CDDE6792F}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.CD_ROM|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.CD_ROM|Mixed Platforms.Build.0 = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.Release|x86.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.SingleImage|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.SingleImage|Mixed Platforms.Build.0 = Release|Any CPU
+		{DE276811-26F2-455B-A670-485BA14E8D83}.SingleImage|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

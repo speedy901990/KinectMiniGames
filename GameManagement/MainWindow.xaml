@@ -1,0 +1,21 @@
+﻿<Window x:Class="GameManagement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" 
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+        <Button Content="Add Player" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Width="200" Height="75" Click="AddPlayerButton_Click"/>
+        <Button Content="Show Players" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Width="200" Height="75" Click="ShowDetailsButton_Click"/>
+        <Button Content="Back" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Width="200" Height="75" Click="BackButton_Click"/>
+    </Grid>
+</Window>

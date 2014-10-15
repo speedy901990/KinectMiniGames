@@ -256,6 +256,10 @@
       <Project>{1845804c-2831-4906-9080-d30cdde6792f}</Project>
       <Name>DrawingGame</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GameManagement\GameManagement.csproj">
+      <Project>{de276811-26f2-455b-a670-485ba14e8d83}</Project>
+      <Name>GameManagement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
       <Project>{4de23893-27e7-423f-9bb6-ba21dac2c45e}</Project>
       <Name>Microsoft.Samples.Kinect.WpfViewers</Name>
