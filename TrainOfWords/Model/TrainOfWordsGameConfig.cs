@@ -1,6 +1,6 @@
 ﻿using DatabaseManagement;
 
-namespace TrainOfWords.View
+namespace TrainOfWords.Model
 {
     public class TrainOfWordsGameConfig
     {
@@ -18,7 +18,13 @@ namespace TrainOfWords.View
 
         public int LetterHeight
         {
-            get { return 2*((WindowHeight - 100)/9); }
+            get
+            {
+                var a = 4.0 / 9.0;
+                var b = WindowHeight - 100;
+                var result = a*b/3;
+                return (int) result;
+            }
         }
 
         public Player Player { get; set; }

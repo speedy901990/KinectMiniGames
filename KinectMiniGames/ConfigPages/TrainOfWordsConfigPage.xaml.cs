@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Kinect.Toolkit;
+using TrainOfWords.Model;
 using TrainOfWords.View;
 
 namespace KinectMiniGames.ConfigPages

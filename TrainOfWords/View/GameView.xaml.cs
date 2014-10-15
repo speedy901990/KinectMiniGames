@@ -25,7 +25,7 @@ namespace TrainOfWords.View
 
         private string _selectedLetter;
 
-        private KinectTileButton _selectedLetterButton;
+        private Label _selectedLetterButton;
 
         public GameView() : this(new FirstLevelGame(new TrainOfWordsGameConfig{Level = 1}))
         {}
@@ -113,16 +113,18 @@ namespace TrainOfWords.View
             var j = 0;
             foreach (var letter in _game.Letters[word.Name])
             {
-                var letterButton = new KinectTileButton
+                var letterButton = new Label
                 {
                     Tag = letter,
                     Content = letter,
                     Foreground = new SolidColorBrush(Colors.DarkSlateBlue),
                     Background = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.ExtraBold,
-                    FontSize = 100,
+                    FontSize = _game.Config.LetterHeight * 0.75,
                     Width = 250,
-                    Height = _game.Config.LetterHeight
+                    Height = _game.Config.LetterHeight,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center
                 };
                 letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
                 //kinectowe eventy
@@ -135,13 +137,21 @@ namespace TrainOfWords.View
                 j++;
             }
 
-            var train = new KinectTileButton
+            var train = new Label
             {
                 Tag = word,
-                Label = word.Name,
+                Content = word.Name,
                 VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center
+                HorizontalAlignment = HorizontalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new ImageBrush(Utils.ConvertBitmapToBitmapSource(Properties.Resources.wagon3)),
+                Height = _game.Config.LetterHeight * 2,
+                Width = 700,
+                FontSize = 100
             };
+
             train.MouseEnter += TrainOnMouseEnter;
             //kinectowe eventy
             KinectRegion.AddQueryInteractionStatusHandler(train, OnQuery);
@@ -164,16 +174,18 @@ namespace TrainOfWords.View
             var j = 0;
             foreach (var letter in _game.Letters[word.Name])
             {
-                var letterButton = new KinectTileButton
+                var letterButton = new Label
                 {
                     Tag = letter,
                     Content = letter,
                     Foreground = new SolidColorBrush(Colors.DarkSlateBlue),
                     Background = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.ExtraBold,
-                    FontSize = 100,
+                    FontSize = _game.Config.LetterHeight * 0.75,
                     Width = 250,
-                    Height = _game.Config.LetterHeight
+                    Height = _game.Config.LetterHeight,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center
                 };
                 letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
                 //kinectowe eventy
@@ -186,12 +198,19 @@ namespace TrainOfWords.View
                 j++;
             }
 
-            var train = new KinectTileButton
+            var train = new Label
             {
                 Tag = word,
-                Label = word.Name,
+                Content = word.Name,
                 VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center
+                HorizontalAlignment = HorizontalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new ImageBrush(Utils.ConvertBitmapToBitmapSource(Properties.Resources.wagon3)),
+                Height = _game.Config.LetterHeight * 2,
+                Width = 700,
+                FontSize = 100
             };
             train.MouseEnter += TrainOnMouseEnter;
             //kinectowe eventy
@@ -214,16 +233,19 @@ namespace TrainOfWords.View
             var j = 0;
             foreach (var letter in _game.Letters[word.Name])
             {
-                var letterButton = new KinectTileButton
+                var letterButton = new Label
                 {
                     Tag = letter,
                     Content = letter,
                     Foreground = new SolidColorBrush(Colors.DarkSlateBlue),
                     Background = new SolidColorBrush(Colors.White),
                     FontWeight = FontWeights.ExtraBold,
-                    FontSize = 100,
+                    FontSize = _game.Config.LetterHeight * 0.6,
                     Width = 250,
-                    Height = _game.Config.LetterHeight
+                    Height = _game.Config.LetterHeight,
+                    HorizontalContentAlignment = HorizontalAlignment.Center,
+                    VerticalContentAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness { Bottom = 10}
                 };
                 letterButton.PreviewMouseLeftButtonDown += LetterButtonOnMouseLeftButtonDown;
                 //kinectowe eventy
@@ -236,12 +258,19 @@ namespace TrainOfWords.View
                 j++;
             }
 
-            var train = new KinectTileButton
+            var train = new Label
             {
                 Tag = word,
-                Label = word.Name,
+                Content = word.Name,
                 VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center
+                HorizontalAlignment = HorizontalAlignment.Center,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                Foreground = new SolidColorBrush(Colors.White),
+                Background = new ImageBrush(Utils.ConvertBitmapToBitmapSource(Properties.Resources.wagon3)),
+                Height = _game.Config.LetterHeight * 2,
+                Width = 700,
+                FontSize = 100
             };
             train.MouseEnter += TrainOnMouseEnter;
             //kinectowe eventy
@@ -262,7 +291,7 @@ namespace TrainOfWords.View
         private void OnGrip(object sender, HandPointerEventArgs e)
         {
             e.HandPointer.Capture(MainCanvas);
-            var button = sender as KinectTileButton;
+            var button = sender as Label;
             if (button == null) 
                 return;
             var letter = button.Tag as string;
@@ -279,7 +308,7 @@ namespace TrainOfWords.View
             if (_selectedLetterButton == null) 
                 return;
             _selectedLetterButton.Visibility = Visibility.Visible;
-            var train = sender as KinectTileButton;
+            var train = sender as Label;
             if (train == null) 
                 return;
             var word = train.Tag as Word;
@@ -321,7 +350,7 @@ namespace TrainOfWords.View
 
         private void LetterButtonOnMouseLeftButtonDown(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            var button = sender as KinectTileButton;
+            var button = sender as Label;
             if (button == null) 
                 return;
             var letter = button.Tag as string;
@@ -337,7 +366,7 @@ namespace TrainOfWords.View
             if (_selectedLetterButton == null) 
                 return;
             _selectedLetterButton.Visibility = Visibility.Visible;
-            var train = sender as KinectTileButton;
+            var train = sender as Label;
             if (train == null) 
                 return;
             var word = train.Tag as Word;

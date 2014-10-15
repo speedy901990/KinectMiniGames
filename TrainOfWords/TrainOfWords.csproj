@@ -40,6 +40,7 @@
     <Reference Include="Microsoft.Kinect, Version=1.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,6 +62,7 @@
     <Compile Include="Model\FirstLevelGame.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\Score.cs" />
+    <Compile Include="Model\TrainOfWordsGameConfig.cs" />
     <Compile Include="Model\Word.cs" />
     <Compile Include="Resources\Alphabet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -83,6 +85,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Words3Chars.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
     <Compile Include="View\GameOverPopup.xaml.cs">
       <DependentUpon>GameOverPopup.xaml</DependentUpon>
     </Compile>
@@ -99,7 +102,6 @@
     <Compile Include="View\SmallPopup.xaml.cs">
       <DependentUpon>SmallPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\TrainOfWordsGameConfig.cs" />
     <Page Include="View\GameOverPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +175,12 @@
       <Project>{C6F9C31B-6130-4443-A5CC-EF0664552ECD}</Project>
       <Name>Microsoft.Kinect.Toolkit</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tramwaj.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wagon3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
