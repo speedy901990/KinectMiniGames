@@ -56,6 +56,22 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs\GameList.Designer.cs">
+      <DependentUpon>GameList.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Configs\GameParamsList.Designer.cs">
+      <DependentUpon>GameParamsList.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Configs\GameResultsList.Designer.cs">
+      <DependentUpon>GameResultsList.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="Game.cs">
       <DependentUpon>GameModel.tt</DependentUpon>
     </Compile>
@@ -95,6 +111,8 @@
     <Compile Include="Managers\LettersGameManager.cs" />
     <Compile Include="Managers\PlayersManager.cs" />
     <Compile Include="Managers\TrainOfWordsManager.cs" />
+    <Compile Include="Models\GameParamModel.cs" />
+    <Compile Include="Models\GameResultModel.cs" />
     <Compile Include="Params\ApplesGameParams.cs" />
     <Compile Include="Params\BubblesGameParams.cs" />
     <Compile Include="Params\DrawingGameParams.cs" />
@@ -112,6 +130,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -126,6 +148,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GameModel.edmx.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configs\GameList.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configs\GameParamsList.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameParamsList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configs\GameResultsList.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameResultsList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

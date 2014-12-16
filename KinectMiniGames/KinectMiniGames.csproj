@@ -134,25 +134,7 @@
     <Compile Include="ConfigPages\TrainOfWordsConfigPage.xaml.cs">
       <DependentUpon>TrainOfWordsConfigPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Configs\GameList.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GameList.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Configs\GameParamsList.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GameParamsList.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Configs\GameResultsList.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GameResultsList.resx</DependentUpon>
-    </Compile>
-    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="KinectHoverButton.cs" />
-    <Compile Include="Models\GameParamModel.cs" />
-    <Compile Include="Models\GameResultModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
@@ -212,18 +194,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Configs\GameList.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GameList.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Configs\GameParamsList.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GameParamsList.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Configs\GameResultsList.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GameResultsList.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

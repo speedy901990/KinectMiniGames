@@ -62,6 +62,8 @@
     <Compile Include="Model\FirstLevelGame.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\Score.cs" />
+    <Compile Include="Model\SecondLevelGame.cs" />
+    <Compile Include="Model\ThirdLevelGame.cs" />
     <Compile Include="Model\TrainOfWordsGameConfig.cs" />
     <Compile Include="Model\Word.cs" />
     <Compile Include="Resources\Alphabet.Designer.cs">

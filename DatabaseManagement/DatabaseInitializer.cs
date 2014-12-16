@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using DatabaseManagement;
-using KinectMiniGames.Models;
+using DatabaseManagement.Models;
 using Newtonsoft.Json;
 
-namespace KinectMiniGames
+namespace DatabaseManagement
 {
     public class DatabaseInitializer
     {

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Drawing;
-using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using KinectMiniGames.Models;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
@@ -17,7 +13,6 @@ using KinectMiniGames.ConfigPages;
 using DatabaseManagement;
 using DatabaseManagement.Managers;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace KinectMiniGames
 {

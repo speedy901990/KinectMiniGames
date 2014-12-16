@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KinectMiniGames.Configs {
+namespace DatabaseManagement.Configs {
     using System;
     
     

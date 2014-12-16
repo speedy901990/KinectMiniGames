@@ -1,8 +1,9 @@
-﻿namespace KinectMiniGames.Models
+﻿namespace DatabaseManagement.Models
 {
-    public class GameParamModel
+    public class GameResultModel
     {
         public string Game { get; set; }
+
         public string Name { get; set; }
     }
 }
