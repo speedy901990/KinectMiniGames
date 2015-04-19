@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DrawingGame.Draftsman">
+    <Position X="17.5" Y="6.75" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAQAAAAAAAABAAAAAAACAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Draftsman.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawingGame.DrawingGameConfig" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAQAQAAIAAACAAAgCAAAAABAQIAAQQAMCQ=</HashCode>
+      <FileName>DrawingGameConfig.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DrawingGame.GameOverPopup">
+    <Position X="11.25" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAQAQAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameOverPopup.xaml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawingGame.KinectManager">
+    <Position X="11.5" Y="7.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAQAAAAAABAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>KinectManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawingGame.MainWindow">
+    <Position X="14.25" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>pKAiwAAEsAEAAgIAyJAIAAEQADmQAAAggBQGQQAQEAA=</HashCode>
+      <FileName>MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Draftsman1" />
+      <Property Name="KinectManager1" />
+      <Property Name="ResultSaver1" />
+      <Property Name="Resources" />
+      <Property Name="GameOverPopup" />
+      <Property Name="DrawingGameConfig" />
+      <Property Name="Player1" />
+      <Property Name="WindowSize" />
+      <Property Name="DotPuzzle" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrawingGame.Player">
+    <Position X="19.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IQAAAACQAgAAAgAAEAJAAAEAACATAAAAAAAAACYACAA=</HashCode>
+      <FileName>Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawingGame.ResultSaver">
+    <Position X="9.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAABAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>ResultSaver.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DrawingGameManager" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="DrawingGame.Tracker">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAABAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tracker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawingGame.WindowSize">
+    <Position X="17.5" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAQAYAAAAEAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WindowSize.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawingGame.Properties.Resources">
+    <Position X="8.75" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAQAAQAAAAAAEAAAAACAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseManagement.Managers.DrawingGameManager">
+    <Position X="6.5" Y="6.5" Width="3" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DatabaseManagement.Params.DrawingGameParams">
+    <Position X="6.75" Y="8" Width="2.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="DrawingGame.DotPuzzle">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DotPuzzle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
