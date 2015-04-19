@@ -1,64 +1,62 @@
-﻿using Microsoft.Kinect;
+﻿using System.ComponentModel;
 using Microsoft.Kinect.Toolkit;
-using Microsoft.Kinect.Toolkit.Controls;
-using System.ComponentModel;
 
 namespace DrawingGame
 {
     public class DrawingGameConfig : INotifyPropertyChanged
     {
          #region Private State
-        private KinectSensorChooser kinectSensor;
-        private DatabaseManagement.Player player;
-        private string username = "Gracz";
-        private string userSurname = "Testowy";
+        private KinectSensorChooser _kinectSensor;
+        private DatabaseManagement.Player _player;
+        private string _username = "Gracz";
+        private string _userSurname = "Testowy";
          
-          private  int difficulty ;
-          private  int handsState ;
-          private int precision;
+          private  int _difficulty ;
+          private  int _handsState ;
+          private int _precision;
          #endregion 
 
         #region Public State
         
         public KinectSensorChooser PassedKinectSensorChooser
         {
-            get { return this.kinectSensor; }
-            set { this.kinectSensor = value;
+            get { return _kinectSensor; }
+            set { _kinectSensor = value;
             ;
             }
         }
         public DatabaseManagement.Player Player
         {
-            get { return player; }
-            set { player = value; }
+            get { return _player; }
+            set { _player = value; }
         }
         public string UserName { 
-            get { return username;} 
-            set{username = value;
+            get { return _username;} 
+            set{_username = value;
             OnPropertyChanged("DrawingUserName");
             } 
         }
         public string UserSurname 
-        { get { return userSurname; }
-            set { userSurname = value;
+        { get { return _userSurname; }
+            set { _userSurname = value;
             OnPropertyChanged("DrawingUserSurname");
             }
         }
         public int Difficulty {
-            get { return difficulty; } 
-            set { difficulty = value;
+            get { return _difficulty; } 
+            set { _difficulty = value;
             OnPropertyChanged("DrawingDifficulty");
             }
         }
         public int HandsState { 
-            get { return handsState; } 
-            set { handsState = value;
+            get { return _handsState; } 
+            set { _handsState = value;
             OnPropertyChanged("DrawingHandsState");
             }
         }
         public int Precision { 
-            get { return precision; }
-            set { precision = value;
+            get { return _precision; }
+            set { _precision = value;
             OnPropertyChanged("DrawingPrecision");
             }
         }

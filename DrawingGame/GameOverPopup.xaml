@@ -13,6 +13,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Koniec Gry!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"/>
-        <TextBlock x:Name="tblResult" Grid.Row="1" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" MaxWidth="300" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" TextAlignment="Center"><Run Language="pl-pl" Text="Narysowano wszystkie figury"/><Run Text="!"/></TextBlock>
+        <TextBlock x:Name="TblResult" Grid.Row="1" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" MaxWidth="300" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" TextAlignment="Center"><Run Language="pl-pl" Text="Narysowano wszystkie figury"/><Run Text="!"/></TextBlock>
     </Grid>
 </UserControl>

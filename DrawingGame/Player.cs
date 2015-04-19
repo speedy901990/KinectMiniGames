@@ -4,16 +4,17 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using Microsoft.Kinect;
+
 namespace DrawingGame
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Media;
-    using System.Windows.Shapes;
-    using Microsoft.Kinect;
 
     #region Struct
     public struct Bone
@@ -144,8 +145,8 @@ namespace DrawingGame
         private readonly int _id;
         private static int _colorId;
         private Rect _playerBounds;
-        public Point _playerCenter;
-        public double _playerScale;
+        public Point PlayerCenter;
+        public double PlayerScale;
 
         public Player(int skeletonSlot)
         {
@@ -186,18 +187,18 @@ namespace DrawingGame
         public void SetBounds(Rect r)
         {
             _playerBounds = r;
-            _playerCenter.X = (_playerBounds.Left + _playerBounds.Right) / 2;
-            _playerCenter.Y = (_playerBounds.Top + _playerBounds.Bottom) / 2;
-            _playerScale = Math.Min(_playerBounds.Width, _playerBounds.Height / 2);
+            PlayerCenter.X = (_playerBounds.Left + _playerBounds.Right) / 2;
+            PlayerCenter.Y = (_playerBounds.Top + _playerBounds.Bottom) / 2;
+            PlayerScale = Math.Min(_playerBounds.Width, _playerBounds.Height / 2);
         }
 
         public void UpdateBonePosition(JointCollection joints, JointType j1, JointType j2)
         {
             var seg = new Segment(
-                (joints[j1].Position.X * _playerScale) + _playerCenter.X,
-                _playerCenter.Y - (joints[j1].Position.Y * _playerScale),
-                (joints[j2].Position.X * _playerScale) + _playerCenter.X,
-                _playerCenter.Y - (joints[j2].Position.Y * _playerScale))
+                (joints[j1].Position.X * PlayerScale) + PlayerCenter.X,
+                PlayerCenter.Y - (joints[j1].Position.Y * PlayerScale),
+                (joints[j2].Position.X * PlayerScale) + PlayerCenter.X,
+                PlayerCenter.Y - (joints[j2].Position.Y * PlayerScale))
                 { Radius = Math.Max(3.0, _playerBounds.Height * BoneSize) / 2 };
             UpdateSegmentPosition(j1, j2, seg);
         }
@@ -205,8 +206,8 @@ namespace DrawingGame
         public void UpdateJointPosition(JointCollection joints, JointType j)
         {
             var seg = new Segment(
-                (joints[j].Position.X * _playerScale) + _playerCenter.X,
-                _playerCenter.Y - (joints[j].Position.Y * _playerScale))
+                (joints[j].Position.X * PlayerScale) + PlayerCenter.X,
+                PlayerCenter.Y - (joints[j].Position.Y * PlayerScale))
                 { Radius = _playerBounds.Height * ((j == JointType.Head) ? HeadSize : HandSize) / 2 };
             UpdateSegmentPosition(j, j, seg);
         }

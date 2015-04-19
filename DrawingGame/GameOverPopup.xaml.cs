@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DrawingGame
 {
@@ -21,8 +10,8 @@ namespace DrawingGame
     /// </summary>
     public partial class GameOverPopup : UserControl
     {
-        private MainWindow mw;
-        private Timer timer;
+        private MainWindow _mw;
+        private Timer _timer;
 
         public GameOverPopup()
         {
@@ -31,26 +20,26 @@ namespace DrawingGame
 
         public GameOverPopup(MainWindow mw)
         {
-            this.mw = mw;
+            _mw = mw;
             InitializeComponent();
         }
 
         private void UserControl_Loaded_1(object sender, RoutedEventArgs e)
         {
-            this.timer = new Timer();
-            timer.Interval = 3000;
-            timer.Elapsed += timer_Elapsed;
-            timer.Start();
+            _timer = new Timer();
+            _timer.Interval = 3000;
+            _timer.Elapsed += timer_Elapsed;
+            _timer.Start();
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
 
-            timer.Elapsed -= timer_Elapsed;
+            _timer.Elapsed -= timer_Elapsed;
 
-            this.Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke(new Action(() =>
             {
-                this.mw.Close();
+                _mw.Close();
             }), null);
         }
     }

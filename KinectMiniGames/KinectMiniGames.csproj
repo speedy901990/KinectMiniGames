@@ -58,10 +58,10 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>6DDCA7D3234BA8FCCE7FECFEB12EB07B05B160E4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>31C51E384C0DDBDE173B8BE4A91B259D8FCBD305</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>KinectMiniGames_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>KinectMiniGames_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -198,7 +198,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="KinectMiniGames_1_TemporaryKey.pfx" />
+    <None Include="KinectMiniGames_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

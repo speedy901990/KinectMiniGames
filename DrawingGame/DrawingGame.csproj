@@ -78,13 +78,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DotPuzzle.cs" />
+    <Compile Include="Draftsman.cs" />
     <Compile Include="GameOverPopup.xaml.cs">
       <DependentUpon>GameOverPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DrawingLevel.cs" />
+    <Compile Include="KinectManager.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Points.cs" />
     <Compile Include="DrawingGameConfig.cs" />
+    <Compile Include="ResultSaver.cs" />
+    <Compile Include="Tracker.cs" />
     <Compile Include="WindowSize.cs" />
     <Page Include="GameOverPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +123,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
