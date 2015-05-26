@@ -406,7 +406,7 @@ namespace LettersGame.View
         private void NotifyFail()
         {
             _game.Fails++;
-            QuickFailurePopup();
+            //QuickFailurePopup();
         }
 
         private void EndGame()

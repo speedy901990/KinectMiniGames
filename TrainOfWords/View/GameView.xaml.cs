@@ -412,7 +412,7 @@ namespace TrainOfWords.View
         private void NotifyFail()
         {
             _game.Score.Failures++;
-            QuickFailurePopup();
+            //QuickFailurePopup();
         }
 
         private void EndGame()

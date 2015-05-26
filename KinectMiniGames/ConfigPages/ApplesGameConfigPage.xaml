@@ -53,11 +53,11 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <!--<ColumnDefinition Width="*"/>-->
                     </Grid.ColumnDefinitions>
                     <k:KinectCircleButton Grid.Column="0" Width="auto" Name="kcbLevel1" Label="Poziom 1" Click="kcbLevel1_Click"/>
                     <k:KinectCircleButton Grid.Column="1" Width="auto" Name="kcbLevel2" Label="Poziom 2" Click="kcbLevel2_Click"/>
-                    <k:KinectCircleButton Grid.Column="2" Width="auto" Name="kcbLevel3" Label="Poziom 3" Click="kcbLevel3_Click"/>
+                    <!--<k:KinectCircleButton Grid.Column="2" Width="auto" Name="kcbLevel3" Label="Poziom 3" Click="kcbLevel3_Click"/>-->
                 </Grid>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <k:KinectTileButton Name="ktbBackToMenu" Grid.Row="2" Height="auto" MaxHeight="150" Width="250" Content="Wróć do menu" Foreground="White" Click="ktbBackToMenu_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
