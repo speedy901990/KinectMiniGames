@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using LettersGame.Properties;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Toolkit;
 using Microsoft.Kinect.Toolkit.Controls;
@@ -31,8 +30,6 @@ namespace LettersGame.View
         private readonly int _letterHeight;
 
         private Line _linkingLine;
-
-        private bool _drawingEnabled;
 
         private KinectTileButton _selectedLetterButton;
 
@@ -194,7 +191,7 @@ namespace LettersGame.View
         {
             if (!MainCanvas.IsMouseCaptured || e.LeftButton != MouseButtonState.Pressed)
                 return;
-            if (_linkingLine == null || !_drawingEnabled)
+            if (_linkingLine == null)
                 return;
 
             var point = e.GetPosition(MainCanvas);
@@ -206,8 +203,6 @@ namespace LettersGame.View
         {
             if (_selectedLetterButton == null || _selectedLetter == null) 
                 return;
-
-            //_selectedLetterButton.Visibility = Visibility.Visible;
 
             var letterButton = sender as KinectTileButton;
 
@@ -246,7 +241,6 @@ namespace LettersGame.View
             if (_selectedLetterButton == null) 
                 return;
 
-            //_selectedLetterButton.Visibility = Visibility.Hidden;
             _selectedLetter = _selectedLetterButton.Tag as Letter;
             if (!MainCanvas.CaptureMouse()) 
                 return;
@@ -267,8 +261,6 @@ namespace LettersGame.View
         private void LetterOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             MainCanvas.ReleaseMouseCapture();
-            if (!_drawingEnabled) 
-                return;
 
             if (_selectedLetterButton != null)
                 _selectedLetterButton.Visibility = Visibility.Visible;
@@ -353,8 +345,6 @@ namespace LettersGame.View
         private void OnGripRelease(object sender, HandPointerEventArgs e)
         {
             e.HandPointer.Captured = null;
-            if (!_drawingEnabled) 
-                return;
             if (_selectedLetterButton != null)
                 _selectedLetterButton.Visibility = Visibility.Visible;
             MainCanvas.Children.Remove(_linkingLine);
@@ -406,7 +396,6 @@ namespace LettersGame.View
         private void NotifyFail()
         {
             _game.Fails++;
-            //QuickFailurePopup();
         }
 
         private void EndGame()
@@ -423,11 +412,11 @@ namespace LettersGame.View
             Grid.SetRow(popup, 1);
             Grid.SetColumnSpan(popup, ButtonsGrid.ColumnDefinitions.Count);
             var endGamePopupTimer = new Timer {Interval = 3000};
-            endGamePopupTimer.Elapsed += endGamePopupTimer_Elapsed;
+            endGamePopupTimer.Elapsed += ShowEndGamePopup;
             endGamePopupTimer.Start();
         }
 
-        void endGamePopupTimer_Elapsed(object sender, ElapsedEventArgs e)
+        private void ShowEndGamePopup(object sender, ElapsedEventArgs e)
         {
             Dispatcher.Invoke(new Action(() =>
             {
@@ -446,18 +435,6 @@ namespace LettersGame.View
             {
                 Message = "DOBRZE!",
                 PopupColor = Brushes.WhiteSmoke
-            };
-            popup.Update();
-            PopupPanel.Children.Add(popup);
-        }
-
-        private void QuickFailurePopup()
-        {
-            Grid.SetColumnSpan(PopupPanel, ButtonsGrid.ColumnDefinitions.Count);
-            var popup = new SmallPopup
-            {
-                Message = "ŹLE!",
-                PopupColor = Brushes.Red
             };
             popup.Update();
             PopupPanel.Children.Add(popup);

@@ -12,7 +12,6 @@ namespace DatabaseManagement
         private readonly List<Game> _games = new List<Game>();
         private readonly List<GameParam> _gameParams = new List<GameParam>(); 
         private readonly List<GameResult> _gameResults = new List<GameResult>();
-        private Player _player;
 
         public DatabaseInitializer()
         {
@@ -25,7 +24,6 @@ namespace DatabaseManagement
                     GenerateGamesFromResource();
                     GenerateGameParamsFromResources();
                     GenerateGameResultsFromResources();
-                    //context.Players.Add(_player);
                     context.GameParams.AddRange(_gameParams);
                     context.GameResults1.AddRange(_gameResults);
                     context.Games.AddRange(_games);
@@ -37,10 +35,7 @@ namespace DatabaseManagement
 
         private void GenerateDefaultPlayer(GameModelContainer context)
         {
-            //_player = new Player {Name = "Jan", Surname = "Kowalski", Age = 10};
-            //_player = new Player { Name = "Grzegorz", Surname = "Paśnik", Age = 23 };
             context.Players.Add(new Player {Name = "Jan", Surname = "Kowalski", Age = 10});
-            context.Players.Add(new Player {Name = "Grzegorz", Surname = "Paśnik", Age = 23});
         }
 
         private void GenerateGamesFromResource()
