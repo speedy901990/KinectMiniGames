@@ -21,11 +21,11 @@ namespace DatabaseManagement
                 if (!context.Database.Exists())
                 {
                     context.Database.Create();
-                    GenerateDefaultPlayer();
+                    GenerateDefaultPlayer(context);
                     GenerateGamesFromResource();
                     GenerateGameParamsFromResources();
                     GenerateGameResultsFromResources();
-                    context.Players.Add(_player);
+                    //context.Players.Add(_player);
                     context.GameParams.AddRange(_gameParams);
                     context.GameResults1.AddRange(_gameResults);
                     context.Games.AddRange(_games);
@@ -35,9 +35,12 @@ namespace DatabaseManagement
             }
         }
 
-        private void GenerateDefaultPlayer()
+        private void GenerateDefaultPlayer(GameModelContainer context)
         {
-            _player = new Player {Name = "Jan", Surname = "Kowalski", Age = 10};
+            //_player = new Player {Name = "Jan", Surname = "Kowalski", Age = 10};
+            //_player = new Player { Name = "Grzegorz", Surname = "Paśnik", Age = 23 };
+            context.Players.Add(new Player {Name = "Jan", Surname = "Kowalski", Age = 10});
+            context.Players.Add(new Player {Name = "Grzegorz", Surname = "Paśnik", Age = 23});
         }
 
         private void GenerateGamesFromResource()
@@ -74,7 +77,7 @@ namespace DatabaseManagement
                if (game != null)
                     _gameResults.Add(new GameResult { Name = gameResultModel.Name, Game = game});
             }
-            Configs.GameList.ResourceManager.ReleaseAllResources();
+            Configs.GameResultsList.ResourceManager.ReleaseAllResources();
         }
     }
 }

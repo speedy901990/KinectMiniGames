@@ -39,7 +39,7 @@ namespace DatabaseManagement.Configs {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KinectMiniGames.Configs.GameResultsList", typeof(GameResultsList).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DatabaseManagement.Configs.GameResultsList", typeof(GameResultsList).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

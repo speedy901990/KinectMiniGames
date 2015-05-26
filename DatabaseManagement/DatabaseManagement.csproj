@@ -56,20 +56,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configs\GameList.Designer.cs">
-      <DependentUpon>GameList.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Configs\GameParamsList.Designer.cs">
-      <DependentUpon>GameParamsList.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>GameParamsList.resx</DependentUpon>
     </Compile>
     <Compile Include="Configs\GameResultsList.Designer.cs">
-      <DependentUpon>GameResultsList.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>GameResultsList.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Configs\GameList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GameList.resx</DependentUpon>
     </Compile>
     <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="Game.cs">
@@ -150,10 +150,6 @@
     <Content Include="GameModel.edmx.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Configs\GameList.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GameList.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Configs\GameParamsList.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GameParamsList.Designer.cs</LastGenOutput>
@@ -161,6 +157,10 @@
     <EmbeddedResource Include="Configs\GameResultsList.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>GameResultsList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configs\GameList.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>GameList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
