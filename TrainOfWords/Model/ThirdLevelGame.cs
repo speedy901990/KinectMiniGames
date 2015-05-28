@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using TrainOfWords.Resources;
 
 namespace TrainOfWords.Model
 {
-    public class ThirdLevelGame : Game
+    public sealed class ThirdLevelGame : Game
     {
         public ThirdLevelGame(TrainOfWordsGameConfig config) : base(config)
         {
             var random = new Random();
-            Config.AllLettersCount = 0;
 
             //3 chars word
             var number = random.Next(WordsContainer.Words3Chars.Count);
@@ -26,20 +25,19 @@ namespace TrainOfWords.Model
             wordStr = WordsContainer.Words5Chars[number];
             Words.Add(new Word(wordStr));
 
+            PrepareLettersAndImages();
+        }
+
+        protected override void PrepareLettersAndImages()
+        {
+            base.PrepareLettersAndImages();
             foreach (var word in Words)
             {
-                Letters.Add(word.Name, new List<string>(word.Letters));
-                Config.AllLettersCount += word.Letters.Count;
-                while (Letters[word.Name].Count < Config.NuberOfLettersOnScreen)
-                {
-                    var index = random.Next(WordsContainer.Alphabet.Count);
-                    Letters[word.Name].Add(WordsContainer.Alphabet[index]);
-                }
+                var rm = Properties.Resources.ResourceManager;
+                var image = (Bitmap)rm.GetObject(word.Name);
+                word.Bitmap = image;
+                word.ShowTrain = false;
             }
-            foreach (var letter in Letters)
-                letter.Value.Sort();
-
-            StartTime = DateTime.Now;
         }
 
         public override void Run()

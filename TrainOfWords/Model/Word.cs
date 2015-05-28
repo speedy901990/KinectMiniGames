@@ -11,13 +11,16 @@ namespace TrainOfWords.Model
 
         public Bitmap Bitmap { get; set; }
 
-        public List<string> Letters { get; private set; }
+        public bool ShowTrain { get; set; }
+
+        public List<char> Letters { get; private set; }
 
 
         public Word(string name)
         {
             Name = name;
-            Letters = Name.ToList().ConvertAll(input => input.ToString(CultureInfo.InvariantCulture));
+            Letters = Name.ToCharArray().ToList();
+            //Letters = Name.ToList().ConvertAll(input => input.ToString(CultureInfo.InvariantCulture));
         }
     }
 }

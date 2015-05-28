@@ -7,7 +7,7 @@ namespace TrainOfWords.Resources
         public static List<string> Words3Chars { get; private set; }
         public static List<string> Words4Chars { get; private set; }
         public static List<string> Words5Chars { get; private set; }
-        public static List<string> Alphabet { get; private set; } 
+        public static List<char> Alphabet { get; private set; } 
 
         static WordsContainer()
         {
@@ -33,42 +33,42 @@ namespace TrainOfWords.Resources
                 "zegar"
             };
 
-            Alphabet = new List<string>
+            Alphabet = new List<char>
             {
-                "a",
-                "ą",
-                "b",
-                "c",
-                "ć",
-                "d",
-                "e",
-                "ę",
-                "f",
-                "g",
-                "h",
-                "i",
-                "j",
-                "k",
-                "l",
-                "ł",
-                "m",
-                "n",
-                "ń",
-                "o",
-                "ó",
-                "p",
-                "r",
-                "s",
-                "ś",
-                "t",
-                "u",
-                "v",
-                "w",
-                "x",
-                "y",
-                "z",
-                "ź",
-                "ż"
+                'a',
+                'ą',
+                'b',
+                'c',
+                'ć',
+                'd',
+                'e',
+                'ę',
+                'f',
+                'g',
+                'h',
+                'i',
+                'j',
+                'k',
+                'l',
+                'ł',
+                'm',
+                'n',
+                'ń',
+                'o',
+                'ó',
+                'p',
+                'r',
+                's',
+                'ś',
+                't',
+                'u',
+                'v',
+                'w',
+                'x',
+                'y',
+                'z',
+                'ź',
+                'ż'
             };
         }
     }

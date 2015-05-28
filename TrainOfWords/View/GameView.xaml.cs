@@ -23,7 +23,7 @@ namespace TrainOfWords.View
 
         private bool _isInGripInteraction;
 
-        private string _selectedLetter;
+        private char? _selectedLetter;
 
         private Label _selectedLetterButton;
 
@@ -226,6 +226,9 @@ namespace TrainOfWords.View
 
         private void SetTrain(Word word)
         {
+            if (!word.ShowTrain)
+                return;
+
             var train = new Label
             {
                 Tag = word,
@@ -254,27 +257,12 @@ namespace TrainOfWords.View
             if (word.Bitmap == null)
                 return;
 
-            //var image = new Label
-            //{
-            //    Tag = word,
-            //    VerticalAlignment = VerticalAlignment.Center,
-            //    HorizontalAlignment = HorizontalAlignment.Center,
-            //    HorizontalContentAlignment = HorizontalAlignment.Center,
-            //    VerticalContentAlignment = VerticalAlignment.Center,
-            //    Foreground = new SolidColorBrush(Colors.White),
-            //    Background = new ImageBrush(Utils.ConvertBitmapToBitmapSource(word.Bitmap)),
-            //    Height = _game.Config.LetterHeight * 4,
-            //    Width = 600,
-            //    FontSize = 100
-            //};
             var image = new Image
             {
                 Tag = word,
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Source = Utils.ConvertBitmapToBitmapSource(word.Bitmap)
-                //Height = _game.Config.LetterHeight * 4,
-                //Width = 600,
             };
             image.MouseEnter += TrainOnMouseEnter;
             //kinectowe eventy
@@ -299,7 +287,7 @@ namespace TrainOfWords.View
             var button = sender as Label;
             if (button == null) 
                 return;
-            var letter = button.Tag as string;
+            var letter = button.Tag as char?;
             if (letter == null) 
                 return;
             _selectedLetter = letter;
@@ -327,9 +315,9 @@ namespace TrainOfWords.View
 
             if (word == null) 
                 return;
-            if (word.Letters.Contains(_selectedLetter))
+            if (word.Letters.Contains(_selectedLetter.GetValueOrDefault()))
             {
-                word.Letters.Remove(_selectedLetter);
+                word.Letters.Remove(_selectedLetter.GetValueOrDefault());
                 _selectedLetterButton.IsEnabled = false;
                 _selectedLetterButton.Foreground = new SolidColorBrush(Colors.Green);
                 NotifySuccess();
@@ -365,7 +353,7 @@ namespace TrainOfWords.View
             var button = sender as Label;
             if (button == null) 
                 return;
-            var letter = button.Tag as string;
+            var letter = button.Tag as char?;
             if (letter == null) 
                 return;
             _selectedLetter = letter;
@@ -392,11 +380,12 @@ namespace TrainOfWords.View
             
             if (word == null) 
                 return;
-            if (!word.Letters.Contains(_selectedLetter)) 
+            if (!word.Letters.Contains(_selectedLetter.GetValueOrDefault())) 
                 return;
 
-            word.Letters.Remove(_selectedLetter);
+            word.Letters.Remove(_selectedLetter.GetValueOrDefault());
             _selectedLetterButton.IsEnabled = false;
+            _selectedLetterButton.Visibility = Visibility.Hidden;
             NotifySuccess();
         }
 
