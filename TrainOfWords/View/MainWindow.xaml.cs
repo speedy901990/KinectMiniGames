@@ -1,10 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using TrainOfWords.Model;
-using TrainOfWords.Resources;
 
 namespace TrainOfWords.View
 {
@@ -37,12 +33,19 @@ namespace TrainOfWords.View
             switch (_config.Level)
             {
                 case 1:
+                    //napis + rysunek
                     _game = new FirstLevelGame(_config);
                     MainGrid.Children.Add(new GameView(_game));
                     break;
                 case 2:
+                    //napis
+                    _game = new SecondLevelGame(_config);
+                    MainGrid.Children.Add(new GameView(_game));
                     break;
                 case 3:
+                    //rysunek
+                    _game = new ThirdLevelGame(_config);
+                    MainGrid.Children.Add(new GameView(_game));
                     break;
             }
         }

@@ -25,7 +25,7 @@
                 <WrapPanel x:Name="LettersPanel" Grid.Row="0"></WrapPanel>
                 <Canvas x:Name="MainCanvas" Grid.RowSpan="3" Grid.Column="0" Grid.Row="0"></Canvas>
                 <WrapPanel x:Name="PopupPanel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
-                <WrapPanel x:Name="TrainPanel" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
+                <WrapPanel x:Name="TrainPanel" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
             </Grid>
         </k:KinectRegion>
     </Grid>

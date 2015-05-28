@@ -137,28 +137,8 @@ namespace TrainOfWords.View
                 j++;
             }
 
-            var train = new Label
-            {
-                Tag = word,
-                Content = word.Name,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                Foreground = new SolidColorBrush(Colors.White),
-                Background = new ImageBrush(Utils.ConvertBitmapToBitmapSource(Properties.Resources.wagon3)),
-                Height = _game.Config.LetterHeight * 2,
-                Width = 700,
-                FontSize = 100
-            };
-
-            train.MouseEnter += TrainOnMouseEnter;
-            //kinectowe eventy
-            KinectRegion.AddQueryInteractionStatusHandler(train, OnQuery);
-            KinectRegion.AddHandPointerEnterHandler(train, OnHandPointerEnter);
-            KinectRegion.AddHandPointerGripReleaseHandler(train, OnGripRelease);
-            TrainPanel.Children.Add(train);
-            Grid.SetColumnSpan(TrainPanel, _game.Letters.Count / 2);
+            SetTrain(word);
+            SetImage(word);
         }
 
         private void SetSecondStep()
@@ -198,26 +178,8 @@ namespace TrainOfWords.View
                 j++;
             }
 
-            var train = new Label
-            {
-                Tag = word,
-                Content = word.Name,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                HorizontalContentAlignment = HorizontalAlignment.Center,
-                VerticalContentAlignment = VerticalAlignment.Center,
-                Foreground = new SolidColorBrush(Colors.White),
-                Background = new ImageBrush(Utils.ConvertBitmapToBitmapSource(Properties.Resources.wagon3)),
-                Height = _game.Config.LetterHeight * 2,
-                Width = 700,
-                FontSize = 100
-            };
-            train.MouseEnter += TrainOnMouseEnter;
-            //kinectowe eventy
-            KinectRegion.AddQueryInteractionStatusHandler(train, OnQuery);
-            KinectRegion.AddHandPointerEnterHandler(train, OnHandPointerEnter);
-            KinectRegion.AddHandPointerGripReleaseHandler(train, OnGripRelease);
-            TrainPanel.Children.Add(train);
+            SetTrain(word);
+            SetImage(word);
         }
 
         private void SetThirdStep()
@@ -258,6 +220,12 @@ namespace TrainOfWords.View
                 j++;
             }
 
+            SetTrain(word);
+            SetImage(word);
+        }
+
+        private void SetTrain(Word word)
+        {
             var train = new Label
             {
                 Tag = word,
@@ -269,15 +237,52 @@ namespace TrainOfWords.View
                 Foreground = new SolidColorBrush(Colors.White),
                 Background = new ImageBrush(Utils.ConvertBitmapToBitmapSource(Properties.Resources.wagon3)),
                 Height = _game.Config.LetterHeight * 2,
-                Width = 700,
+                Width = 600,
                 FontSize = 100
             };
+
             train.MouseEnter += TrainOnMouseEnter;
             //kinectowe eventy
             KinectRegion.AddQueryInteractionStatusHandler(train, OnQuery);
             KinectRegion.AddHandPointerEnterHandler(train, OnHandPointerEnter);
             KinectRegion.AddHandPointerGripReleaseHandler(train, OnGripRelease);
             TrainPanel.Children.Add(train);
+        }
+
+        private void SetImage(Word word)
+        {
+            if (word.Bitmap == null)
+                return;
+
+            //var image = new Label
+            //{
+            //    Tag = word,
+            //    VerticalAlignment = VerticalAlignment.Center,
+            //    HorizontalAlignment = HorizontalAlignment.Center,
+            //    HorizontalContentAlignment = HorizontalAlignment.Center,
+            //    VerticalContentAlignment = VerticalAlignment.Center,
+            //    Foreground = new SolidColorBrush(Colors.White),
+            //    Background = new ImageBrush(Utils.ConvertBitmapToBitmapSource(word.Bitmap)),
+            //    Height = _game.Config.LetterHeight * 4,
+            //    Width = 600,
+            //    FontSize = 100
+            //};
+            var image = new Image
+            {
+                Tag = word,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Source = Utils.ConvertBitmapToBitmapSource(word.Bitmap)
+                //Height = _game.Config.LetterHeight * 4,
+                //Width = 600,
+            };
+            image.MouseEnter += TrainOnMouseEnter;
+            //kinectowe eventy
+            KinectRegion.AddQueryInteractionStatusHandler(image, OnQuery);
+            KinectRegion.AddHandPointerEnterHandler(image, OnHandPointerEnter);
+            KinectRegion.AddHandPointerGripReleaseHandler(image, OnGripRelease);
+
+            TrainPanel.Children.Add(image);
         }
 
         private void OnGripRelease(object sender, HandPointerEventArgs e)
@@ -308,10 +313,18 @@ namespace TrainOfWords.View
             if (_selectedLetterButton == null) 
                 return;
             _selectedLetterButton.Visibility = Visibility.Visible;
+            Word word = null;
+
             var train = sender as Label;
-            if (train == null) 
-                return;
-            var word = train.Tag as Word;
+            if (train != null)
+                word = train.Tag as Word;
+            else
+            {
+                var image = sender as Image;
+                if (image != null)
+                    word = image.Tag as Word;
+            }
+
             if (word == null) 
                 return;
             if (word.Letters.Contains(_selectedLetter))
@@ -324,7 +337,6 @@ namespace TrainOfWords.View
                 _selectedLetterButton = null;
                 return;
             }
-            NotifyFail();
             _selectedLetter = null;
             _selectedLetterButton = null;
         }
@@ -366,20 +378,26 @@ namespace TrainOfWords.View
             if (_selectedLetterButton == null) 
                 return;
             _selectedLetterButton.Visibility = Visibility.Visible;
+            Word word = null;
+
             var train = sender as Label;
-            if (train == null) 
-                return;
-            var word = train.Tag as Word;
+            if (train != null)
+                word = train.Tag as Word;
+            else
+            {
+                var image = sender as Image;
+                if (image != null)
+                    word = image.Tag as Word;
+            }
+            
             if (word == null) 
                 return;
-            if (word.Letters.Contains(_selectedLetter))
-            {
-                word.Letters.Remove(_selectedLetter);
-                _selectedLetterButton.IsEnabled = false;
-                NotifySuccess();
+            if (!word.Letters.Contains(_selectedLetter)) 
                 return;
-            }
-            NotifyFail();
+
+            word.Letters.Remove(_selectedLetter);
+            _selectedLetterButton.IsEnabled = false;
+            NotifySuccess();
         }
 
         private void NotifySuccess()
@@ -408,13 +426,7 @@ namespace TrainOfWords.View
             }
             QuickSuccessPopup();
         }
-
-        private void NotifyFail()
-        {
-            _game.Score.Failures++;
-            //QuickFailurePopup();
-        }
-
+        
         private void EndGame()
         {
             _game.SaveResult();
@@ -425,7 +437,7 @@ namespace TrainOfWords.View
             };
             Grid.SetRow(popup, 1);
             RootGrid.Children.Add(popup);
-            var endGamePopupTimer = new Timer { Interval = 3000 };
+            var endGamePopupTimer = new Timer { Interval = 3000, AutoReset = false};
             endGamePopupTimer.Elapsed += EndGamePopupTimerOnElapsed;
             endGamePopupTimer.Start();
         }
@@ -449,18 +461,6 @@ namespace TrainOfWords.View
             {
                 Message = "DOBRZE!",
                 PopupColor = Brushes.Green
-            };
-            popup.Update();
-            PopupPanel.Children.Add(popup);
-        }
-
-        private void QuickFailurePopup()
-        {
-            Grid.SetColumnSpan(PopupPanel, ButtonsGrid.ColumnDefinitions.Count);
-            var popup = new SmallPopup
-            {
-                Message = "ŹLE!",
-                PopupColor = Brushes.Red
             };
             popup.Update();
             PopupPanel.Children.Add(popup);

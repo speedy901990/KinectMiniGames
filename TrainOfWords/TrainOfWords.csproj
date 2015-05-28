@@ -66,27 +66,7 @@
     <Compile Include="Model\ThirdLevelGame.cs" />
     <Compile Include="Model\TrainOfWordsGameConfig.cs" />
     <Compile Include="Model\Word.cs" />
-    <Compile Include="Resources\Alphabet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Alphabet.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Words4Chars.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Words4Chars.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Words5Chars.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Words5Chars.resx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\WordsContainer.cs" />
-    <Compile Include="Resources\Words3Chars.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Words3Chars.resx</DependentUpon>
-    </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="View\GameOverPopup.xaml.cs">
       <DependentUpon>GameOverPopup.xaml</DependentUpon>
@@ -139,22 +119,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Alphabet.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Alphabet.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Words3Chars.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Words3Chars.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Words4Chars.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Words4Chars.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Words5Chars.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Words5Chars.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -183,6 +147,42 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\wagon3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\oko.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\noga.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ryba.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ekran.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lawka.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lizak.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\malpa.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\okret.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\torba.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wozek.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zegar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

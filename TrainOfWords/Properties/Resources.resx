@@ -118,10 +118,46 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ekran" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ekran.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="kot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\kot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lizak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lizak.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="małpa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\malpa.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="noga" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\noga.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="oko" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\oko.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="okręt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\okret.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ryba" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ryba.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="torba" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\torba.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tramwaj" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tramwaj.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="wagon3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wagon3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wózek" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wozek.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zegar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zegar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ławka" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lawka.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TrainOfWords.Model
 {
@@ -12,7 +9,10 @@ namespace TrainOfWords.Model
     {
         public string Name { get; private set; }
 
+        public Bitmap Bitmap { get; set; }
+
         public List<string> Letters { get; private set; }
+
 
         public Word(string name)
         {

@@ -1,61 +1,47 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using TrainOfWords.View;
+using System.Drawing;
+using TrainOfWords.Resources;
 
 namespace TrainOfWords.Model
 {
+    /// <summary>
+    /// Prepares data from resorces: 
+    /// </summary>
     public class FirstLevelGame : Game
     {
         public FirstLevelGame(TrainOfWordsGameConfig config) : base(config)
         {
             var random = new Random();
-            var alphabet = new List<string>();
             Config.AllLettersCount = 0;
-            using (var resourceSet = Resources.Alphabet.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
-            {
-                var letters = resourceSet.Cast<DictionaryEntry>().Select(entry => entry.Value.ToString());
-                alphabet.AddRange(letters);
-                Resources.Alphabet.ResourceManager.ReleaseAllResources();
-            }
-            using (var resourceSet = Resources.Words3Chars.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
-            {
-                var words = resourceSet.Cast<DictionaryEntry>().ToList();
-                var number = random.Next(words.Count);
-                var word = words[number].Value.ToString();
-                Words.Add(new Word(word));
+            
+            //3 chars word
+            var number = random.Next(WordsContainer.Words3Chars.Count);
+            var wordStr = WordsContainer.Words3Chars[number];
+            Words.Add(new Word(wordStr));
 
-                Resources.Words3Chars.ResourceManager.ReleaseAllResources();
-            }
-            using (var resourceSet = Resources.Words4Chars.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
-            {
-                var words = resourceSet.Cast<DictionaryEntry>().ToList();
-                var number = random.Next(words.Count);
-                var word = words[number].Value.ToString();
-                Words.Add(new Word(word));
+            //4 chars word
+            number = random.Next(WordsContainer.Words4Chars.Count);
+            wordStr = WordsContainer.Words4Chars[number];
+            Words.Add(new Word(wordStr));
 
-                Resources.Words4Chars.ResourceManager.ReleaseAllResources();
-            }
-            using (var resourceSet = Resources.Words5Chars.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true))
-            {
-                var words = resourceSet.Cast<DictionaryEntry>().ToList();
-                var number = random.Next(words.Count);
-                var word = words[number].Value.ToString();
-                Words.Add(new Word(word));
+            //5 chars word
+            number = random.Next(WordsContainer.Words5Chars.Count);
+            wordStr = WordsContainer.Words5Chars[number];
+            Words.Add(new Word(wordStr));
 
-                Resources.Words5Chars.ResourceManager.ReleaseAllResources();
-            }
             foreach (var word in Words)
             {
                 Letters.Add(word.Name, new List<string>(word.Letters));
                 Config.AllLettersCount += word.Letters.Count;
                 while (Letters[word.Name].Count < Config.NuberOfLettersOnScreen)
                 {
-                    var index = random.Next(alphabet.Count);
-                    Letters[word.Name].Add(alphabet[index]);
+                    var index = random.Next(WordsContainer.Alphabet.Count);
+                    Letters[word.Name].Add(WordsContainer.Alphabet[index]);
                 }
+                var rm = Properties.Resources.ResourceManager;
+                var image = (Bitmap)rm.GetObject(word.Name);
+                word.Bitmap = image;
             }
             foreach (var letter in Letters)
                 letter.Value.Sort();
